@@ -13,31 +13,38 @@ import {
   ListItemText,
   InputAdornment,
 } from "@mui/material";
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
+import { StyledTextField } from "@/components/other/StyledTextField";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import { useNavViewModel } from "@/viewmodels/navigation-bar/useNavViewModel";
 
 export const NavigationBar = () => {
+  const { t } = useTranslation();
+  const [isClient, setIsClient] = useState<boolean>(false);
   const { matches: isDesktop, mounted } = useMediaQueryWithSsr("md");
   const { navItems, isMobileMenuOpen, toggleMobileMenu } = useNavViewModel();
 
-  if (!mounted) {
-    return null;
-  }
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient || !mounted) return null;
 
   return (
     <AppBar
-      position="fixed"
+      position="static"
       sx={{
         backgroundColor: "white",
         color: "black",
         fontFamily: "Roboto, sans-serif",
+        height: "90px",
       }}
     >
       <Toolbar
@@ -45,6 +52,9 @@ export const NavigationBar = () => {
           width: containerWidths,
           mx: containerMargins,
           justifyContent: "space-between",
+          height: "100%",
+          alignItems: "center",
+          minHeight: "unset",
         }}
       >
         <Box>
@@ -59,18 +69,21 @@ export const NavigationBar = () => {
 
         {isDesktop && (
           <>
-            <Box sx={{ display: "flex", gap: 2, mx: 2 }}>
+            <Box sx={{ display: "flex", gap: { md: 1.5, lg: 3, xl: 4 }, mx: 2 }}>
               {navItems.map((item) => (
                 <Link key={item.path} href={item.path} passHref style={{ textDecoration: "none", color: "inherit" }}>
-                  <Typography variant="button">{item.label}</Typography>
+                  <Typography variant="button" sx={{ whiteSpace: "nowrap" }}>
+                    {t(`${item.i18n}`)}
+                  </Typography>
                 </Link>
               ))}
             </Box>
 
             <Box component="form">
-              <TextField
+              <StyledTextField
                 size="small"
-                placeholder="Search..."
+                sx={{ width: "150px" }}
+                placeholder={`${t("search-placeholder")}...`}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -132,7 +145,7 @@ export const NavigationBar = () => {
                   }}
                 >
                   <ListItemText
-                    primary={item.label}
+                    primary={t(`${item.i18n}`)}
                     primaryTypographyProps={{
                       variant: "h6",
                       textAlign: "center",
