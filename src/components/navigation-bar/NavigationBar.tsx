@@ -1,26 +1,26 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
 import {
+  Box,
+  List,
+  Drawer,
   AppBar,
   Toolbar,
+  ListItem,
+  TextField,
   Typography,
   IconButton,
-  Drawer,
-  List,
-  ListItem,
   ListItemText,
-  Box,
-  Stack,
-  TextField,
   InputAdornment,
 } from "@mui/material";
+import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
+import { containerWidths, containerMargins } from "@/utils/constants";
 import { useNavViewModel } from "@/viewmodels/navigation-bar/useNavViewModel";
 
 export const NavigationBar = () => {
@@ -42,18 +42,8 @@ export const NavigationBar = () => {
     >
       <Toolbar
         sx={{
-          width: {
-            xs: "100%",
-            md: "95%",
-            lg: "85%",
-            xl: "75%",
-          },
-          mx: {
-            xs: 0,
-            md: "auto",
-            lg: "auto",
-            xl: "auto",
-          },
+          width: containerWidths,
+          mx: containerMargins,
           justifyContent: "space-between",
         }}
       >
