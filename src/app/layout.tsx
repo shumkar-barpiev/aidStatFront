@@ -2,6 +2,7 @@ import React from "react";
 import "@/styles/global.css";
 import theme from "@/styles/theme";
 import type { Metadata } from "next";
+import { Footer } from "@/components/footer/Footer";
 import { ThemeProvider } from "@mui/material/styles";
 import { NavigationBar } from "@/components/navigation-bar/NavigationBar";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
@@ -23,6 +24,7 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <NavigationBar />
             {children}
+            <Footer />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
