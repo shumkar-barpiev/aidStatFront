@@ -1,18 +1,5 @@
 "use client";
 
-import {
-  Box,
-  List,
-  Drawer,
-  AppBar,
-  Toolbar,
-  ListItem,
-  TextField,
-  Typography,
-  IconButton,
-  ListItemText,
-  InputAdornment,
-} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
@@ -21,9 +8,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
-import { StyledTextField } from "@/components/other/StyledTextField";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import { useNavViewModel } from "@/viewmodels/navigation-bar/useNavViewModel";
+import { Box, List, Drawer, AppBar, Toolbar, ListItem, Typography, IconButton, ListItemText } from "@mui/material";
 
 export const NavigationBar = () => {
   const { t } = useTranslation();
@@ -58,13 +45,15 @@ export const NavigationBar = () => {
         }}
       >
         <Box>
-          <Image
-            src="/icons/aid-stat-icon.png"
-            alt="App Logo"
-            width={120}
-            height={40}
-            style={{ objectFit: "contain" }}
-          />
+          <Link href="/" passHref>
+            <Image
+              src="/icons/aid-stat-icon.png"
+              alt="App Logo"
+              width={120}
+              height={40}
+              style={{ objectFit: "contain" }}
+            />
+          </Link>
         </Box>
 
         {isDesktop && (
@@ -80,18 +69,9 @@ export const NavigationBar = () => {
             </Box>
 
             <Box component="form">
-              <StyledTextField
-                size="small"
-                sx={{ width: "150px" }}
-                placeholder={`${t("search-placeholder")}...`}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <IconButton id="search-button" sx={{ color: "black", width: 40, height: 40 }}>
+                <SearchIcon sx={{ color: "black", width: 28, height: 28 }} />
+              </IconButton>
             </Box>
           </>
         )}

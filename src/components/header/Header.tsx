@@ -2,11 +2,11 @@
 import Colors from "@/styles/colors";
 import { Box, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import LoginIcon from "@mui/icons-material/Login";
 import React, { useState, useEffect } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Menu, MenuItem, Typography } from "@mui/material";
 import { containerWidths, containerMargins } from "@/utils/constants";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const locales = [
   { code: "en", label: "English", flag: "ENG" },
@@ -78,7 +78,11 @@ export const Header = () => {
             </Menu>
           </Box>
           <Box>
-            <Button id="sign-in-button" startIcon={<LoginIcon sx={{ color: "black" }} />} sx={{ color: "black" }}>
+            <Button
+              id="sign-in-button"
+              startIcon={<AccountCircleOutlinedIcon sx={{ color: "black", width: 24, height: 24 }} />}
+              sx={{ color: "black" }}
+            >
               {t("login")}
             </Button>
           </Box>
