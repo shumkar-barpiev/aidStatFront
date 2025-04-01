@@ -76,13 +76,15 @@ export const Footer = () => {
                   spacing={3}
                 >
                   <Box>
-                    <Image
-                      src="/icons/aid-stat-footer-icon.png"
-                      alt="App Logo"
-                      width={150}
-                      height={50}
-                      style={{ objectFit: "contain" }}
-                    />
+                    <Link href="/">
+                      <Image
+                        src="/icons/aid-stat-footer-icon.png"
+                        alt="App Logo"
+                        width={150}
+                        height={50}
+                        style={{ objectFit: "contain" }}
+                      />
+                    </Link>
                   </Box>
                   <Box>
                     <Box>
