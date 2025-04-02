@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from "react";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import { useFooterViewModel } from "@/viewmodels/footer/useFooterViewModel";
 import { Box, Container, Grid, Link, Typography, Divider, Stack } from "@mui/material";
