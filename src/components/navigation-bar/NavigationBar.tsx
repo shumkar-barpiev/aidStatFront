@@ -1,16 +1,29 @@
 "use client";
 
+import {
+  Box,
+  List,
+  Stack,
+  AppBar,
+  Drawer,
+  Toolbar,
+  Tooltip,
+  ListItem,
+  Typography,
+  IconButton,
+  ListItemText,
+} from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import { containerWidths, containerMargins } from "@/utils/constants";
+import { LocaleSwitch } from "@/components/navigation-bar/LocaleSwitch";
 import { useNavViewModel } from "@/viewmodels/navigation-bar/useNavViewModel";
-import { Box, List, Drawer, AppBar, Toolbar, ListItem, Typography, IconButton, ListItemText } from "@mui/material";
 
 export const NavigationBar = () => {
   const { t } = useTranslation();
@@ -26,7 +39,7 @@ export const NavigationBar = () => {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         backgroundColor: "white",
         color: "black",
@@ -58,20 +71,33 @@ export const NavigationBar = () => {
 
         {isDesktop && (
           <>
-            <Box sx={{ display: "flex", gap: { md: 1.5, lg: 3, xl: 4 }, mx: 2 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: { md: 1.5, lg: 3, xl: 4 }, mx: 2 }}>
               {navItems.map((item) => (
                 <Link key={item.path} href={item.path} passHref style={{ textDecoration: "none", color: "inherit" }}>
-                  <Typography variant="button" sx={{ whiteSpace: "nowrap" }}>
+                  <Typography
+                    variant="button"
+                    sx={{
+                      whiteSpace: "nowrap",
+                      fontSize: "14px",
+                      transition: "all 0.1s ease-in-out",
+                      "&:hover": { textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)" },
+                    }}
+                  >
                     {t(`${item.i18n}`)}
                   </Typography>
                 </Link>
               ))}
             </Box>
 
-            <Box component="form">
-              <IconButton id="search-button" sx={{ color: "black", width: 40, height: 40 }}>
-                <SearchIcon sx={{ color: "black", width: 28, height: 28 }} />
-              </IconButton>
+            <Box>
+              <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                <LocaleSwitch />
+                <Tooltip title={`${t("login")}`}>
+                  <IconButton id="sign-in-button" sx={{ color: "black" }}>
+                    <LoginOutlinedIcon sx={{ color: "black", width: 24, height: 24 }} />
+                  </IconButton>
+                </Tooltip>
+              </Stack>
             </Box>
           </>
         )}
