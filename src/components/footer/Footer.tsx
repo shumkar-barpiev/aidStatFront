@@ -37,7 +37,7 @@ export const Footer = () => {
           mx: containerMargins,
         }}
       >
-        <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3 }, height: "45vh" }}>
+        <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3 }, height: "25vh" }}>
           <Box
             sx={{
               width: "100%",
@@ -47,24 +47,21 @@ export const Footer = () => {
               justifyContent: "center",
             }}
           >
-            <Grid container spacing={4} sx={{ mt: 4 }}>
-              <Grid item xs={12} sm={6} md={8}>
-                <Grid container spacing={2}>
-                  {primaryFooterNavItems.map((item) => (
-                    <Grid item xs={12} sm={6} md={4} key={item.label}>
-                      <Link
-                        href="#"
-                        color="inherit"
-                        underline="hover"
-                        sx={{ display: "block", textTransform: "uppercase" }}
-                      >
-                        {t(`${item.i18n}`)}
-                      </Link>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-
+            <Stack direction={"row"} alignItems={"center"} flexWrap={"wrap"}>
+              {primaryFooterNavItems.map((item) => (
+                <Box key={item.label} sx={{ mt: 1, mr: 2 }}>
+                  <Link
+                    href="#"
+                    color="inherit"
+                    underline="hover"
+                    sx={{ display: "block", textTransform: "uppercase" }}
+                  >
+                    {t(`${item.i18n}`)}
+                  </Link>
+                </Box>
+              ))}
+            </Stack>
+            <Grid container spacing={4} sx={{ mt: 1 }}>
               <Grid item xs={12}>
                 <Divider sx={{ mb: 2 }} />
 
