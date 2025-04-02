@@ -17,6 +17,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import MenuIcon from "@mui/icons-material/Menu";
+import { NAVBAR_HEIGHT } from "@/utils/constants";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
@@ -44,7 +45,7 @@ export const NavigationBar = () => {
         backgroundColor: "white",
         color: "black",
         fontFamily: "Roboto, sans-serif",
-        height: "90px",
+        height: `${NAVBAR_HEIGHT}px`,
       }}
     >
       <Toolbar
@@ -60,7 +61,7 @@ export const NavigationBar = () => {
         <Box>
           <Link href="/" passHref>
             <Image
-              src="/icons/aid-stat-icon.png"
+              src="/images/icons/aid-stat-icon.png"
               alt="App Logo"
               width={120}
               height={40}

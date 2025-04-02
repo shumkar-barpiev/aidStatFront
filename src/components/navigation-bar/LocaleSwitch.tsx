@@ -13,7 +13,7 @@ const locales = [
 ];
 
 export const LocaleSwitch = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const [isClient, setIsClient] = useState<boolean>(false);
   const [selectedLocale, setSelectedLocale] = useState<Record<string, any> | null>(null);
@@ -25,7 +25,7 @@ export const LocaleSwitch = () => {
   const handleClose = (locale: any) => {
     if (locale) {
       setSelectedLocale(locale);
-      i18n.changeLanguage(locale.code ?? "ru");
+      i18n.changeLanguage(locale.code ?? locales[1].code);
     }
     setAnchorEl(null);
   };
@@ -34,6 +34,9 @@ export const LocaleSwitch = () => {
     const matchingLocale = locales.find((locale) => locale.code === i18n.language);
     if (matchingLocale) {
       setSelectedLocale(matchingLocale);
+    } else {
+      setSelectedLocale(locales[1]);
+      i18n.changeLanguage(locales[1].code);
     }
 
     setIsClient(true);

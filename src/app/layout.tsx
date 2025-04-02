@@ -5,6 +5,7 @@ import React from "react";
 import "@/styles/global.css";
 import theme from "@/styles/theme";
 import { Box } from "@mui/material";
+import { NAVBAR_HEIGHT } from "@/utils/constants";
 import { Footer } from "@/components/footer/Footer";
 import { ThemeProvider } from "@mui/material/styles";
 import { NavigationBar } from "@/components/navigation-bar/NavigationBar";
@@ -17,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <NavigationBar />
-            <Box sx={{ minHeight: "100vh", pt: "90px" }}>{children}</Box>
+            <Box sx={{ minHeight: "100vh", pt: `${NAVBAR_HEIGHT}px` }}>{children}</Box>
             <Footer />
           </ThemeProvider>
         </AppRouterCacheProvider>

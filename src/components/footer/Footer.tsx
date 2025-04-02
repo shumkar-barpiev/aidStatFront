@@ -48,8 +48,8 @@ export const Footer = () => {
             }}
           >
             <Stack direction={"row"} alignItems={"center"} flexWrap={"wrap"}>
-              {primaryFooterNavItems.map((item) => (
-                <Box key={item.label} sx={{ mt: 1, mr: 2 }}>
+              {primaryFooterNavItems.map((item, index) => (
+                <Stack direction={"row"} alignItems={"center"} key={item.label} sx={{ mt: 1, mr: 2 }}>
                   <Link
                     href="#"
                     color="inherit"
@@ -58,7 +58,10 @@ export const Footer = () => {
                   >
                     {t(`${item.i18n}`)}
                   </Link>
-                </Box>
+                  {index !== primaryFooterNavItems.length - 1 && (
+                    <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+                  )}
+                </Stack>
               ))}
             </Stack>
             <Grid container spacing={4} sx={{ mt: 1 }}>
@@ -75,7 +78,7 @@ export const Footer = () => {
                   <Box>
                     <Link href="/">
                       <Image
-                        src="/icons/aid-stat-footer-icon.png"
+                        src="/images/icons/aid-stat-footer-icon.png"
                         alt="App Logo"
                         width={150}
                         height={50}

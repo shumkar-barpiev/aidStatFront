@@ -2,10 +2,10 @@
 
 import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
-import React, { useState, useEffect } from "react";
-import { containerMargins, containerWidths } from "@/utils/constants";
+import React, { useState, useEffect, useRef } from "react";
 import { Card, Typography, Grid, Box, Button, Divider } from "@mui/material";
 import { useMainPageViewModel } from "@/viewmodels/main-page/useMainPageViewModel";
+import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
 import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
 
 const convertToRussianDateFormat = (date: string | undefined) => {
@@ -21,8 +21,17 @@ const convertToRussianDateFormat = (date: string | undefined) => {
 
 export default function Home() {
   const { t } = useTranslation();
-  const [isClient, setIsClient] = useState<boolean>(false);
   const { projects } = useMainPageViewModel();
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [isClient, setIsClient] = useState<boolean>(false);
+
+  const handleScrollToBox = () => {
+    if (boxRef.current) {
+      const yOffset = -NAVBAR_HEIGHT;
+      const y = boxRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -91,13 +100,13 @@ export default function Home() {
           >
             {t("mainPageDescription")}
           </Typography>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={handleScrollToBox}>
             {t("mainPageBtn")}
           </Button>
         </Box>
       </Box>
 
-      <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>
+      <Box ref={boxRef} sx={{ width: containerWidths, mx: containerMargins, p: 2, height: "100vh" }}>
         <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
           {t("projects")}
         </Typography>
