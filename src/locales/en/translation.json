@@ -7,10 +7,16 @@
   "aboutUsPage": "About Us",
   "mainPage": "Home",
   "newsPage": "News",
+  "projects": "Projects",
   "contactsPage": "Contacts",
   "useTermsPage": "Terms of Use",
   "privacyPolicyPage": "Privacy Policy",
   "cookiePolicyPage": "Cookie Policy",
   "allRightsReserved": "All rights reserved.",
-  "login": "Login"
+  "login": "Login",
+  "showMore": "Show More",
+  "deadline": "Deadline",
+  "mainPageText": "Monitoring of projects for the creation and development of Kyrgyzstan's infrastructure",
+  "mainPageDescription": "Up-to-date information on projects, funding, and implementation",
+  "mainPageBtn": "Go to projects"
 }

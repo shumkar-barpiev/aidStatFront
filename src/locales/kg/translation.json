@@ -8,9 +8,15 @@
   "statisticsPage": "Статистика",
   "contactsPage": "Байланыштар",
   "aboutUsPage": "Биз жөнүндө",
+  "projects": "Долбоорлор",
   "useTermsPage": "Колдонуу шарттары",
   "privacyPolicyPage": "Купуялык саясаты",
   "cookiePolicyPage": "Куки саясаты",
   "allRightsReserved": "Бардык укуктар корголгон.",
-  "login": "Кирүү"
+  "login": "Кирүү",
+  "showMore": "Көбүрөөк",
+  "deadline": "Жыйынтыктоо мөөнөтү",
+  "mainPageText": "Кыргызстандын инфраструктурасын түзүү жана өнүктүрүү үчүн долбоорлорду мониторингдөө",
+  "mainPageDescription": "Долбоорлор, каржылоо жана ишке ашыруу боюнча актуалдуу маалымат",
+  "mainPageBtn": "Долбоорлорго өтүү"
 }
