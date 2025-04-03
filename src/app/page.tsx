@@ -40,7 +40,7 @@ export default function Home() {
   if (!isClient) return null;
 
   return (
-    <Box>
+    <Box height={"100%"}>
       <Box
         sx={{
           mt: "-10px",
@@ -106,7 +106,7 @@ export default function Home() {
         </Box>
       </Box>
 
-      <Box ref={boxRef} sx={{ width: containerWidths, mx: containerMargins, p: 2, height: "100vh" }}>
+      <Box ref={boxRef} sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
         <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
           {t("projects")}
         </Typography>
