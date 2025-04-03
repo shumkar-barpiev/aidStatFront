@@ -10,14 +10,7 @@ import { Box, Container, Grid, Link, Typography, Divider, Stack } from "@mui/mat
 
 export const Footer = () => {
   const { t } = useTranslation();
-  const [isClient, setIsClient] = useState<boolean>(false);
   const { primaryFooterNavItems, secondaryFooterNavItems } = useFooterViewModel();
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
 
   return (
     <Box
@@ -81,7 +74,7 @@ export const Footer = () => {
                   <Box>
                     <Link href="/">
                       <Image
-                        src="/images/icons/aid-stat-footer-icon.png"
+                        src="/assets/images/icons/aid-stat-footer-icon.png"
                         alt="App Logo"
                         width={150}
                         height={50}
