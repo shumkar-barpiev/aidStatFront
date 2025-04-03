@@ -13,13 +13,13 @@ import {
   IconButton,
   ListItemText,
 } from "@mui/material";
-import Link from "next/link";
+import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NAVBAR_HEIGHT } from "@/utils/constants";
 import CloseIcon from "@mui/icons-material/Close";
-import React, { useEffect, useState } from "react";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import { containerWidths, containerMargins } from "@/utils/constants";
@@ -27,16 +27,21 @@ import { LocaleSwitch } from "@/components/navigation-bar/LocaleSwitch";
 import { useNavViewModel } from "@/viewmodels/navigation-bar/useNavViewModel";
 
 export const NavigationBar = () => {
+  const router = useRouter();
   const { t } = useTranslation();
-  const [isClient, setIsClient] = useState<boolean>(false);
   const { matches: isDesktop, mounted } = useMediaQueryWithSsr("md");
   const { navItems, isMobileMenuOpen, toggleMobileMenu } = useNavViewModel();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const plainBtnStyle = {
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    textDecoration: "none",
+    color: "inherit",
+    padding: 0,
+  };
 
-  if (!isClient || !mounted) return null;
+  if (!mounted) return null;
 
   return (
     <AppBar
@@ -59,7 +64,7 @@ export const NavigationBar = () => {
         }}
       >
         <Box>
-          <Link href="/" passHref>
+          <button onClick={() => router.push("/")} style={plainBtnStyle}>
             <Image
               src="/assets/images/icons/aid-stat-icon.png"
               alt="App Logo"
@@ -67,14 +72,14 @@ export const NavigationBar = () => {
               height={40}
               style={{ objectFit: "contain" }}
             />
-          </Link>
+          </button>
         </Box>
 
         {isDesktop && (
           <>
             <Box sx={{ display: "flex", alignItems: "center", gap: { md: 1.5, lg: 3, xl: 4 }, mx: 2 }}>
               {navItems.map((item) => (
-                <Link key={item.path} href={item.path} passHref style={{ textDecoration: "none", color: "inherit" }}>
+                <button key={item.i18n} onClick={() => router.push(item.path)} style={plainBtnStyle}>
                   <Typography
                     variant="button"
                     sx={{
@@ -86,7 +91,7 @@ export const NavigationBar = () => {
                   >
                     {t(`${item.i18n}`)}
                   </Typography>
-                </Link>
+                </button>
               ))}
             </Box>
 
@@ -104,9 +109,12 @@ export const NavigationBar = () => {
         )}
 
         {!isDesktop && (
-          <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleMobileMenu} sx={{ ml: 2 }}>
-            {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
+          <Stack direction={"row"} alignItems={"center"} spacing={1}>
+            <LocaleSwitch />
+            <IconButton edge="end" color="inherit" aria-label="menu" onClick={toggleMobileMenu} sx={{ ml: 2 }}>
+              {isMobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            </IconButton>
+          </Stack>
         )}
       </Toolbar>
 
@@ -118,7 +126,7 @@ export const NavigationBar = () => {
           onClose={toggleMobileMenu}
           sx={{
             "& .MuiDrawer-paper": {
-              width: "100%",
+              width: "80%",
               height: "100%",
               maxWidth: "100vw",
             },
@@ -140,14 +148,44 @@ export const NavigationBar = () => {
             </Box>
 
             <List sx={{ mt: 4 }}>
+              <ListItem
+                key={"mainPage"}
+                component="button"
+                onClick={() => {
+                  router.push("/");
+                  toggleMobileMenu();
+                }}
+                sx={{
+                  bgcolor: "transparent",
+                  border: "none",
+                  textAlign: "left",
+                  cursor: "pointer",
+                  width: "100%",
+                  "&:hover": { bgcolor: "action.hover" },
+                }}
+              >
+                <ListItemText
+                  primary={t("mainPage")}
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    textAlign: "left",
+                  }}
+                />
+              </ListItem>
               {navItems.map((item) => (
                 <ListItem
-                  key={item.path}
-                  component={Link}
-                  href={item.path}
-                  onClick={toggleMobileMenu}
+                  key={item.i18n}
+                  component="button"
+                  onClick={() => {
+                    router.push(item.path);
+                    toggleMobileMenu();
+                  }}
                   sx={{
-                    py: 1,
+                    bgcolor: "transparent",
+                    border: "none",
+                    textAlign: "left",
+                    cursor: "pointer",
+                    width: "100%",
                     "&:hover": { bgcolor: "action.hover" },
                   }}
                 >
@@ -155,11 +193,36 @@ export const NavigationBar = () => {
                     primary={t(`${item.i18n}`)}
                     primaryTypographyProps={{
                       variant: "h6",
-                      textAlign: "center",
+                      textAlign: "left",
                     }}
                   />
                 </ListItem>
               ))}
+
+              <ListItem
+                key={"login"}
+                component="button"
+                onClick={() => {
+                  // router.push("/login");
+                  // toggleMobileMenu();
+                }}
+                sx={{
+                  bgcolor: "transparent",
+                  border: "none",
+                  textAlign: "left",
+                  cursor: "pointer",
+                  width: "100%",
+                  "&:hover": { bgcolor: "action.hover" },
+                }}
+              >
+                <ListItemText
+                  primary={t("login")}
+                  primaryTypographyProps={{
+                    variant: "h6",
+                    textAlign: "left",
+                  }}
+                />
+              </ListItem>
             </List>
           </Box>
         </Drawer>

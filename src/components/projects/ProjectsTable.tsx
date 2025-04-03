@@ -31,7 +31,7 @@ export default function ProjectsTable() {
             sx={{
               position: "sticky",
               top: 0,
-              backgroundColor: Colors.royalBlue,
+              backgroundColor: Colors.darkBlue,
               zIndex: 50,
               height: "70px",
             }}
