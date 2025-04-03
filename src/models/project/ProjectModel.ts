@@ -4,7 +4,7 @@ export const ProjectModel = z.object({
   id: z.number().int().positive().optional(),
   title: z.string().trim().optional(),
   sector: z.string().trim().optional(),
-  deadline: z.string().trim().optional(),
+  endDate: z.string().trim().optional(),
   description: z.string().trim().optional(),
   partners: z.string().trim().optional(),
   startDate: z.string().trim().optional(),
