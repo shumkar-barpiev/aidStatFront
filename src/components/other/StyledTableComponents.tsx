@@ -7,7 +7,7 @@ export const StyledTableHeadCell = styled(TableCell)(() => ({
   fontSize: "12px",
   textAlign: "center",
   whiteSpace: "nowrap",
-  backgroundColor: Colors.royalBlue,
+  backgroundColor: Colors.darkBlue,
   border: "none",
   padding: "10px",
   tableLayout: "fixed",

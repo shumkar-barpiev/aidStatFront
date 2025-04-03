@@ -1,27 +1,26 @@
 "use client";
 
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Button,
+  Divider,
+  Tooltip,
+  CardMedia,
+  IconButton,
+  Typography,
+  CardContent,
+} from "@mui/material";
 import Colors from "@/styles/colors";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from "react";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { useMainPageViewModel } from "@/viewmodels/main-page/useMainPageViewModel";
 import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
-import {
-  Card,
-  Typography,
-  Grid,
-  Box,
-  Button,
-  Divider,
-  Stack,
-  Tooltip,
-  IconButton,
-  CardContent,
-  CardMedia,
-  CardActions,
-} from "@mui/material";
 
 const convertToRussianDateFormat = (date: string | undefined) => {
   if (!date) return;
@@ -37,7 +36,6 @@ const convertToRussianDateFormat = (date: string | undefined) => {
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
-  const pathname = usePathname();
   const { projects } = useMainPageViewModel();
   const boxRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState<boolean>(false);
@@ -141,7 +139,7 @@ export default function Home() {
               "&:hover": { color: "white", backgroundColor: Colors.darkBlue },
             }}
           >
-            {t("showMore")}
+            {t("showAll")}
           </Button>
         </Stack>
         <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
@@ -232,7 +230,7 @@ export default function Home() {
             </Box>
             <CardMedia
               sx={{ width: { xs: 600, sm: 650, md: 700, lg: 750, xl: 800 }, height: 350, objectFit: "contain" }}
-              image="/assets/images/main-page/main-page-1.jpg"
+              image="/assets/images/pages/main-page-1.jpg"
               title="green iguana"
             />
           </Card>
