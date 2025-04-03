@@ -1,7 +1,7 @@
 "use client";
 
 import Colors from "@/styles/colors";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from "react";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
@@ -37,6 +37,7 @@ const convertToRussianDateFormat = (date: string | undefined) => {
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
+  const pathname = usePathname();
   const { projects } = useMainPageViewModel();
   const boxRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState<boolean>(false);
@@ -51,7 +52,10 @@ export default function Home() {
 
   useEffect(() => {
     setIsClient(true);
-    window.scrollTo(0, 0);
+
+    return () => {
+      window.scrollTo(0, 0);
+    };
   }, []);
 
   if (!isClient) return null;
@@ -130,7 +134,7 @@ export default function Home() {
           </Typography>
           <Button
             startIcon={<ReadMoreOutlinedIcon fontSize="large" sx={{ color: "inheir" }} />}
-            onClick={() => router.push("/projects")}
+            onClick={() => router.push("/projects", { scroll: false })}
             sx={{
               backgroundColor: "white",
               color: Colors.darkBlue,
