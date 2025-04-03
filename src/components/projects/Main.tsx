@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProjectsTable from "@/components/projects/ProjectsTable";
 import ProjectsFilter from "@/components/projects/ProjectsFilter";
 import { Grid, Box, Stack, Typography, Button } from "@mui/material";
@@ -13,7 +13,6 @@ import { containerWidths, containerMargins, NAVBAR_HEIGHT } from "@/utils/consta
 
 export default function Main() {
   const { t } = useTranslation();
-  const [filterText, setFilterText] = useState("");
   const [searchText, setSearchText] = useState("");
   const projectsTableRef = useRef<HTMLDivElement | null>(null);
 
@@ -25,6 +24,12 @@ export default function Main() {
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      window.scrollTo(0, 0);
+    };
+  }, []);
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>

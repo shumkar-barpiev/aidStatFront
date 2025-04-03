@@ -15,7 +15,6 @@ export const Footer = () => {
 
   useEffect(() => {
     setIsClient(true);
-    window.scrollTo(0, 0);
   }, []);
 
   if (!isClient) return null;
