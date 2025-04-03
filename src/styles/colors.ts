@@ -9,6 +9,7 @@ const Colors = {
   success: "#2ecc71", // Green
   border: "#dcdcdc", // Border Color
   darkBlue: "#2E4B6D", // Dark blue Color
+  royalBlue: "#465594", // Royal Blue color
   lightBrown: "#e8c387", // light brown Color
 };
 

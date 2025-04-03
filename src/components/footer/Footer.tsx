@@ -10,7 +10,15 @@ import { Box, Container, Grid, Link, Typography, Divider, Stack } from "@mui/mat
 
 export const Footer = () => {
   const { t } = useTranslation();
+  const [isClient, setIsClient] = useState<boolean>(false);
   const { primaryFooterNavItems, secondaryFooterNavItems } = useFooterViewModel();
+
+  useEffect(() => {
+    setIsClient(true);
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (!isClient) return null;
 
   return (
     <Box

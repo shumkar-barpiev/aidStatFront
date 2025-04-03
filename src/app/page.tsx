@@ -1,12 +1,27 @@
 "use client";
 
 import Colors from "@/styles/colors";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Typography, Grid, Box, Button, Divider } from "@mui/material";
+import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
+import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { useMainPageViewModel } from "@/viewmodels/main-page/useMainPageViewModel";
 import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
-import ExpandCircleDownOutlinedIcon from "@mui/icons-material/ExpandCircleDownOutlined";
+import {
+  Card,
+  Typography,
+  Grid,
+  Box,
+  Button,
+  Divider,
+  Stack,
+  Tooltip,
+  IconButton,
+  CardContent,
+  CardMedia,
+  CardActions,
+} from "@mui/material";
 
 const convertToRussianDateFormat = (date: string | undefined) => {
   if (!date) return;
@@ -20,6 +35,7 @@ const convertToRussianDateFormat = (date: string | undefined) => {
 };
 
 export default function Home() {
+  const router = useRouter();
   const { t } = useTranslation();
   const { projects } = useMainPageViewModel();
   const boxRef = useRef<HTMLDivElement>(null);
@@ -35,6 +51,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsClient(true);
+    window.scrollTo(0, 0);
   }, []);
 
   if (!isClient) return null;
@@ -107,61 +124,115 @@ export default function Home() {
       </Box>
 
       <Box ref={boxRef} sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
-        <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
-          {t("projects")}
-        </Typography>
-        <Divider sx={{ mb: 6, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+        <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+          <Typography variant="h4" fontWeight="bold" sx={{ my: 1, textAlign: "left" }}>
+            {t("projects")}
+          </Typography>
+          <Button
+            startIcon={<ReadMoreOutlinedIcon fontSize="large" sx={{ color: "inheir" }} />}
+            onClick={() => router.push("/projects")}
+            sx={{
+              backgroundColor: "white",
+              color: Colors.darkBlue,
+              "&:hover": { color: "white", backgroundColor: Colors.darkBlue },
+            }}
+          >
+            {t("showMore")}
+          </Button>
+        </Stack>
+        <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         <Grid container spacing={3}>
-          {projects.map((project) => (
-            <Grid item xs={12} sm={6} md={4} sx={{ height: "230px" }} key={project.id}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  p: 2,
-
-                  transition: "box-shadow 0.3s ease-in-out, transform 0.2s ease-in-out",
-                  "&:hover": {
-                    boxShadow: 6,
-                    transform: "translateY(-5px)",
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                <Typography variant="subtitle1" color="textSecondary" sx={{ fontWeight: "bold" }}>
-                  {project.sector}
-                </Typography>
-
-                <Typography
-                  variant="h6"
+          {projects.slice(0, 4).map((project, index) => {
+            return (
+              <Grid item xs={12} sm={6} md={6} lg={3} key={project.id}>
+                <Card
                   sx={{
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    mt: 1,
-                    display: "box",
+                    height: "282px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    p: "20px",
+                    borderRadius: "0px",
                     overflow: "hidden",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 2,
-                    textOverflow: "ellipsis",
+                    backgroundColor: "#F0F4F7",
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      backgroundColor: "#e6ecf0",
+                      boxShadow: 6,
+                      transform: "translateY(-5px)",
+                      cursor: "pointer",
+                    },
                   }}
                 >
-                  {project.title}
-                </Typography>
-
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 3 }}>
-                  <Typography variant="body2" color="textSecondary" sx={{ whiteSpace: "nowrap" }}>
-                    {t("deadline")}: {convertToRussianDateFormat(project.deadline)}
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+                    {project.sector}
                   </Typography>
-                </Box>
-                <Button variant="outlined" endIcon={<ExpandCircleDownOutlinedIcon />} size="small">
-                  {t("showMore")}
-                </Button>
-              </Card>
-            </Grid>
-          ))}
+
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontWeight: 550,
+                      fontFamily: "sans-serif",
+                      fontSize: "1.25rem",
+                      display: "-webkit-box",
+                      overflow: "hidden",
+                      WebkitBoxOrient: "vertical",
+                      WebkitLineClamp: 2,
+                      textOverflow: "ellipsis",
+
+                      "&:hover": {
+                        color: "#2E4B6D",
+                        transition: "color 0.3s ease",
+                      },
+                    }}
+                  >
+                    {project.title}
+                  </Typography>
+
+                  <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                    <Stack direction={"column"} alignItems={"left"}>
+                      <Typography variant="body2" sx={{ whiteSpace: "nowrap", fontWeight: "bold" }}>
+                        {t("endDate")}:
+                      </Typography>
+                      <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
+                        {convertToRussianDateFormat(project.endDate)}
+                      </Typography>
+                    </Stack>
+
+                    <Tooltip title={t("more")}>
+                      <IconButton sx={{ border: `1px solid ${Colors.darkBlue}` }}>
+                        <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
+                      </IconButton>
+                    </Tooltip>
+                  </Stack>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
+
+        <Box sx={{ mt: 2 }}>
+          <Card sx={{ display: "flex", maxWidth: 1, pl: 1, bgcolor: "#F3F2F8" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", p: 2, width: "100%" }}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
+                  {t("aidStatInfoTitle")}
+                </Typography>
+                <Typography variant="body1" sx={{ color: "text.secondary", textAlign: "justify" }}>
+                  {t("aidStatInfoDescription")}
+                </Typography>
+                <Button size="small" endIcon={<ArrowForwardOutlinedIcon />} sx={{ mt: 1 }}>
+                  {t("more")}
+                </Button>
+              </CardContent>
+            </Box>
+            <CardMedia
+              sx={{ width: { xs: 600, sm: 650, md: 700, lg: 750, xl: 800 }, height: 350, objectFit: "contain" }}
+              image="/assets/images/main-page/main-page-1.jpg"
+              title="green iguana"
+            />
+          </Card>
+        </Box>
       </Box>
     </Box>
   );
