@@ -1,7 +1,7 @@
 "use client";
 
+import { TModelFilters } from "@/types/model";
 import { ChangeEvent, useEffect, useState } from "react";
-import { TCriteriaList, TModelFilters } from "@/types/model";
 import { useProjectsStore } from "@/stores/projects/projects";
 import { TProjectModel, EProjectModelFilter } from "@/models/project/ProjectModel";
 
@@ -55,11 +55,18 @@ export const useProjectsViewModel = () => {
     });
   }, [projectsFilter]);
 
+  const getProjectSectorsTitle = (sectors: Record<string, any>[]) => {
+    if (!sectors || sectors.length === 0) return "";
+
+    return sectors.map((sector) => sector.name).join(", ");
+  };
+
   return {
     projects,
     handleFilter,
     projectsFilter,
     projectItemsPageTotal,
+    getProjectSectorsTitle,
     handleProcessItemsPageChange,
   };
 };

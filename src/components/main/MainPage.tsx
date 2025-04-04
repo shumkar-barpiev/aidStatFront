@@ -16,6 +16,8 @@ import {
 import Colors from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { safeEncrypt } from "@/utils/crypto-utils";
+import { RenderEllipsisText } from "@/utils/textUtils";
 import React, { useState, useEffect, useRef } from "react";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
@@ -36,9 +38,9 @@ const convertToRussianDateFormat = (date: string | undefined) => {
 export default function MainPage() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { projects } = useProjectsViewModel();
   const boxRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState<boolean>(false);
+  const { projects, getProjectSectorsTitle } = useProjectsViewModel();
 
   const handleScrollToBox = () => {
     if (boxRef.current) {
@@ -166,15 +168,9 @@ export default function MainPage() {
                     },
                   }}
                 >
-                  {project?.sectors ? (
-                    <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                      {project?.sectors?.map((sector: Record<string, any>, index: number) => {
-                        return sector.name;
-                      })}
-                    </Typography>
-                  ) : (
-                    <Box></Box>
-                  )}
+                  <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                    {project?.sectors && <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />}
+                  </Typography>
 
                   <Typography
                     variant="h3"
@@ -208,7 +204,12 @@ export default function MainPage() {
                     </Stack>
 
                     <Tooltip title={t("more")}>
-                      <IconButton sx={{ border: `1px solid ${Colors.darkBlue}` }}>
+                      <IconButton
+                        sx={{ border: `1px solid ${Colors.darkBlue}` }}
+                        onClick={() => {
+                          router.push(`/projects/show/${safeEncrypt(`${project.name}`)}`);
+                        }}
+                      >
                         <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
                       </IconButton>
                     </Tooltip>
