@@ -1,62 +1,71 @@
 "use client";
 
-import { useState } from "react";
-import { TPartnerModel } from "@/models/partner/partner";
+import { TModelFilters } from "@/types/model";
+import { ChangeEvent, useEffect, useState } from "react";
+import { usePartnersStore } from "@/stores/partners/partners";
+import { TPartnerModel, EPartnerModelFilter } from "@/models/partner/partner";
+
+let timer: ReturnType<typeof setTimeout> | null;
+
+const initialFilters: () => TModelFilters = () => {
+  return {
+    page: 1,
+    pageSize: 16,
+  };
+};
+
 export const usePartnersViewModel = () => {
-  const [partners] = useState<TPartnerModel[]>([
-    {
-      id: 1,
-      name: "Smart City Initiative",
-      description: "In Progress",
-    },
-    {
-      id: 2,
-      name: "Green Energy Solutions",
-      description: "Completed",
-    },
-    {
-      id: 3,
-      name: "Digital Education Program",
-      description: "Ongoing",
-    },
-    {
-      id: 4,
-      name: "Healthcare for All",
-      description: "In Progress",
-    },
-    {
-      id: 5,
-      name: "Sustainable Agriculture Project",
-      description: "Completed",
-    },
-    {
-      id: 6,
-      name: "Tech Innovation Hub",
-      description: "Ongoing",
-    },
-    {
-      id: 7,
-      name: "Women in STEM Initiative",
-      description: "In Progress",
-    },
-    {
-      id: 8,
-      name: "AI Research Collaboration",
-      description: "Completed",
-    },
-    {
-      id: 9,
-      name: "Climate Change Mitigation",
-      description: "Ongoing",
-    },
-    {
-      id: 10,
-      name: "Urban Development Plan",
-      description: "In Progress",
-    },
-  ]);
+  const partnerStore = usePartnersStore();
+  const [partners, setPartners] = useState<TPartnerModel[]>([]);
+  const [allPartners, setAllPartners] = useState<TPartnerModel[]>([]);
+  const [partnerItemsPageTotal, setPartnerItemsPageTotal] = useState(0);
+  const [partnersFilter, setPartnersFilter] = useState<TModelFilters>({
+    ...initialFilters(),
+  });
+
+  const handleProcessItemsPageChange = (e: ChangeEvent<unknown>, page: number) => {
+    setPartnersFilter((prev) => ({ ...prev, page }));
+  };
+
+  const handleFilter = (type: EPartnerModelFilter, searchText?: string | number) => {
+    if (timer != null) {
+      clearTimeout(timer);
+    }
+
+    timer = setTimeout(() => {
+      // switch (type) {
+      //   case EPartnerModelFilter.search:
+      //     console.log(searchText);
+      //     setPartnersFilter((prev) => ({
+      //       ...prev,
+      //       page: 1,
+      //       searchString: searchText ?? "",
+      //     }));
+      //     timer = null;
+      //     break;
+      // }
+    }, 500);
+  };
+
+  useEffect(() => {
+    partnerStore.fetchItems(partnersFilter, (data: Record<string, any>) => {
+      const pageTotal =
+        data.total != null && partnersFilter?.pageSize != null ? Math.ceil(data.total / partnersFilter?.pageSize) : 0;
+      setPartnerItemsPageTotal(pageTotal);
+      if (pageTotal > 0) setPartners(data.data);
+    });
+
+    partnerStore.getItems((data: TPartnerModel[]) => {
+      if (data.length > 0) setAllPartners(data);
+    });
+  }, [partnersFilter]);
 
   return {
     partners,
+    allPartners,
+    handleFilter,
+    partnersFilter,
+    partnerItemsPageTotal,
+    handleProcessItemsPageChange,
   };
 };

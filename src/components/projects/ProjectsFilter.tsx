@@ -1,80 +1,113 @@
-import * as React from "react";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import { Stack, Box } from "@mui/material";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import RegionDistrictSelector from "./RegionDistrictSelector";
+import { Region, useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
+import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
+import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { Stack, Box, Typography, Chip, Autocomplete, TextField } from "@mui/material";
 
 export default function ProjectsFilter() {
+  const { sectors } = useSectorsViewModel();
+  const { allPartners } = usePartnersViewModel();
+  const { regions, districts } = useRegionsViewModel();
+  const [selectedSectorIds, setSelectedSectorIds] = useState<number[]>([]);
+  const [selectedPartnerIds, setSelectedPartnerIds] = useState<number[]>([]);
+  const selectedSectorOptions = sectors.filter((option) => selectedSectorIds.includes(option.id));
+  const selectedParnerOptions = allPartners.filter((option) => selectedPartnerIds.includes(option.id));
+
+  const [renderTheSelector, setRenderTheSelector] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (regions.length > 0 && districts.length > 0) {
+      setRenderTheSelector(true);
+    }
+  }, [regions, districts]);
+
+  const handleSelectionChange = (regionIds: number[], districtIds: number[]) => {
+    // console.log("Selected Regions:", regionIds);
+    // console.log("Selected Dsit:", districtIds);
+  };
+
   return (
     <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "4px" }}>
       <Stack spacing={3}>
         <Autocomplete
-          multiple
           size="small"
-          id="tags-outlined"
-          options={top100Films}
-          getOptionLabel={(option) => option.title}
-          defaultValue={[]}
-          filterSelectedOptions
-          renderInput={(params) => <TextField {...params} label="Секторы" placeholder="Секторы" />}
+          multiple
+          id="sector-ids"
+          options={sectors}
+          getOptionLabel={(option) => option.name}
+          value={selectedSectorOptions}
+          onChange={(event, newValue) => {
+            const newSectorIds = newValue.map((option) => option.id);
+            setSelectedSectorIds(newSectorIds);
+            console.log("Selected IDs:", newSectorIds);
+          }}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          renderInput={(params) => <TextField {...params} label="Секторы" />}
+          renderOption={(props, option) => (
+            <li {...props} key={option.name}>
+              <Typography
+                variant="body2"
+                sx={{
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {option.name}
+              </Typography>
+            </li>
+          )}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => {
+              const { key, ...otherProps } = getTagProps({ index });
+              return <Chip {...otherProps} key={option.id ?? `option-${index}`} label={option.name} size="small" />;
+            })
+          }
         />
 
         <Autocomplete
-          multiple
           size="small"
-          id="tags-outlined"
-          options={top100Films}
-          getOptionLabel={(option) => option.title}
-          defaultValue={[]}
-          filterSelectedOptions
-          renderInput={(params) => <TextField {...params} label="Партнеры" placeholder="Партнеры" />}
+          multiple
+          id="parner-ids"
+          options={allPartners}
+          getOptionLabel={(option) => option?.name ?? ""}
+          value={selectedParnerOptions}
+          onChange={(event, newValue) => {
+            const newPartnerIds = newValue.map((option) => option.id);
+            setSelectedPartnerIds(newPartnerIds);
+            console.log("Selected IDs:", newPartnerIds);
+          }}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          renderInput={(params) => <TextField {...params} label="Партнеры" />}
+          renderOption={(props, option) => (
+            <li {...props} key={option.name}>
+              <Typography
+                variant="body2"
+                sx={{
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {option.name}
+              </Typography>
+            </li>
+          )}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => {
+              const { key, ...otherProps } = getTagProps({ index });
+              return <Chip {...otherProps} key={option.id ?? `option-${index}`} label={option.name} size="small" />;
+            })
+          }
         />
 
-        <Autocomplete
-          multiple
-          size="small"
-          id="tags-outlined"
-          options={top100Films}
-          getOptionLabel={(option) => option.title}
-          defaultValue={[]}
-          filterSelectedOptions
-          renderInput={(params) => <TextField {...params} label="Охват" placeholder="Охват" />}
-        />
+        {renderTheSelector && (
+          <RegionDistrictSelector districts={districts} regions={regions} onChange={handleSelectionChange} />
+        )}
       </Stack>
     </Box>
   );
 }
-
-const top100Films = [
-  { title: "City of God", year: 2002 },
-  { title: "Se7en", year: 1995 },
-  { title: "The Silence of the Lambs", year: 1991 },
-  { title: "It's a Wonderful Life", year: 1946 },
-  { title: "Life Is Beautiful", year: 1997 },
-  { title: "The Usual Suspects", year: 1995 },
-  { title: "Léon: The Professional", year: 1994 },
-  { title: "Spirited Away", year: 2001 },
-  { title: "Saving Private Ryan", year: 1998 },
-  { title: "Once Upon a Time in the West", year: 1968 },
-  { title: "American History X", year: 1998 },
-  { title: "Interstellar", year: 2014 },
-  { title: "Casablanca", year: 1942 },
-  { title: "City Lights", year: 1931 },
-  { title: "Psycho", year: 1960 },
-  { title: "The Green Mile", year: 1999 },
-  { title: "The Intouchables", year: 2011 },
-  { title: "Modern Times", year: 1936 },
-  { title: "Raiders of the Lost Ark", year: 1981 },
-  { title: "Rear Window", year: 1954 },
-  { title: "The Pianist", year: 2002 },
-  { title: "The Departed", year: 2006 },
-  { title: "Terminator 2: Judgment Day", year: 1991 },
-  { title: "Back to the Future", year: 1985 },
-  { title: "Whiplash", year: 2014 },
-  { title: "Gladiator", year: 2000 },
-  { title: "Memento", year: 2000 },
-  { title: "The Prestige", year: 2006 },
-  { title: "The Lion King", year: 1994 },
-  { title: "Apocalypse Now", year: 1979 },
-  { title: "Alien", year: 1979 },
-  { title: "Sunset Boulevard", year: 1950 },
-];

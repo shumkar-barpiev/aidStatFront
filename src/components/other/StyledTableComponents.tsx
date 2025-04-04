@@ -19,4 +19,5 @@ export const StyledTableCell = styled(TableCell)(() => ({
   textAlign: "left",
   paddingLeft: "20px",
   borderBottom: "1px solid lightgray",
+  whiteSpace: "nowrap",
 }));

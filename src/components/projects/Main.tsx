@@ -13,7 +13,6 @@ import { containerWidths, containerMargins, NAVBAR_HEIGHT } from "@/utils/consta
 
 export default function Main() {
   const { t } = useTranslation();
-  const [searchText, setSearchText] = useState("");
   const projectsTableRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToTableBox = () => {
@@ -82,12 +81,7 @@ export default function Main() {
         </Box>
 
         <Box sx={{ position: "relative", width: "65%", maxWidth: "400px", height: "auto", aspectRatio: "1" }}>
-          <Image
-            src="/assets/images/pages/projects-1.png"
-            alt="Project1"
-            fill
-            style={{ objectFit: "contain" }}
-          />
+          <Image src="/assets/images/pages/projects-1.png" alt="Project1" fill style={{ objectFit: "contain" }} />
         </Box>
       </Stack>
 
@@ -98,8 +92,8 @@ export default function Main() {
           </Grid>
 
           <Grid item xs={12} sm={12} md={9} sx={{ flex: 1, height: "100%", minHeight: "100%" }}>
-            <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "4px" }}>
-              <ProjectSearchField value={searchText} onChange={setSearchText} />
+            <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "4px", width: "100%" }}>
+              <ProjectSearchField />
               <ProjectsTable />
             </Box>
           </Grid>

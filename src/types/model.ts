@@ -18,3 +18,14 @@ export type TModelFilters = {
   fields?: string[];
   criteria?: (TCriteria | TCriteriaList)[];
 } | null;
+
+export type TModelPublicFilters = {
+  page?: number;
+  pageSize?: number;
+  searchString?: string;
+  sectorIds?: number[];
+  cityIds?: number[];
+  districtIds?: number[];
+  regionIds?: number[];
+  partnerIds?: number[];
+} | null;

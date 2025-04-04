@@ -1,25 +1,11 @@
 "use client";
 
-import {
-  Box,
-  Card,
-  Grid,
-  Stack,
-  Button,
-  Divider,
-  Tooltip,
-  CardMedia,
-  IconButton,
-  Typography,
-  CardContent,
-} from "@mui/material";
-import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { Box, Card, Grid, Stack, Tooltip, CardMedia, IconButton, Typography } from "@mui/material";
+import React from "react";
 import Colors from "@/styles/colors";
-import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import React, { useState, useEffect, useRef } from "react";
-import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
+import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
 
 function PartnersCard() {
   const { t } = useTranslation();
