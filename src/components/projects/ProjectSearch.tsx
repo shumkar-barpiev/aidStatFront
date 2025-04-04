@@ -2,23 +2,23 @@
 import { InputAdornment } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import SearchIcon from "@mui/icons-material/Search";
+import { EProjectModelFilter } from "@/models/project/ProjectModel";
 import { StyledTextField } from "@/components/other/StyledTextField";
+import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 
-interface SearchFieldProps {
-  value: string;
-  onChange: Function;
-}
-
-export const ProjectSearchField: React.FC<SearchFieldProps> = ({ value, onChange }) => {
+export const ProjectSearchField = () => {
   const { t } = useTranslation();
+  const { handleFilter } = useProjectsViewModel();
 
   return (
     <StyledTextField
       fullWidth
       placeholder={t("search-placeholder")}
       variant="outlined"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => {
+        const searchText = e.target.value;
+        handleFilter(EProjectModelFilter.search, searchText);
+      }}
       sx={{ width: 1, my: 1 }}
       InputProps={{
         startAdornment: (

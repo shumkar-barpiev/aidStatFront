@@ -10,5 +10,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/concept/ws/:path*"],
+  matcher: ["/aidstat/ws/:path*"],
 };

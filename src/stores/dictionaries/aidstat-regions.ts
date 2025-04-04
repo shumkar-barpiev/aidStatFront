@@ -1,8 +1,5 @@
 import { create } from "zustand";
 import { http } from "@/utils/http";
-import { TModelFilters } from "@/types/model";
-import { replacePublicEndpointFilters } from "@/utils/axelor-api";
-import { TProjectModel } from "@/models/project/ProjectModel";
 
 const initialStore = {
   loading: false,
@@ -11,30 +8,22 @@ const initialStore = {
   items: null,
 };
 
-export const useProjectsStore = create<{
+export const useAidStatRegionsStore = create<{
   loading: boolean;
   error: string | null;
   total: number | null;
-  items: TProjectModel[] | null;
-  getItems: (filters?: TModelFilters) => TProjectModel[] | null;
-  fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
+  items: Record<string, any>[] | null;
+  fetchItems: (callback: Function) => Promise<void>;
   clearStore: () => void;
 }>((set, get) => ({
   ...initialStore,
-  getItems: (filters?: TModelFilters) => {
-    if (!get().loading) get().fetchItems(filters);
 
-    return get().items;
-  },
-
-  fetchItems: async (filters?: TModelFilters, callback?: Function) => {
+  fetchItems: async (callback: Function) => {
     set({ loading: true });
     try {
-      const _filters = replacePublicEndpointFilters(filters);
-      const response = await http("/ws/public/projects", {
-        method: "POST",
+      const response = await http("/ws/public/coverage", {
+        method: "GET",
         withoutAuth: true,
-        body: JSON.stringify(_filters),
       });
 
       if (response.ok) {
