@@ -82,6 +82,7 @@ export default function Main() {
 
         <Box sx={{ position: "relative", width: "65%", maxWidth: "400px", height: "auto", aspectRatio: "1" }}>
           <Image src="/assets/images/pages/projects-1.png" alt="Project1" fill style={{ objectFit: "contain" }} />
+          <Image src="/assets/images/pages/projects-1.png" alt="Project1" fill style={{ objectFit: "contain" }} />
         </Box>
       </Stack>
 

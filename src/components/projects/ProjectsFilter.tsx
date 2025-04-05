@@ -7,6 +7,12 @@ import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
 import { Stack, Box, Typography, Chip, Autocomplete, TextField } from "@mui/material";
 
+type TPartnerModel = {
+  id: number;
+  name?: string;
+  projectCount?: number;
+};
+
 export default function ProjectsFilter() {
   const { sectors } = useSectorsViewModel();
   const { allPartners } = usePartnersViewModel();
@@ -67,7 +73,6 @@ export default function ProjectsFilter() {
             })
           }
         />
-
         <Autocomplete
           size="small"
           multiple

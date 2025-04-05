@@ -16,8 +16,7 @@ import {
 } from "@mui/material";
 import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
-import { renderEllipsisText } from "@/utils/textUtils";
-import HandshakeIcon from "@mui/icons-material/Handshake";
+import { RenderEllipsisText } from "@/utils/textUtils";
 import { useProjectsStore } from "@/stores/projects/projects";
 import { Base64Avatar } from "@/components/other/Base64Avatar";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
@@ -26,7 +25,8 @@ import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledT
 export default function ProjectsTable() {
   const { t } = useTranslation();
   const projectStore = useProjectsStore();
-  const { projects, projectsFilter, projectItemsPageTotal, handleProcessItemsPageChange } = useProjectsViewModel();
+  const { projects, projectsFilter, projectItemsPageTotal, getProjectSectorsTitle, handleProcessItemsPageChange } =
+    useProjectsViewModel();
 
   const getPartnerAvatar = (name: string, image: string | null) => {
     if (!image) {
@@ -40,18 +40,6 @@ export default function ProjectsTable() {
     }
 
     return <Base64Avatar key={name} base64String={`${image ?? ""}`} alt={name} />;
-  };
-
-  const getProjectSectors = (sectors: Record<string, any>[]) => {
-    if (!sectors) return;
-
-    let sectorsName = "";
-
-    sectors?.map((sector: Record<string, any>) => {
-      sectorsName += `${sector.name}, `;
-    });
-
-    return sectorsName;
   };
 
   return (
@@ -111,7 +99,7 @@ export default function ProjectsTable() {
                   >
                     <StyledTableCell sx={{ width: "5%" }}>{index + 1} </StyledTableCell>
                     <StyledTableCell sx={{ width: "20%" }}>
-                      {renderEllipsisText(project?.name, "100%", "left")}
+                      <RenderEllipsisText text={project?.name} tooltipPlacement="left" />
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>
                       {project?.partners &&
@@ -121,7 +109,7 @@ export default function ProjectsTable() {
                         })}
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>
-                      {renderEllipsisText(getProjectSectors(project.sectors ?? []), "100%", "left")}
+                      <RenderEllipsisText text={getProjectSectorsTitle(project.sectors ?? [])} tooltipPlacement="top" />
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>{project.startDate}</StyledTableCell>
                     <StyledTableCell sx={{ width: "15%", paddingLeft: "0px", textAlign: "center" }}>
