@@ -16,10 +16,10 @@ import {
 import Colors from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { safeEncrypt } from "@/utils/crypto-utils";
 import { RenderEllipsisText } from "@/utils/textUtils";
 import React, { useState, useEffect, useRef } from "react";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
@@ -171,7 +171,7 @@ export default function MainPage() {
                   <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
                     {project?.sectors && <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />}
                   </Typography>
-
+                  
                   <Typography
                     variant="h3"
                     sx={{
@@ -207,7 +207,7 @@ export default function MainPage() {
                       <IconButton
                         sx={{ border: `1px solid ${Colors.darkBlue}` }}
                         onClick={() => {
-                          router.push(`/projects/show/${safeEncrypt(`${project.name}`)}`);
+                          router.push(`/projects/show/${project.name}`);
                         }}
                       >
                         <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
@@ -221,13 +221,40 @@ export default function MainPage() {
         </Grid>
 
         <Box sx={{ mt: 2 }}>
-          <Card sx={{ display: "flex", maxWidth: 1, pl: 1, bgcolor: "#F3F2F8" }}>
-            <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", p: 2, width: "100%" }}>
+          <Card
+            sx={{
+              display: "flex",
+              maxWidth: 1,
+              bgcolor: "#F3F2F8",
+              alignItems: "stretch",
+              flexDirection: { xs: "column-reverse", sm: "column-reverse", md: "row" },
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                p: 2,
+                width: "100%",
+                minHeight: { xs: 250, sm: 300, md: 350 },
+              }}
+            >
               <CardContent>
                 <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
                   {t("aidStatInfoTitle")}
                 </Typography>
-                <Typography variant="body1" sx={{ color: "text.secondary", textAlign: "justify" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "text.secondary",
+                    display: "-webkit-box",
+                    overflow: "hidden",
+                    WebkitLineClamp: 5,
+                    textAlign: "justify",
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
                   {t("aidStatInfoDescription")}
                 </Typography>
                 <Button size="small" endIcon={<ArrowForwardOutlinedIcon />} sx={{ mt: 1 }}>
@@ -235,8 +262,13 @@ export default function MainPage() {
                 </Button>
               </CardContent>
             </Box>
+
             <CardMedia
-              sx={{ width: { xs: 600, sm: 650, md: 700, lg: 750, xl: 800 }, height: 350, objectFit: "contain" }}
+              sx={{
+                width: { xs: "100%", sm: "100%", md: 600, lg: 750, xl: 800 },
+                height: { xs: 250, sm: 300, md: 350 },
+                objectFit: "contain",
+              }}
               image="/assets/images/pages/main-page-1.jpg"
               title="green iguana"
             />

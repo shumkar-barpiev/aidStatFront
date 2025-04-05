@@ -26,20 +26,20 @@ import { containerWidths, containerMargins } from "@/utils/constants";
 import { LocaleSwitch } from "@/components/navigation-bar/LocaleSwitch";
 import { useNavViewModel } from "@/viewmodels/navigation-bar/useNavViewModel";
 
+export const plainBtnStyle = {
+  background: "none",
+  border: "none",
+  cursor: "pointer",
+  textDecoration: "none",
+  color: "inherit",
+  padding: 0,
+};
+
 export const NavigationBar = () => {
   const router = useRouter();
   const { t } = useTranslation();
   const { matches: isDesktop, mounted } = useMediaQueryWithSsr("md");
   const { navItems, isMobileMenuOpen, toggleMobileMenu } = useNavViewModel();
-
-  const plainBtnStyle = {
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    textDecoration: "none",
-    color: "inherit",
-    padding: 0,
-  };
 
   if (!mounted) return null;
 
@@ -66,11 +66,12 @@ export const NavigationBar = () => {
         <Box>
           <button onClick={() => router.push("/")} style={plainBtnStyle}>
             <Image
-              src="/assets/images/icons/aid-stat-icon.png"
-              alt="App Logo"
               width={120}
               height={40}
+              alt="App Logo"
               style={{ objectFit: "contain" }}
+              src="/assets/images/icons/aid-stat-icon.png"
+              priority
             />
           </button>
         </Box>

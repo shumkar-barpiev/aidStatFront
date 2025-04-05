@@ -81,11 +81,12 @@ export const Footer = () => {
                   <Box>
                     <Link href="/">
                       <Image
-                        src="/assets/images/icons/aid-stat-footer-icon.png"
-                        alt="App Logo"
                         width={150}
                         height={50}
+                        alt="App Logo"
                         style={{ objectFit: "contain" }}
+                        src="/assets/images/icons/aid-stat-footer-icon.png"
+                        priority
                       />
                     </Link>
                   </Box>
