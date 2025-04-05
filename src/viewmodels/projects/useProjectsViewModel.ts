@@ -52,7 +52,7 @@ export const useProjectsViewModel = () => {
       const pageTotal =
         data.total != null && projectsFilter?.pageSize != null ? Math.ceil(data.total / projectsFilter?.pageSize) : 0;
       setProjectItemsPageTotal(pageTotal);
-      if (pageTotal > 0) setProjects(data.projects);
+      if (pageTotal > 0) setProjects(data.data);
     });
   }, [projectsFilter]);
 

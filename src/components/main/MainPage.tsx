@@ -146,78 +146,81 @@ export default function MainPage() {
         </Stack>
         <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         <Grid container spacing={3}>
-          {projects.slice(0, 4).map((project, index) => {
-            return (
-              <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
-                <Card
-                  sx={{
-                    height: "282px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    p: "20px",
-                    borderRadius: "0px",
-                    overflow: "hidden",
-                    backgroundColor: "#F0F4F7",
-                    transition: "all 0.3s ease-in-out",
-                    "&:hover": {
-                      backgroundColor: "#e6ecf0",
-                      boxShadow: 6,
-                      transform: "translateY(-5px)",
-                      cursor: "pointer",
-                    },
-                  }}
-                >
-                  <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-                    {project?.sectors && <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />}
-                  </Typography>
-                  
-                  <Typography
-                    variant="h3"
+          {projects &&
+            projects.slice(0, 4).map((project, index) => {
+              return (
+                <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
+                  <Card
                     sx={{
-                      fontWeight: 550,
-                      fontFamily: "sans-serif",
-                      fontSize: "1.25rem",
-                      display: "-webkit-box",
+                      height: "282px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      p: "20px",
+                      borderRadius: "0px",
                       overflow: "hidden",
-                      WebkitBoxOrient: "vertical",
-                      WebkitLineClamp: 2,
-                      textOverflow: "ellipsis",
-
+                      backgroundColor: "#F0F4F7",
+                      transition: "all 0.3s ease-in-out",
                       "&:hover": {
-                        color: "#2E4B6D",
-                        transition: "color 0.3s ease",
+                        backgroundColor: "#e6ecf0",
+                        boxShadow: 6,
+                        transform: "translateY(-5px)",
+                        cursor: "pointer",
                       },
                     }}
                   >
-                    {project?.name}
-                  </Typography>
+                    <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
+                      {project?.sectors && (
+                        <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />
+                      )}
+                    </Typography>
 
-                  <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
-                    <Stack direction={"column"} alignItems={"left"}>
-                      <Typography variant="body2" sx={{ whiteSpace: "nowrap", fontWeight: "bold" }}>
-                        {t("endDate")}:
-                      </Typography>
-                      <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
-                        {project.endDate && convertToRussianDateFormat(project.endDate)}
-                      </Typography>
+                    <Typography
+                      variant="h3"
+                      sx={{
+                        fontWeight: 550,
+                        fontFamily: "sans-serif",
+                        fontSize: "1.25rem",
+                        display: "-webkit-box",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        textOverflow: "ellipsis",
+
+                        "&:hover": {
+                          color: "#2E4B6D",
+                          transition: "color 0.3s ease",
+                        },
+                      }}
+                    >
+                      {project?.name}
+                    </Typography>
+
+                    <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
+                      <Stack direction={"column"} alignItems={"left"}>
+                        <Typography variant="body2" sx={{ whiteSpace: "nowrap", fontWeight: "bold" }}>
+                          {t("endDate")}:
+                        </Typography>
+                        <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
+                          {project.endDate && convertToRussianDateFormat(project.endDate)}
+                        </Typography>
+                      </Stack>
+
+                      <Tooltip title={t("more")}>
+                        <IconButton
+                          sx={{ border: `1px solid ${Colors.darkBlue}` }}
+                          onClick={() => {
+                            router.push(`/projects/show/${project.name}`);
+                          }}
+                        >
+                          <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
+                        </IconButton>
+                      </Tooltip>
                     </Stack>
-
-                    <Tooltip title={t("more")}>
-                      <IconButton
-                        sx={{ border: `1px solid ${Colors.darkBlue}` }}
-                        onClick={() => {
-                          router.push(`/projects/show/${project.name}`);
-                        }}
-                      >
-                        <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
-                      </IconButton>
-                    </Tooltip>
-                  </Stack>
-                </Card>
-              </Grid>
-            );
-          })}
+                  </Card>
+                </Grid>
+              );
+            })}
         </Grid>
 
         <Box sx={{ mt: 2 }}>
