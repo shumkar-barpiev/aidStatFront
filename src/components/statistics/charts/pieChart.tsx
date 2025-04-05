@@ -1,16 +1,10 @@
 "use client";
+import { Box, Tooltip } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Box, Tooltip, Divider } from "@mui/material";
 
 function parseValue(str: string) {
   const numeric = parseFloat(str.replace(/[^\d.]/g, ""));
   return str.includes("млрд") ? numeric * 1000 : numeric;
-}
-
-function formatPercent(n: number) {
-  let dec = n.toFixed(1);
-  if (dec.endsWith(".0")) dec = dec.slice(0, -2);
-  return dec + "%";
 }
 
 export default function PieChart({ card }: { card: any }) {

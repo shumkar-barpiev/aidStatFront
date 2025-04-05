@@ -1,26 +1,22 @@
 "use client";
 import React, { useState } from "react";
-import { Card, Typography, Box, Divider, IconButton, Tooltip } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
-import TableViewIcon from "@mui/icons-material/TableView";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import PieChartIcon from "@mui/icons-material/PieChart";
-import TableChart from "./tableChart";
-import RegChart from "./regChart";
-import PieChart from "./pieChart";
+import TableViewIcon from "@mui/icons-material/TableView";
+import RegChart from "@/components/statistics/charts/regChart";
+import PieChart from "@/components/statistics/charts/pieChart";
+import TableChart from "@/components/statistics/charts/tableChart";
+import { Card, Typography, Box, Divider, IconButton } from "@mui/material";
 
-export default function CardComponent({ card }: { card: any }) {
-  const [view, setView] = useState<"chart" | "table" | "pie">("chart");
+enum ChartTypes {
+  BarChart = "BAR_CHART",
+  PieChart = "PIE_CHART",
+  Table = "Table",
+}
 
-  function switchToChart() {
-    setView("chart");
-  }
-  function switchToTable() {
-    setView("table");
-  }
-  function switchToPie() {
-    setView("pie");
-  }
+export default function ChartCard({ card }: { card: any }) {
+  const [view, setView] = useState<ChartTypes>(ChartTypes.BarChart);
 
   const iconButtonSx = (active: boolean) => ({
     transform: active ? "scale(1.5)" : "scale(1)",
@@ -33,7 +29,7 @@ export default function CardComponent({ card }: { card: any }) {
   });
 
   function downloadExcel(cardId: number) {
-    const fileUrl = `/statistics/exselData/${cardId}.xlsx`;
+    const fileUrl = `/assets/statistics/exselData/${cardId}.xlsx`;
     const link = document.createElement("a");
     link.href = fileUrl;
     link.download = `${cardId}.xlsx`;
@@ -55,23 +51,23 @@ export default function CardComponent({ card }: { card: any }) {
         </Box>
         <Divider sx={{ bgcolor: "#666666", height: 2, mb: 1 }} />
         <Box sx={{ flex: 1, minHeight: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {view === "chart" && <RegChart card={card} />}
-          {view === "table" && (
+          {view === ChartTypes.BarChart && <RegChart card={card} />}
+          {view === ChartTypes.Table && (
             <Box sx={{ width: "110%", height: "100%", overflow: "auto" }}>
               <TableChart card={card} />
             </Box>
           )}
-          {view === "pie" && <PieChart card={card} />}
+          {view === ChartTypes.PieChart && <PieChart card={card} />}
         </Box>
         <Box sx={{ mt: 1, display: "flex", justifyContent: "space-between" }}>
           <Box>
-            <IconButton onClick={switchToChart} sx={iconButtonSx(view === "chart")}>
+            <IconButton onClick={() => setView(ChartTypes.BarChart)} sx={iconButtonSx(view === ChartTypes.BarChart)}>
               <BarChartIcon />
             </IconButton>
-            <IconButton onClick={switchToTable} sx={iconButtonSx(view === "table")}>
+            <IconButton onClick={() => setView(ChartTypes.Table)} sx={iconButtonSx(view === ChartTypes.Table)}>
               <TableViewIcon />
             </IconButton>
-            <IconButton onClick={switchToPie} sx={iconButtonSx(view === "pie")}>
+            <IconButton onClick={() => setView(ChartTypes.PieChart)} sx={iconButtonSx(view === ChartTypes.PieChart)}>
               <PieChartIcon />
             </IconButton>
           </Box>

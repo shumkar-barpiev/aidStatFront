@@ -1,14 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Divider, Tooltip } from "@mui/material";
+import { Box, Typography, Tooltip } from "@mui/material";
 
 function parseValue(str: string): number {
   const numeric = parseFloat(str.replace(/[^\d.]/g, ""));
   return str.includes("млрд") ? numeric * 1000 : numeric;
 }
+
 function truncateLabel(label: string): string {
   return label.length > 22 ? label.substring(0, 22) + "..." : label;
 }
+
 function formatValue(original: string, val: number) {
   if (original.includes("млрд")) {
     const adjusted = val / 1000;
