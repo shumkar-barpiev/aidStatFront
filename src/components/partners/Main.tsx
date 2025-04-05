@@ -39,7 +39,13 @@ export default function Main() {
         justifyContent={{ xs: "center", sm: "center", md: "space-between", lg: "space-between" }}
       >
         <Box sx={{ position: "relative", width: "65%", maxWidth: "400px", height: "auto", aspectRatio: "1" }}>
-          <Image src="/assets/images/pages/partners-1.jpg" alt="Partners" fill style={{ objectFit: "contain" }} />
+          <Image
+            fill
+            alt="Partners "
+            style={{ objectFit: "contain" }}
+            src="/assets/images/pages/partners-1.jpg"
+            priority
+          />
         </Box>
         <Box
           sx={{

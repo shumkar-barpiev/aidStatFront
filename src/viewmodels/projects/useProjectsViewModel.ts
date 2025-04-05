@@ -17,6 +17,7 @@ const initialFilters: () => TModelFilters = () => {
 export const useProjectsViewModel = () => {
   const projectStore = useProjectsStore();
   const [projects, setProjects] = useState<TProjectModel[]>([]);
+  const [project, setProject] = useState<TProjectModel | null>(null);
   const [projectItemsPageTotal, setProjectItemsPageTotal] = useState(0);
   const [projectsFilter, setProjectsFilter] = useState<TModelFilters>({
     ...initialFilters(),
@@ -61,9 +62,18 @@ export const useProjectsViewModel = () => {
     return sectors.map((sector) => sector.name).join(", ");
   };
 
+  const fetchProject = (projectName: string) => {
+    console.log(projectName)
+    projectStore.fetchItem(projectName, (data: Record<string, any>) => {
+      console.log(data);
+    });
+  };
+
   return {
+    project,
     projects,
     handleFilter,
+    fetchProject,
     projectsFilter,
     projectItemsPageTotal,
     getProjectSectorsTitle,

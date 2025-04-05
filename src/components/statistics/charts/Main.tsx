@@ -1,23 +1,14 @@
 "use client";
 
+import React from "react";
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useState } from "react";
 import { Box, Typography, Divider, Grid } from "@mui/material";
 import CardComponent from "@/components/statistics/charts/ChartCard";
 import { useStatisticsChartsViewModel } from "@/viewmodels/statistics/charts/useStatisticChartsViewModel";
 
 export default function Main() {
   const { t } = useTranslation();
-  const [isClient, setIsClient] = useState(false);
   const { cardsData } = useStatisticsChartsViewModel();
-
-  console.log(cardsData);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) return null;
 
   return (
     <Box sx={{ width: 1 }}>
@@ -27,7 +18,7 @@ export default function Main() {
       <Divider sx={{ mb: 6, borderColor: "darkblue", borderBottomWidth: 2 }} />
       <Grid container spacing={3}>
         {cardsData.map((card) => (
-          <Grid item xs={12} sm={6} key={card.id}>
+          <Grid item xs={12} sm={12} lg={6} key={card.id}>
             <CardComponent card={card} />
           </Grid>
         ))}
