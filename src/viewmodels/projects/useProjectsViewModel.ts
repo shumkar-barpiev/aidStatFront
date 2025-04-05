@@ -63,9 +63,8 @@ export const useProjectsViewModel = () => {
   };
 
   const fetchProject = (projectName: string) => {
-    console.log(projectName)
     projectStore.fetchItem(projectName, (data: Record<string, any>) => {
-      console.log(data);
+      setProject(data);
     });
   };
 

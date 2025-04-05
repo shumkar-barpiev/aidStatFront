@@ -16,10 +16,10 @@ import {
 import Colors from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { safeEncrypt } from "@/utils/crypto-utils";
 import { RenderEllipsisText } from "@/utils/textUtils";
 import React, { useState, useEffect, useRef } from "react";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
@@ -171,7 +171,7 @@ export default function MainPage() {
                   <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
                     {project?.sectors && <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />}
                   </Typography>
-
+                  
                   <Typography
                     variant="h3"
                     sx={{
@@ -207,7 +207,7 @@ export default function MainPage() {
                       <IconButton
                         sx={{ border: `1px solid ${Colors.darkBlue}` }}
                         onClick={() => {
-                          router.push(`/projects/show/${safeEncrypt(`${project.name}`)}`);
+                          router.push(`/projects/show/${project.name}`);
                         }}
                       >
                         <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
