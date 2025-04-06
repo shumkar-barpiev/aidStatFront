@@ -45,17 +45,23 @@ export const useProjectsStore = create<ProjectState>((set, get) => ({
   },
 
   setFilterBySector: (sector) => {
-    set({ filterBySector: sector ?? null });
+    set({
+      filterBySector: sector === "all" ? null : sector,
+    });
     get().filterProjects();
   },
 
   setFilterByLocationName: (locationName) => {
-    set({ filterByLocationName: locationName ?? null });
+    set({
+      filterByLocationName: locationName === "all" ? null : locationName,
+    });
     get().filterProjects();
   },
 
   setFilterByDonor: (donor) => {
-    set({ filterByDonor: donor ?? null });
+    set({
+      filterByDonor: donor === "all" ? null : donor,
+    });
     get().filterProjects();
   },
 
