@@ -30,7 +30,7 @@ export const useProjectsStore = create<ProjectState>((set, get) => ({
   fetchProjects: async () => {
     set({ loading: true });
     try {
-      const response = await http("/ws/rest/com.axelor.team.db.TeamTask/search", {
+      const response = await http("/ws/public/projects", {
         method: "GET",
       });
       if (!response.ok) throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
@@ -61,7 +61,6 @@ export const useProjectsStore = create<ProjectState>((set, get) => ({
 
   filterProjects: () => {
     const { projects, filterBySector, filterByLocationName, filterByDonor } = get();
-    console.log("WE ARE IN FILTER PROJECT", projects);
 
     if (!projects) return;
 
@@ -70,7 +69,6 @@ export const useProjectsStore = create<ProjectState>((set, get) => ({
       const matchesRegion = filterByLocationName ? project.properties?.location_name === filterByLocationName : true;
       const matchesDonor = filterByDonor ? project.properties?.donors.includes(filterByDonor) : true;
 
-      console.log("WE ARE IN FILTER PROJECT STEP 2");
       return matchesSector && matchesRegion && matchesDonor;
     });
 
