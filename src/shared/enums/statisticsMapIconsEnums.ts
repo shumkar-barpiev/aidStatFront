@@ -115,15 +115,19 @@ export const TestFilterLocationNameOptions = [
   },
   {
     id: 8,
-    name: "Город Бишкек",
+    name: "г. Бишкек",
   },
   {
     id: 9,
-    name: "Город Ош",
+    name: "г. Ош",
   },
   {
     id: 10,
-    name: "Город Токмак",
+    name: "г. Токмак",
+  },
+  {
+    id: 11,
+    name: "Кыргызская Республика",
   },
 ];
 
