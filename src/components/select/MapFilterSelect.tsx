@@ -3,6 +3,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 interface Option {
   id: number;
@@ -17,15 +19,36 @@ interface Props {
 }
 
 const MapFilterSelect: React.FC<Props> = ({ options, value, onChange, labelName }) => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <FormControl variant="outlined" fullWidth>
       <InputLabel id={`select-label-${labelName}`}>{labelName}</InputLabel>
       <Select
         labelId={`select-label-${labelName}`}
-        value={value} // Получаем значение от родителя
+        value={value}
         onChange={onChange}
         label={labelName}
+        MenuProps={{
+          PaperProps: {
+            style: {
+              maxHeight: 200,
+              zIndex: 1302,
+            },
+          },
+          disablePortal: isSmallScreen,
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left",
+          },
+        }}
       >
+        <MenuItem value="all">Все {labelName.toLowerCase() + "ы"}</MenuItem>
         {options.map((option) => (
           <MenuItem key={option.id} value={option.name}>
             {option.name}
