@@ -38,7 +38,7 @@ export const useProjectsStore = create<ProjectState>((set, get) => ({
       const data: ProjectFeatureCollection = await response.json();
       set({ projects: data, filteredProjects: data.features, error: null });
     } catch (error: any) {
-      set({ error: error.message, projects: null, filteredProjects: [] });
+      set({ error: error.message });
     } finally {
       set({ loading: false });
     }
