@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import MapFilterSelect from "@/components/select/MapFilterSelect.tsx";
 import { useProjectsStore } from "@/stores/projects/projects-for-map.ts";
 import { useLocationNamesStore } from "@/stores/location-names/location-names.ts";
@@ -25,17 +25,18 @@ import bishkekCity from "../../utils/map/statesBishkekCity.json";
 import oshCity from "../../utils/map/statesOshCity.json";
 import HeatLayer from "@/components/maps/HeatLayer.tsx";
 import MapWithClusters from "@/components/maps/MapWithClusters.tsx";
+import { TestFilterLocationNameOptions } from "@/shared/enums/statisticsMapIconsEnums.ts";
 
 const districtsMap: Record<string, any> = {
-  batkenRegion,
-  djalalAbadRegion,
-  narynRegion,
-  talasRegion,
-  chuyRegion,
-  issykKulRegion,
-  oshRegion,
-  bishkekCity,
-  oshCity,
+  "Баткенская область": batkenRegion,
+  "Джалал-Абадская область": djalalAbadRegion,
+  "Нарынская область": narynRegion,
+  "Таласская область": talasRegion,
+  "Чуйская область": chuyRegion,
+  "Иссык-Кульская область": issykKulRegion,
+  "Ошская область": oshRegion,
+  "г. Бишкек": bishkekCity,
+  "г. Ош": oshCity,
 };
 
 const ProjectsMap = () => {
@@ -53,6 +54,7 @@ const ProjectsMap = () => {
     filterByLocationName,
     filterBySector,
     filterByDonor,
+    loading,
   } = useProjectsStore();
   const { locationNames, fetchLocationNames } = useLocationNamesStore();
   const { sectors, fetchSectors } = useSectorsStore();
@@ -63,7 +65,7 @@ const ProjectsMap = () => {
       try {
         await Promise.all([
           // fetchLocationNames(),
-          // fetchSectors(),
+          fetchSectors(),
           // fetchDonors(),
           // fetchProjects(),
         ]);
@@ -96,8 +98,10 @@ const ProjectsMap = () => {
         },
         click: (e: any) => {
           const bounds = e.target.getBounds();
+          console.log(feature.id);
           map.fitBounds(bounds, { padding: [60, 60], animate: true, duration: 2.0 });
           loadDistricts(feature.id as string); // Загружаем районы выбранной области
+          useProjectsStore.getState().setFilterByLocationName(feature.id as string);
         },
       });
     };
@@ -105,9 +109,9 @@ const ProjectsMap = () => {
     return (
       <GeoJSON
         data={geojsonData as FeatureCollection}
-        pointToLayer={(feature, latlng) => L.circleMarker([999, 999])}
+        pointToLayer={() => L.circleMarker([999, 999])}
         onEachFeature={onEachFeature}
-        style={(feature) => ({
+        style={() => ({
           weight: 1,
           fillOpacity: 0,
           color: "#3b4b60",
@@ -141,13 +145,13 @@ const ProjectsMap = () => {
             mouseover: (e: any) => {
               e.target.setStyle({
                 fillOpacity: 0.3,
-                color: "#3b4b60",
+                color: "#ff5722",
               });
             },
             mouseout: (e: any) => {
               e.target.setStyle({
-                fillOpacity: selectedRegion === feature.id ? 0.5 : 0.2,
-                color: selectedRegion === feature.id ? "#ff5722" : "#3b4b60",
+                fillOpacity: 0.1,
+                color: "#3b4b60",
               });
             },
             click: (e: any) => {
@@ -158,7 +162,7 @@ const ProjectsMap = () => {
           });
         }}
         style={(feature) => ({
-          color: selectedRegion === feature?.id ? "#ff5722" : "#3b4b60",
+          color: "#3b4b60",
           weight: 1,
           fillOpacity: selectedRegion === feature?.id ? 0.5 : 0,
         })}
@@ -169,56 +173,50 @@ const ProjectsMap = () => {
   const MemoizedMapWithDistricts = React.memo(MapWithDistricts);
 
   return (
-    <Box sx={{ width: "100%", height: "100%" }}>
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: "semibold",
-          color: "#3b4b60",
-          letterSpacing: 1.5,
-          textTransform: "uppercase",
-          padding: "20px 0",
-        }}
-      >
+    <Box sx={{ width: "100%", height: "100%", mb: 6 }}>
+      <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
         Мониторинг проектов для создания и развития инфраструктуры КР
       </Typography>
-      <Box sx={{ display: "flex", gap: "16px", padding: "20px 0" }}>
+      <Divider sx={{ mb: 2, borderColor: "darkblue", borderBottomWidth: 2 }} />
+      <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: "16px", padding: "20px 0" }}>
         <MapFilterSelect
           labelName="Регион"
           onChange={(e) => setFilterByLocationName(e.target.value)}
-          options={locationNames}
-          value={filterByLocationName ? filterByLocationName : ""}
+          options={TestFilterLocationNameOptions}
+          value={filterByLocationName ? filterByLocationName : "all"}
         />
         <MapFilterSelect
           labelName="Сектор"
           onChange={(e) => setFilterBySector(e.target.value)}
           options={sectors}
-          value={filterBySector ? filterBySector : ""}
+          value={filterBySector ? filterBySector : "all"}
         />
         <MapFilterSelect
           labelName="Партнер"
           onChange={(e) => setFilterByDonor(e.target.value)}
           options={donors}
-          value={filterByDonor ? filterByDonor : ""}
+          value={filterByDonor ? filterByDonor : "all"}
         />
       </Box>
 
-      <Box sx={{ width: "100%", height: "650px", margin: "auto" }}>
+      <Box sx={{ width: "100%", height: { xs: "400px", sm: "650px" }, margin: "auto" }}>
         <Paper sx={{ display: "flex", width: "100%", height: "100%" }} elevation={3}>
-          <MapContainer
-            center={center}
-            zoom={7}
-            scrollWheelZoom={true}
-            style={{ flex: 1, width: "100%" }}
-            maxZoom={10}
-            minZoom={7}
-          >
-            <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
-            <MapWithClusters />
-            <HeatLayer />
-            <MemoizedMapWithRegions />
-            <MemoizedMapWithDistricts />
-          </MapContainer>
+          {!loading && (
+            <MapContainer
+              center={center}
+              zoom={7}
+              scrollWheelZoom={true}
+              style={{ flex: 1, width: "100%" }}
+              maxZoom={12}
+              minZoom={5}
+            >
+              <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
+              <MapWithClusters />
+              <HeatLayer />
+              <MemoizedMapWithRegions />
+              <MemoizedMapWithDistricts />
+            </MapContainer>
+          )}
         </Paper>
       </Box>
     </Box>

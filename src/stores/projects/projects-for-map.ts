@@ -72,7 +72,9 @@ export const useProjectsStore = create<ProjectState>((set, get) => ({
 
     const filtered = projects.features.filter((project: ProjectFeature) => {
       const matchesSector = filterBySector ? project.properties?.sectors.includes(filterBySector) : true;
-      const matchesRegion = filterByLocationName ? project.properties?.location_name === filterByLocationName : true;
+      const matchesRegion = filterByLocationName
+        ? project.properties?.location_name?.toLowerCase().trim() === filterByLocationName?.toLowerCase().trim()
+        : true;
       const matchesDonor = filterByDonor ? project.properties?.donors.includes(filterByDonor) : true;
 
       return matchesSector && matchesRegion && matchesDonor;
