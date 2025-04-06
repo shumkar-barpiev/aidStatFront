@@ -2,7 +2,7 @@ import { getCookie } from "@/utils/cookie";
 
 let csrfToken: string | null = null;
 
-export const http = (url: string, options: RequestInit = {}): Promise<Response> => {
+export const http = (url: string, options: RequestInit & { withoutAuth?: boolean } = {}): Promise<Response> => {
   const headers = (options.headers as Record<string, string>) ?? {};
   const contentType = headers["Content-Type"];
 
@@ -10,7 +10,7 @@ export const http = (url: string, options: RequestInit = {}): Promise<Response> 
     csrfToken = getCookie("CSRF-TOKEN");
   }
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === "development" && !options.withoutAuth) {
     headers["Authorization"] =
       `Basic ${btoa(process.env.NEXT_PUBLIC_AXELOR_USER + ":" + process.env.NEXT_PUBLIC_AXELOR_PASSWORD)}`;
   }
@@ -27,5 +27,7 @@ export const http = (url: string, options: RequestInit = {}): Promise<Response> 
     ...headers,
   };
 
-  return fetch(`/concept${url}`, options);
+  const { withoutAuth, ...fetchOptions } = options;
+
+  return fetch(`/aidstat${url}`, fetchOptions);
 };

@@ -8,8 +8,7 @@ const Colors = {
   warning: "#f39c12", // Yellow
   success: "#2ecc71", // Green
   border: "#dcdcdc", // Border Color
-  darkBlue: "#2E4B6D", // Dark blue Color
-  lightBrown: "#e8c387", // light brown Color
+  darkBlue: "#0b4678", // Dark blue Color
 };
 
 export default Colors;

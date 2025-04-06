@@ -1,9 +1,8 @@
-import styles from "@/app/page.module.css";
+"use client";
+
+import React from "react";
+import MainPage from "@/components/main/MainPage";
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div>Hello world!</div>
-    </main>
-  );
+  return <MainPage />;
 }

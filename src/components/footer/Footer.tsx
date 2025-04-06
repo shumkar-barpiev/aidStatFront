@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from "react";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import { useFooterViewModel } from "@/viewmodels/footer/useFooterViewModel";
 import { Box, Container, Grid, Link, Typography, Divider, Stack } from "@mui/material";
@@ -29,27 +29,31 @@ export const Footer = () => {
         borderTop: "1px solid",
         borderColor: "divider",
         fontFamily: "Roboto, sans-serif",
+        minHeight: "250px",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Box
         sx={{
           width: containerWidths,
           mx: containerMargins,
+          flexGrow: 1,
         }}
       >
-        <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3 }, height: "25vh" }}>
+        <Container maxWidth={false} sx={{ px: { xs: 2, sm: 3 }, flexGrow: 1 }}>
           <Box
             sx={{
               width: "100%",
-              height: "100%",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              flexGrow: 1,
             }}
           >
             <Stack direction={"row"} alignItems={"center"} flexWrap={"wrap"}>
-              {primaryFooterNavItems.map((item) => (
-                <Box key={item.label} sx={{ mt: 1, mr: 2 }}>
+              {primaryFooterNavItems.map((item, index) => (
+                <Stack direction={"row"} alignItems={"center"} key={item.label} sx={{ mt: 1, mr: 2 }}>
                   <Link
                     href="#"
                     color="inherit"
@@ -58,13 +62,15 @@ export const Footer = () => {
                   >
                     {t(`${item.i18n}`)}
                   </Link>
-                </Box>
+                  {index !== primaryFooterNavItems.length - 1 && (
+                    <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+                  )}
+                </Stack>
               ))}
             </Stack>
             <Grid container spacing={4} sx={{ mt: 1 }}>
               <Grid item xs={12}>
                 <Divider sx={{ mb: 2 }} />
-
                 <Stack
                   direction={{ xs: "column", md: "row" }}
                   alignItems={{ xs: "flex-start", md: "center" }}
@@ -75,50 +81,49 @@ export const Footer = () => {
                   <Box>
                     <Link href="/">
                       <Image
-                        src="/icons/aid-stat-footer-icon.png"
-                        alt="App Logo"
                         width={150}
                         height={50}
+                        alt="App Logo"
                         style={{ objectFit: "contain" }}
+                        src="/assets/images/icons/aid-stat-footer-icon.png"
+                        priority
                       />
                     </Link>
                   </Box>
                   <Box>
-                    <Box>
-                      <Grid
-                        container
-                        spacing={2}
-                        sx={{
-                          flexDirection: { xs: "column", sm: "row", md: "row" },
-                          flexWrap: { sm: "nowrap" },
-                          overflowX: { sm: "auto" },
-                        }}
-                      >
-                        {secondaryFooterNavItems.map((item) => (
-                          <Grid
-                            item
-                            key={item.label}
+                    <Grid
+                      container
+                      spacing={2}
+                      sx={{
+                        flexDirection: { xs: "column", sm: "row", md: "row" },
+                        flexWrap: { sm: "nowrap" },
+                        overflowX: { sm: "auto" },
+                      }}
+                    >
+                      {secondaryFooterNavItems.map((item) => (
+                        <Grid
+                          item
+                          key={item.label}
+                          sx={{
+                            width: { xs: "100%", sm: "auto" },
+                            flexShrink: 0,
+                          }}
+                        >
+                          <Link
+                            href="#"
+                            color="inherit"
+                            underline="hover"
                             sx={{
-                              width: { xs: "100%", sm: "auto" },
-                              flexShrink: 0,
+                              display: "block",
+                              whiteSpace: "nowrap",
+                              px: 1,
                             }}
                           >
-                            <Link
-                              href="#"
-                              color="inherit"
-                              underline="hover"
-                              sx={{
-                                display: "block",
-                                whiteSpace: "nowrap",
-                                px: 1,
-                              }}
-                            >
-                              {t(`${item.i18n}`)}
-                            </Link>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Box>
+                            {t(`${item.i18n}`)}
+                          </Link>
+                        </Grid>
+                      ))}
+                    </Grid>
                   </Box>
                 </Stack>
 
@@ -133,7 +138,7 @@ export const Footer = () => {
                     {t("allRightsReserved")}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 1 }}>
-                    © 2025 AIDSTAT.
+                    © 2025 AIDSTAT
                   </Typography>
                 </Stack>
               </Grid>

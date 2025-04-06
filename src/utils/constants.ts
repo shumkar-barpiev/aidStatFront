@@ -11,3 +11,5 @@ export const containerMargins = {
   lg: "auto",
   xl: "auto",
 };
+
+export const NAVBAR_HEIGHT = 90;

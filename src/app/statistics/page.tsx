@@ -1,15 +1,23 @@
 "use client";
-
-import React from "react";
 import { Box } from "@mui/material";
-import ProjectsMap from "@/components/maps/ProjectsMap.tsx";
+import React, { useEffect, useState } from "react";
+import Main from "@/components/statistics/charts/Main";
+import { containerMargins, containerWidths } from "@/utils/constants";
 
-const Page = () => {
+export default function StatisticsPage() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
   return (
-    <Box display="flex" flexDirection="column">
-      <ProjectsMap />
+    <Box sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
+      {/* The main page of map should be rendered here! */}
+
+      <Main />
     </Box>
   );
-};
-
-export default Page;
+}

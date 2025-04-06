@@ -7,15 +7,14 @@ import { Box, IconButton, Tooltip } from "@mui/material";
 import { Menu, MenuItem, Typography } from "@mui/material";
 
 const locales = [
-  { code: "en", label: "English", iconPath: "/images/country-flags/us-flag.png" },
-  { code: "ru", label: "Русский", iconPath: "/images/country-flags/ru-flag.png" },
-  { code: "kg", label: "Кыргызча", iconPath: "/images/country-flags/kg-flag.png" },
+  { code: "en", label: "English", iconPath: "/assets/images/country-flags/us-flag.png" },
+  { code: "ru", label: "Русский", iconPath: "/assets/images/country-flags/ru-flag.png" },
+  { code: "kg", label: "Кыргызча", iconPath: "/assets/images/country-flags/kg-flag.png" },
 ];
 
 export const LocaleSwitch = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [isClient, setIsClient] = useState<boolean>(false);
   const [selectedLocale, setSelectedLocale] = useState<Record<string, any> | null>(null);
 
   const handleClick = (event: any) => {
@@ -25,7 +24,7 @@ export const LocaleSwitch = () => {
   const handleClose = (locale: any) => {
     if (locale) {
       setSelectedLocale(locale);
-      i18n.changeLanguage(locale.code ?? "ru");
+      i18n.changeLanguage(locale.code ?? locales[1].code);
     }
     setAnchorEl(null);
   };
@@ -34,12 +33,11 @@ export const LocaleSwitch = () => {
     const matchingLocale = locales.find((locale) => locale.code === i18n.language);
     if (matchingLocale) {
       setSelectedLocale(matchingLocale);
+    } else {
+      setSelectedLocale(locales[1]);
+      i18n.changeLanguage(locales[1].code);
     }
-
-    setIsClient(true);
   }, [i18n.language]);
-
-  if (!isClient) return null;
 
   return (
     <Box>

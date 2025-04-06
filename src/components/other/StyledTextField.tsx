@@ -2,10 +2,10 @@ import { styled } from "@mui/system";
 import { TextField } from "@mui/material";
 
 export const StyledTextField = styled(TextField)({
-  height: "30px",
+  height: "40px",
   borderRadius: 0,
   "& .MuiOutlinedInput-root": {
-    height: "30px",
+    height: "40px",
     "& fieldset": {
       border: "1px solid lightgray",
       borderRadius: 0,
