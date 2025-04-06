@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "narynRegion",
+      "id": "Нарынская область",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -523,7 +523,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "chuyRegion",
+      "id": "Чуйская область",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -1045,7 +1045,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "issykKulRegion",
+      "id": "Иссык-Кульская область",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",
@@ -1434,7 +1434,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "talasRegion",
+      "id": "Таласская область",
       "total": "400",
       "geometry": {
         "type": "MultiPolygon",
@@ -1751,7 +1751,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "djalalAbadRegion",
+      "id": "Джалал-Абадская область",
       "total": "500",
       "geometry": {
         "type": "MultiPolygon",
@@ -2277,7 +2277,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "oshRegion",
+      "id": "Ошская область",
       "total": "600",
       "geometry": {
         "type": "MultiPolygon",
@@ -3039,7 +3039,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "batkenRegion",
+      "id": "Баткенская область",
       "total": "700",
       "geometry": {
         "type": "MultiPolygon",
@@ -3572,7 +3572,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "bishkekCity",
+      "id": "г. Бишкек",
       "total": "800",
       "geometry": {
         "type": "MultiPolygon",
@@ -3994,7 +3994,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "oshCity",
+      "id": "г. Ош",
       "total": "900",
       "geometry": {
         "type": "MultiPolygon",
@@ -5375,7 +5375,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "kyrgysztan",
+      "id": "Кыргызская Республика",
       "total": "1000000",
       "geometry": {
         "type": "Point",
