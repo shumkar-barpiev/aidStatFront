@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Main from "@/components/statistics/charts/Main";
 import { containerMargins, containerWidths } from "@/utils/constants";
+import ContractsMap from "@/components/maps/ContractsMap.tsx";
 
 // 👇 импорт без SSR
 const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
@@ -22,6 +23,7 @@ export default function StatisticsPage() {
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
       <ProjectsMap />
+      <ContractsMap />
       <Main />
     </Box>
   );
