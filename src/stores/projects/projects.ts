@@ -1,25 +1,29 @@
 import { create } from "zustand";
 import { http } from "@/utils/http";
 import { TModelFilters } from "@/types/model";
-import { replacePublicEndpointFilters } from "@/utils/axelor-api";
 import { TProjectModel } from "@/models/project/ProjectModel";
+import { replacePublicEndpointFilters } from "@/utils/axelor-api";
+
+const PAGE_SIZE = 16;
 
 const initialStore = {
-  loading: false,
-  error: null,
-  total: null,
-  items: null,
   item: null,
+  items: null,
+  total: null,
+  error: null,
+  loading: false,
+  pageTotal: null,
 };
 
 export const useProjectsStore = create<{
   loading: boolean;
   error: string | null;
   total: number | null;
+  pageTotal: number | null;
   item: TProjectModel | null;
   items: TProjectModel[] | null;
   getItems: (filters?: TModelFilters) => TProjectModel[] | null;
-  fetchItem: (projectName: string, callback?: Function) => Promise<void>;
+  fetchItem: (id: number, callback?: Function) => Promise<void>;
   fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
   clearStore: () => void;
 }>((set, get) => ({
@@ -43,7 +47,12 @@ export const useProjectsStore = create<{
       if (response.ok) {
         const data = await response.json();
         if (callback != null) callback(data);
-        else set(() => ({ error: null, total: data.total, items: data.data }));
+        else {
+          const pageTotal =
+            data.total != null && filters?.pageSize != null ? Math.ceil(data.total / filters?.pageSize) : 0;
+
+          set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));
+        }
       } else {
         throw new Error(`${response.status} ${response.statusText}`);
       }
@@ -54,10 +63,10 @@ export const useProjectsStore = create<{
     }
   },
 
-  fetchItem: async (projectName: string, callback?: Function) => {
+  fetchItem: async (id: number, callback?: Function) => {
     set({ loading: true });
     try {
-      const response = await http(`/ws/public/project?name=${projectName}`, {
+      const response = await http(`/ws/public/project/${id}`, {
         method: "GET",
         withoutAuth: true,
       });

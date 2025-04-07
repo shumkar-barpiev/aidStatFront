@@ -23,9 +23,8 @@ export type TModelPublicFilters = {
   page?: number;
   pageSize?: number;
   searchString?: string;
-  sectorIds?: number[];
-  cityIds?: number[];
-  districtIds?: number[];
-  regionIds?: number[];
-  partnerIds?: number[];
+  sectorIds?: number[] | null;
+  districtIds?: number[] | null;
+  regionIds?: number[] | null;
+  partnerIds?: number[] | null;
 } | null;
