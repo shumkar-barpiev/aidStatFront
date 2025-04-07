@@ -49,11 +49,13 @@ const MapFilterSelect: React.FC<Props> = ({ options, value, onChange, labelName 
         }}
       >
         <MenuItem value="all">Все {labelName.toLowerCase() + "ы"}</MenuItem>
-        {options.map((option) => (
-          <MenuItem key={option.id} value={option.name}>
-            {option.name}
-          </MenuItem>
-        ))}
+        {options
+          .sort((a, b) => a.name.localeCompare(b.name)) // Сортировка по имени
+          .map((option) => (
+            <MenuItem key={option.id} value={option.name}>
+              {option.name}
+            </MenuItem>
+          ))}
       </Select>
     </FormControl>
   );
