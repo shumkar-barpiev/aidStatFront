@@ -8,3 +8,21 @@ html,
 body {
   height: 100%;
 }
+
+.popup-content {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #1f2937; /* gray-800 */
+}
+
+.popup-content b {
+  color: #1d4ed8; /* blue-600 */
+}
+
+.popup-content strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 16px;
+  color: #111827; /* gray-900 */
+}
