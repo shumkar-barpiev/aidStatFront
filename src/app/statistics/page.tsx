@@ -6,7 +6,6 @@ import Main from "@/components/statistics/charts/Main";
 import { containerMargins, containerWidths } from "@/utils/constants";
 import ContractsMap from "@/components/maps/ContractsMap.tsx";
 
-// 👇 импорт без SSR
 const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
   ssr: false,
 });

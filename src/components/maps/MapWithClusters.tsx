@@ -133,9 +133,8 @@ const MapWithClusters = () => {
       const totalFinancingFormatted = formatNumber(project.properties.totalFinancingUsd);
       const endDateFormatted = new Date(project.properties.endDate).toLocaleDateString("en-US");
 
-      // Создаем маркер с иконкой
       const marker = L.marker([latitude, longitude], {
-        icon: projectIcon, // Применяем иконку
+        icon: projectIcon,
         title: project.properties.name,
         zIndexOffset: 2000,
       }).bindPopup(`

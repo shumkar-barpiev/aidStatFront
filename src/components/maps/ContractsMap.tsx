@@ -100,7 +100,7 @@ const ContractsMap = () => {
 
         svg
           .selectAll("path")
-          .data(districts.features.filter((f: Feature) => f.geometry.type !== "Point")) // Исключает отрисовку городов в районах
+          .data(districts.features.filter((f: Feature) => f.geometry.type !== "Point"))
           .enter()
           .append("path")
           .attr("d", path)
@@ -191,7 +191,8 @@ const ContractsMap = () => {
         </button>
       )}
 
-      <svg ref={ref} style={{ width: "100%", height: "600px", userSelect: "none" }} />
+      <svg ref={ref} style={{ width: "80%", height: "600px", userSelect: "none", marginRight: "auto" }} />
+      <div style={{ display: "flex", gap: "40px", justifyContent: "center", marginTop: "20px" }}></div>
     </div>
   );
 };

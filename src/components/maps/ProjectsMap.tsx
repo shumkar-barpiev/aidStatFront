@@ -5,7 +5,6 @@ import { Box, Divider, Paper, Typography } from "@mui/material";
 import MapFilterSelect from "@/components/select/MapFilterSelect.tsx";
 import { useProjectsStore } from "@/stores/projects/projects-for-map.ts";
 import { useLocationNamesStore } from "@/stores/location-names/location-names.ts";
-import { useSectorsStore } from "@/stores/sectors/sectors.ts";
 import { useDonorsStore } from "@/stores/donors/donors.ts";
 import L from "leaflet";
 import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
@@ -13,19 +12,20 @@ import { Feature, FeatureCollection } from "geojson";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
-import geojsonData from "../../utils/map/statesGeoJSON.json";
-import batkenRegion from "../../utils/map/statesBatkenRegion.json";
-import djalalAbadRegion from "../../utils/map/statesDjalalAbadRegion.json";
-import narynRegion from "../../utils/map/statesNarynRegion.json";
-import talasRegion from "../../utils/map/statesTalasRegion.json";
-import oshRegion from "../../utils/map/statesOshRegion.json";
-import chuyRegion from "../../utils/map/statesChuyRegion.json";
-import issykKulRegion from "../../utils/map/statesIssykKulRegion.json";
-import bishkekCity from "../../utils/map/statesBishkekCity.json";
-import oshCity from "../../utils/map/statesOshCity.json";
+import geojsonData from "@/utils/map/statesGeoJSON.json";
+import batkenRegion from "@/utils/map/statesBatkenRegion.json";
+import djalalAbadRegion from "@/utils/map/statesDjalalAbadRegion.json";
+import narynRegion from "@/utils/map/statesNarynRegion.json";
+import talasRegion from "@/utils/map/statesTalasRegion.json";
+import oshRegion from "@/utils/map/statesOshRegion.json";
+import chuyRegion from "@/utils/map/statesChuyRegion.json";
+import issykKulRegion from "@/utils/map/statesIssykKulRegion.json";
+import bishkekCity from "@/utils/map/statesBishkekCity.json";
+import oshCity from "@/utils/map/statesOshCity.json";
 import HeatLayer from "@/components/maps/HeatLayer.tsx";
 import MapWithClusters from "@/components/maps/MapWithClusters.tsx";
 import { TestFilterLocationNameOptions } from "@/shared/enums/statisticsMapIconsEnums.ts";
+import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
 
 const districtsMap: Record<string, any> = {
   "Баткенская область": batkenRegion,
@@ -39,10 +39,12 @@ const districtsMap: Record<string, any> = {
   "г. Ош": oshCity,
 };
 
+const defaultMapCenter: [number, number] = [41.2, 74.649991];
+
 const ProjectsMap = () => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [districtsData, setDistrictsData] = useState<FeatureCollection | null>(null);
-  const [center, setCenter] = useState<[number, number]>([41.2, 74.649991]); // Координаты КР (центрирует при первой прорисовке)
+  const [center, setCenter] = useState<[number, number]>(defaultMapCenter);
 
   const {
     setFilterByLocationName,
@@ -57,7 +59,7 @@ const ProjectsMap = () => {
     loading,
   } = useProjectsStore();
   const { locationNames, fetchLocationNames } = useLocationNamesStore();
-  const { sectors, fetchSectors } = useSectorsStore();
+  const { sectors } = useSectorsViewModel();
   const { donors, fetchDonors } = useDonorsStore();
 
   useEffect(() => {
@@ -65,7 +67,6 @@ const ProjectsMap = () => {
       try {
         await Promise.all([
           // fetchLocationNames(),
-          fetchSectors(),
           // fetchDonors(),
           // fetchProjects(),
         ]);
@@ -77,7 +78,6 @@ const ProjectsMap = () => {
     fetchData();
   }, []);
 
-  // Создание слоя Областей и её логика поведения
   const MapWithRegions = () => {
     const map = useMap();
 
