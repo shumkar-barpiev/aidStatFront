@@ -1,8 +1,14 @@
 "use client";
+import dynamic from "next/dynamic";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Main from "@/components/statistics/charts/Main";
 import { containerMargins, containerWidths } from "@/utils/constants";
+import ContractsMap from "@/components/maps/ContractsMap.tsx";
+
+const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
+  ssr: false,
+});
 
 export default function StatisticsPage() {
   const [isClient, setIsClient] = useState(false);
@@ -15,8 +21,8 @@ export default function StatisticsPage() {
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
-      {/* The main page of map should be rendered here! */}
-      
+      <ProjectsMap />
+      <ContractsMap />
       <Main />
     </Box>
   );

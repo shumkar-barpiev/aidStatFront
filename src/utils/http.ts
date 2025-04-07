@@ -2,10 +2,7 @@ import { getCookie } from "@/utils/cookie";
 
 let csrfToken: string | null = null;
 
-export const http = (
-  url: string,
-  options: RequestInit & { withoutAuth?: boolean } = {}
-): Promise<Response> => {
+export const http = (url: string, options: RequestInit & { withoutAuth?: boolean } = {}): Promise<Response> => {
   const headers = (options.headers as Record<string, string>) ?? {};
   const contentType = headers["Content-Type"];
 
