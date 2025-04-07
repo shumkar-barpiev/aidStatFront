@@ -97,6 +97,10 @@ const sectorIcons: { [key: string]: L.Icon } = {
   }),
 };
 
+const formatNumber = (number: number) => {
+  return new Intl.NumberFormat().format(number);
+};
+
 const MapWithClusters = () => {
   const map = useMap();
   const { filteredProjects } = useProjectsStore();
@@ -126,20 +130,21 @@ const MapWithClusters = () => {
           popupAnchor: [0, -32],
         });
 
-      const marker = L.marker([latitude, longitude], {
-        title: project.properties.name,
-        icon: projectIcon,
-        zIndexOffset: 2000,
-      });
+      const totalFinancingFormatted = formatNumber(project.properties.totalFinancingUsd);
+      const endDateFormatted = new Date(project.properties.endDate).toLocaleDateString("en-US");
 
-      // Создание всплывающего окна с данными проекта
-      marker.bindPopup(`
-        <div>
+      // Создаем маркер с иконкой
+      const marker = L.marker([latitude, longitude], {
+        icon: projectIcon, // Применяем иконку
+        title: project.properties.name,
+        zIndexOffset: 2000,
+      }).bindPopup(`
+        <div class="popup-content">
           <strong>${project.properties.name}</strong><br>
-          <b>Total Financing:</b> ${project.properties.totalFinancingUsd}<br>
-          <b>Donor:</b> ${project.properties.donors}<br>
-          <b>Sector:</b> ${project.properties.sectors}<br>
-          <b>End Date:</b> ${project.properties.endDate || "N/A"}
+          <b>Сумма финансирования:</b> $${totalFinancingFormatted}<br>
+          <b>Доноры:</b> ${project.properties.donors}<br>
+          <b>Сектор:</b> ${project.properties.sectors}<br>
+          <b>Дата окончания:</b> ${endDateFormatted || "N/A"}
         </div>
       `);
 
