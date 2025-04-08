@@ -3,7 +3,7 @@
 import { TModelFilters } from "@/types/model";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useProjectsStore } from "@/stores/projects/projects";
-import { TProjectModel, EProjectModelFilter } from "@/models/project/ProjectModel";
+import { EProjectModelFilter } from "@/models/project/ProjectModel";
 
 let timer: ReturnType<typeof setTimeout> | null;
 
@@ -16,9 +16,6 @@ const initialFilters: () => TModelFilters = () => {
 
 export const useProjectsViewModel = () => {
   const projectStore = useProjectsStore();
-  const [projects, setProjects] = useState<TProjectModel[]>([]);
-  const [project, setProject] = useState<TProjectModel | null>(null);
-  const [projectItemsPageTotal, setProjectItemsPageTotal] = useState(0);
   const [projectsFilter, setProjectsFilter] = useState<TModelFilters>({
     ...initialFilters(),
   });
@@ -27,10 +24,8 @@ export const useProjectsViewModel = () => {
     setProjectsFilter((prev) => ({ ...prev, page }));
   };
 
-  const handleFilter = (type: EProjectModelFilter, searchText?: string | number) => {
-    if (timer != null) {
-      clearTimeout(timer);
-    }
+  const handleFilter = (type: EProjectModelFilter, searchText?: string | number | number[] | Record<string, any>) => {
+    if (timer != null) clearTimeout(timer);
 
     timer = setTimeout(() => {
       switch (type) {
@@ -43,18 +38,38 @@ export const useProjectsViewModel = () => {
 
           timer = null;
           break;
+        case EProjectModelFilter.filterSector:
+          setProjectsFilter((prev) => ({
+            ...prev,
+            page: 1,
+            sectorIds: Array.isArray(searchText) && searchText?.length > 0 ? searchText : null,
+          }));
+
+          timer = null;
+          break;
+        case EProjectModelFilter.filterPartner:
+          setProjectsFilter((prev) => ({
+            ...prev,
+            page: 1,
+            partnerIds: Array.isArray(searchText) && searchText?.length > 0 ? searchText : null,
+          }));
+
+          timer = null;
+          break;
+        case EProjectModelFilter.filterCoverage:
+          if (typeof searchText === "object" && !Array.isArray(searchText) && searchText !== null) {
+            setProjectsFilter((prev) => ({
+              ...prev,
+              page: 1,
+              districtIds: searchText.districtIds ?? null,
+              regionIds: searchText.regionIds ?? null,
+            }));
+            timer = null;
+            break;
+          }
       }
     }, 500);
   };
-
-  useEffect(() => {
-    projectStore.fetchItems(projectsFilter, (data: Record<string, any>) => {
-      const pageTotal =
-        data.total != null && projectsFilter?.pageSize != null ? Math.ceil(data.total / projectsFilter?.pageSize) : 0;
-      setProjectItemsPageTotal(pageTotal);
-      if (pageTotal > 0) setProjects(data.data);
-    });
-  }, [projectsFilter]);
 
   const getProjectSectorsTitle = (sectors: Record<string, any>[]) => {
     if (!sectors || sectors.length === 0) return "";
@@ -62,19 +77,19 @@ export const useProjectsViewModel = () => {
     return sectors.map((sector) => sector.name).join(", ");
   };
 
-  const fetchProject = (projectName: string) => {
-    projectStore.fetchItem(projectName, (data: Record<string, any>) => {
-      setProject(data);
-    });
+  const fetchProject = (id: number) => {
+    projectStore.fetchItem(id);
   };
 
+  useEffect(() => {
+    console.log(projectsFilter);
+    projectStore.fetchItems(projectsFilter);
+  }, [projectsFilter]);
+
   return {
-    project,
-    projects,
     handleFilter,
     fetchProject,
     projectsFilter,
-    projectItemsPageTotal,
     getProjectSectorsTitle,
     handleProcessItemsPageChange,
   };

@@ -9,6 +9,7 @@ import {
   InputAdornment,
   FormControlLabel,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import React, { useEffect, useState, useCallback } from "react";
 import { StyledTextField } from "@/components/other/StyledTextField";
 import { ExpandMore, ExpandLess, Search } from "@mui/icons-material";
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange }) => {
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState("");
   const [selectedRegionIds, setSelectedRegionIds] = useState<number[]>([]);
   const [selectedDistrictIds, setSelectedDistrictIds] = useState<number[]>([]);
@@ -152,7 +154,7 @@ const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange 
         <StyledTextField
           fullWidth
           variant="outlined"
-          placeholder="Search regions or districts..."
+          placeholder={`${t("search-coverage-placeholder")}...`}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
           InputProps={{
@@ -162,7 +164,7 @@ const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange 
               </InputAdornment>
             ),
           }}
-          sx={{ mb: 2 }}
+          sx={{ mb: 1 }}
         />
 
         <FormGroup>
@@ -182,8 +184,8 @@ const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange 
             }
 
             return (
-              <Box key={region.id} sx={{ mb: 2 }}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box key={region.id} sx={{ mb: 0, width: 1 }}>
+                <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -192,8 +194,28 @@ const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange 
                         onChange={() => handleRegionChange(region.id)}
                       />
                     }
-                    label={<Typography fontWeight="bold">{region.name}</Typography>}
-                    sx={{ flexGrow: 1, ml: 0.5 }}
+                    label={
+                      <Typography
+                        fontWeight="bold"
+                        sx={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          maxWidth: { xs: "150px", sm: "200px", md: "250px" },
+                        }}
+                      >
+                        {`[ ${region.projectCount} ]  ${region.name}`}
+                      </Typography>
+                    }
+                    sx={{
+                      flexGrow: 1,
+                      minWidth: 0,
+                      ml: 0.5,
+                      "& .MuiFormControlLabel-label": {
+                        flex: 1,
+                        minWidth: 0,
+                      },
+                    }}
                   />
                   {regionDistricts.length > 0 && (
                     <IconButton
@@ -204,7 +226,7 @@ const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange 
                           [region.id]: !prev[region.id],
                         }))
                       }
-                      sx={{ mr: 1 }}
+                      sx={{ flexShrink: 0 }}
                     >
                       {isExpanded ? <ExpandLess /> : <ExpandMore />}
                     </IconButton>
@@ -224,7 +246,7 @@ const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange 
                                 onChange={() => handleDistrictChange(district.id, region.id)}
                               />
                             }
-                            label={district.name}
+                            label={`[${district.projectCount}] ${district.name}`}
                           />
                         ))}
                       </FormGroup>

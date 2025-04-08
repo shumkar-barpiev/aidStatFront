@@ -73,4 +73,7 @@ export type TProjectModel = z.infer<typeof ProjectModel>;
 
 export enum EProjectModelFilter {
   search = "search",
+  filterSector = "sector",
+  filterPartner = "partner",
+  filterCoverage = "coverage",
 }
