@@ -7,17 +7,18 @@ import React, { useEffect, useRef, useState } from "react";
 import PartnersCard from "@/components/partners/PartnersCard";
 import { Grid, Box, Stack, Typography, Button } from "@mui/material";
 import MoveDownOutlinedIcon from "@mui/icons-material/MoveDownOutlined";
+import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
 import { containerWidths, containerMargins, NAVBAR_HEIGHT } from "@/utils/constants";
 
 export default function Main() {
   const { t } = useTranslation();
-  const [searchText, setSearchText] = useState("");
-  const projectsTableRef = useRef<HTMLDivElement | null>(null);
+  const { handleFilter } = usePartnersViewModel();
+  const partnersBoxRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToTableBox = () => {
-    if (projectsTableRef.current) {
+    if (partnersBoxRef.current) {
       const yOffset = -NAVBAR_HEIGHT;
-      const y = projectsTableRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
+      const y = partnersBoxRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
 
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -89,7 +90,7 @@ export default function Main() {
         </Box>
       </Stack>
 
-      <Box ref={projectsTableRef} sx={{ width: 1, pt: 2, minHeight: "90vh" }}>
+      <Box ref={partnersBoxRef} sx={{ width: 1, pt: 2, minHeight: "90vh" }}>
         <Grid container spacing={1} sx={{ flex: 1, height: "100%" }}>
           <Grid item xs={12} sx={{ flex: 1, height: "100%", minHeight: "100%" }}>
             <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "4px" }}>

@@ -107,7 +107,9 @@ export default function ProjectsFilter() {
           }
         />
 
-        <RegionDistrictSelector districts={districts} regions={regions} onChange={handleSelectionChange} />
+        {districts && regions && (
+          <RegionDistrictSelector districts={districts} regions={regions} onChange={handleSelectionChange} />
+        )}
       </Stack>
     </Box>
   );

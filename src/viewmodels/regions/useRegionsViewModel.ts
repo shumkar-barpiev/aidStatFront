@@ -22,19 +22,20 @@ export const useRegionsViewModel = () => {
   const [districts, setDistricts] = useState<District[]>([]);
 
   const splitRegionObject = (regionObj: Record<string, any>): [Region, District[]] => {
-    console.log(regionObj);
     const region = {
       id: regionObj.id,
       name: regionObj.name,
       projectCount: regionObj.projectCount,
     };
 
-    const districts = regionObj.district.map((district: Record<string, any>) => ({
-      id: district.id,
-      name: district.name,
-      regionId: regionObj.id,
-      projectCount: district.projectCount,
-    }));
+    const districts = Boolean(regionObj.district)
+      ? regionObj.district?.map((district: Record<string, any>) => ({
+          id: district.id,
+          name: district.name,
+          regionId: regionObj.id,
+          projectCount: district.projectCount,
+        }))
+      : [];
 
     return [region, districts];
   };
@@ -49,7 +50,7 @@ export const useRegionsViewModel = () => {
           const [region, districts] = splitRegionObject(regionData.region);
 
           regions.push(region);
-          regionDistricts.push(...districts);
+          if (districts?.length > 0) regionDistricts.push(...districts);
         });
 
         setRegions(regions);
