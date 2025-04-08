@@ -8,6 +8,7 @@ import { useStatisticsChartsViewModel } from "@/viewmodels/statistics/charts/use
 import ContractsMap from "@/components/maps/ContractsMap.tsx";
 import dynamic from "next/dynamic";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
+import ContractsTable from "@/components/maps/ContractsTable.tsx";
 
 const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
   ssr: false,
@@ -33,11 +34,15 @@ export default function Main() {
     <Box sx={{ width: 1 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Тепловая карта проектов" {...a11yProps(0)} />
+          <Tab label="Карта проектов" {...a11yProps(0)} />
           <Tab label="Карта контрактов" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={tab} index={0}>
+        <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
+          Мониторинг проектов для создания и развития инфраструктуры КР
+        </Typography>
+        <Divider sx={{ mb: 2, borderColor: "darkblue", borderBottomWidth: 2 }} />
         <ProjectsMap />
         <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
           {t("statisticsTitle")}
@@ -52,7 +57,10 @@ export default function Main() {
         </Grid>
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
-        <ContractsMap />
+        <Box>
+          <ContractsMap />
+          <ContractsTable />
+        </Box>
       </CustomTabPanel>
     </Box>
   );
