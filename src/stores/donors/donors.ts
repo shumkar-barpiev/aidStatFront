@@ -22,7 +22,7 @@ export const useDonorsStore = create<DonorState>((set, get) => ({
   fetchDonors: async () => {
     set({ loading: true });
     try {
-      const response = await http("/ws/rest/com.axelor.team.db.TeamTask/search", {
+      const response = await http("/ws/public/partners", {
         method: "GET",
       });
       if (!response.ok) throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
