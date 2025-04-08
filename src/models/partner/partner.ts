@@ -3,6 +3,7 @@ import { z } from "zod";
 export const PartnerModel = z.object({
   id: z.number().int().positive(),
   name: z.string().trim().optional(),
+  image: z.string().trim().optional(),
   projectCount: z.number().int().positive().optional(),
 });
 
