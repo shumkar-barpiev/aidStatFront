@@ -4,6 +4,7 @@ import {
   Box,
   Table,
   Paper,
+  Stack,
   Avatar,
   Tooltip,
   TableRow,
@@ -15,18 +16,20 @@ import {
   CircularProgress,
 } from "@mui/material";
 import Colors from "@/styles/colors";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { RenderEllipsisText } from "@/utils/textUtils";
 import { useProjectsStore } from "@/stores/projects/projects";
 import { Base64Avatar } from "@/components/other/Base64Avatar";
+import ProjectBadges from "@/components/projects/ProjectBadges";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 
 export default function ProjectsTable() {
+  const router = useRouter();
   const { t } = useTranslation();
   const projectStore = useProjectsStore();
-  const { projects, projectsFilter, projectItemsPageTotal, getProjectSectorsTitle, handleProcessItemsPageChange } =
-    useProjectsViewModel();
+  const { projectsFilter, getProjectSectorsTitle, handleProcessItemsPageChange } = useProjectsViewModel();
 
   const getPartnerAvatar = (name: string, image: string | null) => {
     if (!image) {
@@ -76,7 +79,7 @@ export default function ProjectsTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {projects?.length == 0 ? (
+            {projectStore.items?.length == 0 ? (
               <TableRow>
                 <StyledTableCell align="center" sx={{ textAlign: "center" }} colSpan={7}>
                   {projectStore.loading && <CircularProgress />}
@@ -84,11 +87,13 @@ export default function ProjectsTable() {
                 </StyledTableCell>
               </TableRow>
             ) : (
-              projects?.map((project, index) => {
+              projectStore.items?.map((project, index) => {
                 return (
                   <TableRow
                     key={index}
-                    onClick={() => {}}
+                    onClick={() => {
+                      router.push(`/projects/show/${project.name}#${project.id}`);
+                    }}
                     sx={{
                       cursor: "pointer",
                       backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
@@ -102,11 +107,13 @@ export default function ProjectsTable() {
                       <RenderEllipsisText text={project?.name} tooltipPlacement="left" />
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>
-                      {project?.partners &&
-                        project.partners.map((partner) => {
-                          const partnerName = `${partner.name ?? ""}`;
-                          return getPartnerAvatar(partnerName, partner.image ?? null);
-                        })}
+                      <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                        {project?.partners &&
+                          project.partners.map((partner) => {
+                            const partnerName = `${partner.name ?? ""}`;
+                            return getPartnerAvatar(partnerName, partner.image ?? null);
+                          })}
+                      </Stack>
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>
                       <RenderEllipsisText text={getProjectSectorsTitle(project.sectors ?? [])} tooltipPlacement="top" />
@@ -115,7 +122,11 @@ export default function ProjectsTable() {
                     <StyledTableCell sx={{ width: "15%", paddingLeft: "0px", textAlign: "center" }}>
                       {project?.totalSum && `${project?.totalSum}`}
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "15%", textAlign: "center" }}>{project.status}</StyledTableCell>
+                    <StyledTableCell sx={{ width: "15%", textAlign: "center" }}>
+                      <ProjectBadges
+                        status={project.status as "In progress" | "Completed" | "Not started" | "Canceled"}
+                      />
+                    </StyledTableCell>
                   </TableRow>
                 );
               })
@@ -124,14 +135,14 @@ export default function ProjectsTable() {
         </Table>
       </TableContainer>
 
-      {projectItemsPageTotal > 0 && (
+      {(projectStore.pageTotal ?? 0) > 0 && (
         <Box sx={{ mt: 2 }}>
           <Pagination
             siblingCount={1}
             boundaryCount={2}
             page={projectsFilter?.page}
-            count={projectItemsPageTotal}
             disabled={projectStore.loading}
+            count={projectStore.pageTotal ?? 1}
             onChange={handleProcessItemsPageChange}
           />
         </Box>

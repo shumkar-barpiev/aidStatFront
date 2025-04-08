@@ -2,53 +2,51 @@
 
 import React, { useState, useEffect } from "react";
 import RegionDistrictSelector from "./RegionDistrictSelector";
-import { Region, useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
+import { EProjectModelFilter } from "@/models/project/ProjectModel";
+import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { Stack, Box, Typography, Chip, Autocomplete, TextField } from "@mui/material";
-
-type TPartnerModel = {
-  id: number;
-  name?: string;
-  projectCount?: number;
-};
 
 export default function ProjectsFilter() {
   const { sectors } = useSectorsViewModel();
+  const { handleFilter } = useProjectsViewModel();
   const { allPartners } = usePartnersViewModel();
   const { regions, districts } = useRegionsViewModel();
   const [selectedSectorIds, setSelectedSectorIds] = useState<number[]>([]);
+  const [selectedRegionIds, setSelectedRegionIds] = useState<number[]>([]);
   const [selectedPartnerIds, setSelectedPartnerIds] = useState<number[]>([]);
+  const [selectedDistrictIds, setSelectedDistrictIds] = useState<number[]>([]);
   const selectedSectorOptions = sectors.filter((option) => selectedSectorIds.includes(option.id));
   const selectedParnerOptions = allPartners.filter((option) => selectedPartnerIds.includes(option.id));
 
-  const [renderTheSelector, setRenderTheSelector] = useState<boolean>(false);
+  const handleSelectionChange = (regionIds: number[], districtIds: number[]) => {
+    setSelectedRegionIds(regionIds);
+    setSelectedDistrictIds(districtIds);
+  };
 
   useEffect(() => {
-    if (regions.length > 0 && districts.length > 0) {
-      setRenderTheSelector(true);
-    }
-  }, [regions, districts]);
-
-  const handleSelectionChange = (regionIds: number[], districtIds: number[]) => {
-    // console.log("Selected Regions:", regionIds);
-    // console.log("Selected Dsit:", districtIds);
-  };
+    handleFilter(EProjectModelFilter.filterCoverage, {
+      regionIds: selectedRegionIds,
+      districtIds: selectedDistrictIds,
+    });
+  }, [selectedRegionIds, selectedDistrictIds]);
 
   return (
     <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "4px" }}>
-      <Stack spacing={3}>
+      <Stack spacing={2}>
         <Autocomplete
           size="small"
           multiple
           id="sector-ids"
           options={sectors}
-          getOptionLabel={(option) => option.name}
+          getOptionLabel={(option) => `${option.name} - (${1})`}
           value={selectedSectorOptions}
           onChange={(event, newValue) => {
             const newSectorIds = newValue.map((option) => option.id);
             setSelectedSectorIds(newSectorIds);
-            console.log("Selected IDs:", newSectorIds);
+            handleFilter(EProjectModelFilter.filterSector, newSectorIds);
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Секторы" />}
@@ -62,7 +60,7 @@ export default function ProjectsFilter() {
                   textOverflow: "ellipsis",
                 }}
               >
-                {option.name}
+                ({option.projectCount}) - {option.name}
               </Typography>
             </li>
           )}
@@ -83,7 +81,7 @@ export default function ProjectsFilter() {
           onChange={(event, newValue) => {
             const newPartnerIds = newValue.map((option) => option.id);
             setSelectedPartnerIds(newPartnerIds);
-            console.log("Selected IDs:", newPartnerIds);
+            handleFilter(EProjectModelFilter.filterPartner, newPartnerIds);
           }}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Партнеры" />}
@@ -97,7 +95,7 @@ export default function ProjectsFilter() {
                   textOverflow: "ellipsis",
                 }}
               >
-                {option.name}
+                ({option.projectCount}) - {option.name}
               </Typography>
             </li>
           )}
@@ -109,9 +107,7 @@ export default function ProjectsFilter() {
           }
         />
 
-        {renderTheSelector && (
-          <RegionDistrictSelector districts={districts} regions={regions} onChange={handleSelectionChange} />
-        )}
+        <RegionDistrictSelector districts={districts} regions={regions} onChange={handleSelectionChange} />
       </Stack>
     </Box>
   );

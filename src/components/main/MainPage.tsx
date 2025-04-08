@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { RenderEllipsisText } from "@/utils/textUtils";
 import React, { useState, useEffect, useRef } from "react";
+import { useProjectsStore } from "@/stores/projects/projects";
+import { TProjectModel } from "@/models/project/ProjectModel";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
@@ -38,9 +40,10 @@ const convertToRussianDateFormat = (date: string | undefined) => {
 export default function MainPage() {
   const router = useRouter();
   const { t } = useTranslation();
+  const projectsStore = useProjectsStore();
   const boxRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState<boolean>(false);
-  const { projects, getProjectSectorsTitle } = useProjectsViewModel();
+  const { getProjectSectorsTitle } = useProjectsViewModel();
 
   const handleScrollToBox = () => {
     if (boxRef.current) {
@@ -146,8 +149,8 @@ export default function MainPage() {
         </Stack>
         <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         <Grid container spacing={3}>
-          {projects &&
-            projects.slice(0, 4).map((project, index) => {
+          {projectsStore.items &&
+            projectsStore.items.slice(0, 4).map((project: TProjectModel, index) => {
               return (
                 <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
                   <Card
@@ -175,26 +178,34 @@ export default function MainPage() {
                       )}
                     </Typography>
 
-                    <Typography
-                      variant="h3"
-                      sx={{
-                        fontWeight: 550,
-                        fontFamily: "sans-serif",
-                        fontSize: "1.25rem",
-                        display: "-webkit-box",
-                        overflow: "hidden",
-                        WebkitBoxOrient: "vertical",
-                        WebkitLineClamp: 2,
-                        textOverflow: "ellipsis",
-
-                        "&:hover": {
-                          color: "#2E4B6D",
-                          transition: "color 0.3s ease",
-                        },
+                    <button
+                      onClick={() => {
+                        router.push(`/projects/show/${project.name}#${project.id}`);
                       }}
+                      style={plainBtnStyle}
                     >
-                      {project?.name}
-                    </Typography>
+                      <Typography
+                        variant="h3"
+                        sx={{
+                          textAlign: "left",
+                          fontWeight: 550,
+                          fontFamily: "sans-serif",
+                          fontSize: "1.25rem",
+                          display: "-webkit-box",
+                          overflow: "hidden",
+                          WebkitBoxOrient: "vertical",
+                          WebkitLineClamp: 2,
+                          textOverflow: "ellipsis",
+
+                          "&:hover": {
+                            color: "#2E4B6D",
+                            transition: "color 0.3s ease",
+                          },
+                        }}
+                      >
+                        {project?.name}
+                      </Typography>
+                    </button>
 
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                       <Stack direction={"column"} alignItems={"left"}>
@@ -210,7 +221,7 @@ export default function MainPage() {
                         <IconButton
                           sx={{ border: `1px solid ${Colors.darkBlue}` }}
                           onClick={() => {
-                            router.push(`/projects/show/${project.name}`);
+                            router.push(`/projects/show/${project.name}#${project.id}`);
                           }}
                         >
                           <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />

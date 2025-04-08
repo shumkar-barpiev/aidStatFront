@@ -7,11 +7,13 @@ export interface District {
   id: number;
   name: string;
   regionId: number;
+  projectCount: number;
 }
 
 export interface Region {
   id: number;
   name: string;
+  projectCount: number;
 }
 
 export const useRegionsViewModel = () => {
@@ -20,15 +22,18 @@ export const useRegionsViewModel = () => {
   const [districts, setDistricts] = useState<District[]>([]);
 
   const splitRegionObject = (regionObj: Record<string, any>): [Region, District[]] => {
+    console.log(regionObj);
     const region = {
       id: regionObj.id,
       name: regionObj.name,
+      projectCount: regionObj.projectCount,
     };
 
     const districts = regionObj.district.map((district: Record<string, any>) => ({
       id: district.id,
       name: district.name,
       regionId: regionObj.id,
+      projectCount: district.projectCount,
     }));
 
     return [region, districts];
