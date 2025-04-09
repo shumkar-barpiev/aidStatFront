@@ -21,6 +21,21 @@ import { formatCurrency } from "@/utils/formatCurrency.ts";
 import { UseContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
 import { GeneratedProjectNames } from "@/shared/enums/statisticsMapIconsEnums.ts";
 
+const mokDonors = [
+  { name: "International Monetary Fund", image: "12_imf.png" },
+  { name: "Европейский Банк Реконструкции и Развития", image: "EBRR_logo.png" },
+  { name: "Посольство Федеративной Республики Германия", image: "germanembassy.png" },
+  { name: "International Monetary Fund", image: "imf.png" },
+  { name: "Германский Банк Развития", image: "kfw_logo.png" },
+  { name: "Корейское агентство международного сотрудничества", image: "koica.png" },
+  { name: "Корпус Милосердия", image: "mercy_corps.png" },
+  { name: "ОБСЕ", image: "osce_logo.png" },
+  { name: "Саудовский Фонд Развития", image: "saudi_fund.png" },
+  { name: "Турецкое агентство по сотрудничеству и координации", image: "tika-logo.png" },
+  { name: "United Nations", image: "un-logo.png" },
+  { name: "USAID", image: "usaid_logo.png" },
+];
+
 const ContractsTable = () => {
   const { contracts, filteredContracts } = UseContractsViewModel();
   const [page, setPage] = useState(0);
@@ -91,7 +106,6 @@ const ContractsTable = () => {
               <TableRow
                 key={index}
                 sx={{
-                  cursor: "pointer",
                   backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
                   "&:hover": { backgroundColor: "#cadefa" },
                 }}
@@ -187,7 +201,26 @@ const ContractsTable = () => {
                     );
                   })()}
                 </StyledTableCell>
-                <StyledTableCell sx={{ width: "10%" }}>{contract.beg_date}</StyledTableCell>
+                <StyledTableCell sx={{ width: "10%" }}>
+                  {(() => {
+                    const index = Math.floor(Math.random() * mokDonors.length);
+                    return (
+                      <Tooltip title={mokDonors[index].name}>
+                        <a
+                          href={`/assets/images/donors/${mokDonors[index].image}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={`/assets/images/donors/${mokDonors[index].image}`}
+                            alt={mokDonors[index].name}
+                            style={{ width: "100px", height: "auto" }}
+                          />
+                        </a>
+                      </Tooltip>
+                    );
+                  })()}
+                </StyledTableCell>
                 <StyledTableCell sx={{ width: "10%", textAlign: "center" }}>
                   <ProjectBadges status={contract.status as "In progress" | "Completed" | "Not started" | "Canceled"} />
                 </StyledTableCell>
