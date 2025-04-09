@@ -77,6 +77,12 @@ export const useProjectsViewModel = () => {
     return sectors.map((sector) => sector.name).join(", ");
   };
 
+  const getProjectRegionsTitle = (regions: Record<string, any>[]) => {
+    if (!regions || regions.length === 0) return "";
+
+    return regions.map((region) => region?.region?.name).join(", ");
+  };
+
   const fetchProject = (id: number) => {
     projectStore.fetchItem(id);
   };
@@ -89,6 +95,7 @@ export const useProjectsViewModel = () => {
     handleFilter,
     fetchProject,
     projectsFilter,
+    getProjectRegionsTitle,
     getProjectSectorsTitle,
     handleProcessItemsPageChange,
   };
