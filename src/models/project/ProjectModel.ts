@@ -10,14 +10,6 @@ export const ProjectModel = z.object({
   startDate: z.string().trim().optional().nullable(),
   endDate: z.string().trim().optional().nullable(),
 
-  geographicalCoverage: z
-    .object({
-      id: z.number().int().positive(),
-      name: z.string().trim(),
-    })
-    .optional()
-    .nullable(),
-
   timeLine: z
     .object({
       startDate: z.string().trim(),
@@ -37,6 +29,17 @@ export const ProjectModel = z.object({
     .optional()
     .nullable(),
   sectors: z
+    .array(
+      z.object({
+        id: z.number().int().positive(),
+        name: z.string().trim().optional(),
+        type: z.string().trim().optional(),
+        projectCount: z.number().int().positive(),
+      })
+    )
+    .optional()
+    .nullable(),
+  geographicalCoverage: z
     .array(
       z.object({
         id: z.number().int().positive(),

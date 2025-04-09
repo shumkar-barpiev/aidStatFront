@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PartnersCard from "@/components/partners/PartnersCard";
 import { Grid, Box, Stack, Typography, Button } from "@mui/material";
 import MoveDownOutlinedIcon from "@mui/icons-material/MoveDownOutlined";
@@ -36,15 +36,16 @@ export default function Main() {
         alignItems={"center"}
         direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
         spacing={3}
-        sx={{ width: "80%", mx: "auto", height: { xs: "90vh", sm: "90vh", md: "auto" } }}
+        sx={{ width: "80%", mx: "auto", height: { xs: "50vh", sm: "50vh", md: "auto" }, color: Colors.darkBlue, mb: 3 }}
         justifyContent={{ xs: "center", sm: "center", md: "space-between", lg: "space-between" }}
       >
-        <Box sx={{ position: "relative", width: "65%", maxWidth: "400px", height: "auto", aspectRatio: "1" }}>
+        <Box sx={{ position: "relative", width: "100%", maxWidth: "300px", height: "auto", aspectRatio: "1" }}>
           <Image
             fill
-            alt="Partners "
-            style={{ objectFit: "contain" }}
-            src="/assets/images/pages/partners-1.jpg"
+            alt="Project1"
+            style={{ objectFit: "cover" }}
+            src="/assets/images/pages/partners-1.png"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
             priority
           />
         </Box>
@@ -55,7 +56,6 @@ export default function Main() {
             justifyContent: "center",
             alignItems: { xs: "center", sm: "center", md: "flex-start" },
             textAlign: { xs: "center", sm: "center", md: "left" },
-            width: "100%",
           }}
         >
           <Typography
@@ -65,18 +65,13 @@ export default function Main() {
             sx={{
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)",
-              maxWidth: { xs: "100%", md: "80%" },
+
+              maxWidth: { xs: "100%", md: "90%" },
             }}
           >
             {t("partnersPage")}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)", maxWidth: { xs: "100%", md: "90%" } }}
-          >
+          <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
             {t("partnersPageDescription")}
           </Typography>
           <Button

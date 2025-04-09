@@ -71,7 +71,7 @@ export default function MainPage() {
           position: "relative",
           width: "100%",
           height: "95vh",
-          backgroundImage: `url(https://pce.sandiego.edu/wp-content/uploads/2023/02/GettyImages-1411195926-scaled.jpg)`,
+          backgroundImage: `url(/assets/images/pages/main-page-1.png)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
@@ -88,7 +88,7 @@ export default function MainPage() {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
           }}
         />
         <Box
@@ -283,7 +283,7 @@ export default function MainPage() {
                 height: { xs: 250, sm: 300, md: 350 },
                 objectFit: "contain",
               }}
-              image="/assets/images/pages/main-page-1.jpg"
+              image="/assets/images/pages/main-page-2.jpg"
               title="green iguana"
             />
           </Card>

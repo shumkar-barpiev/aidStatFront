@@ -1,23 +1,25 @@
 "use client";
 
-import Colors from "@/styles/colors";
 import {
   Map as CoverageIcon,
   Business as AgencyIcon,
   Category as SectorsIcon,
-  Diversity3Outlined as PartnersIcon,
   Engineering as ImplementingIcon,
+  Diversity3Outlined as PartnersIcon,
   AssignmentOutlined as DescriptionIcon,
   CurrencyExchangeRounded as FundingIcon,
 } from "@mui/icons-material";
+import Colors from "@/styles/colors";
 import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import { useProjectsStore } from "@/stores/projects/projects";
 import { Box, Typography, Grid, Divider } from "@mui/material";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
+import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 
 export const ShowProject = () => {
   const projectsStore = useProjectsStore();
+  const { getProjectSectorsTitle, getProjectRegionsTitle } = useProjectsViewModel();
   const [project, setProject] = useState<TProjectModel | null>(null);
 
   useEffect(() => {
@@ -85,15 +87,7 @@ export const ShowProject = () => {
                     Исполнительное агентство
                   </Typography>
                 </Box>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Название:</strong> Министерство Энергетики Кыргызской Республики
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Куратор проекта:</strong> Азимов А.К.
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Контакт:</strong> +996 312 123 456, energy@gov.kg
-                </Typography>
+                <Typography sx={{ mb: 1 }}>Министерство Энергетики Кыргызской Республики</Typography>
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
 
@@ -104,24 +98,8 @@ export const ShowProject = () => {
                     Секторы
                   </Typography>
                 </Box>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Основной сектор:</strong> Гидроэнергетика
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Дополнительные секторы:</strong>
-                </Typography>
-                <Box component="ul" sx={{ pl: 2.5 }}>
-                  <Box component="li">
-                    <Typography>Экологическая безопасность</Typography>
-                  </Box>
-                  <Box component="li">
-                    <Typography>Развитие инфраструктуры</Typography>
-                  </Box>
-                  <Box component="li">
-                    <Typography>Создание рабочих мест</Typography>
-                  </Box>
-                </Box>
-                <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+
+                <Typography sx={{ mb: 1 }}>{getProjectSectorsTitle(project?.sectors ?? [])}</Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -151,18 +129,10 @@ export const ShowProject = () => {
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                   <ImplementingIcon color="primary" fontSize="large" />
                   <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                    Реализующее агентство
+                    Реализующее агентство:
                   </Typography>
                 </Box>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Подрядчик:</strong> ТОО &quot;КыргызГидроСтрой&quot;
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Срок контракта:</strong> 2022-2025 гг.
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Ответственный инженер:</strong> Петров В.И.
-                </Typography>
+                <Typography sx={{ mb: 1 }}>ТОО &quot;КыргызГидроСтрой&quot;</Typography>
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
 
@@ -173,31 +143,16 @@ export const ShowProject = () => {
                     Географический охват
                   </Typography>
                 </Box>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Основная локация:</strong> Жалал-Абадская область
-                </Typography>
-                <Typography sx={{ mb: 1 }}>
-                  <strong>Затронутые районы:</strong>
-                </Typography>
-                <Box component="ul" sx={{ pl: 2.5 }}>
-                  <Box component="li">
-                    <Typography>Токтогульский район</Typography>
-                  </Box>
-                  <Box component="li">
-                    <Typography>Ала-Букинский район</Typography>
-                  </Box>
-                  <Box component="li">
-                    <Typography>город Кербен</Typography>
-                  </Box>
-                </Box>
-
-                <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+                <Typography sx={{ mb: 1 }}>{getProjectRegionsTitle(project?.geographicalCoverage ?? [])}</Typography>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Box>
-      <ProjectTimeLine />
+      <Box sx={{ my: 6 }}>
+        <Divider sx={{ mb: 8, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+        <ProjectTimeLine />
+      </Box>
     </Box>
   );
 };
