@@ -1,21 +1,39 @@
 import { create } from "zustand";
 import { http } from "@/utils/http.ts";
+import contractsData from "@/components/maps/contractsData.json";
 
-interface Contract {
-  id: number;
-  name: string;
+export interface Contract {
+  title: string;
+  state_id: string;
+  region_id: string;
+  aa_id: string;
+  village_id: string;
+  city: string;
+  lat: string;
+  lng: string;
+  id: string;
+  cat_id: string;
+  project_id: string;
+  beg_date: string;
+  end_date: string;
+  budget: string;
+  mark: string;
+  status: string;
 }
 
 const initialStore = {
   loading: false,
   error: null,
-  items: null,
+  filter: null,
+  items: contractsData,
 };
 
 interface ContractsState {
   loading: boolean;
   error: string | null;
   items: Contract[] | null;
+  filter: string | null;
+  setFilter: (filter: string | null) => void;
   fetchItems: (callback: Function) => Promise<void>;
 }
 
@@ -25,7 +43,7 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
   fetchItems: async (callback: Function) => {
     set({ loading: true });
     try {
-      const response = await http("/ws/public/stat/contract/region/", {
+      const response = await http("/ws/public/stat/contracts", {
         method: "GET",
         withoutAuth: true,
       });
@@ -36,11 +54,17 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
       if (callback != null) callback(data);
       else set(() => ({ error: null, items: data }));
     } catch (e: any) {
-      set({ error: e?.message, items: null });
+      set({ error: e?.message });
     } finally {
       set({ loading: false });
     }
   },
+
+  setFilter: (filter: string | null) => {
+    set({ filter });
+    console.log("FILTER IS SET FILTER", filter);
+  },
+
   clearStore: () => {
     set(initialStore);
   },
