@@ -17,13 +17,7 @@ const DonutChart: React.FC<Props> = ({ seriesOptions, labels }) => {
       type: "donut",
     },
     labels: labels || ["до $100.000", "от $100.000 до $500.000", "от $500.000"],
-    colors: [
-      "#0b4678", // Тёмно-синий
-      "#005faf", // Ярко-синий
-      "#0084c7", // Голубой
-      "#00a1e1", // Светло-голубой
-      "#0074b7", // Средний синий
-    ],
+    colors: ["#0b4678", "#005faf", "#0084c7", "#00a1e1", "#0074b7"],
     responsive: [
       {
         breakpoint: 480,
