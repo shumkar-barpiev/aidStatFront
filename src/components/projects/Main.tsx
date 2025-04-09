@@ -36,7 +36,7 @@ export default function Main() {
         alignItems={"center"}
         direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
         spacing={3}
-        sx={{ width: "80%", mx: "auto", height: { xs: "90vh", sm: "90vh", md: "auto" } }}
+        sx={{ width: "90%", mx: "auto", height: { xs: "90vh", sm: "90vh", md: "45vh" } }}
         justifyContent={{ xs: "center", sm: "center", md: "space-between", lg: "space-between" }}
       >
         <Box
@@ -46,7 +46,7 @@ export default function Main() {
             justifyContent: "center",
             alignItems: { xs: "center", sm: "center", md: "flex-end" },
             textAlign: { xs: "center", sm: "center", md: "right" },
-            width: "100%",
+            color: Colors.darkBlue,
           }}
         >
           <Typography
@@ -57,7 +57,7 @@ export default function Main() {
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)",
-              maxWidth: { xs: "100%", md: "80%" },
+              maxWidth: "100%",
             }}
           >
             {t("projects")}
@@ -66,7 +66,7 @@ export default function Main() {
             variant="subtitle1"
             fontWeight="bold"
             gutterBottom
-            sx={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)", maxWidth: { xs: "100%", md: "90%" } }}
+            sx={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)", maxWidth: "100%" }}
           >
             {t("projectsPageDescription")}
           </Typography>
@@ -80,11 +80,11 @@ export default function Main() {
           </Button>
         </Box>
 
-        <Box sx={{ position: "relative", width: "65%", maxWidth: "400px", height: "auto", aspectRatio: "1" }}>
+        <Box sx={{ position: "relative", width: "100%", maxWidth: "800px", height: "auto", aspectRatio: "1" }}>
           <Image
             fill
             alt="Project1"
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "cover" }}
             src="/assets/images/pages/projects-1.png"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
             priority

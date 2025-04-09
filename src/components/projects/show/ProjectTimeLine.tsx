@@ -24,9 +24,7 @@ export default function ProjectTimeLine() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot color="primary">
-            <PlanningIcon />
-          </TimelineDot>
+          <TimelineDot color="primary"></TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
@@ -47,9 +45,7 @@ export default function ProjectTimeLine() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot color="primary">
-            <ConstructionIcon />
-          </TimelineDot>
+          <TimelineDot color="primary"></TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
@@ -68,9 +64,7 @@ export default function ProjectTimeLine() {
       <TimelineItem>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot color="primary" variant="outlined">
-            <MilestoneIcon />
-          </TimelineDot>
+          <TimelineDot color="primary" variant="outlined"></TimelineDot>
           <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
@@ -91,9 +85,7 @@ export default function ProjectTimeLine() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-          <TimelineDot color="secondary">
-            <CompletionIcon />
-          </TimelineDot>
+          <TimelineDot color="secondary"></TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
@@ -115,9 +107,7 @@ export default function ProjectTimeLine() {
         </TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineConnector />
-          <TimelineDot color="primary">
-            <ReviewIcon />
-          </TimelineDot>
+          <TimelineDot color="primary"></TimelineDot>
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent sx={{ py: "12px", px: 2 }}>
