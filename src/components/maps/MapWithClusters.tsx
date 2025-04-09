@@ -3,6 +3,7 @@ import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet.markercluster";
 import { useProjectsStore } from "@/stores/projects/projects-for-map.ts";
+import { formatCurrency } from "@/utils/formatCurrency.ts";
 
 const sectorIcons: { [key: string]: L.Icon } = {
   Здравоохранение: new L.Icon({
@@ -97,10 +98,6 @@ const sectorIcons: { [key: string]: L.Icon } = {
   }),
 };
 
-const formatNumber = (number: number) => {
-  return new Intl.NumberFormat().format(number);
-};
-
 const MapWithClusters = () => {
   const map = useMap();
   const { filteredProjects } = useProjectsStore();
@@ -130,7 +127,7 @@ const MapWithClusters = () => {
           popupAnchor: [0, -32],
         });
 
-      const totalFinancingFormatted = formatNumber(project.properties.totalFinancingUsd);
+      const totalFinancingFormatted = formatCurrency(project.properties.totalFinancingUsd);
       const endDateFormatted = new Date(project.properties.endDate).toLocaleDateString("en-US");
 
       const marker = L.marker([latitude, longitude], {
