@@ -9,6 +9,7 @@ import ContractsMap from "@/components/maps/ContractsMap.tsx";
 import dynamic from "next/dynamic";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
 import ContractsTable from "@/components/maps/ContractsTable.tsx";
+import DonutChart from "@/components/statistics/charts/DonutChart.tsx";
 
 const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
   ssr: false,
@@ -58,7 +59,13 @@ export default function Main() {
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
         <Box>
-          <ContractsMap />
+          <Box display="flex" gap={2}>
+            <ContractsMap />
+            <Box display="flex" flexDirection="column" gap={2}>
+              <DonutChart />
+              <DonutChart />
+            </Box>
+          </Box>
           <ContractsTable />
         </Box>
       </CustomTabPanel>
