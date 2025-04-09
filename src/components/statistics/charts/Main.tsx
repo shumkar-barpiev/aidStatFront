@@ -9,11 +9,12 @@ import ContractsMap from "@/components/maps/ContractsMap.tsx";
 import dynamic from "next/dynamic";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
 import ContractsTable from "@/components/maps/ContractsTable.tsx";
-import DonutChart from "@/components/statistics/charts/DonutChart.tsx";
 
 const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
   ssr: false,
 });
+
+const DonutChart = dynamic(() => import("@/components/statistics/charts/DonutChart"), { ssr: false });
 
 const a11yProps = (index: number) => {
   return {
