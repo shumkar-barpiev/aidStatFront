@@ -5,6 +5,7 @@ import { select } from "d3-selection";
 import { json } from "d3-fetch";
 import { geoPath, geoMercator } from "d3-geo";
 import { Feature, FeatureCollection } from "geojson";
+import { UseContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
 
 const width = 800;
 const height = 600;
@@ -38,6 +39,7 @@ const isFeatureCollection = (data: unknown): data is FeatureCollection => {
 const ContractsMap = () => {
   const ref = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const { handleSetFilter } = UseContractsViewModel();
 
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
 
@@ -77,7 +79,10 @@ const ContractsMap = () => {
               select(this).attr("fill", areaColor);
             })
             .on("click", function (event, d) {
-              setSelectedRegion(d);
+              if (d && d.id) {
+                setSelectedRegion(d);
+                handleSetFilter(d.id as string);
+              }
             })
             .append("title");
         }
@@ -131,6 +136,7 @@ const ContractsMap = () => {
 
   const resetView = () => {
     setSelectedRegion(null);
+    handleSetFilter(null);
     drawRegions();
   };
 
@@ -191,7 +197,7 @@ const ContractsMap = () => {
         </button>
       )}
 
-      <svg ref={ref} style={{ width: "80%", height: "600px", userSelect: "none", marginRight: "auto" }} />
+      <svg ref={ref} style={{ width: "100%", height: "600px", userSelect: "none", marginRight: "auto" }} />
       <div style={{ display: "flex", gap: "40px", justifyContent: "center", marginTop: "20px" }}></div>
     </div>
   );
