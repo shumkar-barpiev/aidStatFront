@@ -174,10 +174,6 @@ const ProjectsMap = () => {
 
   return (
     <Box sx={{ width: "100%", height: "100%", mb: 6 }}>
-      <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
-        Мониторинг проектов для создания и развития инфраструктуры КР
-      </Typography>
-      <Divider sx={{ mb: 2, borderColor: "darkblue", borderBottomWidth: 2 }} />
       <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: "16px", padding: "20px 0" }}>
         <MapFilterSelect
           labelName="Регион"
