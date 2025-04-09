@@ -206,7 +206,7 @@ const ProjectsMap = () => {
               maxZoom={12}
               minZoom={5}
             >
-              <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
+              <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=99425f3c-24bb-4e1e-94fc-c257d13c34a5" />
               <MapWithClusters />
               <HeatLayer />
               <MemoizedMapWithRegions />
