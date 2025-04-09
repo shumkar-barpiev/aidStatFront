@@ -9,12 +9,14 @@ const initialStore = {
   error: null,
   total: null,
   items: null,
+  pageTotal: null,
 };
 
 export const usePartnersStore = create<{
   loading: boolean;
   error: string | null;
   total: number | null;
+  pageTotal: number | null;
   items: TPartnerModel[] | null;
   getItems: (callback: Function) => Promise<void>;
   fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
@@ -56,7 +58,12 @@ export const usePartnersStore = create<{
       if (response.ok) {
         const data = await response.json();
         if (callback != null) callback(data);
-        else set(() => ({ error: null, total: data.total, items: data.data }));
+        else {
+          const pageTotal =
+            data.total != null && filters?.pageSize != null ? Math.ceil(data.total / filters?.pageSize) : 0;
+
+          set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));
+        }
       } else {
         throw new Error(`${response.status} ${response.statusText}`);
       }

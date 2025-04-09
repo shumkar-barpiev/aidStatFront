@@ -82,7 +82,6 @@ export const useProjectsViewModel = () => {
   };
 
   useEffect(() => {
-    console.log(projectsFilter);
     projectStore.fetchItems(projectsFilter);
   }, [projectsFilter]);
 

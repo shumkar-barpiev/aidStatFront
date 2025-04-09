@@ -10,20 +10,18 @@ let timer: ReturnType<typeof setTimeout> | null;
 const initialFilters: () => TModelFilters = () => {
   return {
     page: 1,
-    pageSize: 16,
+    pageSize: 8,
   };
 };
 
 export const usePartnersViewModel = () => {
   const partnerStore = usePartnersStore();
-  const [partners, setPartners] = useState<TPartnerModel[]>([]);
   const [allPartners, setAllPartners] = useState<TPartnerModel[]>([]);
-  const [partnerItemsPageTotal, setPartnerItemsPageTotal] = useState(0);
   const [partnersFilter, setPartnersFilter] = useState<TModelFilters>({
     ...initialFilters(),
   });
 
-  const handleProcessItemsPageChange = (e: ChangeEvent<unknown>, page: number) => {
+  const handlePartnersPageChange = (e: ChangeEvent<unknown>, page: number) => {
     setPartnersFilter((prev) => ({ ...prev, page }));
   };
 
@@ -33,39 +31,38 @@ export const usePartnersViewModel = () => {
     }
 
     timer = setTimeout(() => {
-      // switch (type) {
-      //   case EPartnerModelFilter.search:
-      //     console.log(searchText);
-      //     setPartnersFilter((prev) => ({
-      //       ...prev,
-      //       page: 1,
-      //       searchString: searchText ?? "",
-      //     }));
-      //     timer = null;
-      //     break;
-      // }
+      switch (type) {
+        case EPartnerModelFilter.search:
+          setPartnersFilter((prev) => ({
+            ...prev,
+            page: 1,
+            searchString: searchText ?? null,
+          }));
+          timer = null;
+          break;
+      }
     }, 500);
   };
 
-  useEffect(() => {
-    partnerStore.fetchItems(partnersFilter, (data: Record<string, any>) => {
-      const pageTotal =
-        data.total != null && partnersFilter?.pageSize != null ? Math.ceil(data.total / partnersFilter?.pageSize) : 0;
-      setPartnerItemsPageTotal(pageTotal);
-      if (pageTotal > 0) setPartners(data.data);
-    });
+  const fetchPartner = (id: number) => {
+    console.log(id);
+  };
 
+  useEffect(() => {
     partnerStore.getItems((data: TPartnerModel[]) => {
       if (data.length > 0) setAllPartners(data);
     });
+  }, []);
+
+  useEffect(() => {
+    partnerStore.fetchItems(partnersFilter);
   }, [partnersFilter]);
 
   return {
-    partners,
     allPartners,
+    fetchPartner,
     handleFilter,
     partnersFilter,
-    partnerItemsPageTotal,
-    handleProcessItemsPageChange,
+    handlePartnersPageChange,
   };
 };
