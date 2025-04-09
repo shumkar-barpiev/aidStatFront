@@ -197,7 +197,7 @@ const ContractsMap = () => {
         </button>
       )}
 
-      <svg ref={ref} style={{ width: "80%", height: "600px", userSelect: "none", marginRight: "auto" }} />
+      <svg ref={ref} style={{ width: "100%", height: "600px", userSelect: "none", marginRight: "auto" }} />
       <div style={{ display: "flex", gap: "40px", justifyContent: "center", marginTop: "20px" }}></div>
     </div>
   );
