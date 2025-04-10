@@ -18,7 +18,7 @@ import { RenderEllipsisText } from "@/utils/textUtils.tsx";
 import ProjectBadges from "@/components/projects/ProjectBadges.tsx";
 import { Base64Avatar } from "@/components/other/Base64Avatar.tsx";
 import { formatCurrency } from "@/utils/formatCurrency.ts";
-import { UseContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
+import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
 import { GeneratedProjectNames } from "@/shared/enums/statisticsMapIconsEnums.ts";
 
 const mokDonors = [
@@ -37,7 +37,7 @@ const mokDonors = [
 ];
 
 const ContractsTable = () => {
-  const { contracts, filteredContracts } = UseContractsViewModel();
+  const { contracts, filteredContracts } = useContractsViewModel();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
