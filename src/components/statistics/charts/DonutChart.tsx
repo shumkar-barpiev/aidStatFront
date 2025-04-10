@@ -3,6 +3,7 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import { Box } from "@mui/material";
 
 interface Props {
   seriesOptions?: number[];
@@ -16,7 +17,7 @@ const DonutChart: React.FC<Props> = ({ seriesOptions, labels }) => {
     chart: {
       type: "donut",
     },
-    labels: labels || ["до $100.000", "от $100.000 до $500.000", "от $500.000"],
+    labels: labels || ["до $100.000", "$100.000 - $500.000", "от $500.000"],
     colors: ["#0b4678", "#005faf", "#0084c7", "#00a1e1", "#0074b7"],
     responsive: [
       {
@@ -34,9 +35,9 @@ const DonutChart: React.FC<Props> = ({ seriesOptions, labels }) => {
   };
 
   return (
-    <div className="w-full flex justify-center items-center">
-      <Chart options={options} series={series} type="donut" width="500" />
-    </div>
+    <Box mx="auto" display="flex" justifyContent="center" alignItems="center">
+      <Chart options={options} series={series} type="donut" width="450px" />
+    </Box>
   );
 };
 
