@@ -9,6 +9,7 @@ const initialStore = {
   error: null,
   total: null,
   items: null,
+  item: null,
   pageTotal: null,
 };
 
@@ -17,10 +18,12 @@ export const usePartnersStore = create<{
   error: string | null;
   total: number | null;
   pageTotal: number | null;
+  item: TPartnerModel | null;
   items: TPartnerModel[] | null;
-  getItems: (callback: Function) => Promise<void>;
-  fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
   clearStore: () => void;
+  getItems: (callback: Function) => Promise<void>;
+  fetchItem: (id: number, callback?: Function) => Promise<void>;
+  fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
 }>((set, get) => ({
   ...initialStore,
   getItems: async (callback: Function) => {
@@ -73,6 +76,29 @@ export const usePartnersStore = create<{
       set({ loading: false });
     }
   },
+
+  fetchItem: async (id: number, callback?: Function) => {
+    set({ loading: true });
+    try {
+      const response = await http(`/ws/public/partner/${id}`, {
+        method: "GET",
+        withoutAuth: true,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (callback != null) callback(data);
+        else set(() => ({ error: null, total: data.total, item: data }));
+      } else {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+    } catch (e: any) {
+      set({ error: e?.message, total: null, items: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
   clearStore: () => {
     set(initialStore);
   },

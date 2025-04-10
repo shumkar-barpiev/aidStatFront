@@ -8,7 +8,7 @@ export const useFooterViewModel = () => {
     { label: "Главная", i18n: "mainPage", path: "/" },
     { label: "Новости", i18n: "newsPage", path: "/news" },
     { label: "Проекты", i18n: "projectsPage", path: "/projects" },
-    { label: "Партнеры", i18n: "partnersPage", path: "/partners" },
+    { label: "Партнеры", i18n: "partners", path: "/partners" },
     { label: "Документы", i18n: "documentsPage", path: "/documents" },
     { label: "Статистика", i18n: "statisticsPage", path: "/statistics" },
     { label: "Контакты", i18n: "contactsPage", path: "/contacts" },
