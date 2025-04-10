@@ -2,6 +2,14 @@ import { create } from "zustand";
 import { http } from "@/utils/http.ts";
 import contractsData from "@/components/maps/contractsData.json";
 
+export interface ContractShort {
+  title: string;
+  budget: string;
+  state_id: string;
+  region_id: string;
+  type: string;
+}
+
 export interface Contract {
   title: string;
   state_id: string;
@@ -21,19 +29,35 @@ export interface Contract {
   status: string;
 }
 
+export interface BudgetStats {
+  lowBudget: number;
+  mediumBudget: number;
+  highBudget: number;
+}
+
+export interface ByTypesStats {
+  goods: number;
+  infrastructure: number;
+}
+
 const initialStore = {
   loading: false,
   error: null,
   filter: null,
+  chartFilter: null,
   items: contractsData,
+  itemsWithBudgetByRegion: null,
 };
 
 interface ContractsState {
   loading: boolean;
   error: string | null;
   items: Contract[] | null;
+  itemsWithBudgetByRegion: ContractShort[] | null;
   filter: string | null;
+  chartFilter: string | null;
   setFilter: (filter: string | null) => void;
+  setChartFilter: (filter: string | null) => void;
   fetchItems: (callback: Function) => Promise<void>;
 }
 
@@ -62,7 +86,10 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
 
   setFilter: (filter: string | null) => {
     set({ filter });
-    console.log("FILTER IS SET FILTER", filter);
+  },
+
+  setChartFilter: (chartFilter: string | null) => {
+    set({ chartFilter });
   },
 
   clearStore: () => {
