@@ -3,6 +3,7 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import { Box } from "@mui/material";
 
 interface Props {
   seriesOptions?: number[];
@@ -10,33 +11,76 @@ interface Props {
 }
 
 const DonutChart: React.FC<Props> = ({ seriesOptions, labels }) => {
-  const series = seriesOptions || [44, 54, 53];
+  if (!seriesOptions) return null;
 
-  const options: ApexOptions = {
-    chart: {
-      type: "donut",
-    },
-    labels: labels || ["до $100.000", "от $100.000 до $500.000", "от $500.000"],
-    colors: ["#0b4678", "#005faf", "#0084c7", "#00a1e1", "#0074b7"],
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 300,
-          },
-          legend: {
-            position: "bottom",
-          },
+  const noData = seriesOptions.every((val) => val === 0);
+
+  const series = noData ? [1] : seriesOptions;
+
+  const options: ApexOptions = noData
+    ? {
+        chart: {
+          type: "donut",
         },
-      },
-    ],
-  };
+        labels: ["Нет данных для графика"],
+        colors: ["#e0e0e0"],
+        dataLabels: {
+          enabled: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
+        legend: {
+          show: true,
+        },
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 300,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      }
+    : {
+        chart: {
+          type: "donut",
+        },
+        labels: labels,
+        colors: ["#0b4678", "#005faf", "#0084c7", "#00a1e1", "#0074b7"],
+        dataLabels: {
+          enabled: true,
+        },
+        tooltip: {
+          enabled: true,
+        },
+        legend: {
+          show: true,
+        },
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 300,
+              },
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        ],
+      };
 
   return (
-    <div className="w-full flex justify-center items-center">
-      <Chart options={options} series={series} type="donut" width="500" />
-    </div>
+    <Box mx="auto" display="flex" justifyContent="center" alignItems="center">
+      <Chart options={options} series={series} type="donut" width="450px" />
+    </Box>
   );
 };
 

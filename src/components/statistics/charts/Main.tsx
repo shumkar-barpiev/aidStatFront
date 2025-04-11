@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Box, Typography, Divider, Grid, Tab, Tabs } from "@mui/material";
 import CardComponent from "@/components/statistics/charts/ChartCard";
 import { useStatisticsChartsViewModel } from "@/viewmodels/statistics/charts/useStatisticChartsViewModel";
+import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel";
 import ContractsMap from "@/components/maps/ContractsMap.tsx";
 import dynamic from "next/dynamic";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
@@ -27,6 +28,7 @@ export default function Main() {
   const [tab, setTab] = useState<number>(0);
   const { t } = useTranslation();
   const { cardsData } = useStatisticsChartsViewModel();
+  const { budgetForChart, byTypesForChart } = useContractsViewModel();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -59,16 +61,29 @@ export default function Main() {
         </Grid>
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
-        <Box>
-          <Box display="flex" gap={2}>
-            <ContractsMap />
-            <Box display="flex" flexDirection="column" gap={2}>
-              <DonutChart />
-              <DonutChart />
-            </Box>
+        <Box
+          display="flex"
+          gap={2}
+          mb={5}
+          sx={{ flexDirection: { xs: "column", lg: "row" }, justifyContent: "center", alignItems: "center" }}
+        >
+          <ContractsMap />
+          <Box display="flex" gap={2} flexDirection="column" sx={{ flexDirection: { xs: "row", lg: "column" } }}>
+            {budgetForChart && (
+              <DonutChart
+                seriesOptions={[budgetForChart.lowBudget, budgetForChart.mediumBudget, budgetForChart.highBudget]}
+                labels={["до $100.000", "$100.000 - $500.000", "от $500.000"]}
+              />
+            )}
+            {byTypesForChart && (
+              <DonutChart
+                seriesOptions={[byTypesForChart.goods, byTypesForChart?.infrastructure]}
+                labels={["Товары", "Инфраструктура"]}
+              />
+            )}
           </Box>
-          <ContractsTable />
         </Box>
+        <ContractsTable />
       </CustomTabPanel>
     </Box>
   );

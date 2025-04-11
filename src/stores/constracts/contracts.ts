@@ -1,6 +1,15 @@
 import { create } from "zustand";
 import { http } from "@/utils/http.ts";
 import contractsData from "@/components/maps/contractsData.json";
+import contractsDataBudgetStateOnly from "@/components/maps/contractsDataBudgetStateOnly.json";
+
+export interface ContractShort {
+  title: string;
+  budget: string;
+  state_id: string;
+  region_id: string;
+  type: string;
+}
 
 export interface Contract {
   title: string;
@@ -21,20 +30,41 @@ export interface Contract {
   status: string;
 }
 
+export interface BudgetStats {
+  lowBudget: number;
+  mediumBudget: number;
+  highBudget: number;
+}
+
+export interface ByTypesStats {
+  goods: number;
+  infrastructure: number;
+}
+
 const initialStore = {
   loading: false,
   error: null,
   filter: null,
+  chartFilter: null,
   items: contractsData,
+  isDistrict: false,
+  itemsWithBudget: contractsDataBudgetStateOnly,
+  itemsWithBudgetByRegion: null,
 };
 
 interface ContractsState {
   loading: boolean;
   error: string | null;
   items: Contract[] | null;
+  isDistrict: boolean;
+  itemsWithBudget: ContractShort[] | null;
+  itemsWithBudgetByRegion: ContractShort[] | null;
   filter: string | null;
+  chartFilter: string | null;
   setFilter: (filter: string | null) => void;
+  setChartFilter: (filter: string | null) => void;
   fetchItems: (callback: Function) => Promise<void>;
+  setIsDistrict: (isDistrict: boolean) => void;
 }
 
 export const useContractsStore = create<ContractsState>((set, get) => ({
@@ -62,7 +92,14 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
 
   setFilter: (filter: string | null) => {
     set({ filter });
-    console.log("FILTER IS SET FILTER", filter);
+  },
+
+  setChartFilter: (chartFilter: string | null) => {
+    set({ chartFilter });
+  },
+
+  setIsDistrict: (isDistrict: boolean) => {
+    set({ isDistrict });
   },
 
   clearStore: () => {

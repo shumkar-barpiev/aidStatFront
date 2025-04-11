@@ -5,7 +5,7 @@ import { select } from "d3-selection";
 import { json } from "d3-fetch";
 import { geoPath, geoMercator } from "d3-geo";
 import { Feature, FeatureCollection } from "geojson";
-import { UseContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
+import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
 
 const width = 800;
 const height = 600;
@@ -39,8 +39,7 @@ const isFeatureCollection = (data: unknown): data is FeatureCollection => {
 const ContractsMap = () => {
   const ref = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const { handleSetFilter } = UseContractsViewModel();
-
+  const { handleSetFilter, handleSetChartFilter, handleSetIsDistrict } = useContractsViewModel();
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
 
   const drawRegions = useCallback(() => {
@@ -71,17 +70,21 @@ const ContractsMap = () => {
                 .style("opacity", 1)
                 .html((d.id as string) || "Без названия");
             })
-            .on("mouseenter", function () {
-              select(this).attr("fill", areaHoverColor);
+            .on("mouseenter", function (event, d) {
+              if (d && d.id) {
+                select(this).attr("fill", areaHoverColor);
+                handleSetChartFilter(d.id as string);
+              }
             })
             .on("mouseleave", function () {
               select(tooltipRef.current).style("opacity", 0);
               select(this).attr("fill", areaColor);
+              handleSetChartFilter(null);
             })
             .on("click", function (event, d) {
               if (d && d.id) {
                 setSelectedRegion(d);
-                handleSetFilter(d.id as string);
+                handleSetChartFilter(d.id as string);
               }
             })
             .append("title");
@@ -99,7 +102,6 @@ const ContractsMap = () => {
       if (isFeatureCollection(districts)) {
         const svg = select(ref.current);
         svg.selectAll("*").remove();
-
         const projection = geoMercator().fitSize([width, height], districts);
         const path = geoPath().projection(projection);
 
@@ -108,6 +110,9 @@ const ContractsMap = () => {
           .data(districts.features.filter((f: Feature) => f.geometry.type !== "Point"))
           .enter()
           .append("path")
+          .attr("d", (d) => {
+            return path(d);
+          })
           .attr("d", path)
           .attr("fill", areaColor)
           .attr("stroke", "#fff")
@@ -121,12 +126,23 @@ const ContractsMap = () => {
               .style("opacity", 1)
               .html((d.id as string) || "Без названия");
           })
-          .on("mouseenter", function () {
-            select(this).attr("fill", areaHoverColor);
+          .on("mouseenter", function (event, d) {
+            if (d && d.id) {
+              select(this).attr("fill", areaHoverColor);
+              handleSetIsDistrict(true);
+              handleSetChartFilter(d.id as string);
+            }
           })
           .on("mouseleave", function () {
             select(tooltipRef.current).style("opacity", 0);
             select(this).attr("fill", areaColor);
+            handleSetIsDistrict(false);
+            handleSetChartFilter(null);
+          })
+          .on("click", function (event, d) {
+            if (d && d.id) {
+              handleSetChartFilter(d.id as string);
+            }
           })
           .append("title");
         // .text((d: any) => d.properties.name || 'Район');
@@ -136,6 +152,7 @@ const ContractsMap = () => {
 
   const resetView = () => {
     setSelectedRegion(null);
+    handleSetIsDistrict(false);
     handleSetFilter(null);
     drawRegions();
   };
@@ -153,6 +170,7 @@ const ContractsMap = () => {
   useEffect(() => {
     if (selectedRegion) {
       drawDistricts();
+      handleSetChartFilter(selectedRegion.id as string);
     }
   }, [selectedRegion, drawDistricts]);
 
@@ -198,7 +216,6 @@ const ContractsMap = () => {
       )}
 
       <svg ref={ref} style={{ width: "100%", height: "600px", userSelect: "none", marginRight: "auto" }} />
-      <div style={{ display: "flex", gap: "40px", justifyContent: "center", marginTop: "20px" }}></div>
     </div>
   );
 };
