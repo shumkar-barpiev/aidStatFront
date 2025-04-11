@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { http } from "@/utils/http.ts";
 import contractsData from "@/components/maps/contractsData.json";
+import contractsDataBudgetStateOnly from "@/components/maps/contractsDataBudgetStateOnly.json";
 
 export interface ContractShort {
   title: string;
@@ -46,6 +47,8 @@ const initialStore = {
   filter: null,
   chartFilter: null,
   items: contractsData,
+  isDistrict: false,
+  itemsWithBudget: contractsDataBudgetStateOnly,
   itemsWithBudgetByRegion: null,
 };
 
@@ -53,12 +56,15 @@ interface ContractsState {
   loading: boolean;
   error: string | null;
   items: Contract[] | null;
+  isDistrict: boolean;
+  itemsWithBudget: ContractShort[] | null;
   itemsWithBudgetByRegion: ContractShort[] | null;
   filter: string | null;
   chartFilter: string | null;
   setFilter: (filter: string | null) => void;
   setChartFilter: (filter: string | null) => void;
   fetchItems: (callback: Function) => Promise<void>;
+  setIsDistrict: (isDistrict: boolean) => void;
 }
 
 export const useContractsStore = create<ContractsState>((set, get) => ({
@@ -90,6 +96,10 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
 
   setChartFilter: (chartFilter: string | null) => {
     set({ chartFilter });
+  },
+
+  setIsDistrict: (isDistrict: boolean) => {
+    set({ isDistrict });
   },
 
   clearStore: () => {
