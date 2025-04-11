@@ -7,7 +7,7 @@ interface Base64AvatarProps {
   alt?: string;
   size?: number;
 }
-export const Base64Avatar: React.FC<Base64AvatarProps> = ({ base64String, alt = "Avatar", size = 40 }) => {
+export const Base64Avatar: React.FC<Base64AvatarProps> = ({ base64String, alt = "Avatar", size = 50 }) => {
   const isValidBase64 = (str: string) => {
     try {
       return Buffer.from(str, "base64").toString("base64") === str;
@@ -28,7 +28,17 @@ export const Base64Avatar: React.FC<Base64AvatarProps> = ({ base64String, alt = 
 
   return (
     <Tooltip title={`${alt}`}>
-      <Avatar src={`data:image/jpeg;base64,${base64String}`} alt={alt} sx={{ width: size, height: size }} />
+      <Avatar
+        src={`data:image/jpeg;base64,${base64String}`}
+        alt={alt}
+        sx={{
+          width: size,
+          height: size,
+          "& .MuiAvatar-img": {
+            objectFit: "contain",
+          },
+        }}
+      />
     </Tooltip>
   );
 };

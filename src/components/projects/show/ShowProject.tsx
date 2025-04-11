@@ -4,7 +4,11 @@ import {
   Map as CoverageIcon,
   Business as AgencyIcon,
   Category as SectorsIcon,
+  AttachMoney as CoFinancingIcon,
   Engineering as ImplementingIcon,
+  Assistant as TechAssistanceIcon,
+  CalendarToday as CurrentYearIcon,
+  TrendingUp as DomesticFundingIcon,
   Diversity3Outlined as PartnersIcon,
   AssignmentOutlined as DescriptionIcon,
   CurrencyExchangeRounded as FundingIcon,
@@ -13,14 +17,16 @@ import Colors from "@/styles/colors";
 import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import { useProjectsStore } from "@/stores/projects/projects";
-import { Box, Typography, Grid, Divider } from "@mui/material";
+import { Box, Typography, Grid, Divider, Card } from "@mui/material";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
+import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
+import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 
 export const ShowProject = () => {
   const projectsStore = useProjectsStore();
   const [project, setProject] = useState<TProjectModel | null>(null);
-  const { getProjectSectorsTitle, getProjectRegionsTitle } = useProjectsViewModel();
+  const { getProjectSectorsTitle, getProjectRegionsTitle, getProjectPartnersTitle } = useProjectsViewModel();
 
   useEffect(() => {
     setProject(projectsStore.item);
@@ -88,7 +94,9 @@ export const ShowProject = () => {
                       Исполнительное агентство
                     </Typography>
                   </Box>
-                  <Typography sx={{ mb: 1 }}>Министерство Энергетики Кыргызской Республики</Typography>
+                  <Typography sx={{ mb: 1 }}>
+                    {project?.contractors && getProjectPartnersTitle(project?.contractors)}
+                  </Typography>
                 </Box>
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
@@ -104,6 +112,14 @@ export const ShowProject = () => {
 
                   <Typography sx={{ mb: 1 }}>{getProjectSectorsTitle(project?.sectors ?? [])}</Typography>
                 </Box>
+                <Divider
+                  sx={{
+                    mb: 2,
+                    borderColor: Colors.darkBlue,
+                    borderBottomWidth: 2,
+                    display: { xs: "block", sm: "block", md: "none" },
+                  }}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -119,7 +135,8 @@ export const ShowProject = () => {
                     </Typography>
                   </Box>
                   <Typography sx={{ mb: 1 }}>
-                    <strong>Наименование:</strong> Международная ассоциация развития (MAP)
+                    <strong>Наименование: </strong>
+                    {project?.partners && getProjectPartnersTitle(project?.partners)}
                   </Typography>
                 </Box>
 
@@ -131,10 +148,12 @@ export const ShowProject = () => {
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <ImplementingIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Реализующее агентство:
+                      Реализующее агентство
                     </Typography>
                   </Box>
-                  <Typography sx={{ mb: 1 }}>ТОО &quot;КыргызГидроСтрой&quot;</Typography>
+                  <Typography sx={{ mb: 1 }}>
+                    {project?.implementors && getProjectPartnersTitle(project?.implementors)}
+                  </Typography>
                 </Box>
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
@@ -153,10 +172,91 @@ export const ShowProject = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>
-      <Box sx={{ my: 6 }}>
-        <Divider sx={{ mb: 8, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-        <ProjectTimeLine />
+        <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+
+        <Card sx={{ p: 3 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                  <CoFinancingIcon color="primary" sx={{ mr: 1, fontSize: 32 }} />
+                  <Typography variant="h6" fontWeight="bold" sx={{ whiteSpace: "nowrap" }}>
+                    Сумма софинансирования
+                  </Typography>
+                </Box>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  {project?.funding?.coFundingSum || "Н/Д"}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                  <TechAssistanceIcon color="primary" sx={{ mr: 1, fontSize: 32 }} />
+                  <Typography variant="h6" fontWeight="bold" sx={{ whiteSpace: "nowrap" }}>
+                    Сумма технической помощи
+                  </Typography>
+                </Box>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  {project?.funding?.techAidSum || "Н/Д"}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                  <DomesticFundingIcon color="primary" sx={{ mr: 1, fontSize: 32 }} />
+                  <Typography
+                    variant="h6"
+                    fontWeight="bold"
+                    sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
+                  >
+                    Освоение внутреннего финансирования
+                  </Typography>
+                </Box>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  {project?.funding?.fundsSpent || "Н/Д"}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                  <CurrentYearIcon color="primary" sx={{ mr: 1, fontSize: 32 }} />
+                  <Typography variant="h6" fontWeight="bold" sx={{ whiteSpace: "nowrap" }}>
+                    Освоение за текущий год
+                  </Typography>
+                </Box>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  {project?.funding?.fundsSpentCurrentYear || "Н/Д"}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Card>
+        <Box sx={{ mb: 3 }}>
+          <Divider sx={{ mb: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+          <ProjectTimeLine />
+        </Box>
+
+        <Box sx={{ my: 3 }}>
+          <Divider sx={{ mb: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+            <AddToDriveOutlinedIcon color="primary" sx={{ mr: 1, fontSize: 32 }} />
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
+            >
+              Документы
+            </Typography>
+          </Box>
+
+          <ProjectDocuments />
+        </Box>
       </Box>
     </Box>
   );

@@ -48,7 +48,7 @@ export default function ProjectsTable() {
   return (
     <Box>
       <TableContainer component={Paper} sx={{ height: "100%" }}>
-        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: "fixed" }}>
+        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: "fixed", minWidth: 950 }}>
           <TableHead>
             <TableRow
               sx={{

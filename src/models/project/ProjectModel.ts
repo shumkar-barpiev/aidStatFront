@@ -4,11 +4,21 @@ export const ProjectModel = z.object({
   id: z.number().int().positive().optional(),
   name: z.string().trim().optional(),
   description: z.string().trim().optional(),
-  funding: z.string().trim().optional().nullable(),
   totalSum: z.string().trim().optional().nullable(),
   status: z.string().trim().optional(),
   startDate: z.string().trim().optional().nullable(),
   endDate: z.string().trim().optional().nullable(),
+
+  funding: z
+    .object({
+      coFundingSum: z.string().trim(),
+      fundsSpent: z.string().trim(),
+      fundsSpentCurrentYear: z.string().trim(),
+      techAidSum: z.string().trim(),
+      totalSum: z.string().trim(),
+    })
+    .optional()
+    .nullable(),
 
   timeLine: z
     .object({

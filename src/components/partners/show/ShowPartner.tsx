@@ -1,5 +1,17 @@
 "use client";
 
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Divider,
+  CardMedia,
+  Typography,
+  IconButton,
+  CardContent,
+  CircularProgress,
+} from "@mui/material";
 import Colors from "@/styles/colors";
 import PhoneIcon from "@mui/icons-material/Phone";
 import React, { useEffect, useState } from "react";
@@ -8,11 +20,10 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { usePartnersStore } from "@/stores/partners/partners";
 import { CollapsibleText } from "@/components/other/CollabsibleText";
-import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
+import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
-import { Box, Typography, Card, CardContent, Grid, Divider, CardMedia, Stack, IconButton } from "@mui/material";
 
 const ShowPartner = () => {
   const partnerStore = usePartnersStore();
@@ -178,7 +189,18 @@ const ShowPartner = () => {
       </Card>
     </Box>
   ) : (
-    <>Loading!</>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "200px",
+        width: 1,
+        mt: 3,
+      }}
+    >
+      <CircularProgress />
+    </Box>
   );
 };
 
