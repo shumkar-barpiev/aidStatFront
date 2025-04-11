@@ -7,12 +7,10 @@ import React, { useEffect, useRef } from "react";
 import PartnersCard from "@/components/partners/PartnersCard";
 import { Grid, Box, Stack, Typography, Button } from "@mui/material";
 import MoveDownOutlinedIcon from "@mui/icons-material/MoveDownOutlined";
-import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
 import { containerWidths, containerMargins, NAVBAR_HEIGHT } from "@/utils/constants";
 
 export default function Main() {
   const { t } = useTranslation();
-  const { handleFilter } = usePartnersViewModel();
   const partnersBoxRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToTableBox = () => {
@@ -69,7 +67,7 @@ export default function Main() {
               maxWidth: { xs: "100%", md: "90%" },
             }}
           >
-            {t("partnersPage")}
+            {t("partners")}
           </Typography>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
             {t("partnersPageDescription")}

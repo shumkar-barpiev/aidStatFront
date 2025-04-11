@@ -3,6 +3,7 @@
 import { Box } from "@mui/material";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import PartnerShow from "@/components/partners/show/ShowPartner";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import CustomBreadcrumbs from "@/components/breadcrumbs/CustomBreadcrumbs";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
@@ -35,7 +36,7 @@ export default function PartnerShowPage() {
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 3 }}>
       <CustomBreadcrumbs path={`partners/${decodeURIComponent(partnerName)}`} />
-      {partnerName}
+      <PartnerShow />
     </Box>
   );
 }
