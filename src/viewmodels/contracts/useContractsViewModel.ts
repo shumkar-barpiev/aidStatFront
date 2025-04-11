@@ -26,7 +26,14 @@ export const useContractsViewModel = () => {
     contractsStore.setChartFilter(filter);
   };
 
+  const handleSetIsDistrict = (isDistrict: boolean) => {
+    contractsStore.setIsDistrict(isDistrict);
+  };
+
   const handleFilterContracts = (data: Contract[] | ContractShort[], filterBy: string) => {
+    if (contractsStore.isDistrict) {
+      return data.filter((contract: Contract | ContractShort) => contract.region_id === filterBy);
+    }
     return data.filter((contract: Contract | ContractShort) => contract.state_id === filterBy);
   };
 
@@ -84,19 +91,8 @@ export const useContractsViewModel = () => {
     if (filterBy) {
       const filtered = handleFilterContracts(contracts, filterBy) as Contract[];
       setFilteredContracts(filtered);
-      const filteredForChart = handleFilterContracts(contractsDataBudgetStateOnly, filterBy) as ContractShort[];
-      setFilteredContractsForChart(filteredForChart);
-      const stats = getBudgetStats(filteredForChart);
-      setBudgetForChart(stats);
-      const typesStats = getTypesStats(filteredForChart);
-      setByTypesForChart(typesStats);
     } else {
       setFilteredContracts(contracts);
-      setFilteredContractsForChart(contractsDataBudgetStateOnly);
-      const stats = getBudgetStats(contractsDataBudgetStateOnly);
-      setBudgetForChart(stats);
-      const typesStats = getTypesStats(contractsDataBudgetStateOnly);
-      setByTypesForChart(typesStats);
     }
   }, [contractsStore.filter, contracts]);
 
@@ -126,5 +122,6 @@ export const useContractsViewModel = () => {
     filteredContractsForChart,
     budgetForChart,
     byTypesForChart,
+    handleSetIsDistrict,
   };
 };
