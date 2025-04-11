@@ -24,6 +24,8 @@ export const useProjectsStore = create<{
   items: TProjectModel[] | null;
   getItems: (filters?: TModelFilters) => TProjectModel[] | null;
   fetchItem: (id: number, callback?: Function) => Promise<void>;
+  fetchDocument: (id: number, callback: Function) => Promise<void>;
+  fetchProjectDocuments: (id: number, callback: Function) => Promise<void>;
   fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
   clearStore: () => void;
 }>((set, get) => ({
@@ -65,6 +67,7 @@ export const useProjectsStore = create<{
 
   fetchItem: async (id: number, callback?: Function) => {
     set({ loading: true });
+
     try {
       const response = await http(`/ws/public/project/${id}`, {
         method: "GET",
@@ -84,6 +87,51 @@ export const useProjectsStore = create<{
       set({ loading: false });
     }
   },
+
+  fetchProjectDocuments: async (id: number, callback: Function) => {
+    set({ loading: true });
+
+    try {
+      const response = await http(`/ws/public/attachment/com.axelor.apps.aid.db.Project/${id}`, {
+        method: "GET",
+        withoutAuth: true,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        callback(data);
+      } else {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+    } catch (e: any) {
+      set({ error: e?.message, total: null, items: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  fetchDocument: async (id: number, callback: Function) => {
+    set({ loading: true });
+
+    try {
+      const response = await http(`/ws/public/file/dms/download/${id}`, {
+        method: "GET",
+        withoutAuth: true,
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        callback(blob);
+      } else {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+    } catch (e: any) {
+      set({ error: e?.message, total: null, items: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
   clearStore: () => {
     set(initialStore);
   },

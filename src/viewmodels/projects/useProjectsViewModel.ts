@@ -83,6 +83,12 @@ export const useProjectsViewModel = () => {
     return regions.map((region) => region?.region?.name).join(", ");
   };
 
+  const getProjectPartnersTitle = (partners: Record<string, any>[]) => {
+    if (!partners || partners.length === 0) return "";
+
+    return partners.map((partner) => partner?.name).join(", ");
+  };
+
   const fetchProject = (id: number) => {
     projectStore.fetchItem(id);
   };
@@ -97,6 +103,7 @@ export const useProjectsViewModel = () => {
     projectsFilter,
     getProjectRegionsTitle,
     getProjectSectorsTitle,
+    getProjectPartnersTitle,
     handleProcessItemsPageChange,
   };
 };
