@@ -189,7 +189,7 @@ const ContractsTable = () => {
                 </StyledTableCell>
                 <StyledTableCell sx={{ width: "22%" }}>
                   {(() => {
-                    const index = Math.floor(Math.random() * GeneratedProjectNames.length);
+                    // const index = Math.floor(Math.random() * GeneratedProjectNames.length);
                     return (
                       <a
                         href={`/projects/show/${GeneratedProjectNames[index]}#${contract.id}`}
@@ -203,7 +203,7 @@ const ContractsTable = () => {
                 </StyledTableCell>
                 <StyledTableCell sx={{ width: "10%" }}>
                   {(() => {
-                    const index = Math.floor(Math.random() * mokDonors.length);
+                    // const index = Math.floor(Math.random() * mokDonors.length);
                     return (
                       <Tooltip title={mokDonors[index].name}>
                         <a
