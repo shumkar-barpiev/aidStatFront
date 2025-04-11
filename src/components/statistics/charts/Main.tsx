@@ -72,6 +72,7 @@ export default function Main() {
             {budgetForChart && (
               <DonutChart
                 seriesOptions={[budgetForChart.lowBudget, budgetForChart.mediumBudget, budgetForChart.highBudget]}
+                labels={["до $100.000", "$100.000 - $500.000", "от $500.000"]}
               />
             )}
             {byTypesForChart && (
