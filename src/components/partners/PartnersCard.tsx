@@ -1,15 +1,29 @@
 "use client";
 
-import React, { useEffect } from "react";
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Tooltip,
+  CardMedia,
+  IconButton,
+  Typography,
+  Pagination,
+  CircularProgress,
+} from "@mui/material";
+import React from "react";
 import Colors from "@/styles/colors";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { usePartnersStore } from "@/stores/partners/partners";
 import { PartnerSearchField } from "@/components/partners/PartnerSearch";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
-import { Box, Card, Grid, Stack, Tooltip, CardMedia, IconButton, Typography, Pagination } from "@mui/material";
 
 function PartnersCard() {
+  const router = useRouter();
   const { t } = useTranslation();
   const partnerStore = usePartnersStore();
   const { handlePartnersPageChange, partnersFilter } = usePartnersViewModel();
@@ -20,8 +34,9 @@ function PartnersCard() {
         <Box sx={{ mb: 1 }}>
           <PartnerSearchField />
         </Box>
+
         <Grid container spacing={3}>
-          {(partnerStore?.items ?? []).length > 0 &&
+          {(partnerStore?.items ?? []).length > 0 ? (
             partnerStore.items?.map((partner, index) => {
               return (
                 <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
@@ -56,6 +71,9 @@ function PartnersCard() {
                       }}
                     >
                       <CardMedia
+                        onClick={() => {
+                          router.push(`/partners/show/${partner.name}#${partner.id}`);
+                        }}
                         component="img"
                         alt={partner.name}
                         image={`data:image/png;base64,${partner.image}`}
@@ -69,30 +87,42 @@ function PartnersCard() {
 
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                       <Stack direction={"column"} alignItems={"left"}>
-                        <Typography
-                          variant="h3"
-                          sx={{
-                            fontWeight: 550,
-                            fontFamily: "sans-serif",
-                            fontSize: "1.25rem",
-                            display: "-webkit-box",
-                            overflow: "hidden",
-                            WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 1,
-                            textOverflow: "ellipsis",
-
-                            "&:hover": {
-                              color: "#2E4B6D",
-                              transition: "color 0.3s ease",
-                            },
+                        <button
+                          onClick={() => {
+                            router.push(`/partners/show/${partner.name}#${partner.id}`);
                           }}
+                          style={plainBtnStyle}
                         >
-                          {partner.name}
-                        </Typography>
+                          <Typography
+                            variant="h3"
+                            sx={{
+                              fontWeight: 550,
+                              fontFamily: "sans-serif",
+                              fontSize: "1.25rem",
+                              display: "-webkit-box",
+                              overflow: "hidden",
+                              WebkitBoxOrient: "vertical",
+                              WebkitLineClamp: 1,
+                              textOverflow: "ellipsis",
+
+                              "&:hover": {
+                                color: "#2E4B6D",
+                                transition: "color 0.3s ease",
+                              },
+                            }}
+                          >
+                            {partner.name}
+                          </Typography>
+                        </button>
                       </Stack>
 
                       <Tooltip title={t("more")}>
-                        <IconButton sx={{ border: `1px solid ${Colors.darkBlue}` }}>
+                        <IconButton
+                          onClick={() => {
+                            router.push(`/partners/show/${partner.name}#${partner.id}`);
+                          }}
+                          sx={{ border: `1px solid ${Colors.darkBlue}` }}
+                        >
                           <ArrowForwardOutlinedIcon sx={{ color: `${Colors.darkBlue}` }} />
                         </IconButton>
                       </Tooltip>
@@ -100,7 +130,23 @@ function PartnersCard() {
                   </Card>
                 </Grid>
               );
-            })}
+            })
+          ) : (
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "200px",
+                  width: 1,
+                  mt: 3,
+                }}
+              >
+                {partnerStore.loading ? <CircularProgress /> : <Typography variant="body2">Нет данных</Typography>}
+              </Box>
+            </Grid>
+          )}
         </Grid>
         {(partnerStore.pageTotal ?? 0) > 0 && (
           <Box sx={{ mt: 2 }}>

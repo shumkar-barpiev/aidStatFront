@@ -45,7 +45,7 @@ export const usePartnersViewModel = () => {
   };
 
   const fetchPartner = (id: number) => {
-    console.log(id);
+    partnerStore.fetchItem(id);
   };
 
   useEffect(() => {
