@@ -29,7 +29,7 @@ export default function ProjectsTable() {
   const router = useRouter();
   const { t } = useTranslation();
   const projectStore = useProjectsStore();
-  const { projectsFilter, getProjectSectorsTitle, handleProcessItemsPageChange } = useProjectsViewModel();
+  const { projectsFilter, getProjectSectorsTitle, handleProjectsPageChange } = useProjectsViewModel();
 
   return (
     <Box>
@@ -127,7 +127,7 @@ export default function ProjectsTable() {
             page={projectsFilter?.page}
             disabled={projectStore.loading}
             count={projectStore.pageTotal ?? 1}
-            onChange={handleProcessItemsPageChange}
+            onChange={handleProjectsPageChange}
           />
         </Box>
       )}

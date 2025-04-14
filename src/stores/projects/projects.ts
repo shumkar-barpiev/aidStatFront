@@ -4,13 +4,22 @@ import { TModelFilters } from "@/types/model";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import { replacePublicEndpointFilters } from "@/utils/axelor-api";
 
-const PAGE_SIZE = 16;
+export type TProjectModelFilters = {
+  page: number;
+  pageSize: number;
+  searchString?: string;
+  sectorIds?: number[] | null;
+  partnerIds?: number[] | null;
+  districtIds?: number[] | null;
+  regionIds?: number[] | null;
+};
 
 const initialStore = {
   item: null,
   items: null,
   total: null,
   error: null,
+  filters: null,
   loading: false,
   pageTotal: null,
 };
@@ -22,6 +31,8 @@ export const useProjectsStore = create<{
   pageTotal: number | null;
   item: TProjectModel | null;
   items: TProjectModel[] | null;
+  filters: TModelFilters | null;
+  setFilters: (filters: Partial<TModelFilters>) => void;
   getItems: (filters?: TModelFilters) => TProjectModel[] | null;
   fetchItem: (id: number, callback?: Function) => Promise<void>;
   fetchDocument: (id: number, callback: Function) => Promise<void>;
@@ -30,6 +41,16 @@ export const useProjectsStore = create<{
   clearStore: () => void;
 }>((set, get) => ({
   ...initialStore,
+  filters: {
+    page: 1,
+    pageSize: 8,
+  },
+
+  setFilters: (newFilters) =>
+    set((state) => ({
+      filters: { ...state.filters, ...newFilters },
+    })),
+
   getItems: (filters?: TModelFilters) => {
     if (!get().loading) get().fetchItems(filters);
 

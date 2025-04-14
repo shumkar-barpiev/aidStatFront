@@ -51,7 +51,7 @@ export default function ProjectsFilter() {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Секторы" />}
           renderOption={(props, option) => (
-            <li {...props} key={option.name}>
+            <li {...props} key={option.id}>
               <Typography
                 variant="body2"
                 sx={{
@@ -67,7 +67,7 @@ export default function ProjectsFilter() {
           renderTags={(value, getTagProps) =>
             value.map((option, index) => {
               const { key, ...otherProps } = getTagProps({ index });
-              return <Chip {...otherProps} key={option.id ?? `option-${index}`} label={option.name} size="small" />;
+              return <Chip {...otherProps} key={index} label={option.name} size="small" />;
             })
           }
         />
@@ -86,7 +86,7 @@ export default function ProjectsFilter() {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Партнеры" />}
           renderOption={(props, option) => (
-            <li {...props} key={option.name}>
+            <li {...props} key={option.id}>
               <Typography
                 variant="body2"
                 sx={{
@@ -102,7 +102,7 @@ export default function ProjectsFilter() {
           renderTags={(value, getTagProps) =>
             value.map((option, index) => {
               const { key, ...otherProps } = getTagProps({ index });
-              return <Chip {...otherProps} key={option.id ?? `option-${index}`} label={option.name} size="small" />;
+              return <Chip {...otherProps} key={index} label={option.name} size="small" />;
             })
           }
         />
