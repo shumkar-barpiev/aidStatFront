@@ -10,28 +10,137 @@ import {
   CalendarToday as CurrentYearIcon,
   TrendingUp as DomesticFundingIcon,
   Diversity3Outlined as PartnersIcon,
+  RequestQuoteOutlined as ProjectGrant,
   AssignmentOutlined as DescriptionIcon,
   CurrencyExchangeRounded as FundingIcon,
+  AccountBalanceOutlined as ProjectCredit,
 } from "@mui/icons-material";
 import Colors from "@/styles/colors";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import { useProjectsStore } from "@/stores/projects/projects";
-import { Box, Typography, Grid, Divider, Card } from "@mui/material";
-import { CollapsibleText } from "@/components/other/CollabsibleText";
+import { getAvatarAsCardMedia } from "@/components/other/Base64Avatar";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
+import { Box, Typography, Grid, Divider, Card, Stack } from "@mui/material";
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
+import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
 
 export const ShowProject = () => {
+  const router = useRouter();
+  const { t } = useTranslation();
   const projectsStore = useProjectsStore();
   const [project, setProject] = useState<TProjectModel | null>(null);
-  const { getProjectSectorsTitle, getProjectRegionsTitle, getProjectPartnersTitle } = useProjectsViewModel();
+  const [grantItems, setGrantItems] = useState<Record<string, any>[]>([]);
+  const [creditItems, setCreditItems] = useState<Record<string, any>[]>([]);
+  const { getProjectSectorsTitle } = useProjectsViewModel();
+
+  const renderProjectStakeholders = (stakeholders: Record<string, any>[]) => {
+    if (!stakeholders || stakeholders.length === 0) return "";
+
+    return (
+      <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
+        {stakeholders.map((partner, index) => (
+          <Stack key={index} direction={"row"} alignItems={"center"} spacing={2}>
+            {getAvatarAsCardMedia(partner.name, partner.image ?? null, 60)}
+
+            <button
+              onClick={() => {
+                router.push(`/partners/show/${partner.name}#${partner.id}`);
+              }}
+              style={plainBtnStyle}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 550,
+                  fontFamily: "sans-serif",
+                  fontSize: "0.85rem",
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 1,
+                  textOverflow: "ellipsis",
+
+                  "&:hover": {
+                    color: "#2E4B6D",
+                    transition: "color 0.3s ease",
+                  },
+                }}
+              >
+                {partner.name}
+              </Typography>
+            </button>
+          </Stack>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderProjectCoverage = (regions: Record<string, any>[]) => {
+    if (!regions || regions.length === 0) return "";
+
+    return (
+      <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
+        {regions.map((region, index) => (
+          <li key={index}>
+            <Typography variant="subtitle1">{region.region.name}</Typography>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderProjectSectors = (sectors: Record<string, any>[]) => {
+    if (!sectors || sectors.length === 0) return "";
+
+    return (
+      <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
+        {sectors.map((sector, index) => (
+          <li key={index}>
+            <Typography variant="subtitle1">{sector.name}</Typography>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const getConditionalDivider = () => {
+    return (
+      <Divider sx={{ borderColor: Colors.darkBlue, borderBottomWidth: 2, display: { xs: "block", md: "none" } }} />
+    );
+  };
+
+  const getNotSpecifiedText = () => {
+    return (
+      <Typography variant="subtitle1" color={"lightgray"} sx={{ flexGrow: 1, fontWeight: "bold" }}>
+        {t("notSpecified")}
+      </Typography>
+    );
+  };
 
   useEffect(() => {
     setProject(projectsStore.item);
   }, [projectsStore.item]);
+
+  useEffect(() => {
+    if (project) {
+      const fundingItems = project.funding?.items;
+
+      if (fundingItems) {
+        const grant = fundingItems?.filter((item: Record<string, any>) => item.type == "Grant");
+        const credit = fundingItems?.filter((item: Record<string, any>) => item.type == "Loan");
+
+        console.log(fundingItems);
+        setGrantItems(grant ?? []);
+        setCreditItems(credit ?? []);
+      }
+    }
+  }, [project]);
 
   return (
     <Box sx={{ py: 3 }}>
@@ -57,138 +166,116 @@ export const ShowProject = () => {
           </Box>
           <Box component="ul" sx={{ pl: 2.5, listStyleType: "none" }}>
             <Box component="li" sx={{ mb: 1, display: "flex", alignItems: "flex-start" }}>
-              <Typography sx={{ mb: 1 }} variant="subtitle1">
-                {project?.description}
-              </Typography>
+              {project?.description ? (
+                <Typography sx={{ mb: 1 }} variant="subtitle1">
+                  {project?.description}
+                </Typography>
+              ) : (
+                getNotSpecifiedText()
+              )}
             </Box>
           </Box>
           <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         </Box>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <FundingIcon color="primary" fontSize="large" />
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Общая сумма финансирования
-                    </Typography>
-                  </Box>
-                  <Typography sx={{ mb: 1 }}>
-                    <strong>Общий бюджет:</strong> {project?.funding?.totalSum}
-                  </Typography>
-                </Box>
+        <Stack spacing={4}>
+          <Stack direction={{ xs: "column", md: "row" }} spacing={4}>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                <FundingIcon color="primary" fontSize="large" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Общая сумма финансирования
+                </Typography>
+              </Box>
+              {project?.funding?.totalSum ? (
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                  {project?.funding?.totalSum}
+                </Typography>
+              ) : (
+                getNotSpecifiedText()
+              )}
+            </Box>
 
-                <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-              </Grid>
+            {getConditionalDivider()}
 
-              <Grid item xs={12}>
-                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <AgencyIcon color="primary" fontSize="large" />
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Исполнительное агентство
-                    </Typography>
-                  </Box>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                <PartnersIcon color="primary" fontSize="large" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Партнеры
+                </Typography>
+              </Box>
+              {project?.partners?.length ? (
+                <Box>{renderProjectStakeholders(project?.partners)}</Box>
+              ) : (
+                getNotSpecifiedText()
+              )}
+            </Box>
+          </Stack>
 
-                  {project?.contractors && (
-                    <CollapsibleText
-                      header="Исполнительное агентство"
-                      text={getProjectSectorsTitle(project?.contractors ?? [])}
-                      maxChars={80}
-                    />
-                  )}
-                </Box>
-                <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-              </Grid>
+          <Divider sx={{ borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
-              <Grid item xs={12}>
-                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <SectorsIcon color="primary" fontSize="large" />
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Секторы
-                    </Typography>
-                  </Box>
+          <Stack direction={{ xs: "column", md: "row" }} spacing={4}>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                <AgencyIcon color="primary" fontSize="large" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Исполнительное агентство
+                </Typography>
+              </Box>
+              {project?.contractors?.length ? (
+                <Box>{renderProjectStakeholders(project?.contractors)}</Box>
+              ) : (
+                getNotSpecifiedText()
+              )}
+            </Box>
 
-                  {project?.sectors && (
-                    <CollapsibleText
-                      header="Секторы"
-                      text={getProjectSectorsTitle(project?.sectors ?? [])}
-                      maxChars={80}
-                    />
-                  )}
-                </Box>
-                <Divider
-                  sx={{
-                    mb: 2,
-                    borderColor: Colors.darkBlue,
-                    borderBottomWidth: 2,
-                    display: { xs: "block", sm: "block", md: "none" },
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
+            {getConditionalDivider()}
 
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <PartnersIcon color="primary" fontSize="large" />
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Партнеры
-                    </Typography>
-                  </Box>
-                  {project?.partners && (
-                    <CollapsibleText
-                      header="Партнеры"
-                      text={getProjectSectorsTitle(project?.partners ?? [])}
-                      maxChars={80}
-                    />
-                  )}
-                </Box>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                <ImplementingIcon color="primary" fontSize="large" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Реализующее агентство
+                </Typography>
+              </Box>
+              {project?.implementors?.length ? (
+                <Box>{renderProjectStakeholders(project?.implementors)}</Box>
+              ) : (
+                getNotSpecifiedText()
+              )}
+            </Box>
+          </Stack>
 
-                <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-              </Grid>
+          <Divider sx={{ borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
-              <Grid item xs={12}>
-                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <ImplementingIcon color="primary" fontSize="large" />
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Реализующее агентство
-                    </Typography>
-                  </Box>
+          <Stack direction={{ xs: "column", md: "row" }} spacing={4}>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                <SectorsIcon color="primary" fontSize="large" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Секторы
+                </Typography>
+              </Box>
+              {project?.sectors?.length ? renderProjectSectors(project.sectors) : getNotSpecifiedText()}
+            </Box>
 
-                  {project?.implementors && (
-                    <CollapsibleText
-                      header="Реализующее агентство"
-                      text={getProjectSectorsTitle(project?.implementors ?? [])}
-                      maxChars={80}
-                    />
-                  )}
-                </Box>
-                <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-              </Grid>
+            {getConditionalDivider()}
 
-              <Grid item xs={12}>
-                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
-                    <CoverageIcon color="primary" fontSize="large" />
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                      Географический охват
-                    </Typography>
-                  </Box>
-                  <Typography sx={{ mb: 1 }}>{getProjectRegionsTitle(project?.geographicalCoverage ?? [])}</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+            <Box flex={1}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+                <CoverageIcon color="primary" fontSize="large" />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Географический охват
+                </Typography>
+              </Box>
+              {project?.geographicalCoverage?.length
+                ? renderProjectCoverage(project.geographicalCoverage)
+                : getNotSpecifiedText()}
+            </Box>
+          </Stack>
+        </Stack>
+
         <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
         <Card sx={{ p: 3 }}>
@@ -201,9 +288,13 @@ export const ShowProject = () => {
                     Сумма софинансирования
                   </Typography>
                 </Box>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  {project?.funding?.coFundingSum || "Н/Д"}
-                </Typography>
+                {project?.funding?.coFundingSum ? (
+                  <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    {project.funding.coFundingSum}
+                  </Typography>
+                ) : (
+                  getNotSpecifiedText()
+                )}
               </Box>
             </Grid>
 
@@ -215,9 +306,13 @@ export const ShowProject = () => {
                     Сумма технической помощи
                   </Typography>
                 </Box>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  {project?.funding?.techAidSum || "Н/Д"}
-                </Typography>
+                {project?.funding?.techAidSum ? (
+                  <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    {project.funding.techAidSum}
+                  </Typography>
+                ) : (
+                  getNotSpecifiedText()
+                )}
               </Box>
             </Grid>
 
@@ -233,9 +328,13 @@ export const ShowProject = () => {
                     Освоение внутреннего финансирования
                   </Typography>
                 </Box>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  {project?.funding?.fundsSpent || "Н/Д"}
-                </Typography>
+                {project?.funding?.fundsSpent ? (
+                  <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    {project.funding.fundsSpent}
+                  </Typography>
+                ) : (
+                  getNotSpecifiedText()
+                )}
               </Box>
             </Grid>
 
@@ -247,16 +346,43 @@ export const ShowProject = () => {
                     Освоение за текущий год
                   </Typography>
                 </Box>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  {project?.funding?.fundsSpentCurrentYear || "Н/Д"}
-                </Typography>
+                {project?.funding?.fundsSpentCurrentYear ? (
+                  <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                    {project.funding.fundsSpentCurrentYear}
+                  </Typography>
+                ) : (
+                  getNotSpecifiedText()
+                )}
               </Box>
             </Grid>
           </Grid>
         </Card>
+
         <Box sx={{ my: 3 }}>
           <Divider sx={{ mb: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
           <ProjectTimeLine project={project} />
+        </Box>
+
+        <Box flex={1}>
+          <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+            <ProjectCredit color="primary" fontSize="large" />
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Кредит
+            </Typography>
+          </Box>
+          {creditItems.length ? <ProjectGrantCreditTable items={creditItems} /> : getNotSpecifiedText()}
+        </Box>
+
+        <Box flex={1}>
+          <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+            <ProjectGrant color="primary" fontSize="large" />
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Грант
+            </Typography>
+          </Box>
+          {grantItems.length ? <ProjectGrantCreditTable items={grantItems} /> : getNotSpecifiedText()}
         </Box>
 
         <Box sx={{ my: 3 }}>
@@ -271,7 +397,6 @@ export const ShowProject = () => {
               Документы
             </Typography>
           </Box>
-
           <ProjectDocuments />
         </Box>
       </Box>
