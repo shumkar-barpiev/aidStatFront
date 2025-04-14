@@ -13,7 +13,6 @@ export const ProjectDocuments = () => {
 
   const handleDownload = (doc: Record<string, any>) => {
     projectStore.fetchDocument(doc.id, (data: any) => {
-      console.log("here");
       downloadFileFromBinary(data, doc.name);
     });
   };

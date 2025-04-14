@@ -20,8 +20,8 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { RenderEllipsisText } from "@/utils/textUtils";
 import { useProjectsStore } from "@/stores/projects/projects";
-import { Base64Avatar } from "@/components/other/Base64Avatar";
 import ProjectBadges from "@/components/projects/ProjectBadges";
+import { getPartnerAvatar } from "@/components/other/Base64Avatar";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 
@@ -30,20 +30,6 @@ export default function ProjectsTable() {
   const { t } = useTranslation();
   const projectStore = useProjectsStore();
   const { projectsFilter, getProjectSectorsTitle, handleProcessItemsPageChange } = useProjectsViewModel();
-
-  const getPartnerAvatar = (name: string, image: string | null) => {
-    if (!image) {
-      const initials = name ? name.substring(0, 2).toUpperCase() : "";
-
-      return (
-        <Tooltip key={name} title={`${name}`}>
-          <Avatar sx={{ width: 40, height: 40, backgroundColor: "blue" }}>{initials}</Avatar>
-        </Tooltip>
-      );
-    }
-
-    return <Base64Avatar key={name} base64String={`${image ?? ""}`} alt={name} />;
-  };
 
   return (
     <Box>
@@ -59,11 +45,10 @@ export default function ProjectsTable() {
                 height: "70px",
               }}
             >
-              <StyledTableHeadCell sx={{ width: "5%" }}>№</StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
                 Название
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
+              <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
                 Партнеры
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
@@ -102,16 +87,15 @@ export default function ProjectsTable() {
                       },
                     }}
                   >
-                    <StyledTableCell sx={{ width: "5%" }}>{index + 1} </StyledTableCell>
                     <StyledTableCell sx={{ width: "20%" }}>
                       <RenderEllipsisText text={project?.name} tooltipPlacement="left" />
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "15%" }}>
+                    <StyledTableCell sx={{ width: "20%" }}>
                       <Stack direction={"row"} alignItems={"center"} spacing={1}>
                         {project?.partners &&
                           project.partners.map((partner) => {
                             const partnerName = `${partner.name ?? ""}`;
-                            return getPartnerAvatar(partnerName, partner.image ?? null);
+                            return getPartnerAvatar(partnerName, partner.image ?? null, 40);
                           })}
                       </Stack>
                     </StyledTableCell>

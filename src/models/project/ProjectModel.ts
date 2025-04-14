@@ -16,6 +16,17 @@ export const ProjectModel = z.object({
       fundsSpentCurrentYear: z.string().trim(),
       techAidSum: z.string().trim(),
       totalSum: z.string().trim(),
+      items: z
+        .array(
+          z.object({
+            number: z.string().trim(),
+            partnerName: z.string().trim(),
+            totalSum: z.string().trim(),
+            totalSumForeign: z.string().trim(),
+            type: z.string().trim(),
+          })
+        )
+        .nullable(),
     })
     .optional()
     .nullable(),
