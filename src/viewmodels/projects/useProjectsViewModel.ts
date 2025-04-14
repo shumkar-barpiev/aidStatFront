@@ -10,7 +10,7 @@ let timer: ReturnType<typeof setTimeout> | null;
 const initialFilters: () => TModelFilters = () => {
   return {
     page: 1,
-    pageSize: 16,
+    pageSize: 8,
   };
 };
 

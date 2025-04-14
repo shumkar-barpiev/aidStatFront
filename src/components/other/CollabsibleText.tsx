@@ -46,63 +46,63 @@ export const CollapsibleText: React.FC<CollapsibleTextProps> = ({ header, text, 
         )}
       </Box>
 
-      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-        <Box
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          p: 2,
+        }}
+      >
+        <Paper
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            p: 2,
+            width: "100%",
+            maxWidth: { xs: "90%", sm: "90%", md: "80%", lg: "70%" },
+            maxHeight: "80vh",
+            position: "relative",
+            p: 3,
+            overflow: "hidden",
           }}
         >
-          <Paper
-            sx={{
-              width: "100%",
-              maxWidth: { xs: "90%", sm: "90%", md: "80%", lg: "70%" },
-              maxHeight: "80vh",
-              position: "relative",
-              p: 3,
-              overflow: "hidden",
-            }}
-          >
-            <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} mb={1}>
-              <Typography variant="h6" fontWeight="bold">
-                {header}
-              </Typography>
-              <Tooltip title={t("close")} arrow>
-                <IconButton
-                  onClick={() => setModalOpen(false)}
-                  sx={{
-                    zIndex: 2,
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
-              </Tooltip>
-            </Stack>
-
-            <Box
-              sx={{
-                overflowY: "auto",
-                maxHeight: "calc(80vh - 60px)",
-                pb: 4,
-                pr: 1,
-              }}
-            >
-              <Typography
-                variant="body1"
-                color="text.primary"
+          <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} mb={1}>
+            <Typography variant="h6" fontWeight="bold">
+              {header}
+            </Typography>
+            <Tooltip title={t("close")} arrow>
+              <IconButton
+                onClick={() => setModalOpen(false)}
                 sx={{
-                  textAlign: "justify",
-                  whiteSpace: "pre-line",
+                  zIndex: 2,
                 }}
               >
-                {text}
-              </Typography>
-            </Box>
-          </Paper>
-        </Box>
+                <CloseIcon />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+
+          <Box
+            sx={{
+              overflowY: "auto",
+              maxHeight: "calc(80vh - 60px)",
+              pb: 4,
+              pr: 1,
+            }}
+          >
+            <Typography
+              variant="body1"
+              color="text.primary"
+              sx={{
+                textAlign: "justify",
+                whiteSpace: "pre-line",
+              }}
+            >
+              {text}
+            </Typography>
+          </Box>
+        </Paper>
       </Modal>
     </>
   );

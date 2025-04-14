@@ -24,6 +24,15 @@ export const ProjectModel = z.object({
     .object({
       startDate: z.string().trim(),
       endDate: z.string().trim(),
+      events: z
+        .array(
+          z.object({
+            name: z.string().trim().optional().nullable(),
+            eventDate: z.string().trim().optional().nullable(),
+          })
+        )
+        .optional()
+        .nullable(),
     })
     .optional()
     .nullable(),

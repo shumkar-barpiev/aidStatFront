@@ -18,6 +18,7 @@ import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import { useProjectsStore } from "@/stores/projects/projects";
 import { Box, Typography, Grid, Divider, Card } from "@mui/material";
+import { CollapsibleText } from "@/components/other/CollabsibleText";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
@@ -68,7 +69,7 @@ export const ShowProject = () => {
           <Grid item xs={12} md={6}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Box sx={{ height: "120px" }}>
+                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <FundingIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -76,10 +77,7 @@ export const ShowProject = () => {
                     </Typography>
                   </Box>
                   <Typography sx={{ mb: 1 }}>
-                    <strong>Общий бюджет:</strong> 5 000 000,00 USD
-                  </Typography>
-                  <Typography sx={{ mb: 1 }}>
-                    <strong>Фактически освоено:</strong> 3 750 000,00 USD (75%)
+                    <strong>Общий бюджет:</strong> {project?.funding?.totalSum}
                   </Typography>
                 </Box>
 
@@ -87,22 +85,27 @@ export const ShowProject = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <Box sx={{ height: "120px" }}>
+                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <AgencyIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                       Исполнительное агентство
                     </Typography>
                   </Box>
-                  <Typography sx={{ mb: 1 }}>
-                    {project?.contractors && getProjectPartnersTitle(project?.contractors)}
-                  </Typography>
+
+                  {project?.contractors && (
+                    <CollapsibleText
+                      header="Исполнительное агентство"
+                      text={getProjectSectorsTitle(project?.contractors ?? [])}
+                      maxChars={80}
+                    />
+                  )}
                 </Box>
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
 
               <Grid item xs={12}>
-                <Box sx={{ height: "100px" }}>
+                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <SectorsIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -110,7 +113,13 @@ export const ShowProject = () => {
                     </Typography>
                   </Box>
 
-                  <Typography sx={{ mb: 1 }}>{getProjectSectorsTitle(project?.sectors ?? [])}</Typography>
+                  {project?.sectors && (
+                    <CollapsibleText
+                      header="Секторы"
+                      text={getProjectSectorsTitle(project?.sectors ?? [])}
+                      maxChars={80}
+                    />
+                  )}
                 </Box>
                 <Divider
                   sx={{
@@ -127,39 +136,47 @@ export const ShowProject = () => {
           <Grid item xs={12} md={6}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Box sx={{ height: "120px" }}>
+                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <PartnersIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                       Партнеры
                     </Typography>
                   </Box>
-                  <Typography sx={{ mb: 1 }}>
-                    <strong>Наименование: </strong>
-                    {project?.partners && getProjectPartnersTitle(project?.partners)}
-                  </Typography>
+                  {project?.partners && (
+                    <CollapsibleText
+                      header="Партнеры"
+                      text={getProjectSectorsTitle(project?.partners ?? [])}
+                      maxChars={80}
+                    />
+                  )}
                 </Box>
 
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
 
               <Grid item xs={12}>
-                <Box sx={{ height: "120px" }}>
+                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <ImplementingIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                       Реализующее агентство
                     </Typography>
                   </Box>
-                  <Typography sx={{ mb: 1 }}>
-                    {project?.implementors && getProjectPartnersTitle(project?.implementors)}
-                  </Typography>
+
+                  {project?.implementors && (
+                    <CollapsibleText
+                      header="Реализующее агентство"
+                      text={getProjectSectorsTitle(project?.implementors ?? [])}
+                      maxChars={80}
+                    />
+                  )}
                 </Box>
                 <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
               </Grid>
 
               <Grid item xs={12}>
-                <Box sx={{ height: "100px" }}>
+                <Box sx={{ height: { xs: "15vh", sm: "10h", md: "130px" } }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                     <CoverageIcon color="primary" fontSize="large" />
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -237,9 +254,9 @@ export const ShowProject = () => {
             </Grid>
           </Grid>
         </Card>
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ my: 3 }}>
           <Divider sx={{ mb: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-          <ProjectTimeLine />
+          <ProjectTimeLine project={project} />
         </Box>
 
         <Box sx={{ my: 3 }}>
