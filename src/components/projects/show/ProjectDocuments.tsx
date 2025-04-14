@@ -1,10 +1,10 @@
 "use client";
 
-import { Table, Paper, Button, TableRow, TableBody, TableCell, Typography, TableContainer } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DownloadIcon from "@mui/icons-material/Download";
 import { useProjectsStore } from "@/stores/projects/projects";
+import { Table, Paper, Button, TableRow, TableBody, TableCell, Typography, TableContainer } from "@mui/material";
 
 export const ProjectDocuments = () => {
   const { t } = useTranslation();
