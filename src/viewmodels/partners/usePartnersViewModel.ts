@@ -11,6 +11,7 @@ const initialFilters: () => TModelFilters = () => {
   return {
     page: 1,
     pageSize: 8,
+    partnerType: "Partner",
   };
 };
 
