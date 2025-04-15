@@ -55,7 +55,7 @@ export const Footer = () => {
               {primaryFooterNavItems.map((item, index) => (
                 <Stack direction={"row"} alignItems={"center"} key={item.label} sx={{ mt: 1, mr: 2 }}>
                   <Link
-                    href="#"
+                    href={item.path}
                     color="inherit"
                     underline="hover"
                     sx={{ display: "block", textTransform: "uppercase" }}

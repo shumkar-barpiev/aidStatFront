@@ -9,7 +9,7 @@ export const useNavViewModel = () => {
     { label: "Statistics", i18n: "statisticsPage", path: "/statistics" },
     { label: "Partners", i18n: "partners", path: "/partners" },
     // { label: "Documents", i18n: "documentsPage", path: "/documents" },
-    // { label: "About Us", i18n: "aboutUsPage", path: "/about-us" },
+    { label: "About Us", i18n: "aboutUsPage", path: "/contacts" },
   ]);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
