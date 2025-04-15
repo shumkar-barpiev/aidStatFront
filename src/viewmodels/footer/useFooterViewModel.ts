@@ -6,12 +6,12 @@ import { NavItem } from "@/models/nav-item/NavItem";
 export const useFooterViewModel = () => {
   const [primaryFooterNavItems] = useState<NavItem[]>([
     { label: "Главная", i18n: "mainPage", path: "/" },
-    { label: "Новости", i18n: "newsPage", path: "/news" },
+    { label: "Новости", i18n: "newsPage", path: "https://minfin.kg/pages/show/page/press-tsentr" },
     { label: "Проекты", i18n: "projectsPage", path: "/projects" },
     { label: "Партнеры", i18n: "partners", path: "/partners" },
-    { label: "Документы", i18n: "documentsPage", path: "/documents" },
+    // { label: "Документы", i18n: "documentsPage", path: "/documents" },
     { label: "Статистика", i18n: "statisticsPage", path: "/statistics" },
-    { label: "Контакты", i18n: "contactsPage", path: "/contacts" },
+    // { label: "Контакты", i18n: "contactsPage", path: "/contacts" },
   ]);
 
   const [secondaryFooterNavItems] = useState<NavItem[]>([

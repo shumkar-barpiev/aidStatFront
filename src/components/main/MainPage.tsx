@@ -75,7 +75,7 @@ export default function MainPage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",
-          alignItems: "center",
+
           justifyContent: "center",
           textAlign: "center",
           color: "white",
@@ -93,38 +93,40 @@ export default function MainPage() {
         />
         <Box
           sx={{
+            mt: 24,
             position: "relative",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
             height: "100%",
             color: "white",
             zIndex: 1,
           }}
         >
           <Typography
-            variant="h4"
+            variant="h3"
             fontWeight="bold"
             gutterBottom
             sx={{
               maxWidth: "60%",
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
+              textShadow: "2px 1px 2px rgba(0, 0, 0, 1)",
             }}
           >
             {t("mainPageText")}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)" }}
-          >
+          <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ textShadow: "2px 1px 2px rgba(0, 0, 0, 0.7)" }}>
             {t("mainPageDescription")}
           </Typography>
-          <Button variant="contained" color="primary" onClick={handleScrollToBox}>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ mt: 2 }}
+            onClick={() => {
+              router.push("/projects");
+            }}
+          >
             {t("mainPageBtn")}
           </Button>
         </Box>
@@ -234,12 +236,12 @@ export default function MainPage() {
             })}
         </Grid>
 
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ mt: 6 }}>
           <Card
             sx={{
               display: "flex",
               maxWidth: 1,
-              bgcolor: "#F3F2F8",
+              bgcolor: "#F0F4F7",
               alignItems: "stretch",
               flexDirection: { xs: "column-reverse", sm: "column-reverse", md: "row" },
             }}
