@@ -53,9 +53,9 @@ export const Footer = () => {
           >
             <Stack direction={"row"} alignItems={"center"} flexWrap={"wrap"}>
               {primaryFooterNavItems.map((item, index) => (
-                <Stack direction={"row"} alignItems={"center"} key={item.label} sx={{ mt: 1, mr: 2 }}>
+                <Stack direction={"row"} alignItems={"center"} key={item.label} sx={{ mt: 1 }}>
                   <Link
-                    href="#"
+                    href={`${item.path}`}
                     color="inherit"
                     underline="hover"
                     sx={{ display: "block", textTransform: "uppercase" }}

@@ -17,9 +17,7 @@ export default function ProjectTimeLine({ project }: { project: TProjectModel | 
     <Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
         <EventNoteIcon color="primary" fontSize="large" />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Хронология проекта
-        </Typography>
+        <Typography variant="h6">Хронология проекта</Typography>
       </Box>
       <Timeline position="alternate">
         {project?.timeLine?.startDate && (

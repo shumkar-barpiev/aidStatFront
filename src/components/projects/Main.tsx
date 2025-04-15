@@ -56,18 +56,13 @@ export default function Main() {
             sx={{
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)",
+
               maxWidth: "100%",
             }}
           >
             {t("projects")}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.4)", maxWidth: "100%" }}
-          >
+          <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
             {t("projectsPageDescription")}
           </Typography>
           <Button

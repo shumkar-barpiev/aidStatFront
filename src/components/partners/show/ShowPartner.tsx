@@ -19,6 +19,7 @@ import { TPartnerModel } from "@/models/partner/partner";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { usePartnersStore } from "@/stores/partners/partners";
+import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { CollapsibleText } from "@/components/other/CollabsibleText";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
@@ -105,34 +106,38 @@ const ShowPartner = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={4}>
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <PlaylistAddCheckOutlinedIcon fontSize="small" />
+                <PlaylistAddCheckOutlinedIcon fontSize="medium" />
                 <Typography variant="subtitle1" fontWeight="bold">
                   Проекты
                 </Typography>
               </Stack>
 
-              {partner?.projectCount && <Typography>{partner?.projectCount}</Typography>}
+              {partner?.projectCount && <Typography fontWeight={"bold"}>{partner?.projectCount}</Typography>}
             </Grid>
 
             <Grid item xs={12} sm={6} md={4}>
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <PaymentsOutlinedIcon fontSize="small" />
+                <PaymentsOutlinedIcon fontSize="medium" />
                 <Typography variant="subtitle1" fontWeight="bold">
                   Гранты
                 </Typography>
               </Stack>
-              {partner?.grant && <Typography>{partner?.grant}</Typography>}
+              {partner?.grant && (
+                <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.grant)}</Typography>
+              )}
             </Grid>
 
             <Grid item xs={12} sm={6} md={4}>
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <LocalAtmOutlinedIcon fontSize="small" />
+                <LocalAtmOutlinedIcon fontSize="medium" />
                 <Typography variant="subtitle1" fontWeight="bold">
                   Кредиты
                 </Typography>
               </Stack>
 
-              {partner?.credit && <Typography>{partner?.credit}</Typography>}
+              {partner?.credit && (
+                <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.credit)}</Typography>
+              )}
             </Grid>
           </Grid>
           <Divider sx={{ my: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
@@ -145,29 +150,29 @@ const ShowPartner = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={4}>
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <PhoneIcon fontSize="small" />
+                <PhoneIcon fontSize="medium" />
                 <Typography variant="subtitle1" fontWeight="bold">
                   Контакты
                 </Typography>
               </Stack>
 
-              {partner?.mobilePhone && <Typography>{partner?.mobilePhone}</Typography>}
-              {partner?.fixedPhone && <Typography>{partner?.fixedPhone}</Typography>}
+              {partner?.mobilePhone && <Typography fontWeight={"bold"}>{partner?.mobilePhone}</Typography>}
+              {partner?.fixedPhone && <Typography fontWeight={"bold"}>{partner?.fixedPhone}</Typography>}
             </Grid>
 
             <Grid item xs={12} sm={6} md={4}>
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <LocationOnIcon fontSize="small" />
+                <LocationOnIcon fontSize="medium" />
                 <Typography variant="subtitle1" fontWeight="bold">
                   Адрес
                 </Typography>
               </Stack>
-              {partner?.address && <Typography>{partner?.address}</Typography>}
+              {partner?.address && <Typography fontWeight={"bold"}>{partner?.address}</Typography>}
             </Grid>
 
             <Grid item xs={12} sm={6} md={4}>
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <InsertLinkOutlinedIcon fontSize="small" />
+                <InsertLinkOutlinedIcon fontSize="medium" />
                 <Typography variant="subtitle1" fontWeight="bold">
                   Ссылки
                 </Typography>
@@ -175,10 +180,12 @@ const ShowPartner = () => {
 
               {partner?.website && (
                 <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                  <Typography>{partner?.website}</Typography>
+                  <Typography sx={{ maxWidth: "320px", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {partner?.website}
+                  </Typography>
                   <IconButton disabled={!formatAndValidateUrl(partner?.website)} sx={{ width: 32, height: 32 }}>
                     <a href={formatAndValidateUrl(partner?.website) ?? "#"} target="_blank" rel="noreferrer">
-                      <OpenInNewIcon fontSize="small" />
+                      <OpenInNewIcon fontSize="medium" />
                     </a>
                   </IconButton>
                 </Stack>
