@@ -84,7 +84,6 @@ const ContractsMap = () => {
             .on("click", function (event, d) {
               if (d && d.id) {
                 setSelectedRegion(d);
-                handleSetChartFilter(d.id as string);
               }
             })
             .append("title");
@@ -145,7 +144,6 @@ const ContractsMap = () => {
             }
           })
           .append("title");
-        // .text((d: any) => d.properties.name || 'Район');
       }
     });
   }, [selectedRegion]);
