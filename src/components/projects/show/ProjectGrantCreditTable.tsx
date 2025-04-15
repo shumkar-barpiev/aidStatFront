@@ -29,12 +29,16 @@ export const ProjectGrantCreditTable = ({ items }: { items: Record<string, any>[
           <TableBody>
             {items?.map((item, index) => (
               <TableRow key={index} sx={{ height: "40px" }}>
-                <StyledTableCell sx={{ width: "25%", textAlign: "center" }}>{item.partnerName}</StyledTableCell>
-                <StyledTableCell sx={{ width: "25%", textAlign: "center" }}>{item.number}</StyledTableCell>
-                <StyledTableCell sx={{ width: "25%", textAlign: "center" }}>
+                <StyledTableCell sx={{ width: "25%", textAlign: "left", fontWeight: "bold" }}>
+                  {item.partnerName}
+                </StyledTableCell>
+                <StyledTableCell sx={{ width: "25%", textAlign: "center", fontWeight: "bold" }}>
+                  {item.number}
+                </StyledTableCell>
+                <StyledTableCell sx={{ width: "25%", textAlign: "center", fontWeight: "bold" }}>
                   {formatCurrencyWithSpaces(item.totalSum)}
                 </StyledTableCell>
-                <StyledTableCell sx={{ width: "25%", textAlign: "center" }}>
+                <StyledTableCell sx={{ width: "25%", textAlign: "center", fontWeight: "bold" }}>
                   {formatCurrencyWithSpaces(item.totalSumForeign)}
                 </StyledTableCell>
               </TableRow>
