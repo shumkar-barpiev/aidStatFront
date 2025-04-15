@@ -22,5 +22,6 @@ export function replacePublicEndpointFilters(filters?: TModelPublicFilters) {
     regionIds: filters?.regionIds ?? null,
     districtIds: filters?.districtIds ?? null,
     partnerIds: filters?.partnerIds ?? null,
+    partnerType: filters?.partnerType ?? null,
   };
 }
