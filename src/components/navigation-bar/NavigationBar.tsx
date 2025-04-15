@@ -67,9 +67,9 @@ export const NavigationBar = () => {
           <button onClick={() => router.push("/")} style={plainBtnStyle}>
             <Image
               width={120}
-              height={40}
+              height={30}
               alt="App Logo"
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "cover" }}
               src="/assets/images/icons/aid-stat-icon.png"
               priority
             />

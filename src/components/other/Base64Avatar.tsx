@@ -34,6 +34,7 @@ export const Base64Avatar: React.FC<Base64AvatarProps> = ({ base64String, alt = 
         sx={{
           width: size,
           height: size,
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
           "& .MuiAvatar-img": {
             objectFit: "contain",
           },
