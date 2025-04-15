@@ -4,6 +4,7 @@ import Timeline from "@mui/lab/Timeline";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Box, Typography } from "@mui/material";
 import TimelineItem from "@mui/lab/TimelineItem";
+import { projectFormatDate } from "@/utils/date";
 import TimelineContent from "@mui/lab/TimelineContent";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -12,16 +13,6 @@ import { TProjectModel } from "@/models/project/ProjectModel";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 
 export default function ProjectTimeLine({ project }: { project: TProjectModel | null }) {
-  const FormatDateWithTime = (dateString: string) => {
-    const date = new Date(dateString);
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-
-    return `${day}.${month}.${year}`;
-  };
-
   return (
     <Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
@@ -34,7 +25,7 @@ export default function ProjectTimeLine({ project }: { project: TProjectModel | 
         {project?.timeLine?.startDate && (
           <TimelineItem>
             <TimelineOppositeContent sx={{ m: "auto 0" }} align="right" variant="body2" color="text.secondary">
-              {project?.timeLine?.startDate && FormatDateWithTime(project?.timeLine?.startDate)}
+              {project?.timeLine?.startDate && projectFormatDate(project?.timeLine?.startDate)}
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineConnector />
@@ -56,7 +47,7 @@ export default function ProjectTimeLine({ project }: { project: TProjectModel | 
               event.eventDate && (
                 <TimelineItem key={index}>
                   <TimelineOppositeContent sx={{ m: "auto 0" }} variant="body2" color="text.secondary">
-                    {FormatDateWithTime(event.eventDate)}
+                    {projectFormatDate(event.eventDate)}
                   </TimelineOppositeContent>
                   <TimelineSeparator>
                     <TimelineConnector />
@@ -76,7 +67,7 @@ export default function ProjectTimeLine({ project }: { project: TProjectModel | 
         {project?.timeLine?.endDate && (
           <TimelineItem>
             <TimelineOppositeContent sx={{ m: "auto 0" }} align="right" variant="body2" color="text.secondary">
-              {project?.timeLine?.endDate && FormatDateWithTime(project?.timeLine?.endDate)}
+              {project?.timeLine?.endDate && projectFormatDate(project?.timeLine?.endDate)}
             </TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineConnector />

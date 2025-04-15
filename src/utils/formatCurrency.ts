@@ -6,3 +6,10 @@ export const formatCurrency = (value: number | string) => {
   }
   return new Intl.NumberFormat().format(number);
 };
+
+export function formatCurrencyWithSpaces(input: string) {
+  const [numberStr, currency] = input.split(" ");
+  const number = parseInt(numberStr, 10);
+  const formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return `${formattedNumber} ${currency ?? ""}`;
+}

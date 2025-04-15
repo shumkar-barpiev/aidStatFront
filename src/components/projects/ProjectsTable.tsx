@@ -18,10 +18,13 @@ import {
 import Colors from "@/styles/colors";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { projectFormatDate } from "@/utils/date";
 import { RenderEllipsisText } from "@/utils/textUtils";
 import { useProjectsStore } from "@/stores/projects/projects";
 import ProjectBadges from "@/components/projects/ProjectBadges";
+import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { getPartnerAvatar } from "@/components/other/Base64Avatar";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 
@@ -76,35 +79,58 @@ export default function ProjectsTable() {
                 return (
                   <TableRow
                     key={index}
-                    onClick={() => {
-                      router.push(`/projects/show/${project.name}#${project.id}`);
-                    }}
                     sx={{
-                      cursor: "pointer",
                       backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
-                      "&:hover": {
-                        backgroundColor: "#cadefa",
-                      },
                     }}
                   >
-                    <StyledTableCell sx={{ width: "20%" }}>
-                      <RenderEllipsisText text={project?.name} tooltipPlacement="left" />
+                    <StyledTableCell sx={{ width: "20%", whiteSpace: "initial" }}>
+                      <button
+                        onClick={() => {
+                          router.push(`/projects/show/${project.name}#${project.id}`);
+                        }}
+                        style={plainBtnStyle}
+                      >
+                        <Typography
+                          variant="h3"
+                          sx={{
+                            textAlign: "left",
+                            fontWeight: 550,
+                            fontSize: "0.85rem",
+                            "&:hover": {
+                              color: "#2E4B6D",
+                              transition: "color 0.3s ease",
+                            },
+                          }}
+                        >
+                          {project?.name}
+                        </Typography>
+                      </button>
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "20%" }}>
                       <Stack direction={"row"} alignItems={"center"} spacing={1}>
                         {project?.partners &&
-                          project.partners.map((partner) => {
+                          project.partners.map((partner, index) => {
                             const partnerName = `${partner.name ?? ""}`;
-                            return getPartnerAvatar(partnerName, partner.image ?? null, 40);
+                            return (
+                              <button
+                                key={index}
+                                onClick={() => {
+                                  router.push(`/partners/show/${partnerName}#${partner.id}`);
+                                }}
+                                style={plainBtnStyle}
+                              >
+                                {getPartnerAvatar(partnerName, partner.image ?? null, 40)}
+                              </button>
+                            );
                           })}
                       </Stack>
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>
                       <RenderEllipsisText text={getProjectSectorsTitle(project.sectors ?? [])} tooltipPlacement="top" />
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "15%" }}>{project.startDate}</StyledTableCell>
+                    <StyledTableCell sx={{ width: "15%" }}>{projectFormatDate(`${project.startDate}`)}</StyledTableCell>
                     <StyledTableCell sx={{ width: "15%", paddingLeft: "0px", textAlign: "center" }}>
-                      {project?.totalSum && `${project?.totalSum}`}
+                      {project?.totalSum && formatCurrencyWithSpaces(`${project?.totalSum}`)}
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%", textAlign: "center" }}>
                       <ProjectBadges

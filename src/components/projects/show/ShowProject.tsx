@@ -21,13 +21,13 @@ import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import { useProjectsStore } from "@/stores/projects/projects";
+import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { getAvatarAsCardMedia } from "@/components/other/Base64Avatar";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import { Box, Typography, Grid, Divider, Card, Stack } from "@mui/material";
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
-import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
 
 export const ShowProject = () => {
@@ -37,7 +37,6 @@ export const ShowProject = () => {
   const [project, setProject] = useState<TProjectModel | null>(null);
   const [grantItems, setGrantItems] = useState<Record<string, any>[]>([]);
   const [creditItems, setCreditItems] = useState<Record<string, any>[]>([]);
-  const { getProjectSectorsTitle } = useProjectsViewModel();
 
   const renderProjectStakeholders = (stakeholders: Record<string, any>[]) => {
     if (!stakeholders || stakeholders.length === 0) return "";
@@ -189,7 +188,7 @@ export const ShowProject = () => {
               </Box>
               {project?.funding?.totalSum ? (
                 <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                  {project?.funding?.totalSum}
+                  {formatCurrencyWithSpaces(project?.funding?.totalSum)}
                 </Typography>
               ) : (
                 getNotSpecifiedText()
@@ -290,7 +289,7 @@ export const ShowProject = () => {
                 </Box>
                 {project?.funding?.coFundingSum ? (
                   <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    {project.funding.coFundingSum}
+                    {formatCurrencyWithSpaces(project.funding.coFundingSum)}
                   </Typography>
                 ) : (
                   getNotSpecifiedText()
@@ -308,7 +307,7 @@ export const ShowProject = () => {
                 </Box>
                 {project?.funding?.techAidSum ? (
                   <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    {project.funding.techAidSum}
+                    {formatCurrencyWithSpaces(project.funding.techAidSum)}
                   </Typography>
                 ) : (
                   getNotSpecifiedText()
@@ -330,7 +329,7 @@ export const ShowProject = () => {
                 </Box>
                 {project?.funding?.fundsSpent ? (
                   <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    {project.funding.fundsSpent}
+                    {formatCurrencyWithSpaces(project.funding.fundsSpent)}
                   </Typography>
                 ) : (
                   getNotSpecifiedText()
@@ -348,7 +347,7 @@ export const ShowProject = () => {
                 </Box>
                 {project?.funding?.fundsSpentCurrentYear ? (
                   <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    {project.funding.fundsSpentCurrentYear}
+                    {formatCurrencyWithSpaces(project.funding.fundsSpentCurrentYear)}
                   </Typography>
                 ) : (
                   getNotSpecifiedText()
