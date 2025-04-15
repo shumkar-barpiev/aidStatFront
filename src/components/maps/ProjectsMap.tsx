@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Box, Divider, Paper, Typography } from "@mui/material";
-import MapFilterSelect from "@/components/select/MapFilterSelect.tsx";
+import { Box, Paper } from "@mui/material";
+import FilterSelect from "@/components/select/FilterSelect.tsx";
 import { useProjectsStore } from "@/stores/projects/projects-for-map.ts";
 import { useLocationNamesStore } from "@/stores/location-names/location-names.ts";
 import { useDonorsStore } from "@/stores/donors/donors.ts";
@@ -24,7 +24,7 @@ import bishkekCity from "@/utils/map/statesBishkekCity.json";
 import oshCity from "@/utils/map/statesOshCity.json";
 import HeatLayer from "@/components/maps/HeatLayer.tsx";
 import MapWithClusters from "@/components/maps/MapWithClusters.tsx";
-import { TestFilterLocationNameOptions } from "@/shared/enums/statisticsMapIconsEnums.ts";
+import { TestFilterLocationNameOptions, TestFilterSectorOptions } from "@/shared/enums/statisticsMapIconsEnums.ts";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
 
 const districtsMap: Record<string, any> = {
@@ -139,7 +139,7 @@ const ProjectsMap = () => {
     return (
       <GeoJSON
         data={districtsData}
-        pointToLayer={(feature, latlng) => L.circleMarker([999, 999])}
+        pointToLayer={() => L.circleMarker([999, 999])}
         onEachFeature={(feature, layer) => {
           layer.on({
             mouseover: (e: any) => {
@@ -175,19 +175,19 @@ const ProjectsMap = () => {
   return (
     <Box sx={{ width: "100%", height: "100%", mb: 6 }}>
       <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: "16px", padding: "20px 0" }}>
-        <MapFilterSelect
+        <FilterSelect
           labelName="Регион"
           onChange={(e) => setFilterByLocationName(e.target.value)}
           options={TestFilterLocationNameOptions}
           value={filterByLocationName ? filterByLocationName : "all"}
         />
-        <MapFilterSelect
+        <FilterSelect
           labelName="Сектор"
           onChange={(e) => setFilterBySector(e.target.value)}
-          options={sectors}
+          options={TestFilterSectorOptions}
           value={filterBySector ? filterBySector : "all"}
         />
-        <MapFilterSelect
+        <FilterSelect
           labelName="Партнер"
           onChange={(e) => setFilterByDonor(e.target.value)}
           options={donors}

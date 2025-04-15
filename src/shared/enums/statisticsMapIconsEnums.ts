@@ -41,137 +41,204 @@ export const IconsEnum = {
   "Азиатский Банк Развития, Евразийский банк развития(ЕАБР)": "6",
 };
 
+export const InitialFilteredCardsData = [
+  { name: "Азиатский Банк Развития", grantAmounts: "899.34", creditAmounts: "400.66" },
+  {
+    name: "Европейский Банк Реконструкции и Развития",
+    grantAmounts: "432.12",
+    creditAmounts: "392.68",
+  },
+  { name: "Всемирный банк", grantAmounts: "174.19", creditAmounts: "158.51" },
+  { name: "Международная ассоциация развития (МАР)", grantAmounts: "135.83", creditAmounts: "138.37" },
+  { name: "Исламский банк развития (ИБР)", grantAmounts: "152.84", creditAmounts: "106.76" },
+  { name: "Другие", grantAmounts: "461.23", creditAmounts: "432.97" },
+];
+
+export const CardsWithRegionSelectionEnums = {
+  title: "Топ доноров по сумме инвестиций по региону",
+  totalSum: 3.9,
+  unit: "",
+  chartData: [
+    {
+      region: "Чуйская область",
+      totalSum: 555,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "150.00", creditAmounts: "100.00" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "100.00", creditAmounts: "90.00" },
+        { name: "Всемирный банк", grantAmounts: "40.00", creditAmounts: "35.00" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "30.00", creditAmounts: "30.00" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "25.00", creditAmounts: "20.00" },
+        { name: "Другие", grantAmounts: "80.00", creditAmounts: "70.00" },
+      ],
+    },
+    {
+      region: "Нарынская область",
+      totalSum: 440,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "120.00", creditAmounts: "80.00" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "60.00", creditAmounts: "50.00" },
+        { name: "Всемирный банк", grantAmounts: "30.00", creditAmounts: "25.00" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "20.00", creditAmounts: "25.00" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "15.00", creditAmounts: "10.00" },
+        { name: "Другие", grantAmounts: "70.00", creditAmounts: "60.00" },
+      ],
+    },
+    {
+      region: "Баткенская область",
+      totalSum: 385,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "100.00", creditAmounts: "60.00" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "50.00", creditAmounts: "40.00" },
+        { name: "Всемирный банк", grantAmounts: "20.00", creditAmounts: "20.00" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "15.00", creditAmounts: "15.00" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "20.00", creditAmounts: "10.00" },
+        { name: "Другие", grantAmounts: "60.00", creditAmounts: "50.00" },
+      ],
+    },
+    {
+      region: "Джалал-Абадская область",
+      totalSum: 515,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "130.00", creditAmounts: "70.00" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "70.00", creditAmounts: "60.00" },
+        { name: "Всемирный банк", grantAmounts: "30.00", creditAmounts: "25.00" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "25.00", creditAmounts: "20.00" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "30.00", creditAmounts: "20.00" },
+        { name: "Другие", grantAmounts: "80.00", creditAmounts: "70.00" },
+      ],
+    },
+    {
+      region: "Таласская область",
+      totalSum: 373,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "80.00", creditAmounts: "30.00" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "40.00", creditAmounts: "35.00" },
+        { name: "Всемирный банк", grantAmounts: "15.00", creditAmounts: "13.00" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "10.00", creditAmounts: "15.00" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "10.00", creditAmounts: "10.00" },
+        { name: "Другие", grantAmounts: "50.00", creditAmounts: "40.00" },
+      ],
+    },
+    {
+      region: "Ошская область",
+      totalSum: 470,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "120.00", creditAmounts: "60.00" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "60.00", creditAmounts: "55.00" },
+        { name: "Всемирный банк", grantAmounts: "20.00", creditAmounts: "20.00" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "15.00", creditAmounts: "15.00" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "25.00", creditAmounts: "15.00" },
+        { name: "Другие", grantAmounts: "60.00", creditAmounts: "55.00" },
+      ],
+    },
+    {
+      region: "Иссык-Кульская область",
+      totalSum: 471.5,
+      regionData: [
+        { name: "Азиатский Банк Развития", grantAmounts: "99.34", creditAmounts: "30.66" },
+        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "52.12", creditAmounts: "62.68" },
+        { name: "Всемирный банк", grantAmounts: "19.19", creditAmounts: "20.51" },
+        { name: "Международная ассоциация развития (МАР)", grantAmounts: "20.83", creditAmounts: "18.37" },
+        { name: "Исламский банк развития (ИБР)", grantAmounts: "27.84", creditAmounts: "21.76" },
+        { name: "Другие", grantAmounts: "61.23", creditAmounts: "57.97" },
+      ],
+    },
+  ],
+};
+
+export const CardsWithSectorSelectionEnums = {
+  title: "Топ доноров по сумме инвестиций по сектору",
+  totalSum: 115,
+  unit: "",
+  chartData: [
+    { name: "Азиатский Банк Развития", grantAmounts: "899.34", creditAmounts: "400.66" },
+    {
+      name: "Европейский Банк Реконструкции и Развития",
+      grantAmounts: "432.12",
+      creditAmounts: "392.68",
+    },
+    { name: "Всемирный банк", grantAmounts: "174.19", creditAmounts: "158.51" },
+    { name: "Международная ассоциация развития (МАР)", grantAmounts: "135.83", creditAmounts: "138.37" },
+    { name: "Исламский банк развития (ИБР)", grantAmounts: "152.84", creditAmounts: "106.76" },
+    { name: "Другие", grantAmounts: "461.23", creditAmounts: "432.97" },
+  ],
+};
+
 export const TestFilterSectorOptions = [
+  { id: 1, name: "Государственное управление", projectCount: 1, type: "Sector Group" },
+  { id: 2, name: "Социальная сфера", projectCount: 0, type: "Sector Group" },
+  { id: 3, name: "Охрана окружающей среды и климат", projectCount: 0, type: "Sector Group" },
+  { id: 4, name: "Инфраструктура и ресурсы", projectCount: 1, type: "Sector Group" },
+  { id: 5, name: "Транспорт и логистика", projectCount: 0, type: "Sector Group" },
+  { id: 6, name: "Связь и телекоммуникации", projectCount: 0, type: "Sector Group" },
+  { id: 7, name: "Сельское хозяйство и ирригация", projectCount: 0, type: "Sector Group" },
+  { id: 8, name: "Чрезвычайная ситуация", projectCount: 0, type: "Sector Group" },
+  { id: 10, name: "Гос управление и администрирование", projectCount: 1, type: "Sector" },
+  { id: 11, name: "Финансы", projectCount: 0, type: "Sector" },
+  { id: 12, name: "Цифровизация", projectCount: 0, type: "Sector" },
+  { id: 13, name: "Социальное жилье и ипотека", projectCount: 0, type: "Sector" },
+  { id: 14, name: "Социальные обеспечения", projectCount: 0, type: "Sector" },
+  { id: 15, name: "Здравоохранение / Медицина", projectCount: 1, type: "Sector" },
+  { id: 16, name: "Образование", projectCount: 0, type: "Sector" },
+  { id: 17, name: "Охрана окружающей среды и экология", projectCount: 0, type: "Sector" },
+  { id: 18, name: "Климат", projectCount: 1, type: "Sector" },
+  { id: 19, name: "Инфраструктура", projectCount: 1, type: "Sector" },
+  { id: 20, name: "Водоснабжение", projectCount: 1, type: "Sector" },
+  { id: 21, name: "Канализация и твердые бытовые отходы", projectCount: 1, type: "Sector" },
+  { id: 22, name: "Энергетика", projectCount: 1, type: "Sector" },
+  { id: 23, name: "Транспорт", projectCount: 0, type: "Sector" },
+  { id: 24, name: "Торгово-логистический центр", projectCount: 0, type: "Sector" },
+  { id: 25, name: "Сельское хозяйство", projectCount: 0, type: "Sector" },
   {
-    id: 1,
-    name: "Здравоохранение",
-  },
-  {
-    id: 2,
-    name: "Образование",
-  },
-  {
-    id: 3,
-    name: "Транспорт",
-  },
-  {
-    id: 4,
-    name: "Энергетика",
-  },
-  {
-    id: 5,
-    name: "Сельское хозяйство",
-  },
-  {
-    id: 6,
-    name: "Информационные технологии",
-  },
-  {
-    id: 7,
-    name: "Экология",
-  },
-  {
-    id: 8,
-    name: "Строительство",
-  },
-  {
-    id: 9,
-    name: "Наука и технологии",
-  },
-  {
-    id: 10,
-    name: "Городское развитие",
+    id: 26,
+    name: "Ирригация",
+    projectCount: 1,
+    type: "Sector",
   },
 ];
 
 export const TestFilterLocationNameOptions = [
-  {
-    id: 1,
-    name: "Нарынская область",
-  },
-  {
-    id: 2,
-    name: "Чуйская область",
-  },
-  {
-    id: 3,
-    name: "Ошская область",
-  },
-  {
-    id: 4,
-    name: "Иссык-Кульская область",
-  },
-  {
-    id: 5,
-    name: "Таласская область",
-  },
-  {
-    id: 6,
-    name: "Джалал-Абадская область",
-  },
-  {
-    id: 7,
-    name: "Баткенская область",
-  },
-  {
-    id: 8,
-    name: "г. Бишкек",
-  },
-  {
-    id: 9,
-    name: "г. Ош",
-  },
-  {
-    id: 10,
-    name: "г. Токмак",
-  },
-  {
-    id: 11,
-    name: "Кыргызская Республика",
-  },
+  { id: 1, name: "Нарынская область" },
+  { id: 2, name: "Чуйская область" },
+  { id: 3, name: "Ошская область" },
+  { id: 4, name: "Иссык-Кульская область" },
+  { id: 5, name: "Таласская область" },
+  { id: 6, name: "Джалал-Абадская область" },
+  { id: 7, name: "Баткенская область" },
+  // {id: 8, name: "г. Бишкек",},
+  // {id: 9, name: "г. Ош",},
+  // {id: 10, name: "г. Токмак",},
+  { id: 11, name: "Кыргызская Республика" },
 ];
 
 export const TestFilterDonorOptions = [
-  {
-    id: 1,
-    name: "Банк Европейского развития",
-  },
-  {
-    id: 2,
-    name: "Всемирный банк",
-  },
-  {
-    id: 3,
-    name: "Американское агентство международного развития (USAID)",
-  },
-  {
-    id: 4,
-    name: "Германское общество международного сотрудничества (GIZ)",
-  },
-  {
-    id: 5,
-    name: "Европейская комиссия",
-  },
-  {
-    id: 6,
-    name: "Фонд Форда",
-  },
-  {
-    id: 7,
-    name: "Британская международная программа помощи (DFID)",
-  },
-  {
-    id: 8,
-    name: "Международный фонд ООН для оказания помощи",
-  },
-  {
-    id: 9,
-    name: 'Фонд "Сорос-Кыргызстан"',
-  },
-  {
-    id: 10,
-    name: "Азиатский банк развития",
-  },
+  { id: 3, name: "Всемирный банк", projectCount: 0 },
+  { id: 4, name: "ТИКА", projectCount: 0 },
+  { id: 1, name: "Агентство США по международному развитию - (USAID)", projectCount: 1 },
+  { id: 5, name: "Программный офис ОБСЕ в Бишкеке", projectCount: 0 },
+  { id: 6, name: "Посольство Федеративной Республики Германия в Кыргызской Республике", projectCount: 0 },
+  { id: 2, name: "Министерство финансов КР", projectCount: 0 },
+  { id: 12, name: "ФАО - Продовольственная и сельскохозяйственная организация Объединенных Наций", projectCount: 0 },
+  { id: 15, name: "Германский Банк Развития (KfW)", projectCount: 0 },
+  { id: 14, name: "Корейское агентство международного сотрудничества (KOICA)", projectCount: 1 },
+  { id: 16, name: "Евразийский банк развития(ЕАБР)", projectCount: 0 },
+  { id: 17, name: "Международный Валютный Фонд (МВФ)", projectCount: 0 },
+  { id: 7, name: "ООН - Женщины", projectCount: 0 },
+  { id: 8, name: "ЮНИСЕФ в Кыргызстане", projectCount: 0 },
+  { id: 9, name: "ПРООН ", projectCount: 0 },
+  { id: 10, name: "Всемирная организация здравоохранения", projectCount: 0 },
+  { id: 11, name: "ЮНФПА - Фонд Организации Объединенных Наций в области народонаселения ", projectCount: 0 },
+  { id: 13, name: "Мерсико", projectCount: 0 },
+  { id: 18, name: "Саудовский фонд развития", projectCount: 0 },
+  { id: 19, name: "Исламский банк развития (ИБР)", projectCount: 0 },
+  { id: 20, name: "Азиатский Банк Развития", projectCount: 0 },
+  { id: 21, name: "Государственный секретариат по экономическим делам Швейцарии (SECO)", projectCount: 0 },
+  { id: 22, name: "Японское агентство международного сотрудничества", projectCount: 0 },
+  { id: 23, name: "Российско-Кыргызский Фонд развития", projectCount: 0 },
+  { id: 24, name: "Европейский Банк Реконструкции и Развития", projectCount: 0 },
+  { id: 25, name: "Европейский инвестиционный банк (ЕИБ)", projectCount: 0 },
+  { id: 26, name: "Международная ассоциация развития (МАР)", projectCount: 0 },
+  { id: 27, name: "Посольство Федеративной Республики Германия в Кыргызской Республике", projectCount: 0 },
 ];
 
 export const TestProjects = [

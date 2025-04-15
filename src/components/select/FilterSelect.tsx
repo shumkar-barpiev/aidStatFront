@@ -12,13 +12,14 @@ interface Option {
 }
 
 interface Props {
+  name?: string;
   options: Option[];
   value: string;
   onChange: (event: SelectChangeEvent) => void;
   labelName: string;
 }
 
-const MapFilterSelect: React.FC<Props> = ({ options, value, onChange, labelName }) => {
+const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName }) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -26,6 +27,7 @@ const MapFilterSelect: React.FC<Props> = ({ options, value, onChange, labelName 
     <FormControl variant="outlined" fullWidth>
       <InputLabel id={`select-label-${labelName}`}>{labelName}</InputLabel>
       <Select
+        name={name}
         labelId={`select-label-${labelName}`}
         value={value}
         onChange={onChange}
@@ -50,7 +52,7 @@ const MapFilterSelect: React.FC<Props> = ({ options, value, onChange, labelName 
       >
         <MenuItem value="all">Все {labelName.toLowerCase() + "ы"}</MenuItem>
         {options
-          .sort((a, b) => a.name.localeCompare(b.name)) // Сортировка по имени
+          .sort((a, b) => a.name.localeCompare(b.name))
           .map((option) => (
             <MenuItem key={option.id} value={option.name}>
               {option.name}
@@ -61,4 +63,4 @@ const MapFilterSelect: React.FC<Props> = ({ options, value, onChange, labelName 
   );
 };
 
-export default MapFilterSelect;
+export default FilterSelect;

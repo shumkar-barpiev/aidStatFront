@@ -4,7 +4,14 @@ export const formatCurrency = (value: number | string) => {
   if (isNaN(number)) {
     return "";
   }
-  return new Intl.NumberFormat().format(number);
+
+  if (number >= 1_000_000_000) {
+    return (number / 1_000_000_000).toFixed(1) + " млрд";
+  }
+  if (number >= 1_000_000) {
+    return (number / 1_000_000).toFixed(1) + " млн";
+  }
+  return number.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
 export function formatCurrencyWithSpaces(input: string) {
