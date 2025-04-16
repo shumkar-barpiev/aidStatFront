@@ -56,11 +56,10 @@ export default function Main() {
             sx={{
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
-
               maxWidth: "100%",
             }}
           >
-            {t("projects")}
+            {t("projectsPage")}
           </Typography>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
             {t("projectsPageDescription")}
