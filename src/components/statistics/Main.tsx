@@ -1,27 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Divider, Grid, Tab, Tabs, Typography } from "@mui/material";
-import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel";
+import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
 import ContractsMap from "@/components/maps/ContractsMap.tsx";
 import dynamic from "next/dynamic";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
 import ContractsTable from "@/components/maps/ContractsTable.tsx";
-import ChartCard from "@/components/statistics/charts/ChartCard.tsx";
-import {
-  CorrelationDataByRegion,
-  CorrelationDataBySector,
-  ProjectChartData,
-  useProjectCardsStore,
-} from "@/stores/projects/projects-for-cards.ts";
-import ChartCardSkeleton from "@/components/statistics/charts/bar-chart-components/ChartCardSkeleton.tsx";
+import ChartsMainBlock from "@/components/statistics/charts/ChartsMainBlock.tsx";
 
-const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap"), {
+const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap.tsx"), {
   ssr: false,
 });
 
-const DonutChart = dynamic(() => import("@/components/statistics/charts/DonutChart"), { ssr: false });
+const DonutChart = dynamic(() => import("@/components/statistics/charts/DonutChart.tsx"), { ssr: false });
 
 const a11yProps = (index: number) => {
   return {
@@ -34,36 +27,6 @@ export default function Main() {
   const [tab, setTab] = useState<number>(0);
   const { t } = useTranslation();
   const { budgetForChart, byTypesForChart } = useContractsViewModel();
-  const cardsStore = useProjectCardsStore();
-  const {
-    topSectorsByProjectCount,
-    topSectorsByInvestment,
-    topDonorsByInvestment,
-    topDonorsByProjectCount,
-    topImplementingAgenciesByProjectCount,
-    topExecutiveAgenciesByProjectCount,
-    topDonorsByInvestmentBySector,
-    topDonorsByInvestmentByRegion,
-  } = cardsStore;
-
-  useEffect(() => {
-    cardsStore.fetchTopSectorsByInvestment();
-    cardsStore.fetchTopSectorsByProjectCount();
-    cardsStore.fetchTopDonorsByInvestment();
-    cardsStore.fetchTopDonorsByProjectCount();
-    cardsStore.fetchTopImplementingAgenciesByProjectCount();
-    cardsStore.fetchTopExecutiveAgenciesByProjectCount();
-  }, []);
-
-  const renderChartCard = (data: ProjectChartData | CorrelationDataByRegion | CorrelationDataBySector) => (
-    <Grid item xs={12} sm={12} lg={6}>
-      {data ? (
-        <ChartCard title={data.title} total={data.total} unit={data.unit} data={data.data} />
-      ) : (
-        <ChartCardSkeleton />
-      )}
-    </Grid>
-  );
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -87,24 +50,8 @@ export default function Main() {
           {t("statisticsTitle")}
         </Typography>
         <Divider sx={{ mb: 6, borderColor: "darkblue", borderBottomWidth: 2 }} />
-        <Grid container spacing={3}>
-          <Grid container spacing={3}>
-            {[
-              topDonorsByInvestment,
-              topDonorsByProjectCount,
-              topDonorsByInvestmentBySector,
-              topDonorsByInvestmentByRegion,
-              topSectorsByInvestment,
-              topSectorsByProjectCount,
-              topImplementingAgenciesByProjectCount,
-              topExecutiveAgenciesByProjectCount,
-            ].map((data, idx) => (
-              <React.Fragment key={idx}>
-                {renderChartCard(data as ProjectChartData | CorrelationDataByRegion | CorrelationDataBySector)}
-              </React.Fragment>
-            ))}
-          </Grid>
-        </Grid>
+
+        <ChartsMainBlock />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
         <Box

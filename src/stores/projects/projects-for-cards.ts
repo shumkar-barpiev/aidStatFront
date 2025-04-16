@@ -56,9 +56,9 @@ export const useProjectCardsStore = create<{
   topExecutiveAgenciesByProjectCount: ProjectChartData | null;
   fetchTopExecutiveAgenciesByProjectCount: (params?: { download?: boolean }) => Promise<void>;
   topDonorsByInvestmentBySector: CorrelationDataBySector | null;
-  fetchTopDonorsByInvestmentBySector: (sectorId: string, params?: { download?: boolean }) => Promise<void>;
+  fetchTopDonorsByInvestmentBySector: (sectorId: number, params?: { download?: boolean }) => Promise<void>;
   topDonorsByInvestmentByRegion: CorrelationDataByRegion | null;
-  fetchTopDonorsByInvestmentByRegion: (regionId: string, params?: { download?: boolean }) => Promise<void>;
+  fetchTopDonorsByInvestmentByRegion: (regionId: number, params?: { download?: boolean }) => Promise<void>;
   downloadDataAsFile: (response: Response) => void;
   clearStore: () => void;
 }>((set, get) => ({
@@ -146,7 +146,7 @@ export const useProjectCardsStore = create<{
     }
   },
 
-  fetchTopDonorsByInvestmentBySector: async (sectorId: string, params?: { download?: boolean }) => {
+  fetchTopDonorsByInvestmentBySector: async (sectorId: number, params?: { download?: boolean }) => {
     try {
       const response = await http(`/ws/public/stat/project/sector/${sectorId}`, { method: "GET", withoutAuth: true });
       if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
@@ -158,7 +158,7 @@ export const useProjectCardsStore = create<{
     }
   },
 
-  fetchTopDonorsByInvestmentByRegion: async (regionId: string, params?: { download?: boolean }) => {
+  fetchTopDonorsByInvestmentByRegion: async (regionId: number, params?: { download?: boolean }) => {
     try {
       const response = await http(`/ws/public/stat/project/region/${regionId}`, { method: "GET", withoutAuth: true });
       if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);

@@ -174,26 +174,26 @@ const ProjectsMap = () => {
 
   return (
     <Box sx={{ width: "100%", height: "100%", mb: 6 }}>
-      <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: "16px", padding: "20px 0" }}>
-        <FilterSelect
-          labelName="Регион"
-          onChange={(e) => setFilterByLocationName(e.target.value)}
-          options={TestFilterLocationNameOptions}
-          value={filterByLocationName ? filterByLocationName : "all"}
-        />
-        <FilterSelect
-          labelName="Сектор"
-          onChange={(e) => setFilterBySector(e.target.value)}
-          options={TestFilterSectorOptions}
-          value={filterBySector ? filterBySector : "all"}
-        />
-        <FilterSelect
-          labelName="Партнер"
-          onChange={(e) => setFilterByDonor(e.target.value)}
-          options={donors}
-          value={filterByDonor ? filterByDonor : "all"}
-        />
-      </Box>
+      {/*<Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: "16px", padding: "20px 0" }}>*/}
+      {/*  <FilterSelect*/}
+      {/*    labelName="Регион"*/}
+      {/*    onChange={(e) => setFilterByLocationName(e.target.value)}*/}
+      {/*    options={TestFilterLocationNameOptions}*/}
+      {/*    value={filterByLocationName ? filterByLocationName : "all"}*/}
+      {/*  />*/}
+      {/*  <FilterSelect*/}
+      {/*    labelName="Сектор"*/}
+      {/*    onChange={(e) => setFilterBySector(e.target.value)}*/}
+      {/*    options={TestFilterSectorOptions}*/}
+      {/*    value={filterBySector ? filterBySector : "all"}*/}
+      {/*  />*/}
+      {/*  <FilterSelect*/}
+      {/*    labelName="Партнер"*/}
+      {/*    onChange={(e) => setFilterByDonor(e.target.value)}*/}
+      {/*    options={donors}*/}
+      {/*    value={filterByDonor ? filterByDonor : "all"}*/}
+      {/*  />*/}
+      {/*</Box>*/}
 
       <Box sx={{ width: "100%", height: { xs: "400px", sm: "650px" }, margin: "auto" }}>
         <Paper sx={{ display: "flex", width: "100%", height: "100%" }} elevation={3}>

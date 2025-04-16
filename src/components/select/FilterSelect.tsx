@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -15,13 +15,20 @@ interface Props {
   name?: string;
   options: Option[];
   value: string;
-  onChange: (event: SelectChangeEvent) => void;
+  onChange: (id: number) => void;
   labelName: string;
 }
 
 const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName }) => {
+  const [selected, setSelected] = useState<string>(value);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSelected(event.target.value);
+    const id = Number(event.target.value);
+    onChange(id);
+  };
 
   return (
     <FormControl variant="outlined" fullWidth>
@@ -29,8 +36,8 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
       <Select
         name={name}
         labelId={`select-label-${labelName}`}
-        value={value}
-        onChange={onChange}
+        value={selected}
+        onChange={handleChange}
         label={labelName}
         MenuProps={{
           PaperProps: {
@@ -50,11 +57,11 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
           },
         }}
       >
-        <MenuItem value="all">Все {labelName.toLowerCase() + "ы"}</MenuItem>
+        <MenuItem value={-1}>Все {labelName.toLowerCase() + "ы"}</MenuItem>
         {options
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((option) => (
-            <MenuItem key={option.id} value={option.name}>
+            <MenuItem key={option.id} value={option.id}>
               {option.name}
             </MenuItem>
           ))}
