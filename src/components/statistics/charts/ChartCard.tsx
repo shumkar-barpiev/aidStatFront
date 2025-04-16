@@ -3,11 +3,10 @@ import React from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Box, Card, Divider, IconButton, Typography } from "@mui/material";
 import BarChart from "@/components/statistics/charts/BarChart.tsx";
+import { ChartDataCount, ChartDataSum } from "@/stores/projects/projects-for-cards.ts";
+import { formatCurrency } from "@/utils/formatCurrency.ts";
 import FilterSelect from "@/components/select/FilterSelect.tsx";
 import { TestFilterLocationNameOptions, TestFilterSectorOptions } from "@/shared/enums/statisticsMapIconsEnums.ts";
-import { ChartDataCount, ChartDataSum } from "@/stores/projects/projects-for-cards.ts";
-import { SelectChangeEvent } from "@mui/material/Select";
-import { formatCurrency } from "@/utils/formatCurrency.ts";
 
 interface Props {
   title: string;
@@ -15,15 +14,10 @@ interface Props {
   unit: string;
   data: ChartDataCount[] | ChartDataSum[];
   chartFilters?: { [key: string]: string };
-  handleFilterChange?: (event: SelectChangeEvent) => void;
+  handleFilterChange?: (id: number) => void;
 }
 
 const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, chartFilters, handleFilterChange }) => {
-  // if (typeof window !== "undefined") {
-  //   window.__logCounter = (window.__logCounter || 0) + 1;
-  //   console.log(`${title} ${window.__logCounter}`);
-  // }
-
   const isChartDataSum = (data: ChartDataSum[] | ChartDataCount[]): data is ChartDataSum[] => {
     return "grantAmounts" in data[0];
   };
@@ -72,29 +66,25 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, chart
             <Typography color="text.secondary">Нет данных для отображения</Typography>
           )}
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 2 }}>
-          <Box>
-            {handleFilterChange && (
-              <Box>
-                <FilterSelect
-                  name="region"
-                  value={chartFilters?.region ? chartFilters?.region : "all"}
-                  options={TestFilterLocationNameOptions}
-                  onChange={handleFilterChange}
-                  labelName="Регион"
-                />
-              </Box>
+        <Box sx={{ display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center", p: 2 }}>
+          <Box sx={{ display: "flex", flex: 1 }}>
+            {title.includes("Корреляция региона") && (
+              <FilterSelect
+                name="region"
+                value="1"
+                options={TestFilterLocationNameOptions}
+                onChange={handleFilterChange ?? (() => {})}
+                labelName="Регион"
+              />
             )}
-            {handleFilterChange && (
-              <Box>
-                <FilterSelect
-                  name="sector"
-                  value={chartFilters?.sector ? chartFilters?.sector : "all"}
-                  options={TestFilterSectorOptions}
-                  onChange={handleFilterChange}
-                  labelName="Сектор"
-                />
-              </Box>
+            {title.includes("Корреляция сектора") && (
+              <FilterSelect
+                name="sector"
+                value="1"
+                options={TestFilterSectorOptions}
+                onChange={handleFilterChange ?? (() => {})}
+                labelName="Сектор"
+              />
             )}
           </Box>
           <Box>
