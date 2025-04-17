@@ -31,6 +31,16 @@ import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
 
+export const NotSpecifiedText = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Typography variant="subtitle1" color={"gray"} sx={{ flexGrow: 1 }}>
+      {t("notSpecified")}
+    </Typography>
+  );
+};
+
 export const ShowProject = () => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -119,14 +129,6 @@ export const ShowProject = () => {
     );
   };
 
-  const getNotSpecifiedText = () => {
-    return (
-      <Typography variant="subtitle1" color={"gray"} sx={{ flexGrow: 1, fontWeight: "bold" }}>
-        {t("notSpecified")}
-      </Typography>
-    );
-  };
-
   useEffect(() => {
     setProject(projectsStore.item);
   }, [projectsStore.item]);
@@ -175,7 +177,7 @@ export const ShowProject = () => {
               {project?.description}
             </Typography>
           ) : (
-            getNotSpecifiedText()
+            <NotSpecifiedText />
           )}
           <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         </Box>
@@ -192,7 +194,7 @@ export const ShowProject = () => {
                   {formatCurrencyWithSpaces(project?.funding?.totalSum)}
                 </Typography>
               ) : (
-                getNotSpecifiedText()
+                <NotSpecifiedText />
               )}
             </Box>
 
@@ -206,7 +208,7 @@ export const ShowProject = () => {
               {project?.partners?.length ? (
                 <Box>{renderProjectStakeholders(project?.partners)}</Box>
               ) : (
-                getNotSpecifiedText()
+                <NotSpecifiedText />
               )}
             </Box>
           </Stack>
@@ -222,7 +224,7 @@ export const ShowProject = () => {
               {project?.contractors?.length ? (
                 <Box>{renderProjectStakeholders(project?.contractors)}</Box>
               ) : (
-                getNotSpecifiedText()
+                <NotSpecifiedText />
               )}
             </Box>
 
@@ -236,7 +238,7 @@ export const ShowProject = () => {
               {project?.implementors?.length ? (
                 <Box>{renderProjectStakeholders(project?.implementors)}</Box>
               ) : (
-                getNotSpecifiedText()
+                <NotSpecifiedText />
               )}
             </Box>
           </Stack>
@@ -249,7 +251,7 @@ export const ShowProject = () => {
                 <SectorsIcon color="primary" fontSize="large" />
                 <Typography variant="h6">Секторы</Typography>
               </Box>
-              {project?.sectors?.length ? renderProjectSectors(project.sectors) : getNotSpecifiedText()}
+              {project?.sectors?.length ? renderProjectSectors(project.sectors) : <NotSpecifiedText />}
             </Box>
 
             {getConditionalDivider()}
@@ -259,9 +261,11 @@ export const ShowProject = () => {
                 <CoverageIcon color="primary" fontSize="large" />
                 <Typography variant="h6">Географический охват</Typography>
               </Box>
-              {project?.geographicalCoverage?.length
-                ? renderProjectCoverage(project.geographicalCoverage)
-                : getNotSpecifiedText()}
+              {project?.geographicalCoverage?.length ? (
+                renderProjectCoverage(project.geographicalCoverage)
+              ) : (
+                <NotSpecifiedText />
+              )}
             </Box>
           </Stack>
         </Stack>
@@ -283,7 +287,7 @@ export const ShowProject = () => {
                     {formatCurrencyWithSpaces(project.funding.coFundingSum)}
                   </Typography>
                 ) : (
-                  getNotSpecifiedText()
+                  <NotSpecifiedText />
                 )}
               </Box>
             </Grid>
@@ -301,7 +305,7 @@ export const ShowProject = () => {
                     {formatCurrencyWithSpaces(project.funding.techAidSum)}
                   </Typography>
                 ) : (
-                  getNotSpecifiedText()
+                  <NotSpecifiedText />
                 )}
               </Box>
             </Grid>
@@ -322,7 +326,7 @@ export const ShowProject = () => {
                     {formatCurrencyWithSpaces(project.funding.fundsSpent)}
                   </Typography>
                 ) : (
-                  getNotSpecifiedText()
+                  <NotSpecifiedText />
                 )}
               </Box>
             </Grid>
@@ -340,7 +344,7 @@ export const ShowProject = () => {
                     {formatCurrencyWithSpaces(project.funding.fundsSpentCurrentYear)}
                   </Typography>
                 ) : (
-                  getNotSpecifiedText()
+                  <NotSpecifiedText />
                 )}
               </Box>
             </Grid>
@@ -358,7 +362,7 @@ export const ShowProject = () => {
             <ProjectCredit color="primary" fontSize="large" />
             <Typography variant="h6">Кредит</Typography>
           </Box>
-          {creditItems.length ? <ProjectGrantCreditTable items={creditItems} /> : getNotSpecifiedText()}
+          {creditItems.length ? <ProjectGrantCreditTable items={creditItems} /> : <NotSpecifiedText />}
         </Box>
 
         <Box flex={1}>
@@ -367,7 +371,7 @@ export const ShowProject = () => {
             <ProjectGrant color="primary" fontSize="large" />
             <Typography variant="h6">Грант</Typography>
           </Box>
-          {grantItems.length ? <ProjectGrantCreditTable items={grantItems} /> : getNotSpecifiedText()}
+          {grantItems.length ? <ProjectGrantCreditTable items={grantItems} /> : <NotSpecifiedText />}
         </Box>
 
         <Box sx={{ my: 3 }}>

@@ -6,9 +6,10 @@ import {
   Grid,
   List,
   Stack,
+  Button,
+  Divider,
   ListItem,
   Typography,
-  CardContent,
   ListItemText,
   ToggleButton,
   ToggleButtonGroup,
@@ -17,16 +18,16 @@ import Colors from "@/styles/colors";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ListIcon from "@mui/icons-material/List";
-import FolderIcon from "@mui/icons-material/Folder";
-import GridViewIcon from "@mui/icons-material/GridView";
-import { containerWidths, containerMargins } from "@/utils/constants";
-
-import DescriptionIcon from "@mui/icons-material/Description";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ImageIcon from "@mui/icons-material/Image";
-import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-import ArticleIcon from "@mui/icons-material/Article";
+import FolderIcon from "@mui/icons-material/Folder";
 import GridOnIcon from "@mui/icons-material/GridOn";
+import ArticleIcon from "@mui/icons-material/Article";
+import DownloadIcon from "@mui/icons-material/Download";
+import GridViewIcon from "@mui/icons-material/GridView";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { containerWidths, containerMargins } from "@/utils/constants";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
+import { useDocumentsViewModel } from "@/viewmodels/documents/useDocumentsViewModel";
 
 enum DocumentsView {
   LIST = "LIST",
@@ -34,23 +35,8 @@ enum DocumentsView {
 }
 
 export const Main = () => {
-  const documents = [
-    {
-      id: "1",
-      name: "Project Proposal.pdf",
-      type: "pdf",
-      dateUploaded: "2025-04-14",
-    },
-    {
-      id: "2",
-      name: "SitePhoto.png",
-      type: "image/png",
-      dateUploaded: "2025-04-12",
-      thumbnailUrl: "/images/site-photo.png",
-    },
-  ];
-
   const { t } = useTranslation();
+  const { allDocuments, downloadDocument } = useDocumentsViewModel();
   const [view, setView] = useState<DocumentsView>(DocumentsView.GRID);
 
   const handleViewChange = (_event: React.MouseEvent<HTMLElement>, nextView: DocumentsView | null) => {
@@ -62,19 +48,19 @@ export const Main = () => {
 
     switch (baseType.toLowerCase()) {
       case "pdf":
-        return <PictureAsPdfIcon sx={{ fontSize: 84, color: "#d32f2f" }} />;
+        return <PictureAsPdfIcon sx={{ fontSize: 64, color: "#d32f2f" }} />;
       case "png":
       case "jpg":
       case "jpeg":
-        return <ImageIcon sx={{ fontSize: 84, color: "#1976d2" }} />;
+        return <ImageIcon sx={{ fontSize: 64, color: "#1976d2" }} />;
       case "doc":
       case "docx":
-        return <ArticleIcon sx={{ fontSize: 84, color: "#512da8" }} />;
+        return <ArticleIcon sx={{ fontSize: 64, color: "#512da8" }} />;
       case "xls":
       case "xlsx":
-        return <GridOnIcon sx={{ fontSize: 84, color: "#388e3c" }} />;
+        return <GridOnIcon sx={{ fontSize: 64, color: "#388e3c" }} />;
       default:
-        return <InsertDriveFileIcon sx={{ fontSize: 84, color: "#607d8b" }} />;
+        return <InsertDriveFileIcon sx={{ fontSize: 64, color: "#607d8b" }} />;
     }
   };
 
@@ -127,56 +113,104 @@ export const Main = () => {
           </ToggleButtonGroup>
         </Box>
 
-        {view === DocumentsView.GRID ? (
-          <Grid container spacing={2}>
-            {documents.map((doc) => (
-              <Grid item xs={12} sm={6} md={4} key={doc.id}>
-                <Card
-                  sx={{
-                    borderRadius: 2,
-                    boxShadow: 3,
-                    transition: "0.3s",
-                    "&:hover": { boxShadow: 6 },
-                  }}
-                >
-                  <Box
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    height={160}
+        <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+        {allDocuments?.length > 0 ? (
+          <Box>
+            {view === DocumentsView.GRID ? (
+              <Grid container spacing={2}>
+                {allDocuments.map((doc) => {
+                  return (
+                    <Grid item xs={12} sm={6} md={4} key={doc.id}>
+                      <Card
+                        sx={{
+                          borderRadius: 2,
+                          boxShadow: 3,
+                          transition: "0.3s",
+                          display: "flex",
+                          flexDirection: "column",
+                          height: "100%",
+                          "&:hover": { boxShadow: 6 },
+                        }}
+                      >
+                        <Stack
+                          direction={"row"}
+                          alignItems={"center"}
+                          justifyContent={"space-between"}
+                          sx={{ px: 3, pt: 2 }}
+                        >
+                          <Box>
+                            <Typography variant="subtitle1" fontWeight={550} gutterBottom noWrap>
+                              {doc.name}
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary" gutterBottom>
+                              {doc.documentType.toUpperCase()} | {doc.documentSize}
+                            </Typography>
+                          </Box>
+
+                          {getFileVisual(doc.documentType)}
+                        </Stack>
+                        <Box sx={{ px: 3 }}>
+                          {doc.description && (
+                            <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                              {doc.description}
+                            </Typography>
+                          )}
+
+                          <Box py={2}>
+                            <Button
+                              fullWidth
+                              variant="outlined"
+                              startIcon={<DownloadIcon />}
+                              onClick={() => {
+                                downloadDocument(doc.documentId);
+                              }}
+                            >
+                              {t("download")}
+                            </Button>
+                          </Box>
+                        </Box>
+                      </Card>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            ) : (
+              <List>
+                {allDocuments.map((doc) => (
+                  <ListItem
+                    key={doc.id}
                     sx={{
-                      borderTopLeftRadius: 8,
-                      borderTopRightRadius: 8,
+                      border: "1px solid lightgray",
+                      borderRadius: "8px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                     }}
                   >
-                    {getFileVisual(doc.type)}
-                  </Box>
-                  <CardContent>
-                    <Typography variant="subtitle1" fontWeight={500} gutterBottom noWrap>
-                      {doc.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {doc.type.toUpperCase()}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Uploaded: {doc.dateUploaded}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+                    <Box display="flex" alignItems="center">
+                      <Box mr={2}>{getFileVisual(doc.documentType)}</Box>
+                      <ListItemText
+                        primary={doc.name}
+                        secondary={`${doc.documentType.toUpperCase()} | ${doc.documentSize}`}
+                      />
+                    </Box>
+
+                    <Button
+                      variant="outlined"
+                      startIcon={<DownloadIcon />}
+                      onClick={() => {
+                        downloadDocument(doc.documentId);
+                      }}
+                    >
+                      {t("download")}
+                    </Button>
+                  </ListItem>
+                ))}
+              </List>
+            )}
+          </Box>
         ) : (
-          <List>
-            {documents.map((doc) => (
-              <ListItem key={doc.id}>
-                <Box display="flex" alignItems="center" mr={2}>
-                  {getFileVisual(doc.type)}
-                </Box>
-                <ListItemText primary={doc.name} secondary={`Type: ${doc.type} | Uploaded: ${doc.dateUploaded}`} />
-              </ListItem>
-            ))}
-          </List>
+          <Box>no file</Box>
         )}
       </Box>
     </Box>
