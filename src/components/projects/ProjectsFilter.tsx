@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import RegionDistrictSelector from "./RegionDistrictSelector";
+import { useProjectsStore } from "@/stores/projects/projects";
 import { EProjectModelFilter } from "@/models/project/ProjectModel";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
@@ -10,9 +11,11 @@ import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel
 import { Stack, Box, Typography, Chip, Autocomplete, TextField } from "@mui/material";
 
 export default function ProjectsFilter() {
-  const { handleFilter } = useProjectsViewModel();
+  const projectStore = useProjectsStore();
   const { allPartners } = usePartnersViewModel();
+  const { handleFilter } = useProjectsViewModel();
   const { regions, districts } = useRegionsViewModel();
+  const projectFilters = useProjectsStore((state) => state.filters);
   const [selectedGroupIds, setSelectedGroupIds] = useState<number[]>([]);
   const [selectedSectorIds, setSelectedSectorIds] = useState<number[]>([]);
   const [selectedRegionIds, setSelectedRegionIds] = useState<number[]>([]);
@@ -26,6 +29,7 @@ export default function ProjectsFilter() {
   const handleGroupChange = (event: any, newGroups: Record<string, any>[]) => {
     const newGroupIds = newGroups.map((g) => g.id);
     setSelectedGroupIds(newGroupIds);
+    projectStore.setFilters({ sectorGroupIds: newGroupIds });
     handleSectorGroupChange(newGroupIds);
     if (newGroupIds.length > 0) {
       setSelectedSectorIds((prev) => Array.from(new Set([...prev, ...newGroupIds])));
@@ -59,6 +63,15 @@ export default function ProjectsFilter() {
       districtIds: selectedDistrictIds,
     });
   }, [selectedRegionIds, selectedDistrictIds]);
+
+  useEffect(() => {
+    if (projectFilters) {
+      setSelectedSectorIds(projectFilters.sectorIds ?? []);
+      setSelectedPartnerIds(projectFilters.partnerIds ?? []);
+      setSelectedGroupIds(projectFilters.sectorGroupIds ?? []);
+      setSelectedDistrictIds(projectFilters.districtIds ?? []);
+    }
+  }, []);
 
   return (
     <Box sx={{ p: 2, border: "1px solid #ddd", borderRadius: "4px" }}>
@@ -163,7 +176,13 @@ export default function ProjectsFilter() {
         />
 
         {districts && regions && (
-          <RegionDistrictSelector districts={districts} regions={regions} onChange={handleSelectionChange} />
+          <RegionDistrictSelector
+            selectedRegions={projectFilters?.regionIds ?? []}
+            selectedDistricts={projectFilters?.districtIds ?? []}
+            districts={districts}
+            regions={regions}
+            onChange={handleSelectionChange}
+          />
         )}
       </Stack>
     </Box>
