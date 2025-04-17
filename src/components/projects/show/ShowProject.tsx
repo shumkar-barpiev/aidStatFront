@@ -139,7 +139,6 @@ export const ShowProject = () => {
         const grant = fundingItems?.filter((item: Record<string, any>) => item.type == "Grant");
         const credit = fundingItems?.filter((item: Record<string, any>) => item.type == "Loan");
 
-        console.log(fundingItems);
         setGrantItems(grant ?? []);
         setCreditItems(credit ?? []);
       }

@@ -18,15 +18,23 @@ import { Region, District } from "@/viewmodels/regions/useRegionsViewModel";
 interface Props {
   regions: Region[];
   districts: District[];
+  selectedRegions: number[];
+  selectedDistricts: number[];
   onChange: (regionIds: number[], districtIds: number[]) => void;
 }
 
-const RegionDistrictSelector: React.FC<Props> = ({ regions, districts, onChange }) => {
+const RegionDistrictSelector: React.FC<Props> = ({
+  regions,
+  districts,
+  selectedRegions,
+  selectedDistricts,
+  onChange,
+}) => {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState("");
-  const [selectedRegionIds, setSelectedRegionIds] = useState<number[]>([]);
-  const [selectedDistrictIds, setSelectedDistrictIds] = useState<number[]>([]);
   const [expandedRegions, setExpandedRegions] = useState<Record<number, boolean>>({});
+  const [selectedRegionIds, setSelectedRegionIds] = useState<number[]>(selectedRegions);
+  const [selectedDistrictIds, setSelectedDistrictIds] = useState<number[]>(selectedDistricts);
 
   useEffect(() => {
     const initialExpanded = regions.reduce(

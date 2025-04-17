@@ -5,6 +5,7 @@ import { NavItem } from "@/models/nav-item/NavItem";
 
 export const useNavViewModel = () => {
   const [navItems] = useState<NavItem[]>([
+    { label: "Главная", i18n: "mainPage", path: "/" },
     { label: "Projects", i18n: "projects", path: "/projects" },
     { label: "Statistics", i18n: "statisticsPage", path: "/statistics" },
     { label: "Partners", i18n: "partners", path: "/partners" },
