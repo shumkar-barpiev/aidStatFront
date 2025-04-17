@@ -25,6 +25,7 @@ import ProjectBadges from "@/components/projects/ProjectBadges";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { getPartnerAvatar } from "@/components/other/Base64Avatar";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
+import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 
@@ -108,7 +109,7 @@ export default function ProjectsTable() {
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "20%" }}>
                       <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                        {project?.partners &&
+                        {project?.partners ? (
                           project.partners.map((partner, index) => {
                             const partnerName = `${partner.name ?? ""}`;
                             return (
@@ -122,20 +123,36 @@ export default function ProjectsTable() {
                                 {getPartnerAvatar(partnerName, partner.image ?? null, 40)}
                               </button>
                             );
-                          })}
+                          })
+                        ) : (
+                          <NotSpecifiedText />
+                        )}
                       </Stack>
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%" }}>
-                      <RenderEllipsisText text={getProjectSectorsTitle(project.sectors ?? [])} tooltipPlacement="top" />
+                      {project.sectors ? (
+                        <RenderEllipsisText
+                          text={getProjectSectorsTitle(project.sectors ?? [])}
+                          tooltipPlacement="top"
+                        />
+                      ) : (
+                        <NotSpecifiedText />
+                      )}
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "15%" }}>{projectFormatDate(`${project.startDate}`)}</StyledTableCell>
+                    <StyledTableCell sx={{ width: "15%" }}>
+                      {project.startDate ? projectFormatDate(`${project.startDate}`) : <NotSpecifiedText />}
+                    </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%", paddingLeft: "0px", textAlign: "center" }}>
-                      {project?.totalSum && formatCurrencyWithSpaces(`${project?.totalSum}`)}
+                      {project?.totalSum ? formatCurrencyWithSpaces(`${project?.totalSum}`) : <NotSpecifiedText />}
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%", textAlign: "center" }}>
-                      <ProjectBadges
-                        status={project.status as "In progress" | "Completed" | "Not started" | "Canceled"}
-                      />
+                      {project.status ? (
+                        <ProjectBadges
+                          status={project.status as "In progress" | "Completed" | "Not started" | "Canceled"}
+                        />
+                      ) : (
+                        <NotSpecifiedText />
+                      )}
                     </StyledTableCell>
                   </TableRow>
                 );

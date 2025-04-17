@@ -22,6 +22,7 @@ import { useProjectsStore } from "@/stores/projects/projects";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import ReadMoreOutlinedIcon from "@mui/icons-material/ReadMoreOutlined";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
+import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
@@ -72,10 +73,10 @@ export default function MainPage() {
           width: "100%",
           height: "95vh",
           backgroundImage: `url(/assets/images/pages/main-page-1.png)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundSize: "100% auto",
+          backgroundPosition: "bottom center",
+          backgroundRepeat: "no-repeat",
           display: "flex",
-
           justifyContent: "center",
           textAlign: "center",
           color: "white",
@@ -175,8 +176,10 @@ export default function MainPage() {
                     }}
                   >
                     <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-                      {project?.sectors && (
+                      {project?.sectors ? (
                         <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />
+                      ) : (
+                        <NotSpecifiedText />
                       )}
                     </Typography>
 
@@ -273,20 +276,29 @@ export default function MainPage() {
                 >
                   {t("aidStatInfoDescription")}
                 </Typography>
-                <Button size="small" endIcon={<ArrowForwardOutlinedIcon />} sx={{ mt: 1 }}>
+                <Button
+                  size="small"
+                  endIcon={<ArrowForwardOutlinedIcon />}
+                  sx={{ mt: 1 }}
+                  onClick={() => {
+                    router.push("/contacts");
+                  }}
+                >
                   {t("more")}
                 </Button>
               </CardContent>
             </Box>
 
             <CardMedia
+              component="img"
+              image="/assets/images/pages/main-page-2.png"
+              alt="Main Page"
               sx={{
                 width: { xs: "100%", sm: "100%", md: 600, lg: 750, xl: 800 },
                 height: { xs: 250, sm: 300, md: 350 },
                 objectFit: "contain",
+                pt: 1,
               }}
-              image="/assets/images/pages/main-page-2.jpg"
-              title="green iguana"
             />
           </Card>
         </Box>
