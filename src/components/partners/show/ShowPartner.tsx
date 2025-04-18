@@ -61,68 +61,23 @@ const ShowPartner = () => {
     <Box sx={{ mt: 4, px: 2 }}>
       <Card elevation={3}>
         <CardContent>
-          <Stack
-            direction={"row"}
-            alignItems={"end"}
-            spacing={3}
-            sx={{ mb: 2, justifyContent: "space-between", pr: 3 }}
-          >
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                fontSize: { xs: "1rem", sm: "1.5rem" },
-                WebkitBoxOrient: "vertical",
-                WebkitLineClamp: 2,
-                maxWidth: "60%",
-              }}
-            >
-              {partner?.name}
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "auto",
-                width: "180px",
-                overflow: "hidden",
-                backgroundColor: "inherit",
-              }}
-            >
-              {partner?.image && (
-                <Box
+          <Stack direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }} alignItems={"start"} gap={3}>
+            <Box sx={{ width: { xs: 1, sm: 1, md: 4 / 5 } }}>
+              <Card sx={{ p: 3, mb: 2 }}>
+                <Typography
+                  variant="h5"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "150px",
-                    width: "100%",
-                    overflow: "hidden",
-                    borderRadius: "4px",
-                    backgroundColor: "#F0F4F7",
-                    p: 1,
+                    fontWeight: "bold",
+                    fontSize: { xs: "1rem", sm: "1.5rem" },
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: 2,
+                    maxWidth: "80%",
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    alt={partner.name}
-                    image={`data:image/png;base64,${partner.image}`}
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                    }}
-                  />
-                </Box>
-              )}
-            </Box>
-          </Stack>
-          <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+                  {partner?.name}
+                </Typography>
+                <Divider sx={{ my: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
-          <Stack direction={{ xs: "column-reverse", sm: "row", md: "row" }} alignItems={"start"} gap={3}>
-            <Box sx={{ width: { xs: 1, sm: 3 / 5, md: 4 / 5 } }}>
-              <Card sx={{ p: 3, mb: 2 }}>
                 <Typography variant="subtitle1" fontWeight="bold">
                   Описание
                 </Typography>
@@ -131,8 +86,39 @@ const ShowPartner = () => {
                 )}
               </Card>
             </Box>
-            <Box sx={{ width: { xs: 1, sm: 2 / 5, md: 1 / 5 } }}>
+            <Box sx={{ width: { xs: 1, sm: 1, md: 1 / 5 } }}>
               <Grid container spacing={2}>
+                <Grid item xs={12} sx={{ height: { xs: "140px", sm: "180px" } }}>
+                  {partner?.image && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: "100%",
+                        width: "100%",
+                        overflow: "hidden",
+                        borderRadius: "4px",
+                        p: 1,
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        alt={partner.name}
+                        image={`data:image/png;base64,${partner.image}`}
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Grid>
+                <Divider
+                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", md: "90%" } }}
+                />
+
                 <Grid item xs={12} sx={{ height: { xs: "90px", sm: "130px" } }}>
                   <Stack direction={"row"} alignItems={"center"} spacing={1}>
                     <PlaylistAddCheckOutlinedIcon fontSize="medium" />
@@ -144,7 +130,7 @@ const ShowPartner = () => {
                   {partner?.projectCount && <Typography fontWeight={"bold"}>{partner?.projectCount}</Typography>}
                 </Grid>
                 <Divider
-                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", sm: "90%" } }}
+                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", md: "90%" } }}
                 />
 
                 <Grid item xs={12} sx={{ height: { xs: "90px", sm: "130px" } }}>
@@ -159,7 +145,7 @@ const ShowPartner = () => {
                   )}
                 </Grid>
                 <Divider
-                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", sm: "90%" } }}
+                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", md: "90%" } }}
                 />
 
                 <Grid item xs={12} sx={{ height: { xs: "90px", sm: "130px" } }}>
