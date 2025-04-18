@@ -8,10 +8,12 @@ import Colors from "@/styles/colors";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { useAuthViewModel } from "@/viewmodels/auth/useAuthViewModel";
 import { Box, Paper, Stack, Button, Divider, TextField, IconButton, Typography, InputAdornment } from "@mui/material";
 
 const LoginPage = () => {
   const { t } = useTranslation();
+  const { authorize } = useAuthViewModel();
   const [locked, setLocked] = useState(true);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -38,14 +40,14 @@ const LoginPage = () => {
     }
 
     if (isValid) {
-      console.log("Logged in with:", { username, password });
+      authorize({ username, password });
     }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setLocked((prev) => !prev);
-    }, 1000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, []);
