@@ -64,6 +64,23 @@ export const Main = () => {
     }
   };
 
+  const getFileExtensionFromMime = (mimeType: string): string => {
+    const map: Record<string, string> = {
+      "application/pdf": "pdf",
+      "image/png": "png",
+      "image/jpeg": "jpg",
+      "image/jpg": "jpg",
+      "application/msword": "doc",
+      "application/vnd.ms-excel": "xls",
+      "application/vnd.ms-powerpoint": "ppt",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
+    };
+
+    return map[mimeType.toLowerCase()] || "";
+  };
+
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>
       <Box>
@@ -143,31 +160,30 @@ export const Main = () => {
                               {doc.name}
                             </Typography>
                             <Typography variant="body1" color="text.secondary" gutterBottom>
-                              {doc.documentType.toUpperCase()} | {doc.documentSize}
+                              {getFileExtensionFromMime(doc.documentType).toUpperCase()} | {doc.documentSize}
                             </Typography>
                           </Box>
 
-                          {getFileVisual(doc.documentType)}
+                          {getFileVisual(getFileExtensionFromMime(doc.documentType))}
                         </Stack>
-                        <Box sx={{ px: 3 }}>
+
+                        <Box sx={{ px: 3, flexGrow: 1 }}>
                           {doc.description && (
                             <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                               {doc.description}
                             </Typography>
                           )}
+                        </Box>
 
-                          <Box py={2}>
-                            <Button
-                              fullWidth
-                              variant="outlined"
-                              startIcon={<DownloadIcon />}
-                              onClick={() => {
-                                downloadDocument(doc.documentId);
-                              }}
-                            >
-                              {t("download")}
-                            </Button>
-                          </Box>
+                        <Box sx={{ px: 3, pt: 2, pb: 3 }}>
+                          <Button
+                            fullWidth
+                            variant="outlined"
+                            startIcon={<DownloadIcon />}
+                            onClick={() => downloadDocument(doc, getFileExtensionFromMime(doc.documentType))}
+                          >
+                            {t("download")}
+                          </Button>
                         </Box>
                       </Card>
                     </Grid>
@@ -185,22 +201,21 @@ export const Main = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      mb: 2,
                     }}
                   >
                     <Box display="flex" alignItems="center">
-                      <Box mr={2}>{getFileVisual(doc.documentType)}</Box>
+                      <Box mr={2}>{getFileVisual(getFileExtensionFromMime(doc.documentType))}</Box>
                       <ListItemText
                         primary={doc.name}
-                        secondary={`${doc.documentType.toUpperCase()} | ${doc.documentSize}`}
+                        secondary={`${getFileExtensionFromMime(doc.documentType).toUpperCase()} | ${doc.documentSize}`}
                       />
                     </Box>
 
                     <Button
                       variant="outlined"
                       startIcon={<DownloadIcon />}
-                      onClick={() => {
-                        downloadDocument(doc.documentId);
-                      }}
+                      onClick={() => downloadDocument(doc, getFileExtensionFromMime(doc.documentType))}
                     >
                       {t("download")}
                     </Button>

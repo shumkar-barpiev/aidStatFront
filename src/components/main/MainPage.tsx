@@ -150,7 +150,7 @@ export default function MainPage() {
             {t("showAll")}
           </Button>
         </Stack>
-        <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+        <Divider sx={{ mb: 4, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         <Grid container spacing={3}>
           {projectsStore.items &&
             projectsStore.items.slice(0, 4).map((project: TProjectModel, index) => {
