@@ -1,42 +1,39 @@
 "use client";
+
 import React from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Box, Card, Divider, IconButton, Typography } from "@mui/material";
 import BarChart from "@/components/statistics/charts/BarChart.tsx";
 import { ChartDataCount, ChartDataSum } from "@/stores/projects/projects-for-cards.ts";
 import { formatCurrency } from "@/utils/formatCurrency.ts";
-import FilterSelect from "@/components/select/FilterSelect.tsx";
-import { TestFilterLocationNameOptions, TestFilterSectorOptions } from "@/shared/enums/statisticsMapIconsEnums.ts";
+import FilterSelect, { Option } from "@/components/select/FilterSelect.tsx";
 
 interface Props {
   title: string;
-  total: string;
-  unit: string;
-  data: ChartDataCount[] | ChartDataSum[];
+  total?: string;
+  unit?: string;
+  data?: ChartDataCount[] | ChartDataSum[];
+  selectOptions?: Option[];
   chartFilters?: { [key: string]: string };
   handleFilterChange?: (id: number) => void;
 }
 
-const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, chartFilters, handleFilterChange }) => {
+const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selectOptions, handleFilterChange }) => {
   const isChartDataSum = (data: ChartDataSum[] | ChartDataCount[]): data is ChartDataSum[] => {
-    return "grantAmounts" in data[0];
+    return data?.length > 0 && "grantAmounts" in data[0];
   };
 
-  const names = data.map((item) => item.name);
-  const mainValues = isChartDataSum(data)
-    ? data.map((item) => item.grantAmounts)
-    : data.map((item) => item.projectCount);
-  const extraValues = isChartDataSum(data) ? data.map((item) => item.creditAmounts) : undefined;
+  const hasData = Array.isArray(data) && data.length > 0;
 
-  // const downloadExcel = (title: string) => {
-  //   const fileUrl = `/assets/statistics/exselData/${title}.xlsx`;
-  //   const link = document.createElement("a");
-  //   link.href = fileUrl;
-  //   link.download = `${title}.xlsx`;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
+  const names = hasData ? data.map((item) => item.name) : [];
+  const mainValues = hasData
+    ? isChartDataSum(data)
+      ? data.map((item) => item.grantAmounts)
+      : data.map((item) => item.projectCount)
+    : [];
+
+  const extraValues =
+    hasData && isChartDataSum(data) ? data.map((item) => item.creditAmounts) : undefined;
 
   return (
     <Card sx={{ boxShadow: 3, borderRadius: 1, minHeight: 500 }}>
@@ -45,11 +42,15 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, chart
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
             {title}
           </Typography>
-          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-            {isChartDataSum(data) ? unit + " " + formatCurrency(total) : total}
-          </Typography>
+          {unit && total && (
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              {isChartDataSum(data || []) ? `${unit} ${formatCurrency(total)}` : total}
+            </Typography>
+          )}
         </Box>
+
         <Divider sx={{ backgroundColor: "#666666", height: 2, mb: 4 }} />
+
         <Box
           sx={{
             flex: 1,
@@ -60,30 +61,33 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, chart
             justifyContent: "center",
           }}
         >
-          {mainValues.length ? (
+          {hasData ? (
             <BarChart names={names} mainValues={mainValues} extraValues={extraValues} title={title} />
           ) : (
             <Typography color="text.secondary">Нет данных для отображения</Typography>
           )}
         </Box>
+
         <Box sx={{ display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center", p: 2 }}>
           <Box sx={{ display: "flex", flex: 1 }}>
-            {title.includes("Корреляция региона") && (
+            {title.includes("по регионам") && selectOptions && (
               <FilterSelect
                 name="region"
                 value="1"
-                options={TestFilterLocationNameOptions}
+                options={selectOptions}
                 onChange={handleFilterChange ?? (() => {})}
                 labelName="Регион"
+                isAll={false}
               />
             )}
-            {title.includes("Корреляция сектора") && (
+            {title.includes("по секторам") && selectOptions && (
               <FilterSelect
                 name="sector"
-                value="1"
-                options={TestFilterSectorOptions}
+                value="20"
+                options={selectOptions}
                 onChange={handleFilterChange ?? (() => {})}
                 labelName="Сектор"
+                isAll={false}
               />
             )}
           </Box>

@@ -11,13 +11,13 @@ interface Props {
 
 const TitlesLegend: React.FC<Props> = ({ names, hoveredIndex, setHoveredIndex, mainBarColors, truncateLabel }) => {
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 1.5, mb: 2 }}>
+    <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 1.5, mb: 2, minHeight: "80px" }}>
       {names.map((title: string, index: number) => {
         const barOpacity = hoveredIndex === null || hoveredIndex === index ? 1 : 0.5;
         return (
           <Box
             key={title}
-            sx={{ display: "flex", alignItems: "center", opacity: barOpacity }}
+            sx={{ display: "flex", alignItems: "start", opacity: barOpacity }}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >

@@ -84,7 +84,7 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
   }, [extraValues]);
 
   return (
-    <Box ref={chartRef} height="100%">
+    <Box ref={chartRef} height="100%" sx={{ minHeight: "325px" }}>
       <TitlesLegend
         names={names}
         hoveredIndex={hoveredIndex}
@@ -93,7 +93,7 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
         truncateLabel={truncateLabel}
       />
       <Box sx={{ height: "100%" }}>
-        <Box sx={{ display: "flex", justifyContent: "space-between", height: chartMaxHeight }}>
+        <Box sx={{ display: "flex", justifyContent: "start", height: chartMaxHeight }}>
           {mainValues.map((value: string, index: number) => {
             const finalMainVal = parseValue(value);
             const extraValStr = extraValues?.[index];

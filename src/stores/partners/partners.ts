@@ -1,14 +1,16 @@
 import { create } from "zustand";
 import { http } from "@/utils/http";
-import { TModelFilters } from "@/types/model";
+import { TModelPublicFilters } from "@/types/model";
 import { TPartnerModel } from "@/models/partner/partner";
 import { replacePublicEndpointFilters } from "@/utils/axelor-api";
+import { PartnerType } from "@/viewmodels/partners/usePartnersViewModel";
 
 const initialStore = {
   loading: false,
   error: null,
   total: null,
   items: null,
+  agencies: null,
   item: null,
   pageTotal: null,
 };
@@ -20,10 +22,11 @@ export const usePartnersStore = create<{
   pageTotal: number | null;
   item: TPartnerModel | null;
   items: TPartnerModel[] | null;
+  agencies: TPartnerModel[] | null;
   clearStore: () => void;
   getItems: (callback: Function) => Promise<void>;
   fetchItem: (id: number, callback?: Function) => Promise<void>;
-  fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
+  fetchItems: (filters?: TModelPublicFilters, callback?: Function) => Promise<void>;
 }>((set, get) => ({
   ...initialStore,
   getItems: async (callback: Function) => {
@@ -48,7 +51,7 @@ export const usePartnersStore = create<{
     }
   },
 
-  fetchItems: async (filters?: TModelFilters, callback?: Function) => {
+  fetchItems: async (filters?: TModelPublicFilters, callback?: Function) => {
     set({ loading: true });
     try {
       const _filters = replacePublicEndpointFilters(filters);
@@ -65,7 +68,11 @@ export const usePartnersStore = create<{
           const pageTotal =
             data.total != null && filters?.pageSize != null ? Math.ceil(data.total / filters?.pageSize) : 0;
 
-          set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));
+          if (_filters && _filters?.partnerType === PartnerType.CONTRACTOR_IMPLEMENTER) {
+            set(() => ({ error: null, total: data.total, pageTotal: pageTotal, agencies: data.data }));
+          } else {
+            set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));
+          }
         }
       } else {
         throw new Error(`${response.status} ${response.statusText}`);

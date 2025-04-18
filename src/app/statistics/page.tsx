@@ -1,7 +1,7 @@
 "use client";
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Main from "@/components/statistics/Main.tsx";
+import Main from "@/components/statistics/Main";
 import { containerMargins, containerWidths } from "@/utils/constants";
 
 export default function StatisticsPage() {

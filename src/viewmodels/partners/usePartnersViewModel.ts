@@ -7,11 +7,16 @@ import { TPartnerModel, EPartnerModelFilter } from "@/models/partner/partner";
 
 let timer: ReturnType<typeof setTimeout> | null;
 
+export enum PartnerType {
+  PARTNER = "Partner",
+  CONTRACTOR_IMPLEMENTER = "contractor/implementer",
+}
+
 const initialFilters: () => TModelFilters = () => {
   return {
     page: 1,
     pageSize: 8,
-    partnerType: "Partner",
+    partnerType: PartnerType.PARTNER,
   };
 };
 
@@ -24,6 +29,15 @@ export const usePartnersViewModel = () => {
 
   const handlePartnersPageChange = (e: ChangeEvent<unknown>, page: number) => {
     setPartnersFilter((prev) => ({ ...prev, page }));
+  };
+
+  const handleAgenciesFetch = () => {
+    partnerStore.fetchItems({
+      ...partnersFilter,
+      page: undefined,
+      pageSize: 1000,
+      partnerType: PartnerType.CONTRACTOR_IMPLEMENTER,
+    });
   };
 
   const handleFilter = (type: EPartnerModelFilter, searchText?: string | number) => {
@@ -65,5 +79,6 @@ export const usePartnersViewModel = () => {
     handleFilter,
     partnersFilter,
     handlePartnersPageChange,
+    handleAgenciesFetch,
   };
 };
