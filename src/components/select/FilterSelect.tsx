@@ -6,9 +6,10 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-interface Option {
+export interface Option {
   id: number;
   name: string;
+  projectCount: number;
 }
 
 interface Props {
@@ -17,9 +18,10 @@ interface Props {
   value: string;
   onChange: (id: number) => void;
   labelName: string;
+  isAll?: boolean;
 }
 
-const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName }) => {
+const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName, isAll=true }) => {
   const [selected, setSelected] = useState<string>(value);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -57,12 +59,12 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
           },
         }}
       >
-        <MenuItem value={-1}>Все {labelName.toLowerCase() + "ы"}</MenuItem>
+        {isAll && <MenuItem value={-1}>Все {labelName.toLowerCase() + "ы"}</MenuItem>}
         {options
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((option) => (
             <MenuItem key={option.id} value={option.id}>
-              {option.name}
+              ({option.projectCount}) - {option.name}
             </MenuItem>
           ))}
       </Select>

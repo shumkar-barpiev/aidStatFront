@@ -17,6 +17,7 @@ export type TModelFilters = {
   sortBy?: string[];
   fields?: string[];
   criteria?: (TCriteria | TCriteriaList)[];
+  partnerType?: string | null;
 } | null;
 
 export type TModelPublicFilters = {

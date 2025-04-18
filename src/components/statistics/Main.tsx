@@ -1,20 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
-import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
-import ContractsMap from "@/components/maps/ContractsMap.tsx";
-import dynamic from "next/dynamic";
+import { Box, Tab, Tabs } from "@mui/material";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
-import ContractsTable from "@/components/maps/ContractsTable.tsx";
-import ChartsMainBlock from "@/components/statistics/charts/ChartsMainBlock.tsx";
-
-const ProjectsMap = dynamic(() => import("@/components/maps/ProjectsMap.tsx"), {
-  ssr: false,
-});
-
-const DonutChart = dynamic(() => import("@/components/statistics/charts/DonutChart.tsx"), { ssr: false });
+import ProjectsTab from "@/components/statistics/ProjectsTab.tsx";
+import ContractsTab from "@/components/statistics/ContractsTab.tsx";
 
 const a11yProps = (index: number) => {
   return {
@@ -25,8 +15,6 @@ const a11yProps = (index: number) => {
 
 export default function Main() {
   const [tab, setTab] = useState<number>(0);
-  const { t } = useTranslation();
-  const { budgetForChart, byTypesForChart } = useContractsViewModel();
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -41,49 +29,10 @@ export default function Main() {
         </Tabs>
       </Box>
       <CustomTabPanel value={tab} index={0}>
-        <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
-          Мониторинг проектов для создания и развития инфраструктуры КР
-        </Typography>
-        <Divider sx={{ mb: 2, borderColor: "darkblue", borderBottomWidth: 2 }} />
-        <ProjectsMap />
-        <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
-          {t("statisticsTitle")}
-        </Typography>
-        <Divider sx={{ mb: 6, borderColor: "darkblue", borderBottomWidth: 2 }} />
-
-        <ChartsMainBlock />
+        <ProjectsTab />
       </CustomTabPanel>
       <CustomTabPanel value={tab} index={1}>
-        <Box
-          display="flex"
-          gap={2}
-          mb={5}
-          sx={{ flexDirection: { xs: "column", lg: "row" }, justifyContent: "center", alignItems: "center" }}
-        >
-          <ContractsMap />
-          <Box
-            display="flex"
-            gap={2}
-            flexDirection="column"
-            sx={{ flexDirection: { xs: "column", md: "row", lg: "column" } }}
-          >
-            {budgetForChart && (
-              <DonutChart
-                title="Суммы контрактов"
-                seriesOptions={[budgetForChart.lowBudget, budgetForChart.mediumBudget, budgetForChart.highBudget]}
-                labels={["до $100.000", "$100.000 - $500.000", "от $500.000"]}
-              />
-            )}
-            {byTypesForChart && (
-              <DonutChart
-                title="Типы контрактов"
-                seriesOptions={[byTypesForChart.goods, byTypesForChart?.infrastructure]}
-                labels={["Товары", "Инфраструктура"]}
-              />
-            )}
-          </Box>
-        </Box>
-        <ContractsTable />
+        <ContractsTab />
       </CustomTabPanel>
     </Box>
   );

@@ -9,6 +9,7 @@ const initialStore = {
   error: null,
   total: null,
   items: null,
+  agencies: null,
   item: null,
   pageTotal: null,
 };
@@ -20,6 +21,7 @@ export const usePartnersStore = create<{
   pageTotal: number | null;
   item: TPartnerModel | null;
   items: TPartnerModel[] | null;
+  agencies: TPartnerModel[] | null;
   clearStore: () => void;
   getItems: (callback: Function) => Promise<void>;
   fetchItem: (id: number, callback?: Function) => Promise<void>;
@@ -65,7 +67,11 @@ export const usePartnersStore = create<{
           const pageTotal =
             data.total != null && filters?.pageSize != null ? Math.ceil(data.total / filters?.pageSize) : 0;
 
-          set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));
+          if (_filters && _filters?.partnerType === "contractor/implementor") {
+            set(() => ({ error: null, total: data.total, pageTotal: pageTotal, agencies: data.data }));
+          } else {
+            set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));
+          }
         }
       } else {
         throw new Error(`${response.status} ${response.statusText}`);

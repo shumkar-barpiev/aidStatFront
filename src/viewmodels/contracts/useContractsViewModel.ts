@@ -6,8 +6,8 @@ import {
   ContractShort,
   useContractsStore,
 } from "@/stores/constracts/contracts.ts";
-import contractsData from "@/components/maps/contractsData.json";
-import contractsDataBudgetStateOnly from "@/components/maps/contractsDataBudgetStateOnly.json";
+import contractsData from "@/components/statistics/maps/contractsData.json";
+import contractsDataBudgetStateOnly from "@/components/statistics/maps/contractsDataBudgetStateOnly.json";
 
 export const useContractsViewModel = () => {
   const contractsStore = useContractsStore();

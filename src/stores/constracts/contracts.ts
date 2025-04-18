@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { http } from "@/utils/http.ts";
-import contractsData from "@/components/maps/contractsData.json";
-import contractsDataBudgetStateOnly from "@/components/maps/contractsDataBudgetStateOnly.json";
+import contractsData from "@/components/statistics/maps/contractsData.json";
+import contractsDataBudgetStateOnly from "@/components/statistics/maps/contractsDataBudgetStateOnly.json";
 
 export interface ContractShort {
   title: string;

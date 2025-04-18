@@ -59,6 +59,10 @@ export const usePartnersViewModel = () => {
     partnerStore.fetchItems(partnersFilter);
   }, [partnersFilter]);
 
+  useEffect(() => {
+    partnerStore.fetchItems({...partnersFilter, page: undefined, pageSize: 1000, partnerType: "contractor/implementer"});
+  }, []);
+
   return {
     allPartners,
     fetchPartner,
