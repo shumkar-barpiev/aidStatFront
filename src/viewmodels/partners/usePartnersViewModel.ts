@@ -26,6 +26,10 @@ export const usePartnersViewModel = () => {
     setPartnersFilter((prev) => ({ ...prev, page }));
   };
 
+  const handleAgenciesFetch = () => {
+    partnerStore.fetchItems({...partnersFilter, page: undefined, pageSize: 1000, partnerType: "contractor/implementer"});
+  };
+
   const handleFilter = (type: EPartnerModelFilter, searchText?: string | number) => {
     if (timer != null) {
       clearTimeout(timer);
@@ -59,15 +63,12 @@ export const usePartnersViewModel = () => {
     partnerStore.fetchItems(partnersFilter);
   }, [partnersFilter]);
 
-  useEffect(() => {
-    partnerStore.fetchItems({...partnersFilter, page: undefined, pageSize: 1000, partnerType: "contractor/implementer"});
-  }, []);
-
   return {
     allPartners,
     fetchPartner,
     handleFilter,
     partnersFilter,
     handlePartnersPageChange,
+    handleAgenciesFetch,
   };
 };

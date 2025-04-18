@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { http } from "@/utils/http";
-import { TModelFilters } from "@/types/model";
+import { TModelFilters, TModelPublicFilters } from "@/types/model";
 import { TPartnerModel } from "@/models/partner/partner";
 import { replacePublicEndpointFilters } from "@/utils/axelor-api";
 
@@ -25,7 +25,7 @@ export const usePartnersStore = create<{
   clearStore: () => void;
   getItems: (callback: Function) => Promise<void>;
   fetchItem: (id: number, callback?: Function) => Promise<void>;
-  fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
+  fetchItems: (filters?: TModelPublicFilters, callback?: Function) => Promise<void>;
 }>((set, get) => ({
   ...initialStore,
   getItems: async (callback: Function) => {
@@ -50,7 +50,7 @@ export const usePartnersStore = create<{
     }
   },
 
-  fetchItems: async (filters?: TModelFilters, callback?: Function) => {
+  fetchItems: async (filters?: TModelPublicFilters, callback?: Function) => {
     set({ loading: true });
     try {
       const _filters = replacePublicEndpointFilters(filters);
