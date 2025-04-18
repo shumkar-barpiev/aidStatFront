@@ -113,13 +113,24 @@ export default function MainPage() {
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
               textShadow: "2px 1px 2px rgba(0, 0, 0, 1)",
+              fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
             }}
           >
             {t("mainPageText")}
           </Typography>
-          <Typography variant="h6" fontWeight="bold" gutterBottom sx={{ textShadow: "2px 1px 2px rgba(0, 0, 0, 0.7)" }}>
+
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            gutterBottom
+            sx={{
+              textShadow: "2px 1px 2px rgba(0, 0, 0, 0.7)",
+              fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
+            }}
+          >
             {t("mainPageDescription")}
           </Typography>
+
           <Button
             variant="contained"
             color="primary"
@@ -175,13 +186,13 @@ export default function MainPage() {
                       },
                     }}
                   >
-                    <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
-                      {project?.sectors ? (
+                    {project?.sectors ? (
+                      <Typography key={index} variant="subtitle1" sx={{ fontWeight: "bold", whiteSpace: "nowrap" }}>
                         <RenderEllipsisText text={t(getProjectSectorsTitle(project.sectors ?? []))} />
-                      ) : (
-                        <NotSpecifiedText />
-                      )}
-                    </Typography>
+                      </Typography>
+                    ) : (
+                      <NotSpecifiedText />
+                    )}
 
                     <button
                       onClick={() => {
