@@ -1,7 +1,6 @@
 "use client";
 
-import { TModelFilters } from "@/types/model";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { TProjectModelFilters, useProjectsStore } from "@/stores/projects/projects";
 import { EProjectModelFilter } from "@/models/project/ProjectModel";
 

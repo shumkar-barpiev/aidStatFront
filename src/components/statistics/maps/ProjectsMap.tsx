@@ -20,7 +20,6 @@ import oshCity from "@/utils/map/statesOshCity.json";
 import HeatLayer from "@/components/statistics/maps/HeatLayer.tsx";
 import MapWithClusters from "@/components/statistics/maps/MapWithClusters.tsx";
 import MapWithDistricts from "@/components/statistics/maps/MapWithDistricts.tsx";
-import { useProjectsMapStore } from "@/stores/projects/projects-for-map.ts";
 
 const districtsMap: Record<string, any> = {
   "Баткенская область": batkenRegion,

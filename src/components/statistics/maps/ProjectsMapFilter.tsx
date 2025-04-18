@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { useStatisticsProjectsMapViewModel } from "@/viewmodels/statistics/map/useStatisticsProjectsMapViewModel.ts";
-import FilterSelect, { Option } from "@/components/select/FilterSelect.tsx";
+import FilterSelect from "@/components/select/FilterSelect.tsx";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel.ts";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel.ts";
@@ -30,8 +30,18 @@ const ProjectsMapFilter = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, gap: "16px", padding: "20px 0" }}>
       <FilterSelect labelName="Регион" onChange={handleRegionChange} options={handleOptions(regions)} value="-1" />
-      <FilterSelect labelName="Сектор" onChange={handleSectorChange} options={handleOptions(sectorOptions)} value="-1" />
-      <FilterSelect labelName="Партнер" onChange={handlePartnerChange} options={handleOptions(allPartners)} value="-1" />
+      <FilterSelect
+        labelName="Сектор"
+        onChange={handleSectorChange}
+        options={handleOptions(sectorOptions)}
+        value="-1"
+      />
+      <FilterSelect
+        labelName="Партнер"
+        onChange={handlePartnerChange}
+        options={handleOptions(allPartners)}
+        value="-1"
+      />
     </Box>
   );
 };
