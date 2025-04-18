@@ -1,11 +1,16 @@
 "use client";
 
-import { PartnerType, TModelFilters } from "@/types/model";
+import { TModelFilters } from "@/types/model";
 import { ChangeEvent, useEffect, useState } from "react";
 import { usePartnersStore } from "@/stores/partners/partners";
 import { TPartnerModel, EPartnerModelFilter } from "@/models/partner/partner";
 
 let timer: ReturnType<typeof setTimeout> | null;
+
+export enum PartnerType {
+  PARTNER = "Partner",
+  CONTRACTOR_IMPLEMENTER = "contractor/implementer",
+}
 
 const initialFilters: () => TModelFilters = () => {
   return {
@@ -27,7 +32,12 @@ export const usePartnersViewModel = () => {
   };
 
   const handleAgenciesFetch = () => {
-    partnerStore.fetchItems({...partnersFilter, page: undefined, pageSize: 1000, partnerType: PartnerType.CONTRACTOR_IMPLEMENTER});
+    partnerStore.fetchItems({
+      ...partnersFilter,
+      page: undefined,
+      pageSize: 1000,
+      partnerType: PartnerType.CONTRACTOR_IMPLEMENTER,
+    });
   };
 
   const handleFilter = (type: EPartnerModelFilter, searchText?: string | number) => {

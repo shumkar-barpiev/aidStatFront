@@ -3,6 +3,7 @@ import { http } from "@/utils/http";
 import { TModelPublicFilters } from "@/types/model";
 import { TPartnerModel } from "@/models/partner/partner";
 import { replacePublicEndpointFilters } from "@/utils/axelor-api";
+import { PartnerType } from "@/viewmodels/partners/usePartnersViewModel";
 
 const initialStore = {
   loading: false,
@@ -67,7 +68,7 @@ export const usePartnersStore = create<{
           const pageTotal =
             data.total != null && filters?.pageSize != null ? Math.ceil(data.total / filters?.pageSize) : 0;
 
-          if (_filters && _filters?.partnerType === "contractor/implementor") {
+          if (_filters && _filters?.partnerType === PartnerType.CONTRACTOR_IMPLEMENTER) {
             set(() => ({ error: null, total: data.total, pageTotal: pageTotal, agencies: data.data }));
           } else {
             set(() => ({ error: null, total: data.total, pageTotal: pageTotal, items: data.data }));

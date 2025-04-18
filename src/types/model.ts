@@ -5,11 +5,6 @@ export type TCriteria = {
   value2?: string | number | boolean | null;
 };
 
-export enum PartnerType {
-  PARTNER = "Partner",
-  CONTRACTOR_IMPLEMENTER = "contractor/implementer",
-}
-
 export type TCriteriaList = {
   operator: "and" | "or" | "not";
   criteria: (TCriteria | TCriteriaList)[];
