@@ -100,7 +100,7 @@ export const NavigationBar = () => {
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 <LocaleSwitch />
                 <Tooltip title={`${t("login")}`}>
-                  <IconButton id="sign-in-button" sx={{ color: "black" }}>
+                  <IconButton id="sign-in-button" sx={{ color: "black" }} onClick={() => router.push("/sign-in")}>
                     <LoginOutlinedIcon sx={{ color: "black", width: 24, height: 24 }} />
                   </IconButton>
                 </Tooltip>
@@ -149,30 +149,6 @@ export const NavigationBar = () => {
             </Box>
 
             <List sx={{ mt: 4 }}>
-              <ListItem
-                key={"mainPage"}
-                component="button"
-                onClick={() => {
-                  router.push("/");
-                  toggleMobileMenu();
-                }}
-                sx={{
-                  bgcolor: "transparent",
-                  border: "none",
-                  textAlign: "left",
-                  cursor: "pointer",
-                  width: "100%",
-                  "&:hover": { bgcolor: "action.hover" },
-                }}
-              >
-                <ListItemText
-                  primary={t("mainPage")}
-                  primaryTypographyProps={{
-                    variant: "h6",
-                    textAlign: "left",
-                  }}
-                />
-              </ListItem>
               {navItems.map((item) => (
                 <ListItem
                   key={item.i18n}

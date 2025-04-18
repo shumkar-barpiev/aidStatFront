@@ -63,7 +63,7 @@ const ShowPartner = () => {
         <CardContent>
           <Stack
             direction={"row"}
-            alignItems={"center"}
+            alignItems={"end"}
             spacing={3}
             sx={{ mb: 2, justifyContent: "space-between", pr: 3 }}
           >
@@ -72,6 +72,9 @@ const ShowPartner = () => {
               sx={{
                 fontWeight: "bold",
                 fontSize: { xs: "1rem", sm: "1.5rem" },
+                WebkitBoxOrient: "vertical",
+                WebkitLineClamp: 2,
+                maxWidth: "60%",
               }}
             >
               {partner?.name}
@@ -88,63 +91,102 @@ const ShowPartner = () => {
               }}
             >
               {partner?.image && (
-                <CardMedia
-                  component="img"
-                  alt={partner?.name}
-                  image={`data:image/png;base64,${partner?.image}`}
+                <Box
                   sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "150px",
                     width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
+                    overflow: "hidden",
+                    borderRadius: "4px",
+                    backgroundColor: "#F0F4F7",
+                    p: 1,
                   }}
-                />
+                >
+                  <CardMedia
+                    component="img"
+                    alt={partner.name}
+                    image={`data:image/png;base64,${partner.image}`}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                    }}
+                  />
+                </Box>
               )}
             </Box>
           </Stack>
           <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={4}>
-              <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <PlaylistAddCheckOutlinedIcon fontSize="medium" />
+          <Stack direction={{ xs: "column-reverse", sm: "row", md: "row" }} alignItems={"start"} gap={3}>
+            <Box sx={{ width: { xs: 1, sm: 3 / 5, md: 4 / 5 } }}>
+              <Card sx={{ p: 3, mb: 2 }}>
                 <Typography variant="subtitle1" fontWeight="bold">
-                  Проекты
+                  Описание
                 </Typography>
-              </Stack>
+                {partner?.description && (
+                  <CollapsibleText header="Описание" text={partner?.description} maxChars={1000} />
+                )}
+              </Card>
+            </Box>
+            <Box sx={{ width: { xs: 1, sm: 2 / 5, md: 1 / 5 } }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sx={{ height: { xs: "90px", sm: "130px" } }}>
+                  <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                    <PlaylistAddCheckOutlinedIcon fontSize="medium" />
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      Проекты
+                    </Typography>
+                  </Stack>
 
-              {partner?.projectCount && <Typography fontWeight={"bold"}>{partner?.projectCount}</Typography>}
-            </Grid>
+                  {partner?.projectCount && <Typography fontWeight={"bold"}>{partner?.projectCount}</Typography>}
+                </Grid>
+                <Divider
+                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", sm: "90%" } }}
+                />
 
-            <Grid item xs={12} sm={6} md={4}>
-              <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <PaymentsOutlinedIcon fontSize="medium" />
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Гранты
-                </Typography>
-              </Stack>
-              {partner?.grant && (
-                <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.grant)}</Typography>
-              )}
-            </Grid>
+                <Grid item xs={12} sx={{ height: { xs: "90px", sm: "130px" } }}>
+                  <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                    <PaymentsOutlinedIcon fontSize="medium" />
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      Гранты
+                    </Typography>
+                  </Stack>
+                  {partner?.grant && (
+                    <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.grant)}</Typography>
+                  )}
+                </Grid>
+                <Divider
+                  sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", sm: "90%" } }}
+                />
 
-            <Grid item xs={12} sm={6} md={4}>
-              <Stack direction={"row"} alignItems={"center"} spacing={1}>
-                <LocalAtmOutlinedIcon fontSize="medium" />
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Кредиты
-                </Typography>
-              </Stack>
+                <Grid item xs={12} sx={{ height: { xs: "90px", sm: "130px" } }}>
+                  <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                    <LocalAtmOutlinedIcon fontSize="medium" />
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      Кредиты
+                    </Typography>
+                  </Stack>
 
-              {partner?.credit && (
-                <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.credit)}</Typography>
-              )}
-            </Grid>
-          </Grid>
-          <Divider sx={{ my: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
-          <Typography variant="subtitle1" fontWeight="bold">
-            Описание
-          </Typography>
-          {partner?.description && <CollapsibleText header="Описание" text={partner?.description} maxChars={1000} />}
+                  {partner?.credit && (
+                    <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.credit)}</Typography>
+                  )}
+                </Grid>
+                <Divider
+                  sx={{
+                    ml: 2,
+                    borderColor: Colors.darkBlue,
+                    borderBottomWidth: 2,
+                    width: { xs: "95%", sm: "90%" },
+                    display: { xs: "block", sm: "none" },
+                  }}
+                />
+              </Grid>
+            </Box>
+          </Stack>
+
           <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
           <Grid container spacing={2}>

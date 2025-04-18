@@ -1,12 +1,11 @@
 "use client";
 
-import { ChangeEvent, useEffect } from "react";
-import { TProjectModelFilters, useProjectsStore } from "@/stores/projects/projects";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { EProjectModelFilter } from "@/models/project/ProjectModel";
-
-let timer: ReturnType<typeof setTimeout> | null;
+import { TProjectModelFilters, useProjectsStore } from "@/stores/projects/projects";
 
 export const useProjectsViewModel = () => {
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { filters: projectsFilter, setFilters, fetchItems, fetchItem } = useProjectsStore();
 
   const handleProjectsPageChange = (e: ChangeEvent<unknown>, page: number) => {
@@ -14,9 +13,9 @@ export const useProjectsViewModel = () => {
   };
 
   const handleFilter = (type: EProjectModelFilter, searchText?: string | number | number[] | Record<string, any>) => {
-    if (timer) clearTimeout(timer);
+    if (timerRef.current) clearTimeout(timerRef.current);
 
-    timer = setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       const update: Partial<TProjectModelFilters> = { page: 1 };
 
       switch (type) {
@@ -38,7 +37,6 @@ export const useProjectsViewModel = () => {
       }
 
       setFilters(update);
-      timer = null;
     }, 500);
   };
 
