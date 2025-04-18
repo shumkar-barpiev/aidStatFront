@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { http } from "@/utils/http";
-import { TModelFilters, TModelPublicFilters } from "@/types/model";
+import { TModelPublicFilters } from "@/types/model";
 import { TPartnerModel } from "@/models/partner/partner";
 import { replacePublicEndpointFilters } from "@/utils/axelor-api";
 

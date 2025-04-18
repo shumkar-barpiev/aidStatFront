@@ -1,6 +1,6 @@
 "use client";
 
-import { TModelFilters } from "@/types/model";
+import { PartnerType, TModelFilters } from "@/types/model";
 import { ChangeEvent, useEffect, useState } from "react";
 import { usePartnersStore } from "@/stores/partners/partners";
 import { TPartnerModel, EPartnerModelFilter } from "@/models/partner/partner";
@@ -11,7 +11,7 @@ const initialFilters: () => TModelFilters = () => {
   return {
     page: 1,
     pageSize: 8,
-    partnerType: "Partner",
+    partnerType: PartnerType.PARTNER,
   };
 };
 
@@ -27,7 +27,7 @@ export const usePartnersViewModel = () => {
   };
 
   const handleAgenciesFetch = () => {
-    partnerStore.fetchItems({...partnersFilter, page: undefined, pageSize: 1000, partnerType: "contractor/implementer"});
+    partnerStore.fetchItems({...partnersFilter, page: undefined, pageSize: 1000, partnerType: PartnerType.CONTRACTOR_IMPLEMENTER});
   };
 
   const handleFilter = (type: EPartnerModelFilter, searchText?: string | number) => {
