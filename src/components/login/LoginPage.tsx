@@ -2,7 +2,7 @@ import {
   Visibility,
   VisibilityOff,
   LockOutlined as LockOutlinedIcon,
-  EmailOutlined as EmailOutlinedIcon,
+  PersonOutline as PersonOutlineIcon,
 } from "@mui/icons-material";
 import Colors from "@/styles/colors";
 import { useEffect, useState } from "react";
@@ -13,10 +13,10 @@ import { Box, Paper, Stack, Button, Divider, TextField, IconButton, Typography, 
 const LoginPage = () => {
   const { t } = useTranslation();
   const [locked, setLocked] = useState(true);
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const [usernameError, setUsernameError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -24,24 +24,21 @@ const LoginPage = () => {
 
     let isValid = true;
 
-    setEmailError(null);
+    setUsernameError(null);
     setPasswordError(null);
 
-    if (!email) {
-      setEmailError("Email is required.");
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setEmailError("Please enter a valid email address.");
+    if (!username) {
+      setUsernameError(t("usernameRequiredMessage"));
       isValid = false;
     }
 
     if (!password) {
-      setPasswordError("Password is required.");
+      setPasswordError(t("passwordRequiredMessage"));
       isValid = false;
     }
 
     if (isValid) {
-      console.log("Logged in with:", { email, password });
+      console.log("Logged in with:", { username, password });
     }
   };
 
@@ -68,7 +65,10 @@ const LoginPage = () => {
           mt: "10vh",
           width: { xs: "90%", sm: "90%", md: "100%" },
           maxWidth: 400,
-          maxHeight: { xs: "360px", sm: "350px" },
+          height: "fit-content",
+          minHeight: "min-content",
+          overflow: "visible",
+          flexShrink: 0,
           padding: 3,
           display: "flex",
           flexDirection: "column",
@@ -129,18 +129,18 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
           <TextField
             fullWidth
-            label={t("email")}
+            label={t("username")}
             variant="outlined"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={!!emailError}
-            helperText={emailError}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={!!usernameError}
+            helperText={usernameError}
             sx={{ marginBottom: 2 }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <EmailOutlinedIcon color="action" />
+                  <PersonOutlineIcon color="action" />
                 </InputAdornment>
               ),
             }}
