@@ -86,7 +86,7 @@ export const CollapsibleText: React.FC<CollapsibleTextProps> = ({ header, text, 
           <Box
             sx={{
               overflowY: "auto",
-              maxHeight: "calc(80vh - 60px)",
+              maxHeight: "calc(80vh - 90px)",
               pb: 4,
               pr: 1,
             }}
