@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import PartnerShow from "@/components/partners/show/ShowPartner";
+import PartnerShow from "@/components/partners/partners/show/ShowPartner";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import CustomBreadcrumbs from "@/components/breadcrumbs/CustomBreadcrumbs";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";

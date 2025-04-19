@@ -1,37 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Box, Tab, Tabs } from "@mui/material";
-import CustomTabPanel from "@/components/tabs/CustomTabPanel.tsx";
-import ProjectsTab from "@/components/statistics/ProjectsTab.tsx";
-import ContractsTab from "@/components/statistics/ContractsTab.tsx";
-
-const a11yProps = (index: number) => {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-};
+import CustomTabPanel from "@/components/tabs/CustomTabPanel";
+import ProjectsTab from "@/components/statistics/ProjectsTab";
+import ContractsTab from "@/components/statistics/ContractsTab";
+import { a11yProps } from "@/utils/tab/a11yProps";
+import { useQueryTab } from "@/utils/tab/useQueryTab.ts";
 
 export default function Main() {
-  const [tab, setTab] = useState<number>(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue);
-  };
+  const { currentTab, handleTabChange } = useQueryTab();
 
   return (
     <Box sx={{ width: 1 }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs value={currentTab} onChange={handleTabChange} aria-label="basic tabs">
           <Tab label="Карта проектов" {...a11yProps(0)} />
           <Tab label="Карта контрактов" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={tab} index={0}>
+      <CustomTabPanel value={currentTab} index={0}>
         <ProjectsTab />
       </CustomTabPanel>
-      <CustomTabPanel value={tab} index={1}>
+      <CustomTabPanel value={currentTab} index={1}>
         <ContractsTab />
       </CustomTabPanel>
     </Box>

@@ -31,15 +31,6 @@ export const usePartnersViewModel = () => {
     setPartnersFilter((prev) => ({ ...prev, page }));
   };
 
-  const handleAgenciesFetch = () => {
-    partnerStore.fetchItems({
-      ...partnersFilter,
-      page: undefined,
-      pageSize: 1000,
-      partnerType: PartnerType.CONTRACTOR_IMPLEMENTER,
-    });
-  };
-
   const handleFilter = (type: EPartnerModelFilter, searchText?: string | number) => {
     if (timer != null) {
       clearTimeout(timer);
@@ -79,6 +70,5 @@ export const usePartnersViewModel = () => {
     handleFilter,
     partnersFilter,
     handlePartnersPageChange,
-    handleAgenciesFetch,
   };
 };

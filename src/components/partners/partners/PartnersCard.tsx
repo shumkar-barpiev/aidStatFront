@@ -13,14 +13,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 import React from "react";
-import Colors from "@/styles/colors";
+import Colors from "@/styles/colors.ts";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { usePartnersStore } from "@/stores/partners/partners";
-import { PartnerSearchField } from "@/components/partners/PartnerSearch";
-import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
+import { usePartnersStore } from "@/stores/partners/partners.ts";
+import { PartnerSearchField } from "@/components/partners/partners/PartnerSearch.tsx";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar.tsx";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel.ts";
 
 function PartnersCard() {
   const router = useRouter();
