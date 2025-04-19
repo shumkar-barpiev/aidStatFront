@@ -26,6 +26,7 @@ import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { containerMargins, containerWidths, NAVBAR_HEIGHT } from "@/utils/constants";
+import { StatsSection } from "@/components/widgets/StatsSection";
 
 const convertToRussianDateFormat = (date: string | undefined) => {
   if (!date) return;
@@ -314,6 +315,7 @@ export default function MainPage() {
             />
           </Card>
         </Box>
+        <StatsSection />
       </Box>
     </Box>
   );
