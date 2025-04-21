@@ -22,12 +22,15 @@ import ImageIcon from "@mui/icons-material/Image";
 import FolderIcon from "@mui/icons-material/Folder";
 import GridOnIcon from "@mui/icons-material/GridOn";
 import ArticleIcon from "@mui/icons-material/Article";
+import { RenderEllipsisText } from "@/utils/textUtils";
 import DownloadIcon from "@mui/icons-material/Download";
 import GridViewIcon from "@mui/icons-material/GridView";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { containerWidths, containerMargins } from "@/utils/constants";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { useDocumentsViewModel } from "@/viewmodels/documents/useDocumentsViewModel";
+
+import Image from "next/image";
 
 enum DocumentsView {
   LIST = "LIST",
@@ -83,6 +86,52 @@ export const Main = () => {
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>
+      <Stack
+        alignItems={"center"}
+        direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
+        spacing={3}
+        sx={{ width: "85%", mx: "auto", height: { xs: "50vh", sm: "50vh", md: "auto" }, color: Colors.darkBlue, mb: 6 }}
+        justifyContent={{ xs: "center", sm: "center", md: "space-between", lg: "space-between" }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: { xs: "center", sm: "center", md: "flex-start" },
+            textAlign: { xs: "center", sm: "center", md: "left" },
+          }}
+        >
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            gutterBottom
+            sx={{
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
+              maxWidth: { xs: "100%", md: "90%" },
+              mt: { xs: 3, md: 0 },
+            }}
+          >
+            {t("documentsPageTitle")}
+          </Typography>
+          <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
+            {t("documentsPageDescription")}
+          </Typography>
+        </Box>
+
+        <Box sx={{ position: "relative", width: "100%", maxWidth: "350px", height: "auto", aspectRatio: "1" }}>
+          <Image
+            fill
+            alt="Project1"
+            style={{ objectFit: "cover" }}
+            src="/assets/images/pages/documents-page-1.png"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+            priority
+          />
+        </Box>
+      </Stack>
+
       <Box>
         <Box display="flex" justifyContent="space-between" mb={2} sx={{ alignItems: "center", gap: 3 }}>
           <Stack direction={"row"} alignItems={"center"} spacing={1}>
@@ -153,12 +202,13 @@ export const Main = () => {
                           direction={"row"}
                           alignItems={"center"}
                           justifyContent={"space-between"}
-                          sx={{ px: 3, pt: 2 }}
+                          sx={{ width: 1, px: 3, pt: 2 }}
                         >
-                          <Box>
-                            <Typography variant="subtitle1" fontWeight={550} gutterBottom noWrap>
-                              {doc.name}
+                          <Box sx={{ width: "80%" }}>
+                            <Typography variant="subtitle1" fontWeight={550} gutterBottom>
+                              <RenderEllipsisText text={doc.name} maxWidth={"100%"} />
                             </Typography>
+
                             <Typography variant="body1" color="text.secondary" gutterBottom>
                               {getFileExtensionFromMime(doc.documentType).toUpperCase()} | {doc.documentSize}
                             </Typography>
@@ -209,6 +259,7 @@ export const Main = () => {
                       <ListItemText
                         primary={doc.name}
                         secondary={`${getFileExtensionFromMime(doc.documentType).toUpperCase()} | ${doc.documentSize}`}
+                        primaryTypographyProps={{ style: { fontWeight: 550 } }}
                       />
                     </Box>
 
