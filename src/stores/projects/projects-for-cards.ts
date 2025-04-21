@@ -54,13 +54,19 @@ const fetchData = async (
   url: string,
   setLoading: (loading: boolean) => void,
   setData: (data: ProjectChartData | CorrelationDataByRegion | CorrelationDataBySector) => void,
-  setError: (error: string | null) => void // Добавляем параметр для установки ошибки
+  setError: (error: string | null) => void,
+  download?: boolean,
 ) => {
   setLoading(true);
   try {
-    const response = await http(url, { method: "GET", withoutAuth: true });
+    let api = `${url}`;
+    if (download) {
+      api = `${url}?download=${download}`;
+    }
+    const response = await http(api, { method: "GET", withoutAuth: true });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const data = await response.json();
+    console.log(data);
     setData(data);
   } catch (e: any) {
     setError(e?.message || "Ошибка при загрузке данных");
@@ -83,99 +89,102 @@ export const useProjectCardsStore = create<{
     topDonorsByInvestmentByRegion: boolean;
   };
   topSectorsByProjectCount: ProjectChartData | null;
-  fetchTopSectorsByProjectCount: () => void;
+  fetchTopSectorsByProjectCount: (download?: boolean) => void;
   topSectorsByInvestment: ProjectChartData | null;
-  fetchTopSectorsByInvestment: () => void;
+  fetchTopSectorsByInvestment: (download?: boolean) => void;
   topDonorsByInvestment: ProjectChartData | null;
-  fetchTopDonorsByInvestment: () => void;
+  fetchTopDonorsByInvestment: (download?: boolean) => void;
   topDonorsByProjectCount: ProjectChartData | null;
-  fetchTopDonorsByProjectCount: () => void;
+  fetchTopDonorsByProjectCount: (download?: boolean) => void;
   topImplementingAgenciesByProjectCount: ProjectChartData | null;
-  fetchTopImplementingAgenciesByProjectCount: () => void;
+  fetchTopImplementingAgenciesByProjectCount: (download?: boolean) => void;
   topExecutiveAgenciesByProjectCount: ProjectChartData | null;
-  fetchTopExecutiveAgenciesByProjectCount: () => void;
+  fetchTopExecutiveAgenciesByProjectCount: (download?: boolean) => void;
   topDonorsByInvestmentBySector: CorrelationDataBySector | null;
-  fetchTopDonorsByInvestmentBySector: (sectorId: number) => void;
+  fetchTopDonorsByInvestmentBySector: (sectorId: number, download?: boolean) => void;
   topDonorsByInvestmentByRegion: CorrelationDataByRegion | null;
-  fetchTopDonorsByInvestmentByRegion: (regionId: number) => void;
-  downloadDataAsFile: (response: Response) => void;
+  fetchTopDonorsByInvestmentByRegion: (regionId: number, download?: boolean) => void;
   clearStore: () => void;
 }>((set, get) => ({
   ...initialStore,
 
-  downloadDataAsFile: async (response: Response, filename = "data.csv") => {
-    console.log("downloading");
-  },
-
-  fetchTopSectorsByProjectCount: async () => {
+  fetchTopSectorsByProjectCount: async (download?: boolean) => {
     fetchData(
       "/ws/public/stat/project/count/sector",
       (loading) => set({ loadingState: { ...get().loadingState, topSectorsByProjectCount: loading } }),
       (data) => set({ error: null, topSectorsByProjectCount: data }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopSectorsByInvestment: async () => {
+  fetchTopSectorsByInvestment: async (download?: boolean) => {
     fetchData(
       "/ws/public/stat/project/sector/sum",
       (loading) => set({ loadingState: { ...get().loadingState, topSectorsByInvestment: loading } }),
       (data) => set({ error: null, topSectorsByInvestment: data }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopDonorsByInvestment: async () => {
+  fetchTopDonorsByInvestment: async (download?: boolean) => {
     fetchData(
       "/ws/public/stat/project/donor/sum",
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestment: loading } }),
       (data) => set({ error: null, topDonorsByInvestment: data }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopDonorsByProjectCount: async () => {
+  fetchTopDonorsByProjectCount: async (download?: boolean) => {
     fetchData(
       "/ws/public/stat/project/count/donor",
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByProjectCount: loading } }),
       (data) => set({ error: null, topDonorsByProjectCount: data }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopImplementingAgenciesByProjectCount: async () => {
+  fetchTopImplementingAgenciesByProjectCount: async (download?: boolean) => {
     fetchData(
       "/ws/public/stat/project/count/implementer",
       (loading) => set({ loadingState: { ...get().loadingState, topImplementingAgenciesByProjectCount: loading } }),
       (data) => set({ error: null, topImplementingAgenciesByProjectCount: data }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopExecutiveAgenciesByProjectCount: async () => {
+  fetchTopExecutiveAgenciesByProjectCount: async (download?: boolean) => {
     fetchData(
       "/ws/public/stat/project/count/contractor",
       (loading) => set({ loadingState: { ...get().loadingState, topExecutiveAgenciesByProjectCount: loading } }),
       (data) => set({ error: null, topExecutiveAgenciesByProjectCount: data }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopDonorsByInvestmentBySector: async (sectorId: number) => {
+  fetchTopDonorsByInvestmentBySector: async (sectorId: number, download?: boolean) => {
     fetchData(
       `/ws/public/stat/project/sector/${sectorId}`,
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentBySector: loading } }),
       (data) => set({ error: null, topDonorsByInvestmentBySector: data as CorrelationDataBySector }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 
-  fetchTopDonorsByInvestmentByRegion: async (regionId: number) => {
+  fetchTopDonorsByInvestmentByRegion: async (regionId: number, download?: boolean) => {
     fetchData(
       `/ws/public/stat/project/region/${regionId}`,
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentByRegion: loading } }),
       (data) => set({ error: null, topDonorsByInvestmentByRegion: data as CorrelationDataByRegion }),
-      (error) => set({ error }) // Обновляем ошибку через setError
+      (error) => set({ error }),
+      download
     );
   },
 

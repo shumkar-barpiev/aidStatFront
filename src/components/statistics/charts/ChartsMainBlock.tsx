@@ -8,7 +8,7 @@ import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts
 const LazyChart = React.lazy(() => import("./ChartCard"));
 
 const ChartsMainBlock = () => {
-  const { handleFilterBySector, handleFilterByRegion } = useStatisticsChartsViewModel();
+  const { handleFilterBySector, handleFilterByRegion, handleDownload } = useStatisticsChartsViewModel();
   const cardsStore = useProjectCardsStore();
   const {
     topSectorsByProjectCount,
@@ -43,6 +43,7 @@ const ChartsMainBlock = () => {
           handleFilterChange={handleFilterByRegion}
           selectOptions={regions}
           loading={loadingState.topDonorsByInvestmentByRegion}
+          handleDownload={() => handleDownload(1)}
         />
       </Grid>
 
@@ -55,6 +56,7 @@ const ChartsMainBlock = () => {
           handleFilterChange={handleFilterBySector}
           selectOptions={sectorOptions}
           loading={loadingState.topDonorsByInvestmentBySector}
+          handleDownload={() => handleDownload(2)}
         />
       </Grid>
 
@@ -65,6 +67,7 @@ const ChartsMainBlock = () => {
           unit={topDonorsByInvestment?.unit}
           data={topDonorsByInvestment?.data}
           loading={loadingState.topDonorsByInvestment}
+          handleDownload={() => handleDownload(3)}
         />
       </Grid>
 
@@ -75,6 +78,7 @@ const ChartsMainBlock = () => {
           unit={topDonorsByProjectCount?.unit}
           data={topDonorsByProjectCount?.data}
           loading={loadingState.topDonorsByProjectCount}
+          handleDownload={() => handleDownload(4)}
         />
       </Grid>
 
@@ -85,6 +89,7 @@ const ChartsMainBlock = () => {
           unit={topSectorsByInvestment?.unit}
           data={topSectorsByInvestment?.data}
           loading={loadingState.topSectorsByInvestment}
+          handleDownload={() => handleDownload(5)}
         />
       </Grid>
 
@@ -95,6 +100,7 @@ const ChartsMainBlock = () => {
           unit={topSectorsByProjectCount?.unit}
           data={topSectorsByProjectCount?.data}
           loading={loadingState.topSectorsByProjectCount}
+          handleDownload={() => handleDownload(6)}
         />
       </Grid>
 
@@ -105,6 +111,7 @@ const ChartsMainBlock = () => {
           unit={topImplementingAgenciesByProjectCount?.unit}
           data={topImplementingAgenciesByProjectCount?.data}
           loading={loadingState.topImplementingAgenciesByProjectCount}
+          handleDownload={() => handleDownload(7)}
         />
       </Grid>
 
@@ -115,6 +122,7 @@ const ChartsMainBlock = () => {
           unit={topExecutiveAgenciesByProjectCount?.unit}
           data={topExecutiveAgenciesByProjectCount?.data}
           loading={loadingState.topExecutiveAgenciesByProjectCount}
+          handleDownload={() => handleDownload(8)}
         />
       </Grid>
     </Grid>

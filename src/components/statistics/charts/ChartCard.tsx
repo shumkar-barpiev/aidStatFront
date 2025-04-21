@@ -17,14 +17,13 @@ interface Props {
   chartFilters?: { [key: string]: string };
   handleFilterChange?: (id: number) => void;
   loading?: boolean;
+  handleDownload: () => void;
 }
 
-const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selectOptions, handleFilterChange, loading }) => {
+const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selectOptions, handleFilterChange, loading, handleDownload }) => {
   const isChartDataSum = (data: ChartDataSum[] | ChartDataCount[]): data is ChartDataSum[] => {
     return data?.length > 0 && "grantAmounts" in data[0];
   };
-
-  // const hasData = Array.isArray(data) && data.length > 0;
 
   const names = data ? data.map((item) => item.name) : [];
   const mainValues = data
@@ -96,11 +95,11 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selec
           </Box>
           <Box>
             <IconButton
-              // onClick={() => downloadExcel(title)}
               sx={{
                 transition: "transform 0.2s, color 0.2s",
                 "&:hover": { transform: "scale(1.5)", color: "blue" },
               }}
+              onClick={handleDownload}
             >
               <DownloadIcon />
             </IconButton>
