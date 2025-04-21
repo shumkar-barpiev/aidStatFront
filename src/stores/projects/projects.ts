@@ -19,6 +19,7 @@ const initialStore = {
   item: null,
   items: null,
   total: null,
+  totalSum: null,
   error: null,
   filters: null,
   loading: false,
@@ -30,6 +31,7 @@ export const useProjectsStore = create<{
   error: string | null;
   total: number | null;
   pageTotal: number | null;
+  totalSum: string | null;
   item: TProjectModel | null;
   items: TProjectModel[] | null;
   filters: TProjectModelFilters | null;
@@ -39,6 +41,7 @@ export const useProjectsStore = create<{
   fetchDocument: (id: number, callback: Function) => Promise<void>;
   fetchProjectDocuments: (id: number, callback: Function) => Promise<void>;
   fetchItems: (filters?: TModelFilters, callback?: Function) => Promise<void>;
+  fetchTotals: () => Promise<void>;
   clearStore: () => void;
 }>((set, get) => ({
   ...initialStore,
@@ -157,6 +160,24 @@ export const useProjectsStore = create<{
       set({ error: e?.message, total: null, items: null });
     } finally {
       set({ loading: false });
+    }
+  },
+
+  fetchTotals: async () => {
+    set({ loading: true });
+    try {
+      const response = await http("/ws/public/projects", {
+        method: "POST",
+        withoutAuth: true,
+        body: JSON.stringify({ offset: 0, limit: 0 }),
+      });
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      set(() => ({ error: null, total: data.total, totalSum: data.totalSum }));
+    } catch (e: any) {
+      set({ error: e?.message, total: null, items: null });
     }
   },
 

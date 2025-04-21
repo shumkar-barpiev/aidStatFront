@@ -43,7 +43,7 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selec
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
             {title}
           </Typography>
-          {unit && total && (
+          {total && (
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
               {isChartDataSum(data || []) ? `${unit} ${formatCurrency(total)}` : total}
             </Typography>
