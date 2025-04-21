@@ -36,7 +36,6 @@ export const useFeedbackViewModel = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       setRequestTypes(data.data as RequestType[]);
     } catch (e: any) {
       throw e.message;

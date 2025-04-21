@@ -29,7 +29,6 @@ const FeedbackForm = () => {
   const { requestTypes, createRequest } = useFeedbackViewModel();
   const { i18n } = useTranslation();
   const locale = i18n.language.split("-")[0];
-  console.log(locale);
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(state));
