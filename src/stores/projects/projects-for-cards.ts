@@ -30,6 +30,16 @@ export interface CorrelationDataBySector extends ProjectChartData {
 const initialStore = {
   loading: false,
   error: null,
+  loadingState: {
+    topSectorsByProjectCount: false,
+    topSectorsByInvestment: false,
+    topDonorsByInvestment: false,
+    topDonorsByProjectCount: false,
+    topImplementingAgenciesByProjectCount: false,
+    topExecutiveAgenciesByProjectCount: false,
+    topDonorsByInvestmentBySector: false,
+    topDonorsByInvestmentByRegion: false,
+  },
   topSectorsByProjectCount: null,
   topSectorsByInvestment: null,
   topDonorsByInvestment: null,
@@ -40,25 +50,54 @@ const initialStore = {
   topDonorsByInvestmentByRegion: null,
 };
 
+const fetchData = async (
+  url: string,
+  setLoading: (loading: boolean) => void,
+  setData: (data: ProjectChartData | CorrelationDataByRegion | CorrelationDataBySector) => void,
+  setError: (error: string | null) => void // Добавляем параметр для установки ошибки
+) => {
+  setLoading(true);
+  try {
+    const response = await http(url, { method: "GET", withoutAuth: true });
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    const data = await response.json();
+    setData(data);
+  } catch (e: any) {
+    setError(e?.message || "Ошибка при загрузке данных");
+  } finally {
+    setLoading(false);
+  }
+};
+
 export const useProjectCardsStore = create<{
   loading: boolean;
   error: string | null;
+  loadingState: {
+    topSectorsByProjectCount: boolean;
+    topSectorsByInvestment: boolean;
+    topDonorsByInvestment: boolean;
+    topDonorsByProjectCount: boolean;
+    topImplementingAgenciesByProjectCount: boolean;
+    topExecutiveAgenciesByProjectCount: boolean;
+    topDonorsByInvestmentBySector: boolean;
+    topDonorsByInvestmentByRegion: boolean;
+  };
   topSectorsByProjectCount: ProjectChartData | null;
-  fetchTopSectorsByProjectCount: (params?: { download?: boolean }) => void;
+  fetchTopSectorsByProjectCount: () => void;
   topSectorsByInvestment: ProjectChartData | null;
-  fetchTopSectorsByInvestment: (params?: { download?: boolean }) => Promise<void>;
+  fetchTopSectorsByInvestment: () => void;
   topDonorsByInvestment: ProjectChartData | null;
-  fetchTopDonorsByInvestment: (params?: { download?: boolean }) => Promise<void>;
+  fetchTopDonorsByInvestment: () => void;
   topDonorsByProjectCount: ProjectChartData | null;
-  fetchTopDonorsByProjectCount: (params?: { download?: boolean }) => Promise<void>;
+  fetchTopDonorsByProjectCount: () => void;
   topImplementingAgenciesByProjectCount: ProjectChartData | null;
-  fetchTopImplementingAgenciesByProjectCount: (params?: { download?: boolean }) => Promise<void>;
+  fetchTopImplementingAgenciesByProjectCount: () => void;
   topExecutiveAgenciesByProjectCount: ProjectChartData | null;
-  fetchTopExecutiveAgenciesByProjectCount: (params?: { download?: boolean }) => Promise<void>;
+  fetchTopExecutiveAgenciesByProjectCount: () => void;
   topDonorsByInvestmentBySector: CorrelationDataBySector | null;
-  fetchTopDonorsByInvestmentBySector: (sectorId: number, params?: { download?: boolean }) => Promise<void>;
+  fetchTopDonorsByInvestmentBySector: (sectorId: number) => void;
   topDonorsByInvestmentByRegion: CorrelationDataByRegion | null;
-  fetchTopDonorsByInvestmentByRegion: (regionId: number, params?: { download?: boolean }) => Promise<void>;
+  fetchTopDonorsByInvestmentByRegion: (regionId: number) => void;
   downloadDataAsFile: (response: Response) => void;
   clearStore: () => void;
 }>((set, get) => ({
@@ -68,108 +107,77 @@ export const useProjectCardsStore = create<{
     console.log("downloading");
   },
 
-  fetchTopSectorsByProjectCount: async (params?: { download?: boolean }) => {
-    try {
-      const response = await http("/ws/public/stat/project/count/sector", { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topSectorsByProjectCount: ProjectChartData = await response.json();
-
-      set(() => ({ error: null, topSectorsByProjectCount }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopSectorsByProjectCount: async () => {
+    fetchData(
+      "/ws/public/stat/project/count/sector",
+      (loading) => set({ loadingState: { ...get().loadingState, topSectorsByProjectCount: loading } }),
+      (data) => set({ error: null, topSectorsByProjectCount: data }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopSectorsByInvestment: async (params?: { download?: boolean }) => {
-    try {
-      const response = await http("/ws/public/stat/project/sector/sum", { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topSectorsByInvestment: ProjectChartData = await response.json();
-
-      set(() => ({ error: null, topSectorsByInvestment }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopSectorsByInvestment: async () => {
+    fetchData(
+      "/ws/public/stat/project/sector/sum",
+      (loading) => set({ loadingState: { ...get().loadingState, topSectorsByInvestment: loading } }),
+      (data) => set({ error: null, topSectorsByInvestment: data }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopDonorsByInvestment: async (params?: { download?: boolean }) => {
-    try {
-      const response = await http("/ws/public/stat/project/donor/sum", { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topDonorsByInvestment: ProjectChartData = await response.json();
-
-      set(() => ({ error: null, topDonorsByInvestment }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopDonorsByInvestment: async () => {
+    fetchData(
+      "/ws/public/stat/project/donor/sum",
+      (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestment: loading } }),
+      (data) => set({ error: null, topDonorsByInvestment: data }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopDonorsByProjectCount: async (params?: { download?: boolean }) => {
-    try {
-      const response = await http("/ws/public/stat/project/count/donor", { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topDonorsByProjectCount: ProjectChartData = await response.json();
-
-      set(() => ({ error: null, topDonorsByProjectCount }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopDonorsByProjectCount: async () => {
+    fetchData(
+      "/ws/public/stat/project/count/donor",
+      (loading) => set({ loadingState: { ...get().loadingState, topDonorsByProjectCount: loading } }),
+      (data) => set({ error: null, topDonorsByProjectCount: data }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopImplementingAgenciesByProjectCount: async (params?: { download?: boolean }) => {
-    try {
-      const response = await http("/ws/public/stat/project/count/implementer", { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topImplementingAgenciesByProjectCount: ProjectChartData = await response.json();
-
-      set(() => ({ error: null, topImplementingAgenciesByProjectCount }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopImplementingAgenciesByProjectCount: async () => {
+    fetchData(
+      "/ws/public/stat/project/count/implementer",
+      (loading) => set({ loadingState: { ...get().loadingState, topImplementingAgenciesByProjectCount: loading } }),
+      (data) => set({ error: null, topImplementingAgenciesByProjectCount: data }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopExecutiveAgenciesByProjectCount: async (params?: { download?: boolean }) => {
-    try {
-      const response = await http("/ws/public/stat/project/count/contractor", { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topExecutiveAgenciesByProjectCount: ProjectChartData = await response.json();
-
-      set(() => ({ error: null, topExecutiveAgenciesByProjectCount }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopExecutiveAgenciesByProjectCount: async () => {
+    fetchData(
+      "/ws/public/stat/project/count/contractor",
+      (loading) => set({ loadingState: { ...get().loadingState, topExecutiveAgenciesByProjectCount: loading } }),
+      (data) => set({ error: null, topExecutiveAgenciesByProjectCount: data }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopDonorsByInvestmentBySector: async (sectorId: number, params?: { download?: boolean }) => {
-    try {
-      const response = await http(`/ws/public/stat/project/sector/${sectorId}`, { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-
-      const topDonorsByInvestmentBySector = await response.json();
-      set(() => ({ error: null, topDonorsByInvestmentBySector }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
+  fetchTopDonorsByInvestmentBySector: async (sectorId: number) => {
+    fetchData(
+      `/ws/public/stat/project/sector/${sectorId}`,
+      (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentBySector: loading } }),
+      (data) => set({ error: null, topDonorsByInvestmentBySector: data as CorrelationDataBySector }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
   },
 
-  fetchTopDonorsByInvestmentByRegion: async (regionId: number, params?: { download?: boolean }) => {
-    try {
-      const response = await http(`/ws/public/stat/project/region/${regionId}`, { method: "GET", withoutAuth: true });
-      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+  fetchTopDonorsByInvestmentByRegion: async (regionId: number) => {
+    fetchData(
+      `/ws/public/stat/project/region/${regionId}`,
+      (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentByRegion: loading } }),
+      (data) => set({ error: null, topDonorsByInvestmentByRegion: data as CorrelationDataByRegion }),
+      (error) => set({ error }) // Обновляем ошибку через setError
+    );
+  },
 
-      const topDonorsByInvestmentByRegion = await response.json();
-      set(() => ({ error: null, topDonorsByInvestmentByRegion }));
-    } catch (e: any) {
-      set({ error: e?.message });
-    }
-  },
-  clearStore: () => {
-    set(initialStore);
-  },
+  clearStore: () => set(initialStore),
 }));

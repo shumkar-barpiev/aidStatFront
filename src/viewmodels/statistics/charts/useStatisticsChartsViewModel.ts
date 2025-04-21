@@ -13,19 +13,14 @@ const useStatisticsChartsViewModel = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await Promise.all([
-        cardsStore.fetchTopDonorsByInvestmentByRegion(1),
-        cardsStore.fetchTopDonorsByInvestmentBySector(1),
-        cardsStore.fetchTopSectorsByInvestment(),
-        cardsStore.fetchTopSectorsByProjectCount(),
-        cardsStore.fetchTopDonorsByInvestment(),
-        cardsStore.fetchTopDonorsByProjectCount(),
-        cardsStore.fetchTopImplementingAgenciesByProjectCount(),
-        cardsStore.fetchTopExecutiveAgenciesByProjectCount(),
-      ]);
-    };
-    fetchData();
+        cardsStore.fetchTopDonorsByInvestmentByRegion(1);
+        cardsStore.fetchTopDonorsByInvestmentBySector(1);
+        cardsStore.fetchTopSectorsByInvestment();
+        cardsStore.fetchTopSectorsByProjectCount();
+        cardsStore.fetchTopDonorsByInvestment();
+        cardsStore.fetchTopDonorsByProjectCount();
+        cardsStore.fetchTopImplementingAgenciesByProjectCount();
+        cardsStore.fetchTopExecutiveAgenciesByProjectCount();
   }, []);
 
   return {

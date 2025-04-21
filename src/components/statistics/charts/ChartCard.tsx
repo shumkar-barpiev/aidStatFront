@@ -2,7 +2,7 @@
 
 import React from "react";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Box, Card, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Card, CircularProgress, Divider, IconButton, Typography } from "@mui/material";
 import BarChart from "@/components/statistics/charts/BarChart.tsx";
 import { ChartDataCount, ChartDataSum } from "@/stores/projects/projects-for-cards.ts";
 import { formatCurrency } from "@/utils/formatCurrency.ts";
@@ -16,24 +16,25 @@ interface Props {
   selectOptions?: Option[];
   chartFilters?: { [key: string]: string };
   handleFilterChange?: (id: number) => void;
+  loading?: boolean;
 }
 
-const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selectOptions, handleFilterChange }) => {
+const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selectOptions, handleFilterChange, loading }) => {
   const isChartDataSum = (data: ChartDataSum[] | ChartDataCount[]): data is ChartDataSum[] => {
     return data?.length > 0 && "grantAmounts" in data[0];
   };
 
-  const hasData = Array.isArray(data) && data.length > 0;
+  // const hasData = Array.isArray(data) && data.length > 0;
 
-  const names = hasData ? data.map((item) => item.name) : [];
-  const mainValues = hasData
+  const names = data ? data.map((item) => item.name) : [];
+  const mainValues = data
     ? isChartDataSum(data)
       ? data.map((item) => item.grantAmounts)
       : data.map((item) => item.projectCount)
     : [];
 
   const extraValues =
-    hasData && isChartDataSum(data) ? data.map((item) => item.creditAmounts) : undefined;
+    data && isChartDataSum(data) ? data.map((item) => item.creditAmounts) : undefined;
 
   return (
     <Card sx={{ boxShadow: 3, borderRadius: 1, minHeight: 500 }}>
@@ -61,7 +62,9 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selec
             justifyContent: "center",
           }}
         >
-          {hasData ? (
+          {loading ? (
+            <CircularProgress />
+          ) : data ? (
             <BarChart names={names} mainValues={mainValues} extraValues={extraValues} title={title} />
           ) : (
             <Typography color="text.secondary">Нет данных для отображения</Typography>
