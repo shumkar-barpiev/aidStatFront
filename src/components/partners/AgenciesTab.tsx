@@ -28,13 +28,13 @@ const AgenciesTab = () => {
           sx={{
             WebkitBoxOrient: "vertical",
             WebkitLineClamp: 2,
-
             maxWidth: { xs: "100%", md: "90%" },
+            color: Colors.darkBlue,
           }}
         >
           Агентства
         </Typography>
-        <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
+        <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%", color: Colors.darkBlue }}>
           Здесь представлена информация об исполнительных агентствах, участвующих в реализации проектов и
           программ, а также об их вкладе в устойчивое развитие и повышение эффективности проводимых инициатив.
         </Typography>
