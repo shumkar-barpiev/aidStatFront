@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Visibility,
   VisibilityOff,
@@ -5,9 +7,11 @@ import {
   PersonOutline as PersonOutlineIcon,
 } from "@mui/icons-material";
 import Colors from "@/styles/colors";
+import { enqueueSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import { useAuthViewModel } from "@/viewmodels/auth/useAuthViewModel";
 import { Box, Paper, Stack, Button, Divider, TextField, IconButton, Typography, InputAdornment } from "@mui/material";
 
 const LoginPage = () => {
@@ -16,6 +20,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState(false);
+  const { authorize, authMessage, setAuthMessage } = useAuthViewModel();
   const [usernameError, setUsernameError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
@@ -38,17 +43,24 @@ const LoginPage = () => {
     }
 
     if (isValid) {
-      console.log("Logged in with:", { username, password });
+      authorize({ username, password });
     }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setLocked((prev) => !prev);
-    }, 1000);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (authMessage) {
+      enqueueSnackbar(authMessage.message, { variant: authMessage.variant });
+      setAuthMessage(null);
+    }
+  }, [authMessage]);
 
   return (
     <Box
