@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Box, Button, Paper, TextField, Typography, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, MenuItem, Paper, TextField, Typography } from "@mui/material";
 
 import { useFeedbackViewModel } from "@/viewmodels/feedback/useFeedbackViewModel";
-import { SelectChangeEvent } from "@mui/material/Select";
 import { useTranslation } from "react-i18next";
 import Colors from "@/styles/colors";
 
@@ -41,7 +40,7 @@ const FeedbackForm = () => {
     setState((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (e: SelectChangeEvent) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev) => ({ ...prev, requestType: e.target.value }));
   };
 
@@ -106,25 +105,25 @@ const FeedbackForm = () => {
             required
           />
 
-          <FormControl fullWidth margin="normal" required>
-            <InputLabel id="request-type-label">Тип обращения</InputLabel>
-            <Select
-              labelId="request-type-label"
-              name="requestType"
-              value={state.requestType}
-              onChange={handleSelectChange}
-              label="Тип обращения"
-            >
-              {requestTypes.map((type) => {
-                const localizedTitle = type[`title_${locale as "ru" | "en" | "kg"}`] || type.title;
-                return (
-                  <MenuItem key={type.value} value={type.value}>
-                    {localizedTitle}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
+          <TextField
+            select
+            fullWidth
+            label="Тип обращения"
+            name="requestType"
+            value={state.requestType}
+            onChange={handleSelectChange}
+            margin="normal"
+            required
+          >
+            {requestTypes.map((type) => {
+              const localizedTitle = type[`title_${locale as "ru" | "en" | "kg"}`] || type.title;
+              return (
+                <MenuItem key={type.value} value={type.value}>
+                  {localizedTitle}
+                </MenuItem>
+              );
+            })}
+          </TextField>
 
           <TextField
             fullWidth
