@@ -1,14 +1,17 @@
-import React, { useEffect, useRef } from "react";
-import useStatisticsChartsViewModel from "@/viewmodels/statistics/charts/useStatisticsChartsViewModel.ts";
-import { useProjectCardsStore } from "@/stores/projects/projects-for-cards.ts";
+import React, { useEffect, useRef, useState } from "react";
+import useStatisticsChartsViewModel from "@/viewmodels/statistics/charts/useStatisticsChartsViewModel";
+import { useProjectCardsStore } from "@/stores/projects/projects-for-cards";
 import { Grid } from "@mui/material";
-import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel.ts";
-import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
+import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
+import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 
 const LazyChart = React.lazy(() => import("./ChartCard"));
 
 const ChartsMainBlock = () => {
-  const { handleFilterBySector, handleFilterByRegion, handleDownload } = useStatisticsChartsViewModel();
+  const { regions } = useRegionsViewModel();
+  const { sectors, sectorsGroup } = useSectorsViewModel();
+  const sectorOptions = sectors.concat(sectorsGroup);
+  const { handleFilterBySector, handleFilterByRegion, handleDownload, selectedOption } = useStatisticsChartsViewModel();
   const cardsStore = useProjectCardsStore();
   const {
     topSectorsByProjectCount,
@@ -19,46 +22,42 @@ const ChartsMainBlock = () => {
     topExecutiveAgenciesByProjectCount,
     topDonorsByInvestmentBySector,
     topDonorsByInvestmentByRegion,
-    loadingState
+    loadingState,
   } = cardsStore;
-  const { regions } = useRegionsViewModel();
-  const { sectors, sectorsGroup } = useSectorsViewModel();
-  const sectorOptions = sectors.concat(sectorsGroup);
-
-  const renderCount = useRef<number>(0);
-
-  useEffect(() => {
-    renderCount.current++;
-    console.log("Выполнено рендеров: ", renderCount.current);
-  }, []);
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} sm={12} lg={6}>
-        <LazyChart
-          title="Корреляция доноров по регионам"
-          total={topDonorsByInvestmentByRegion?.total}
-          unit={topDonorsByInvestmentByRegion?.unit}
-          data={topDonorsByInvestmentByRegion?.data}
-          handleFilterChange={handleFilterByRegion}
-          selectOptions={regions}
-          loading={loadingState.topDonorsByInvestmentByRegion}
-          handleDownload={() => handleDownload(1)}
-        />
-      </Grid>
+      {selectedOption.region !== 0 && (
+        <Grid item xs={12} sm={12} lg={6}>
+          <LazyChart
+            title="Корреляция доноров по регионам"
+            total={topDonorsByInvestmentByRegion?.total}
+            unit={topDonorsByInvestmentByRegion?.unit}
+            data={topDonorsByInvestmentByRegion?.data}
+            handleFilterChange={handleFilterByRegion}
+            value={selectedOption.region.toString()}
+            selectOptions={regions}
+            loading={loadingState.topDonorsByInvestmentByRegion}
+            handleDownload={() => handleDownload(1, selectedOption.region)}
+          />
+        </Grid>
+      )}
 
-      <Grid item xs={12} sm={12} lg={6}>
-        <LazyChart
-          title="Корреляция доноров по секторам"
-          total={topDonorsByInvestmentBySector?.total}
-          unit={topDonorsByInvestmentBySector?.unit}
-          data={topDonorsByInvestmentBySector?.data}
-          handleFilterChange={handleFilterBySector}
-          selectOptions={sectorOptions}
-          loading={loadingState.topDonorsByInvestmentBySector}
-          handleDownload={() => handleDownload(2)}
-        />
-      </Grid>
+      {selectedOption.sector !== 0 && (
+        <Grid item xs={12} sm={12} lg={6}>
+          <LazyChart
+            title="Корреляция доноров по секторам"
+            total={topDonorsByInvestmentBySector?.total}
+            unit={topDonorsByInvestmentBySector?.unit}
+            data={topDonorsByInvestmentBySector?.data}
+            handleFilterChange={handleFilterBySector}
+            value={selectedOption.sector.toString()}
+            selectOptions={sectorOptions}
+            loading={loadingState.topDonorsByInvestmentBySector}
+            handleDownload={() => handleDownload(2, selectedOption.sector)}
+          />
+        </Grid>
+      )}
 
       <Grid item xs={12} sm={12} lg={6}>
         <LazyChart

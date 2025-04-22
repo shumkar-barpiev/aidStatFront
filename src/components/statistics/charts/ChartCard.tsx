@@ -13,6 +13,7 @@ interface Props {
   total?: string;
   unit?: string;
   data?: ChartDataCount[] | ChartDataSum[];
+  value?: string;
   selectOptions?: Option[];
   chartFilters?: { [key: string]: string };
   handleFilterChange?: (id: number) => void;
@@ -20,7 +21,7 @@ interface Props {
   handleDownload: () => void;
 }
 
-const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selectOptions, handleFilterChange, loading, handleDownload }) => {
+const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, value, selectOptions, handleFilterChange, loading, handleDownload }) => {
   const isChartDataSum = (data: ChartDataSum[] | ChartDataCount[]): data is ChartDataSum[] => {
     return data?.length > 0 && "grantAmounts" in data[0];
   };
@@ -72,20 +73,20 @@ const ChartCard: React.FC<Props> = React.memo(({ title, total, unit, data, selec
 
         <Box sx={{ display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center", p: 2 }}>
           <Box sx={{ display: "flex", flex: 1 }}>
-            {title.includes("по регионам") && selectOptions && (
+            {title.includes("по регионам") && selectOptions && selectOptions.length > 0 && value && (
               <FilterSelect
                 name="region"
-                value="1"
+                value={value}
                 options={selectOptions}
                 onChange={handleFilterChange ?? (() => {})}
                 labelName="Регион"
                 isAll={false}
               />
             )}
-            {title.includes("по секторам") && selectOptions && (
+            {title.includes("по секторам") && selectOptions && selectOptions.length > 0 && value && (
               <FilterSelect
                 name="sector"
-                value="20"
+                value={value}
                 options={selectOptions}
                 onChange={handleFilterChange ?? (() => {})}
                 labelName="Сектор"

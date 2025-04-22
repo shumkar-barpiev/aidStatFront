@@ -42,7 +42,7 @@ export const useProjectsMapStore = create<ProjectsMapState>((set, get) => ({
       set({
         projects: responseData,
         error: null,
-        filters, // обновим фильтры, с которыми пришли проекты
+        filters,
       });
     } catch (error: any) {
       set({ error: error.message, projects: null });
