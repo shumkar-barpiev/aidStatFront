@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useProjectCardsStore } from "@/stores/projects/projects-for-cards.ts";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel.ts";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
+import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums.ts";
 
 interface firstOptions {
   sector: number,
@@ -32,34 +33,34 @@ const useStatisticsChartsViewModel = () => {
     cardsStore.fetchTopDonorsByInvestmentByRegion(id);
   };
 
-  const handleDownload = (id: number, selectedValueId?: number) => {
-    switch (id) {
-      case 1:
+  const handleDownload = (type: ChartDownloadType, selectedValueId?: number) => {
+    switch (type) {
+      case ChartDownloadType.Region:
         cardsStore.fetchTopDonorsByInvestmentByRegion(selectedValueId as number, true);
         break;
-      case 2:
+      case ChartDownloadType.Sector:
         cardsStore.fetchTopDonorsByInvestmentBySector(selectedValueId as number, true);
         break;
-      case 3:
+      case ChartDownloadType.DonorsByInvestment:
         cardsStore.fetchTopDonorsByInvestment(true);
         break;
-      case 4:
+      case ChartDownloadType.DonorsByProjectCount:
         cardsStore.fetchTopDonorsByProjectCount(true);
         break;
-      case 5:
+      case ChartDownloadType.SectorsByInvestment:
         cardsStore.fetchTopSectorsByInvestment(true);
         break;
-      case 6:
+      case ChartDownloadType.SectorsByProjectCount:
         cardsStore.fetchTopSectorsByProjectCount(true);
         break;
-      case 7:
+      case ChartDownloadType.ImplementingAgencies:
         cardsStore.fetchTopImplementingAgenciesByProjectCount(true);
         break;
-      case 8:
+      case ChartDownloadType.ExecutiveAgencies:
         cardsStore.fetchTopExecutiveAgenciesByProjectCount(true);
         break;
       default:
-        console.warn("Неизвестный id для загрузки:", id);
+        console.warn("Неизвестный тип для загрузки:", type);
     }
   };
 
