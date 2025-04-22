@@ -133,7 +133,7 @@ export const Main = () => {
       </Stack>
 
       <Box>
-        <Box display="flex" justifyContent="space-between" mb={2} sx={{ alignItems: "center", gap: 3 }}>
+        <Box display="flex" justifyContent="space-between" mb={3} sx={{ alignItems: "center", gap: 3 }}>
           <Stack direction={"row"} alignItems={"center"} spacing={1}>
             <FolderIcon fontSize="large" sx={{ color: Colors.darkBlue }} />
             <Typography
@@ -179,7 +179,7 @@ export const Main = () => {
           </ToggleButtonGroup>
         </Box>
 
-        <Divider sx={{ mb: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+        <Divider sx={{ mb: 4, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
         {allDocuments?.length > 0 ? (
           <Box>
             {view === DocumentsView.GRID ? (

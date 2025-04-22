@@ -147,8 +147,8 @@ export default function MainPage() {
       </Box>
 
       <Box ref={boxRef} sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
-        <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
-          <Typography variant="h4" fontWeight="bold" sx={{ my: 1, textAlign: "left" }}>
+        <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} sx={{ mb: 3 }}>
+          <Typography variant="h4" fontWeight="bold" sx={{ textAlign: "left" }}>
             {t("projects")}
           </Typography>
           <Button
@@ -252,7 +252,7 @@ export default function MainPage() {
             })}
         </Grid>
 
-        <Box sx={{ mt: 6 }}>
+        <Box sx={{ mt: 4 }}>
           <Card
             sx={{
               display: "flex",
