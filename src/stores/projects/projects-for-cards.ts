@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { http } from "@/utils/http.ts";
+import { exportToExcel } from "@/utils/files/exportToExcel.ts";
 
 export interface ChartDataSum {
   name: string;
@@ -59,15 +60,20 @@ const fetchData = async (
 ) => {
   setLoading(true);
   try {
-    let api = `${url}`;
+    const api = `${url}`;
     if (download) {
-      api = `${url}?download=${download}`;
+      const url = `${api}?download=${download}`;
+      const response = await http(url, { method: "GET", withoutAuth: true });
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      const data = await response.json();
+      exportToExcel(data.data, "Statistics", data.title);
+      return;
+    } else {
+      const response = await http(api, { method: "GET", withoutAuth: true });
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      const data = await response.json();
+      setData(data);
     }
-    const response = await http(api, { method: "GET", withoutAuth: true });
-    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-    const data = await response.json();
-    console.log(data);
-    setData(data);
   } catch (e: any) {
     setError(e?.message || "Ошибка при загрузке данных");
   } finally {
