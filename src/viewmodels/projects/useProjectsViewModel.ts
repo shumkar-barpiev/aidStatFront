@@ -6,7 +6,7 @@ import { TProjectModelFilters, useProjectsStore } from "@/stores/projects/projec
 
 export const useProjectsViewModel = () => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { filters: projectsFilter, setFilters, fetchItems, fetchItem } = useProjectsStore();
+  const { filters: projectsFilter, setFilters, fetchItems, fetchItem, fetchTotals } = useProjectsStore();
 
   const handleProjectsPageChange = (e: ChangeEvent<unknown>, page: number) => {
     setFilters({ page });

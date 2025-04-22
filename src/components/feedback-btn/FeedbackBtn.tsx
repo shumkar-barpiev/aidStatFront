@@ -4,14 +4,16 @@ import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import { useMediaQueryWithSsr } from "@/hooks/useMediaQuery";
+import { useRouter } from "next/navigation";
 
 export const FeedbackBtn = () => {
   const { t } = useTranslation();
   const [isClient, setIsClient] = useState<boolean>(false);
   const { matches: isDesktop, mounted } = useMediaQueryWithSsr("md");
+  const router = useRouter();
 
   const handleClick = () => {
-    console.log("Feedback button clicked!");
+    router.push("/feedback");
   };
 
   useEffect(() => {

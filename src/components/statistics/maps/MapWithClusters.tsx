@@ -57,7 +57,7 @@ const MapWithClusters = () => {
         !Array.isArray(project.sectors) ||
         project.sectors.length === 0
       ) {
-        console.warn("❌ Пропущен проект (нет валидных координат или секторов):", project);
+        console.log("❌ Пропущен проект (нет валидных координат или секторов):", project.name);
         return;
       }
 
