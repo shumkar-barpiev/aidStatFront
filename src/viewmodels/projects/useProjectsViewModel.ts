@@ -62,10 +62,6 @@ export const useProjectsViewModel = () => {
     fetchItem(id);
   };
 
-  const fetchProjectsTotals = () => {
-    fetchTotals();
-  };
-
   useEffect(() => {
     fetchItems(projectsFilter);
   }, [projectsFilter]);
@@ -78,6 +74,5 @@ export const useProjectsViewModel = () => {
     getProjectSectorsTitle,
     getProjectPartnersTitle,
     handleProjectsPageChange,
-    fetchProjectsTotals,
   };
 };

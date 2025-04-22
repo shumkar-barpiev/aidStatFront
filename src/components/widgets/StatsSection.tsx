@@ -7,16 +7,14 @@ import { useProjectsStore } from "@/stores/projects/projects";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PaidIcon from "@mui/icons-material/Paid";
 import HandshakeIcon from "@mui/icons-material/Handshake";
-import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel.ts";
 import { useEffect } from "react";
 
 export const StatsSection = () => {
   const { allPartners } = usePartnersViewModel();
-  const { total, totalSum } = useProjectsStore();
-  const { fetchProjectsTotals } = useProjectsViewModel();
+  const { total, totalSum, fetchTotals } = useProjectsStore();
 
   useEffect(() => {
-    fetchProjectsTotals();
+    fetchTotals();
   }, []);
 
   const projectIcon = <AssignmentIcon fontSize="large" color="primary" />;
