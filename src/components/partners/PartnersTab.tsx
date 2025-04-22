@@ -1,13 +1,13 @@
-'use client'
+"use client";
 
-import React, { useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
-import Colors from "@/styles/colors.ts";
 import Image from "next/image";
+import Colors from "@/styles/colors.ts";
+import { useTranslation } from "react-i18next";
+import React, { useEffect, useRef } from "react";
+import { NAVBAR_HEIGHT } from "@/utils/constants.ts";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import MoveDownOutlinedIcon from "@mui/icons-material/MoveDownOutlined";
 import PartnersCard from "@/components/partners/partners/PartnersCard.tsx";
-import { NAVBAR_HEIGHT } from "@/utils/constants.ts";
 
 const PartnersTab = () => {
   const { t } = useTranslation();
