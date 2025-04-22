@@ -23,6 +23,7 @@ import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { CollapsibleText } from "@/components/other/CollabsibleText";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
 import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
+import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 
@@ -78,12 +79,13 @@ const ShowPartner = () => {
                 </Typography>
                 <Divider sx={{ my: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
-                <Typography variant="subtitle1" fontWeight="bold">
-                  Описание
-                </Typography>
-                {partner?.description && (
-                  <CollapsibleText header="Описание" text={partner?.description} maxChars={1000} />
-                )}
+                <Box sx={{ flexGrow: 1, height: `${90 * 3 + 140}px`, overflowY: "auto", p: { xs: 2, sm: 0 } }}>
+                  {partner?.description ? (
+                    <CollapsibleText header={`${partner?.name}`} text={partner?.description} maxChars={1000} />
+                  ) : (
+                    <NotSpecifiedText />
+                  )}
+                </Box>
               </Card>
             </Box>
             <Box sx={{ width: { xs: 1, sm: 1, md: 1 / 5 } }}>
@@ -127,7 +129,11 @@ const ShowPartner = () => {
                     </Typography>
                   </Stack>
 
-                  {partner?.projectCount && <Typography fontWeight={"bold"}>{partner?.projectCount}</Typography>}
+                  {partner?.projectCount ? (
+                    <Typography fontWeight={"bold"}>{partner?.projectCount}</Typography>
+                  ) : (
+                    <NotSpecifiedText />
+                  )}
                 </Grid>
                 <Divider
                   sx={{ ml: 2, borderColor: Colors.darkBlue, borderBottomWidth: 2, width: { xs: "95%", md: "90%" } }}
@@ -140,8 +146,10 @@ const ShowPartner = () => {
                       Гранты
                     </Typography>
                   </Stack>
-                  {partner?.grant && (
+                  {partner?.grant ? (
                     <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.grant)}</Typography>
+                  ) : (
+                    <NotSpecifiedText />
                   )}
                 </Grid>
                 <Divider
@@ -156,8 +164,10 @@ const ShowPartner = () => {
                     </Typography>
                   </Stack>
 
-                  {partner?.credit && (
+                  {partner?.credit ? (
                     <Typography fontWeight={"bold"}>{formatCurrencyWithSpaces(partner?.credit)}</Typography>
+                  ) : (
+                    <NotSpecifiedText />
                   )}
                 </Grid>
                 <Divider
@@ -183,9 +193,14 @@ const ShowPartner = () => {
                   Контакты
                 </Typography>
               </Stack>
-
-              {partner?.mobilePhone && <Typography fontWeight={"bold"}>{partner?.mobilePhone}</Typography>}
-              {partner?.fixedPhone && <Typography fontWeight={"bold"}>{partner?.fixedPhone}</Typography>}
+              {partner?.mobilePhone || partner?.fixedPhone ? (
+                <>
+                  {partner?.mobilePhone && <Typography fontWeight={"bold"}>{partner?.mobilePhone}</Typography>}
+                  {partner?.fixedPhone && <Typography fontWeight={"bold"}>{partner?.fixedPhone}</Typography>}
+                </>
+              ) : (
+                <NotSpecifiedText />
+              )}
             </Grid>
 
             <Grid item xs={12} sm={6} md={4}>
@@ -195,7 +210,11 @@ const ShowPartner = () => {
                   Адрес
                 </Typography>
               </Stack>
-              {partner?.address && <Typography fontWeight={"bold"}>{partner?.address}</Typography>}
+              {partner?.address ? (
+                <Typography fontWeight={"bold"}>{partner?.address}</Typography>
+              ) : (
+                <NotSpecifiedText />
+              )}
             </Grid>
 
             <Grid item xs={12} sm={6} md={4}>
@@ -206,7 +225,7 @@ const ShowPartner = () => {
                 </Typography>
               </Stack>
 
-              {partner?.website && (
+              {partner?.website ? (
                 <Stack direction={"row"} alignItems={"center"} spacing={1}>
                   <Typography sx={{ maxWidth: "320px", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {partner?.website}
@@ -217,6 +236,8 @@ const ShowPartner = () => {
                     </a>
                   </IconButton>
                 </Stack>
+              ) : (
+                <NotSpecifiedText />
               )}
             </Grid>
           </Grid>
