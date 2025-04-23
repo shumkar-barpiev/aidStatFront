@@ -4,8 +4,8 @@ import React from "react";
 import { TPartnerModel } from "@/models/partner/partner.ts";
 import { Box, Typography, IconButton } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import AgencyCard from "@/components/partners/agencies/AgencyCard";
+import Colors from "@/styles/colors.ts";
 
 interface Props {
   item: TPartnerModel;
@@ -22,44 +22,47 @@ const AgenciesListItem: React.FC<Props> = ({ item, toggleOpen, isOpenId }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        p: 2,
         borderBottom: "1px solid",
-        borderColor: "divider",
+        borderColor: Colors.darkBlue,
         cursor: "pointer",
         transition: "all 0.1s ease-in-out",
-        "&:hover": {
-          boxShadow: 1,
-          transform: "translateY(-3px)",
-          cursor: "pointer",
-        },
       }}
     >
       <Box
         sx={{
           display: "flex",
+          p: 2,
           justifyContent: "space-between",
           alignItems: "center",
           fontSize: "0.875rem",
+          backgroundColor: "#fff",
+          color: Colors.darkBlue,
+          "&:hover": {
+            backgroundColor: Colors.darkBlue,
+            color: "#fff",
+            boxShadow: 1,
+            cursor: "pointer",
+          },
         }}
       >
         <Typography
           sx={{
-            width: "75%",
+            width: `${isOpenId === item.id ? "100%" : "85%"}`,
             overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            color: "text.primary",
-            fontWeight: `${isOpenId === item.id ? 600 : 500}`,
-            fontSize: `${isOpenId === item.id ? "1.5rem" : "0.875rem"}`,
-            mr: 2,
+            whiteSpace: isOpenId === item.id ? "normal" : "nowrap",
+            textOverflow: isOpenId === item.id ? "unset" : "ellipsis",
+            overflowWrap: isOpenId === item.id ? "break-word" : "normal",
+            wordBreak: isOpenId === item.id ? "break-word" : "normal",
+            fontWeight: isOpenId === item.id ? 600 : 500,
+            fontSize: isOpenId === item.id ? "1.5rem" : "0.875rem",
           }}
         >
           {item.name}
         </Typography>
 
-        <Box sx={{ width: "25%", textAlign: "right" }}>
-          <IconButton size="small" color="primary">
-            {isOpenId === item.id ? null: <ArrowDropDownIcon />}
+        <Box sx={{ display: `${isOpenId === item.id ? "none" : "block"}`, width: "15%", textAlign: "right" }}>
+          <IconButton size="small" sx={{ color: "inherit" }}>
+            <ArrowDropDownIcon fontSize="large" sx={{ color: "inherit" }} />
           </IconButton>
         </Box>
       </Box>
