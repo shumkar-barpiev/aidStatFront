@@ -4,8 +4,8 @@ import React, { useEffect, useRef } from "react";
 import { Box, Typography, Grid, IconButton, Link, CircularProgress, useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import { useAgenciesStore } from "@/stores/partners/agencies.ts";
-import { formatCurrencyWithSpaces } from "@/utils/formatCurrency.ts";
+import { useAgenciesStore } from "@/stores/partners/agencies";
+import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 
 const AgencyCard = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);

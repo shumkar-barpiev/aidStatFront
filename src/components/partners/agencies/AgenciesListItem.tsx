@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { TPartnerModel } from "@/models/partner/partner.ts";
+import { TPartnerModel } from "@/models/partner/partner";
 import { Box, Typography, IconButton } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import AgencyCard from "@/components/partners/agencies/AgencyCard";
-import Colors from "@/styles/colors.ts";
+import Colors from "@/styles/colors";
 
 interface Props {
   item: TPartnerModel;

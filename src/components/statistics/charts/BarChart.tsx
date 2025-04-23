@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, Tooltip, Typography } from "@mui/material";
-import TitlesLegend from "@/components/statistics/charts/bar-chart-components/TitlesLegend.tsx";
-import PercentageBar from "@/components/statistics/charts/bar-chart-components/PercentageBar.tsx";
-import { formatCurrency } from "@/utils/formatCurrency.ts";
+import TitlesLegend from "@/components/statistics/charts/bar-chart-components/TitlesLegend";
+import PercentageBar from "@/components/statistics/charts/bar-chart-components/PercentageBar";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 function parseValue(str: string): number {
   return parseFloat(str);
