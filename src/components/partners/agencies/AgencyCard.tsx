@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { Box, Typography, Grid, IconButton, Link, CircularProgress } from "@mui/material";
+import { Box, Typography, Grid, IconButton, Link, CircularProgress, useTheme, useMediaQuery } from "@mui/material";
 import Image from "next/image";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import { useAgenciesStore } from "@/stores/partners/agencies.ts";
+import { useAgenciesStore } from "@/stores/partners/agencies";
+import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 
 const AgencyCard = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -39,100 +40,113 @@ const AgencyCard = () => {
   }
 
   return (
-    <Box
-      ref={cardRef}
-      sx={{
-        mt: 2,
-      }}
-    >
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+    <Box ref={cardRef} sx={{ mt: 2, width: "100%", overflow: "hidden" }}>
+      <Grid
+        container
+        sx={{
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "center", md: "flex-start" },
+          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 2, sm: 3 },
+          spacing: { xs: 2, sm: 2, md: 4 },
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          md={4}
+          sx={{
+            position: "relative",
+            width: "100%",
+            maxWidth: "300px",
+            aspectRatio: "1",
+            borderRadius: "8px",
+            overflow: "hidden",
+            mx: { xs: "auto", md: 0 },
+          }}
+        >
+          <Image
+            src={`data:image/jpeg;base64,${agency.image}`}
+            alt={`${agency.name} logo`}
+            fill
+            style={{ objectFit: "contain" }}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} mt={1}>
+            <Grid item xs={12} sm={6} sx={{ maxWidth: "230px" }}>
               <Typography variant="body1" color="text.secondary">
-                <strong>Website:</strong>
+                Website:
               </Typography>
-              <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
-                { agency.website ?
-                  (<Link href={agency.website} target="_blank" color="primary" sx={{ pt: 0.5, fontSize: "1rem" }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  pt: 0.5,
+                  fontSize: "1rem",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "100%",
+                }}
+              >
+                {agency.website ? (
+                  <Link href={agency.website} target="_blank" color="primary" sx={{ pt: 0.5, fontSize: "1rem" }}>
                     {agency.website}
                   </Link>
-                  ) : ("сайт не указан")
-                }
+                ) : (
+                  "Cайт не указан"
+                )}
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={6} mt={1}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                <strong>Тел:</strong>
+                Тел:
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
                 {agency.fixedPhone}
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={6} mt={1}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                <strong>Мобильный тел:</strong>
+                Мобильный тел:
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  ml: 0,
-                  pt: 0.5,
-                  fontSize: "1rem",
-                }}
-              >
-                {agency.mobilePhone || "номер не указан"}
+              <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
+                {agency.mobilePhone || "Номер не указан"}
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={6} mt={1}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                <strong>Адрес:</strong>
+                Адрес:
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
                 {agency.address || "Адрес не указан"}
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={6} mt={1}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                <strong>Количество проектов:</strong>
+                Количество проектов:
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
                 {agency.projectCount}
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={6} mt={1}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                <strong>Сумма грантов:</strong>
+                Общая сумма реализуемых проектов:
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
-                {agency.grant || 0}
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12} sm={6} mt={1}>
-              <Typography variant="body1" color="text.secondary">
-                <strong>Сумма кредитов:</strong>
-              </Typography>
-              <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
-                {agency.credit || 0}
+                {formatCurrencyWithSpaces(agency.grant, agency.credit) || "ERROR"}
               </Typography>
             </Grid>
           </Grid>
-        </Box>
-        <Image
-          src={`data:image/jpeg;base64,${agency.image}`}
-          alt={`${agency.name} logo`}
-          width={300}
-          height={300}
-          objectFit="contain"
-          style={{ borderRadius: "8px" }}
-        />
-      </Box>
+        </Grid>
+      </Grid>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
         <IconButton color="primary" sx={{ borderRadius: "50%" }}>

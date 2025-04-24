@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Box, Tooltip, Typography } from "@mui/material";
-import TitlesLegend from "@/components/statistics/charts/bar-chart-components/TitlesLegend.tsx";
-import PercentageBar from "@/components/statistics/charts/bar-chart-components/PercentageBar.tsx";
-import { formatCurrency } from "@/utils/formatCurrency.ts";
+import TitlesLegend from "@/components/statistics/charts/bar-chart-components/TitlesLegend";
+import PercentageBar from "@/components/statistics/charts/bar-chart-components/PercentageBar";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 function parseValue(str: string): number {
   return parseFloat(str);
@@ -39,7 +39,7 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
       ([entry]) => {
         if (entry.isIntersecting) {
           let step = 0;
-          const totalSteps = 10;
+          const totalSteps = 20;
           const inc = 1 / totalSteps;
 
           setProgressMain(0);
@@ -76,12 +76,31 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
     };
   }, []);
 
-  const chartMaxHeight = 230;
-  const maxMainValue = useMemo(() => Math.max(...mainValues.map(parseValue), 0), [mainValues]);
+  const maxMainValue = useMemo(() => {
+    if (!mainValues || mainValues.length === 0) return 0;
+    return Math.max(...mainValues.map(parseValue));
+  }, [mainValues]);
+
   const maxExtraValue = useMemo(() => {
     if (!extraValues || extraValues.length === 0) return 0;
-    return Math.max(...extraValues.map(parseValue), 0);
+    return Math.max(...extraValues.map(parseValue));
   }, [extraValues]);
+
+  const chartMaxHeight = 230;
+
+  if (!mainValues || mainValues.length === 0 || !names || names.length === 0) {
+    return (
+      <Box
+        ref={chartRef}
+        height="100%"
+        sx={{ minHeight: "325px", display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
+        <Typography variant="body1" color="textSecondary">
+          Нет данных для отображения
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box ref={chartRef} height="100%" sx={{ minHeight: "325px" }}>
@@ -100,7 +119,6 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
             const finalExtraVal = extraValStr ? parseValue(extraValStr) : 0;
 
             const totalMax = Math.max(maxMainValue + maxExtraValue, 1);
-
             const mainHeight = (finalMainVal / totalMax) * chartMaxHeight * 0.9;
             const extraHeight = (finalExtraVal / totalMax) * chartMaxHeight * 0.9;
 
@@ -108,7 +126,6 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
             const animatedExtraHeight = extraHeight * progressExtra;
 
             const total = finalMainVal + finalExtraVal;
-
             const mainPercent = total > 0 ? (finalMainVal / total) * 100 : 0;
             const extraPercent = total > 0 ? (finalExtraVal / total) * 100 : 0;
 

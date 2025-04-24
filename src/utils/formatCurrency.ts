@@ -14,9 +14,20 @@ export const formatCurrency = (value: number | string) => {
   return number.toLocaleString("ru-RU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
-export function formatCurrencyWithSpaces(input: string) {
+export function formatCurrencyWithSpaces(input?: string | null, extraInput?: string | null): string {
+  if (!input) return "0";
+
   const [numberStr, currency] = input.split(" ");
-  const number = parseInt(numberStr, 10);
-  const formattedNumber = number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return `${formattedNumber} ${currency ?? ""}`;
+  const mainNumber = parseInt(numberStr, 10);
+
+  let extraNumber = 0;
+  if (extraInput) {
+    const [extraNumberStr] = extraInput.split(" ");
+    extraNumber = parseInt(extraNumberStr, 10);
+  }
+
+  const total = mainNumber + extraNumber;
+  const formattedInt = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+  return `${formattedInt}${currency ? ` ${currency}` : ""}`;
 }
