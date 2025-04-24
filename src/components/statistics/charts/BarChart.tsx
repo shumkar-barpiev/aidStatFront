@@ -39,7 +39,7 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
       ([entry]) => {
         if (entry.isIntersecting) {
           let step = 0;
-          const totalSteps = 20; // Увеличено с 10 до 20
+          const totalSteps = 20;
           const inc = 1 / totalSteps;
 
           setProgressMain(0);

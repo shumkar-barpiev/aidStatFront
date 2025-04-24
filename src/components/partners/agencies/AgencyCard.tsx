@@ -11,9 +11,6 @@ const AgencyCard = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const { agency, agencyLoading } = useAgenciesStore();
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   useEffect(() => {
     if (cardRef.current) {
       cardRef.current.scrollIntoView({
@@ -46,12 +43,12 @@ const AgencyCard = () => {
     <Box ref={cardRef} sx={{ mt: 2, width: "100%", overflow: "hidden" }}>
       <Grid
         container
-        spacing={isMobile ? 2 : 4}
         sx={{
           flexDirection: { xs: "column", md: "row" },
           alignItems: { xs: "center", md: "flex-start" },
           px: { xs: 2, sm: 3, md: 4 },
           py: { xs: 2, sm: 3 },
+          spacing: { xs: 2, sm: 2, md: 4 },
         }}
       >
         <Grid

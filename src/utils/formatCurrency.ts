@@ -26,11 +26,7 @@ export function formatCurrencyWithSpaces(input?: string | null, extraInput?: str
     extraNumber = parseInt(extraNumberStr, 10);
   }
 
-  console.log(mainNumber);
-  console.log(extraNumber);
-
   const total = mainNumber + extraNumber;
-  console.log(total);
   const formattedInt = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   return `${formattedInt}${currency ? ` ${currency}` : ""}`;
