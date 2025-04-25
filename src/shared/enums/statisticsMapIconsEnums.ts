@@ -1,214 +1,42 @@
-export const IconsEnum = {
-  Водоснабжение: "3",
-  Транспорт: "3",
-  Энергетика: "4",
-  "Сельское хозяйство": "1",
-  Здравоохранение: "3",
-  "Социальные обеспечения": "1",
-  "Чрезвычайная ситуация": "3",
-  Образование: "2",
-  "Водоснабжение, Инфраструктура": "6",
-  "Социальное жилье и ипотека": "4",
-  "Государственное управление": "6",
-  "Сельское хозяйство, Энергетика, Социальные обеспечения": "2",
-  "Здравоохранение, Сельское хозяйство": "2",
-  "Сельское хозяйство, Социальные обеспечения": "2",
-  Климат: "5",
-  "Канализация и Твердые бытовые отходы": "4",
-  "Инфраструктура, Сельское хозяйство": "4",
-  Инфраструктура: "4",
-  "Международная ассоциация развития (МАР)": "6",
-  "Азиатский Банк Развития": "6",
-  "Саудовский фонд развития": "6",
-  "Европейский Банк Реконструкции и Развития": "6",
-  "Всемирный банк": "6",
-  "Исламский банк развития (ИБР)": "6",
-  "Исламский банк развития (ИБР), Саудовский фонд развития": "6",
-  "Германский Банк Развития (KfW)": "6",
-  "Европейский инвестиционный банк (ЕИБ)": "6",
-  "Японское агентство международного сотрудничества": "6",
-  "Европейский Банк Реконструкции и Развития, Европейский инвестиционный банк (ЕИБ)": "6",
-  "Всемирный банк, Международная ассоциация развития (МАР)": "6",
-  "Экспортно-импортный банк Китая": "6",
-  "Евразийский банк развития(ЕАБР)": "6",
-  "Фонд международного развития ОПЕК": "6",
-  "Азиатский Банк Развития, Международная ассоциация развития (МАР)": "6",
-  "Экспортно-импортного банка Кореи (Korea Eximbank)": "6",
-  "Кувейтский Фонд Арабского Экономического Развития": "6",
-  "Европейский Банк Реконструкции и Развития, Государственный секретариат по экономическим делам Швейцарии (SECO)": "6",
-  "Европейский Банк Реконструкции и Развития, Европейский инвестиционный банк (ЕИБ), Евразийский банк развития(ЕАБР)":
-    "6",
-  "Азиатский Банк Развития, Евразийский банк развития(ЕАБР)": "6",
-};
-
-export const InitialFilteredCardsData = [
-  { name: "Азиатский Банк Развития", grantAmounts: "899.34", creditAmounts: "400.66" },
+export const EnergeticsMok = [
   {
-    name: "Европейский Банк Реконструкции и Развития",
-    grantAmounts: "432.12",
-    creditAmounts: "392.68",
+    name: "Гидроэлектростанции",
+    data: [
+      12430, 10787, 13004, 14094.3, 13980.4, 13652.5, 14004.1, 10759.1, 10098.0, 11254.6, 14309.1, 14179.0, 13096.7,
+      13297.6, 11092.7, 11497.8, 14191.2, 14318.3, 13859.2, 13979.1, 12957.1, 11928.6, 12030.6,
+    ],
   },
-  { name: "Всемирный банк", grantAmounts: "174.19", creditAmounts: "158.51" },
-  { name: "Международная ассоциация развития (МАР)", grantAmounts: "135.83", creditAmounts: "138.37" },
-  { name: "Исламский банк развития (ИБР)", grantAmounts: "152.84", creditAmounts: "106.76" },
-  { name: "Другие", grantAmounts: "461.23", creditAmounts: "432.97" },
-];
-
-export const CardsWithRegionSelectionEnums = {
-  title: "Топ доноров по сумме инвестиций по региону",
-  totalSum: 3.9,
-  unit: "",
-  chartData: [
-    {
-      region: "Чуйская область",
-      totalSum: 555,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "150.00", creditAmounts: "100.00" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "100.00", creditAmounts: "90.00" },
-        { name: "Всемирный банк", grantAmounts: "40.00", creditAmounts: "35.00" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "30.00", creditAmounts: "30.00" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "25.00", creditAmounts: "20.00" },
-        { name: "Другие", grantAmounts: "80.00", creditAmounts: "70.00" },
-      ],
-    },
-    {
-      region: "Нарынская область",
-      totalSum: 440,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "120.00", creditAmounts: "80.00" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "60.00", creditAmounts: "50.00" },
-        { name: "Всемирный банк", grantAmounts: "30.00", creditAmounts: "25.00" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "20.00", creditAmounts: "25.00" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "15.00", creditAmounts: "10.00" },
-        { name: "Другие", grantAmounts: "70.00", creditAmounts: "60.00" },
-      ],
-    },
-    {
-      region: "Баткенская область",
-      totalSum: 385,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "100.00", creditAmounts: "60.00" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "50.00", creditAmounts: "40.00" },
-        { name: "Всемирный банк", grantAmounts: "20.00", creditAmounts: "20.00" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "15.00", creditAmounts: "15.00" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "20.00", creditAmounts: "10.00" },
-        { name: "Другие", grantAmounts: "60.00", creditAmounts: "50.00" },
-      ],
-    },
-    {
-      region: "Джалал-Абадская область",
-      totalSum: 515,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "130.00", creditAmounts: "70.00" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "70.00", creditAmounts: "60.00" },
-        { name: "Всемирный банк", grantAmounts: "30.00", creditAmounts: "25.00" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "25.00", creditAmounts: "20.00" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "30.00", creditAmounts: "20.00" },
-        { name: "Другие", grantAmounts: "80.00", creditAmounts: "70.00" },
-      ],
-    },
-    {
-      region: "Таласская область",
-      totalSum: 373,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "80.00", creditAmounts: "30.00" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "40.00", creditAmounts: "35.00" },
-        { name: "Всемирный банк", grantAmounts: "15.00", creditAmounts: "13.00" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "10.00", creditAmounts: "15.00" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "10.00", creditAmounts: "10.00" },
-        { name: "Другие", grantAmounts: "50.00", creditAmounts: "40.00" },
-      ],
-    },
-    {
-      region: "Ошская область",
-      totalSum: 470,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "120.00", creditAmounts: "60.00" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "60.00", creditAmounts: "55.00" },
-        { name: "Всемирный банк", grantAmounts: "20.00", creditAmounts: "20.00" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "15.00", creditAmounts: "15.00" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "25.00", creditAmounts: "15.00" },
-        { name: "Другие", grantAmounts: "60.00", creditAmounts: "55.00" },
-      ],
-    },
-    {
-      region: "Иссык-Кульская область",
-      totalSum: 471.5,
-      regionData: [
-        { name: "Азиатский Банк Развития", grantAmounts: "99.34", creditAmounts: "30.66" },
-        { name: "Европейский Банк Реконструкции и Развития", grantAmounts: "52.12", creditAmounts: "62.68" },
-        { name: "Всемирный банк", grantAmounts: "19.19", creditAmounts: "20.51" },
-        { name: "Международная ассоциация развития (МАР)", grantAmounts: "20.83", creditAmounts: "18.37" },
-        { name: "Исламский банк развития (ИБР)", grantAmounts: "27.84", creditAmounts: "21.76" },
-        { name: "Другие", grantAmounts: "61.23", creditAmounts: "57.97" },
-      ],
-    },
-  ],
-};
-
-export const CardsWithSectorSelectionEnums = {
-  title: "Топ доноров по сумме инвестиций по сектору",
-  totalSum: 115,
-  unit: "",
-  chartData: [
-    { name: "Азиатский Банк Развития", grantAmounts: "899.34", creditAmounts: "400.66" },
-    {
-      name: "Европейский Банк Реконструкции и Развития",
-      grantAmounts: "432.12",
-      creditAmounts: "392.68",
-    },
-    { name: "Всемирный банк", grantAmounts: "174.19", creditAmounts: "158.51" },
-    { name: "Международная ассоциация развития (МАР)", grantAmounts: "135.83", creditAmounts: "138.37" },
-    { name: "Исламский банк развития (ИБР)", grantAmounts: "152.84", creditAmounts: "106.76" },
-    { name: "Другие", grantAmounts: "461.23", creditAmounts: "432.97" },
-  ],
-};
-
-export const TestFilterSectorOptions = [
-  { id: 1, name: "Государственное управление", projectCount: 1, type: "Sector Group" },
-  { id: 2, name: "Социальная сфера", projectCount: 0, type: "Sector Group" },
-  { id: 3, name: "Охрана окружающей среды и климат", projectCount: 0, type: "Sector Group" },
-  { id: 4, name: "Инфраструктура и ресурсы", projectCount: 1, type: "Sector Group" },
-  { id: 5, name: "Транспорт и логистика", projectCount: 0, type: "Sector Group" },
-  { id: 6, name: "Связь и телекоммуникации", projectCount: 0, type: "Sector Group" },
-  { id: 7, name: "Сельское хозяйство и ирригация", projectCount: 0, type: "Sector Group" },
-  { id: 8, name: "Чрезвычайная ситуация", projectCount: 0, type: "Sector Group" },
-  { id: 10, name: "Гос управление и администрирование", projectCount: 1, type: "Sector" },
-  { id: 11, name: "Финансы", projectCount: 0, type: "Sector" },
-  { id: 12, name: "Цифровизация", projectCount: 0, type: "Sector" },
-  { id: 13, name: "Социальное жилье и ипотека", projectCount: 0, type: "Sector" },
-  { id: 14, name: "Социальные обеспечения", projectCount: 0, type: "Sector" },
-  { id: 15, name: "Здравоохранение / Медицина", projectCount: 1, type: "Sector" },
-  { id: 16, name: "Образование", projectCount: 0, type: "Sector" },
-  { id: 17, name: "Охрана окружающей среды и экология", projectCount: 0, type: "Sector" },
-  { id: 18, name: "Климат", projectCount: 1, type: "Sector" },
-  { id: 19, name: "Инфраструктура", projectCount: 1, type: "Sector" },
-  { id: 20, name: "Водоснабжение", projectCount: 1, type: "Sector" },
-  { id: 21, name: "Канализация и твердые бытовые отходы", projectCount: 1, type: "Sector" },
-  { id: 22, name: "Энергетика", projectCount: 1, type: "Sector" },
-  { id: 23, name: "Транспорт", projectCount: 0, type: "Sector" },
-  { id: 24, name: "Торгово-логистический центр", projectCount: 0, type: "Sector" },
-  { id: 25, name: "Сельское хозяйство", projectCount: 0, type: "Sector" },
   {
-    id: 26,
-    name: "Ирригация",
-    projectCount: 1,
-    type: "Sector",
+    name: "Тепловые электростанции",
+    data: [
+      1237, 1135, 1017, 1046.7, 910.8, 870.7, 826.3, 1030.0, 985.2, 808.1, 848.9, 989.3, 914.7, 1273.9, 1923.9, 1620.6,
+      1238.3, 1409.7, 1256.0, 1425.1, 2180.9, 1953.9, 1808.7,
+    ],
   },
 ];
 
-export const TestFilterLocationNameOptions = [
-  { id: 1, name: "Нарынская область" },
-  { id: 2, name: "Чуйская область" },
-  { id: 3, name: "Ошская область" },
-  { id: 4, name: "Иссык-Кульская область" },
-  { id: 5, name: "Таласская область" },
-  { id: 6, name: "Джалал-Абадская область" },
-  { id: 7, name: "Баткенская область" },
-  // {id: 8, name: "г. Бишкек",},
-  // {id: 9, name: "г. Ош",},
-  // {id: 10, name: "г. Токмак",},
-  { id: 11, name: "Кыргызская Республика" },
+export const TransportsMok = [
+  {
+    name: "Железнодорожный транспорт",
+    data: [
+      176.3, 204.9, 272.7, 513.3, 457.6, 810.9, 1042.9, 1527.9, 1497.1, 1680.1, 2383.1, 2665.5, 3009.6, 3816.3, 3372.2,
+      3135.9, 3763.9, 4010.1, 3833.4, 4646.5, 5716.9, 5328.7, 6897.1,
+    ],
+  },
+  {
+    name: "Автомобильный транспорт",
+    data: [
+      883.5, 822.5, 761.9, 836.1, 970.0, 1256.4, 1587.3, 3525.2, 3873.3, 3913.7, 4520.3, 4953.6, 5211.4, 5589.7, 6204.6,
+      6600.2, 6774.4, 6905.4, 7038.5, 3904.1, 5472.3, 7612.5, 9242.4,
+    ],
+  },
+  {
+    name: "Воздушный транспорт",
+    data: [
+      43.9, 32.8, 30.2, 25.3, 18.1, 59.5, 22.8, 28.0, 19.7, 27.5, 64.8, 44.8, 43.6, 37.8, 34.0, 76.2, 107.8, 62.0, 4.7,
+      5.3, 7.7, 11.9, 1084.6,
+    ],
+  },
 ];
 
 export const TestFilterDonorOptions = [
@@ -239,145 +67,6 @@ export const TestFilterDonorOptions = [
   { id: 25, name: "Европейский инвестиционный банк (ЕИБ)", projectCount: 0 },
   { id: 26, name: "Международная ассоциация развития (МАР)", projectCount: 0 },
   { id: 27, name: "Посольство Федеративной Республики Германия в Кыргызской Республике", projectCount: 0 },
-];
-
-export const TestProjects = [
-  {
-    type: "Feature",
-    properties: {
-      id: 179,
-      name: "Техническая помощь проекту Камбаратинской ГЭС-1",
-      totalFinancingUsd: 5000000.0,
-      financingPerLocation: 2500000.0,
-      endDate: "2027-12-31T00:00:00",
-      donors: ["Международная ассоциация развития (МАР)"],
-      sectors: ["Энергетика"],
-      location_name: "Кыргызская Республика",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [74.553738, 42.873196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 180,
-      name: "Проект развития здравоохранения в Кыргызстане",
-      totalFinancingUsd: 3000000.0,
-      financingPerLocation: 1500000.0,
-      endDate: "2025-06-30T00:00:00",
-      donors: ["Всемирный банк"],
-      sectors: ["Здравоохранение"],
-      location_name: "Чуйская область",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [74.583738, 42.975196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 181,
-      name: "Развитие инфраструктуры на юге Кыргызстана",
-      totalFinancingUsd: 8000000.0,
-      financingPerLocation: 4000000.0,
-      endDate: "2026-12-31T00:00:00",
-      donors: ["Германское общество международного сотрудничества (GIZ)"],
-      sectors: ["Транспорт"],
-      location_name: "Ошская область",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [73.550738, 40.550196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 182,
-      name: "Поддержка инновационных технологий в Кыргызстане",
-      totalFinancingUsd: 1000000.0,
-      financingPerLocation: 500000.0,
-      endDate: "2024-11-30T00:00:00",
-      donors: ["Банк Европейского развития"],
-      sectors: ["Информационные технологии"],
-      location_name: "Город Бишкек",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [74.616738, 42.878196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 183,
-      name: "Проект устойчивого развития сельского хозяйства",
-      totalFinancingUsd: 4000000.0,
-      financingPerLocation: 2000000.0,
-      endDate: "2025-12-31T00:00:00",
-      donors: ["Азиатский банк развития"],
-      sectors: ["Сельское хозяйство"],
-      location_name: "Таласская область",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [72.920738, 42.375196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 184,
-      name: "Образовательный проект для молодежи",
-      totalFinancingUsd: 2000000.0,
-      financingPerLocation: 1000000.0,
-      endDate: "2023-12-31T00:00:00",
-      donors: ["Фонд Форда"],
-      sectors: ["Образование"],
-      location_name: "Город Токмак",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [72.858738, 42.952196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 185,
-      name: "Проект по улучшению городской инфраструктуры",
-      totalFinancingUsd: 6000000.0,
-      financingPerLocation: 3000000.0,
-      endDate: "2028-01-31T00:00:00",
-      donors: ["Международный фонд ООН для оказания помощи"],
-      sectors: ["Городское развитие"],
-      location_name: "Город Бишкек",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [74.595738, 42.874196],
-    },
-  },
-  {
-    type: "Feature",
-    properties: {
-      id: 186,
-      name: "Экологический проект по восстановлению экосистем",
-      totalFinancingUsd: 7000000.0,
-      financingPerLocation: 3500000.0,
-      endDate: "2029-05-15T00:00:00",
-      donors: ["Европейская комиссия"],
-      sectors: ["Экология"],
-      location_name: "Иссык-Кульская область",
-    },
-    geometry: {
-      type: "Point",
-      coordinates: [77.061738, 42.270196],
-    },
-  },
 ];
 
 export const GeneratedProjectNames = [

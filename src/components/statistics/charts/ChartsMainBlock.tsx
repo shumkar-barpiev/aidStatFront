@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useMemo } from "react";
 import useStatisticsChartsViewModel from "@/viewmodels/statistics/charts/useStatisticsChartsViewModel";
-import { useProjectCardsStore } from "@/stores/projects/projects-for-cards";
+import { useProjectChartsStore } from "@/stores/projects/projects-for-charts";
 import { Grid } from "@mui/material";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
-import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums.ts";
-import ElectricityProductionChart from "@/components/statistics/charts/ElectricityProductionChart.tsx";
+import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
+import AreaChart from "@/components/statistics/charts/AreaChart";
+import { useProjectsMapStore } from "@/stores/projects/projects-for-map";
+import { EnergeticsMok, TransportsMok } from "@/shared/enums/statisticsMapIconsEnums";
 
 const LazyChart = React.lazy(() => import("./ChartCard"));
 
@@ -14,7 +16,8 @@ const ChartsMainBlock = () => {
   const { sectors, sectorsGroup } = useSectorsViewModel();
   const sectorOptions = sectors.concat(sectorsGroup);
   const { handleFilterBySector, handleFilterByRegion, handleDownload, selectedOption } = useStatisticsChartsViewModel();
-  const cardsStore = useProjectCardsStore();
+  const { projects } = useProjectsMapStore();
+  const cardsStore = useProjectChartsStore();
   const {
     topSectorsByProjectCount,
     topSectorsByInvestment,
@@ -27,10 +30,45 @@ const ChartsMainBlock = () => {
     loadingState,
   } = cardsStore;
 
+  const energeticsProjects = useMemo(() => {
+    return (
+      projects?.data
+        .filter((project) => project.sectors?.some((sector) => sector.name === "Энергетика"))
+        .map((project) => ({
+          id: project.id,
+          name: project.name,
+          startDate: project.startDate,
+        })) || []
+    );
+  }, [projects]);
+
+  const transportsProjects = useMemo(() => {
+    return (
+      projects?.data
+        .filter((project) => project.sectors?.some((sector) => sector.name === "Транспорт"))
+        .map((project) => ({
+          id: project.id,
+          name: project.name,
+          startDate: project.startDate,
+        })) || []
+    );
+  }, [projects]);
+
   return (
     <Grid>
-      <ElectricityProductionChart />
-      <Grid container spacing={3} sx={{ mt: 3 }}>
+      <AreaChart
+        title="Производство электроэнергии по источникам (2001–настоящее время)"
+        projects={energeticsProjects}
+        series={EnergeticsMok}
+        yTitle="млн кВт⋅ч"
+      />
+      <AreaChart
+        title="Доходы от перевозок грузов всеми видами транспорта"
+        projects={transportsProjects}
+        series={TransportsMok}
+        yTitle="млн сом"
+      />
+      <Grid container spacing={3}>
         {selectedOption.region !== 0 && (
           <Grid item xs={12} sm={12} lg={6}>
             <LazyChart

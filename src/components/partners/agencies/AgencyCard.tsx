@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { Box, Typography, Grid, IconButton, Link, CircularProgress, useTheme, useMediaQuery } from "@mui/material";
+import { Box, CircularProgress, Grid, IconButton, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useAgenciesStore } from "@/stores/partners/agencies";
@@ -43,12 +43,12 @@ const AgencyCard = () => {
     <Box ref={cardRef} sx={{ mt: 2, width: "100%", overflow: "hidden" }}>
       <Grid
         container
+        spacing={{ xs: 2, sm: 2, md: 4 }}
         sx={{
           flexDirection: { xs: "column", md: "row" },
           alignItems: { xs: "center", md: "flex-start" },
           px: { xs: 2, sm: 3, md: 4 },
           py: { xs: 2, sm: 3 },
-          spacing: { xs: 2, sm: 2, md: 4 },
         }}
       >
         <Grid

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useProjectCardsStore } from "@/stores/projects/projects-for-cards.ts";
-import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel.ts";
-import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
-import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums.ts";
+import { useProjectChartsStore } from "@/stores/projects/projects-for-charts";
+import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
+import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
+import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
 
 interface firstOptions {
-  sector: number,
-  region: number,
+  sector: number;
+  region: number;
 }
 
 const useStatisticsChartsViewModel = () => {
@@ -14,22 +14,22 @@ const useStatisticsChartsViewModel = () => {
     sector: 0,
     region: 0,
   });
-  const cardsStore = useProjectCardsStore();
+  const cardsStore = useProjectChartsStore();
   const { regions } = useRegionsViewModel();
   const { sectors, sectorsGroup } = useSectorsViewModel();
   const sectorOptions = sectors.concat(sectorsGroup);
 
   const handleSelectedOption = (optionName: string, id: number) => {
-    setSelectedOption({...selectedOption, [optionName]: id});
+    setSelectedOption({ ...selectedOption, [optionName]: id });
   };
 
   const handleFilterBySector = (id: number) => {
-    handleSelectedOption('sector', id);
+    handleSelectedOption("sector", id);
     cardsStore.fetchTopDonorsByInvestmentBySector(id);
   };
 
   const handleFilterByRegion = (id: number) => {
-    handleSelectedOption('region', id);
+    handleSelectedOption("region", id);
     cardsStore.fetchTopDonorsByInvestmentByRegion(id);
   };
 
@@ -66,7 +66,7 @@ const useStatisticsChartsViewModel = () => {
 
   useEffect(() => {
     if (sectorOptions && sectorOptions.length > 0) {
-      const firstNonEmptyOption = sectorOptions.find(option => option.projectCount !== 0);
+      const firstNonEmptyOption = sectorOptions.find((option) => option.projectCount !== 0);
 
       if (firstNonEmptyOption) {
         handleSelectedOption("sector", firstNonEmptyOption.id);
@@ -77,7 +77,7 @@ const useStatisticsChartsViewModel = () => {
 
   useEffect(() => {
     if (regions && regions.length > 0) {
-      const firstNonEmptyOption = regions.find(option => option.projectCount !== 0);
+      const firstNonEmptyOption = regions.find((option) => option.projectCount !== 0);
 
       if (firstNonEmptyOption) {
         handleSelectedOption("region", firstNonEmptyOption.id);
