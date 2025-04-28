@@ -1,43 +1,45 @@
 import { useEffect, useCallback } from "react";
-import { useProjectsMapStore } from "@/stores/projects/projects-for-map.ts";
+import { useProjectsMapStore } from "@/stores/projects/projects-for-map";
 
 export const useStatisticsProjectsMapViewModel = () => {
-  const {
-    fetchProjects,
-    filters,
-    setFilters,
-    loading,
-    error,
-    projects,
-  } = useProjectsMapStore();
+  const { fetchProjects, mapFilters, setFilters, loading, error, projects } = useProjectsMapStore();
 
-  const handleRegionChange = useCallback((regionId: number) => {
-    const updatedFilters = {
-      ...filters,
-      regionIds: regionId === -1 ? null : [regionId],
-    };
+  const handleRegionChange = useCallback(
+    (regionId: number) => {
+      const updatedFilters = {
+        ...mapFilters,
+        regionIds: regionId === -1 ? null : [regionId],
+      };
 
-    setFilters(updatedFilters);
-    fetchProjects(updatedFilters);
-  }, [filters, setFilters, fetchProjects]);
+      setFilters(updatedFilters);
+      fetchProjects(updatedFilters);
+    },
+    [mapFilters, setFilters, fetchProjects]
+  );
 
-  const handleSectorChange = useCallback((sectorId: number) => {
-    const updatedFilters = {
-      ...filters,
-      sectorIds: sectorId === -1 ? null : [sectorId],
-    };
-    setFilters(updatedFilters);
-    fetchProjects(updatedFilters);
-  }, [filters, setFilters, fetchProjects]);
+  const handleSectorChange = useCallback(
+    (sectorId: number) => {
+      const updatedFilters = {
+        ...mapFilters,
+        sectorIds: sectorId === -1 ? null : [sectorId],
+      };
+      setFilters(updatedFilters);
+      fetchProjects(updatedFilters);
+    },
+    [mapFilters, setFilters, fetchProjects]
+  );
 
-  const handlePartnerChange = useCallback((partnerId: number) => {
-    const updatedFilters = {
-      ...filters,
-      partnerIds: partnerId === -1 ? null : [partnerId],
-    };
-    setFilters(updatedFilters);
-    fetchProjects(updatedFilters);
-  }, [filters, setFilters, fetchProjects]);
+  const handlePartnerChange = useCallback(
+    (partnerId: number) => {
+      const updatedFilters = {
+        ...mapFilters,
+        partnerIds: partnerId === -1 ? null : [partnerId],
+      };
+      setFilters(updatedFilters);
+      fetchProjects(updatedFilters);
+    },
+    [mapFilters, setFilters, fetchProjects]
+  );
 
   useEffect(() => {
     fetchProjects();
@@ -47,7 +49,7 @@ export const useStatisticsProjectsMapViewModel = () => {
     loading,
     error,
     projects,
-    filters,
+    mapFilters: mapFilters,
     handleRegionChange,
     handleSectorChange,
     handlePartnerChange,

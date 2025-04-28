@@ -56,7 +56,7 @@ const fetchData = async (
   setLoading: (loading: boolean) => void,
   setData: (data: ProjectChartData | CorrelationDataByRegion | CorrelationDataBySector) => void,
   setError: (error: string | null) => void,
-  download?: boolean,
+  download?: boolean
 ) => {
   setLoading(true);
   try {
@@ -81,7 +81,7 @@ const fetchData = async (
   }
 };
 
-export const useProjectCardsStore = create<{
+export const useProjectChartsStore = create<{
   loading: boolean;
   error: string | null;
   loadingState: {

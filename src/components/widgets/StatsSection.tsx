@@ -2,16 +2,14 @@
 
 import { Box, Container, Grid } from "@mui/material";
 import { StatWidget } from "@/components/widgets/ProjectsCountWidget";
-import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
-import { useProjectsStore } from "@/stores/projects/projects";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import PaidIcon from "@mui/icons-material/Paid";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import { useEffect } from "react";
+import { useTotalsStore } from "@/stores/totals/totals";
 
 export const StatsSection = () => {
-  const { allPartners } = usePartnersViewModel();
-  const { total, totalSum, fetchTotals } = useProjectsStore();
+  const { fetchTotals, projectCount, donorCount, totalAmount } = useTotalsStore();
 
   useEffect(() => {
     fetchTotals();
@@ -29,18 +27,23 @@ export const StatsSection = () => {
             <StatWidget
               content={projectIcon}
               label="Общее количество проектов"
-              value={total ? total : 0}
+              value={projectCount ? projectCount : 0}
               duration={1000}
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <StatWidget content={partnerIcon} label="Количество партнеров" value={allPartners.length} duration={2500} />
+            <StatWidget
+              content={partnerIcon}
+              label="Количество партнеров"
+              value={donorCount ? donorCount : 0}
+              duration={2500}
+            />
           </Grid>
           <Grid item xs={12} md={4}>
             <StatWidget
               content={sumIcon}
               label="Привлеченные инвестиции ($)"
-              value={totalSum ? parseFloat(totalSum) : 0}
+              value={totalAmount ? totalAmount : 0}
               duration={3500}
             />
           </Grid>
