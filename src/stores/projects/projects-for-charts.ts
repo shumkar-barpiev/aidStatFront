@@ -6,11 +6,12 @@ export interface ChartDataSum {
   name: string;
   grantAmounts: string;
   creditAmounts: string;
+  totalSum: string;
 }
 
 export interface ChartDataCount {
   name: string;
-  projectCount: string;
+  projectCount: number;
 }
 
 export interface ProjectChartData {

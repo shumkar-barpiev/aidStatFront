@@ -1,33 +1,44 @@
 import React from "react";
 import { Box, Tooltip, Typography } from "@mui/material";
+import { truncateLabel } from "@/utils/charts/truncateLabels.ts";
 
 interface Props {
   names: string[];
-  hoveredIndex: number | null;
-  setHoveredIndex: (index: number | null) => void;
+  hoveredIndex: string | null;
+  setHoveredIndex: (index: string | null) => void;
   mainBarColors: string[];
-  truncateLabel: (label: string) => string;
 }
 
-const TitlesLegend: React.FC<Props> = ({ names, hoveredIndex, setHoveredIndex, mainBarColors, truncateLabel }) => {
+const TitlesLegend: React.FC<Props> = ({ names, hoveredIndex, setHoveredIndex, mainBarColors }) => {
+  const colors = [...mainBarColors].reverse();
   return (
-    <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 1.5, mb: 2, minHeight: "80px" }}>
+    <Box
+      sx={{
+        display: "grid",
+        alignSelf: "center",
+        gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
+        gap: 1.5,
+        mb: 2,
+        minHeight: "80px",
+      }}
+    >
       {names.map((title: string, index: number) => {
-        const barOpacity = hoveredIndex === null || hoveredIndex === index ? 1 : 0.5;
+        const barOpacity = hoveredIndex === null || hoveredIndex === title ? 1 : 0.3;
         return (
           <Box
             key={title}
             sx={{ display: "flex", alignItems: "start", opacity: barOpacity }}
-            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseEnter={() => setHoveredIndex(title)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
             <Box
               sx={{
                 width: 12,
                 height: 12,
-                backgroundColor: title === "Другие" ? "#9e9e9e" : mainBarColors[index],
+                backgroundColor: colors[index],
                 borderRadius: "50%",
                 mr: 1,
+                alignSelf: "center",
               }}
             />
             <Tooltip
@@ -35,12 +46,11 @@ const TitlesLegend: React.FC<Props> = ({ names, hoveredIndex, setHoveredIndex, m
               componentsProps={{
                 tooltip: {
                   sx: {
-                    backgroundColor: "white",
-                    color: names[index] === "Другие" ? "#9e9e9e" : mainBarColors[index],
-                    fontWeight: "500",
+                    backgroundColor: colors[index],
+                    color: "#fff",
                     fontSize: "0.85rem",
                     p: 1,
-                    border: `1px solid ${names[index] === "Другие" ? "#9e9e9e" : mainBarColors[index]}`,
+                    border: `1px solid #fff`,
                   },
                 },
               }}
