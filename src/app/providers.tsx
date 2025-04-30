@@ -17,7 +17,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
         <NavigationBar />
-        <Box sx={{ minHeight: "100vh", pt: `${NAVBAR_HEIGHT}px` }}>{children}</Box>
+        <Box sx={{ minHeight: "100dvh", mt: `${NAVBAR_HEIGHT}px` }}>{children}</Box>
         <Footer />
         <FeedbackBtn />
       </ThemeProvider>

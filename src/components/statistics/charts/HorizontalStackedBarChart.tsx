@@ -35,6 +35,10 @@ const HorizontalStackedBarChart: React.FC<Props> = ({ data }) => {
         setHoveredIndex={setHoveredIndex}
         mainBarColors={colors}
       />
+      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+        <Typography sx={{ color: "#93C5FD", fontSize: "14px" }}>гранты:</Typography>
+        <Typography sx={{ color: "#1E3A8A", fontSize: "14px" }}>кредиты:</Typography>
+      </Box>
       {data.map((item) => {
         const opacity = hoveredIndex === null || hoveredIndex === item.name ? 1 : 0.3;
         const backgroundColor = hoveredIndex === item.name ? "#f3f4f6" : "#fff";
@@ -113,7 +117,7 @@ const HorizontalStackedBarChart: React.FC<Props> = ({ data }) => {
                     sx={{
                       position: "relative",
                       width: "70%",
-                      height: "30px",
+                      height: "28px",
                       display: "flex",
                       justifyContent: "center",
                     }}
