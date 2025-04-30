@@ -1,13 +1,16 @@
 import React, { useMemo } from "react";
 import useStatisticsChartsViewModel from "@/viewmodels/statistics/charts/useStatisticsChartsViewModel";
-import { useProjectChartsStore } from "@/stores/projects/projects-for-charts";
-import { Grid } from "@mui/material";
+import { ChartDataCount, ChartDataSum, useProjectChartsStore } from "@/stores/projects/projects-for-charts";
+import { Grid, Typography } from "@mui/material";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
 import AreaChart from "@/components/statistics/charts/AreaChart";
 import { useProjectsMapStore } from "@/stores/projects/projects-for-map";
 import { EnergeticsMok, TransportsMok } from "@/shared/enums/statisticsMapIconsEnums";
+import PolarChart from "@/components/statistics/charts/PolarChart.tsx";
+import ChartCardLayout from "@/components/statistics/charts/ChartCardLayout.tsx";
+import HorizontalStackedBarChart from "@/components/statistics/charts/HorizontalStackedBarChart.tsx";
 
 const LazyChart = React.lazy(() => import("./ChartCard"));
 
@@ -68,6 +71,7 @@ const ChartsMainBlock = () => {
         series={TransportsMok}
         yTitle="млн сом"
       />
+
       <Grid container spacing={3}>
         {selectedOption.region !== 0 && (
           <Grid item xs={12} sm={12} lg={6}>
@@ -101,71 +105,89 @@ const ChartsMainBlock = () => {
           </Grid>
         )}
 
-        <Grid item xs={12} sm={12} lg={6}>
-          <LazyChart
-            title="Топ доноров по инвестициям"
-            total={topDonorsByInvestment?.total}
-            unit={topDonorsByInvestment?.unit}
-            data={topDonorsByInvestment?.data}
-            loading={loadingState.topDonorsByInvestment}
-            handleDownload={() => handleDownload(ChartDownloadType.DonorsByInvestment)}
-          />
-        </Grid>
+        <ChartCardLayout
+          title="Топ доноров по инвестициям"
+          total={topDonorsByInvestment?.total}
+          unit={topDonorsByInvestment?.unit}
+          loading={loadingState.topDonorsByProjectCount}
+          handleDownload={() => handleDownload(ChartDownloadType.DonorsByInvestment)}
+        >
+          {topDonorsByInvestment && topDonorsByInvestment.data.length > 0 ? (
+            <HorizontalStackedBarChart data={topDonorsByInvestment.data as ChartDataSum[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
-        <Grid item xs={12} sm={12} lg={6}>
-          <LazyChart
-            title="Топ доноров по количеству проектов"
-            total={topDonorsByProjectCount?.total}
-            unit={topDonorsByProjectCount?.unit}
-            data={topDonorsByProjectCount?.data}
-            loading={loadingState.topDonorsByProjectCount}
-            handleDownload={() => handleDownload(ChartDownloadType.DonorsByProjectCount)}
-          />
-        </Grid>
+        <ChartCardLayout
+          title="Топ доноров по количеству проектов"
+          total={topDonorsByProjectCount?.total}
+          unit={topDonorsByProjectCount?.unit}
+          loading={loadingState.topDonorsByProjectCount}
+          handleDownload={() => handleDownload(ChartDownloadType.DonorsByProjectCount)}
+        >
+          {topDonorsByProjectCount && topDonorsByProjectCount.data.length > 0 ? (
+            <PolarChart data={topDonorsByProjectCount.data as ChartDataCount[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
-        <Grid item xs={12} sm={12} lg={6}>
-          <LazyChart
-            title="Топ секторов по инвестициям"
-            total={topSectorsByInvestment?.total}
-            unit={topSectorsByInvestment?.unit}
-            data={topSectorsByInvestment?.data}
-            loading={loadingState.topSectorsByInvestment}
-            handleDownload={() => handleDownload(ChartDownloadType.SectorsByInvestment)}
-          />
-        </Grid>
+        <ChartCardLayout
+          title="Топ секторов по инвестициям"
+          total={topSectorsByInvestment?.total}
+          unit={topSectorsByInvestment?.unit}
+          loading={loadingState.topSectorsByInvestment}
+          handleDownload={() => handleDownload(ChartDownloadType.SectorsByInvestment)}
+        >
+          {topSectorsByInvestment && topSectorsByInvestment.data.length > 0 ? (
+            <HorizontalStackedBarChart data={topSectorsByInvestment.data as ChartDataSum[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
-        <Grid item xs={12} sm={12} lg={6}>
-          <LazyChart
-            title="Топ секторов по количеству проектов"
-            total={topSectorsByProjectCount?.total}
-            unit={topSectorsByProjectCount?.unit}
-            data={topSectorsByProjectCount?.data}
-            loading={loadingState.topSectorsByProjectCount}
-            handleDownload={() => handleDownload(ChartDownloadType.SectorsByProjectCount)}
-          />
-        </Grid>
+        <ChartCardLayout
+          title="Топ секторов по количеству проектов"
+          total={topSectorsByProjectCount?.total}
+          unit={topSectorsByProjectCount?.unit}
+          loading={loadingState.topSectorsByProjectCount}
+          handleDownload={() => handleDownload(ChartDownloadType.SectorsByProjectCount)}
+        >
+          {topSectorsByProjectCount && topSectorsByProjectCount.data.length > 0 ? (
+            <PolarChart data={topSectorsByProjectCount.data as ChartDataCount[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
-        <Grid item xs={12} sm={12} lg={6}>
-          <LazyChart
-            title="Топ исполняющих агентств по количеству проектов"
-            total={topImplementingAgenciesByProjectCount?.total}
-            unit={topImplementingAgenciesByProjectCount?.unit}
-            data={topImplementingAgenciesByProjectCount?.data}
-            loading={loadingState.topImplementingAgenciesByProjectCount}
-            handleDownload={() => handleDownload(ChartDownloadType.ImplementingAgencies)}
-          />
-        </Grid>
+        <ChartCardLayout
+          title="Топ исполняющих агентств по количеству проектов"
+          total={topImplementingAgenciesByProjectCount?.total}
+          unit={topImplementingAgenciesByProjectCount?.unit}
+          loading={loadingState.topImplementingAgenciesByProjectCount}
+          handleDownload={() => handleDownload(ChartDownloadType.ImplementingAgencies)}
+        >
+          {topImplementingAgenciesByProjectCount && topImplementingAgenciesByProjectCount.data.length > 0 ? (
+            <PolarChart data={topImplementingAgenciesByProjectCount.data as ChartDataCount[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
-        <Grid item xs={12} sm={12} lg={6}>
-          <LazyChart
-            title="Топ реализующих агентств по количеству проектов"
-            total={topExecutiveAgenciesByProjectCount?.total}
-            unit={topExecutiveAgenciesByProjectCount?.unit}
-            data={topExecutiveAgenciesByProjectCount?.data}
-            loading={loadingState.topExecutiveAgenciesByProjectCount}
-            handleDownload={() => handleDownload(ChartDownloadType.ExecutiveAgencies)}
-          />
-        </Grid>
+        <ChartCardLayout
+          title="Топ реализующих агентств по количеству проектов"
+          total={topExecutiveAgenciesByProjectCount?.total}
+          unit={topExecutiveAgenciesByProjectCount?.unit}
+          loading={loadingState.topExecutiveAgenciesByProjectCount}
+          handleDownload={() => handleDownload(ChartDownloadType.ExecutiveAgencies)}
+        >
+          {topExecutiveAgenciesByProjectCount && topExecutiveAgenciesByProjectCount.data.length > 0 ? (
+            <PolarChart data={topExecutiveAgenciesByProjectCount.data as ChartDataCount[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
       </Grid>
     </Grid>
   );

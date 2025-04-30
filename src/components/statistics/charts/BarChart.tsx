@@ -8,10 +8,6 @@ function parseValue(str: string): number {
   return parseFloat(str);
 }
 
-const truncateLabel = (label: string) => {
-  return label.length > 22 ? label.substring(0, 22) + "..." : label;
-};
-
 const formatValue = (original: string, val: number) => {
   let oneDecimal = val.toFixed(1);
   if (oneDecimal.endsWith(".0")) oneDecimal = oneDecimal.slice(0, -2);
@@ -28,7 +24,7 @@ interface Props {
 const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) => {
   const [progressMain, setProgressMain] = useState(0);
   const [progressExtra, setProgressExtra] = useState(0);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<string | null>(null);
   const mainBarColors = ["#1E3A8A", "#2563EB", "#3B82F6", "#60A5FA", "#93C5FD"];
   const extraBarColors = ["#4B5CA3", "#5C7EF0", "#73A0F8", "#92BCFB", "#B3D4FE"];
   const tooltipLabel = useMemo(() => (title.includes("количеству") ? "Количество" : "Гранты"), [title]);
@@ -109,7 +105,6 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
         hoveredIndex={hoveredIndex}
         setHoveredIndex={setHoveredIndex}
         mainBarColors={mainBarColors}
-        truncateLabel={truncateLabel}
       />
       <Box sx={{ height: "100%" }}>
         <Box sx={{ display: "flex", justifyContent: "start", height: chartMaxHeight }}>
@@ -135,7 +130,7 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
             const displayMainText = formatValue(value, finalMainVal * progressMain);
             const displayExtraText = extraValStr ? formatValue(extraValStr, finalExtraVal * progressExtra) : null;
 
-            const barOpacity = hoveredIndex === null || hoveredIndex === index ? 1 : 0.3;
+            const barOpacity = hoveredIndex === null || hoveredIndex === names[index] ? 1 : 0.3;
 
             return (
               <Tooltip
@@ -179,7 +174,7 @@ const BarChart: React.FC<Props> = ({ names, mainValues, extraValues, title }) =>
                     textAlign: "center",
                     margin: "0 5px",
                   }}
-                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseEnter={() => setHoveredIndex(names[index])}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <Typography
