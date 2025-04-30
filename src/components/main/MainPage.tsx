@@ -73,7 +73,7 @@ export default function MainPage() {
           position: "relative",
           width: "100%",
           height: "calc(100vh - 80px)",
-          roundImage: `url(/assets/images/pages/main-page-1-version-2.png)`,
+          backgroundImage: `url(/assets/images/pages/main-page-1-version-2.png)`,
           backgroundSize: "100% auto",
           backgroundPosition: "bottom center",
           backgroundRepeat: "no-repeat",
