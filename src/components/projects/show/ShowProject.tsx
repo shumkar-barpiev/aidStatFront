@@ -1,19 +1,17 @@
 "use client";
 
 import {
-  Map as CoverageIcon,
+  AccountBalanceOutlined as ProjectCredit,
+  AssignmentOutlined as DescriptionIcon,
+  Assistant as TechAssistanceIcon,
+  AttachMoney as CoFinancingIcon,
   Business as AgencyIcon,
   Category as SectorsIcon,
-  AttachMoney as CoFinancingIcon,
-  Engineering as ImplementingIcon,
-  Assistant as TechAssistanceIcon,
-  CalendarToday as CurrentYearIcon,
-  TrendingUp as DomesticFundingIcon,
-  Diversity3Outlined as PartnersIcon,
-  RequestQuoteOutlined as ProjectGrant,
-  AssignmentOutlined as DescriptionIcon,
   CurrencyExchangeRounded as FundingIcon,
-  AccountBalanceOutlined as ProjectCredit,
+  Diversity3Outlined as PartnersIcon,
+  Engineering as ImplementingIcon,
+  Map as CoverageIcon,
+  RequestQuoteOutlined as ProjectGrant,
 } from "@mui/icons-material";
 import Colors from "@/styles/colors";
 import { useRouter } from "next/navigation";
@@ -26,16 +24,21 @@ import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { getAvatarAsCardMedia } from "@/components/other/Base64Avatar";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
-import { Box, Typography, Grid, Divider, Card, Stack } from "@mui/material";
+import { Box, Card, Divider, Grid, Stack, SxProps, Typography } from "@mui/material";
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
+import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock.tsx";
 
-export const NotSpecifiedText = () => {
+interface NotSpecifiedTextProps {
+  sx?: SxProps;
+}
+
+export const NotSpecifiedText: React.FC<NotSpecifiedTextProps> = ({ sx }) => {
   const { t } = useTranslation();
 
   return (
-    <Typography variant="subtitle1" color={"gray"} sx={{ flexGrow: 1 }}>
+    <Typography variant="subtitle1" color={"gray"} sx={{ flexGrow: 1, ...sx }}>
       {t("notSpecified")}
     </Typography>
   );
@@ -43,7 +46,6 @@ export const NotSpecifiedText = () => {
 
 export const ShowProject = () => {
   const router = useRouter();
-  const { t } = useTranslation();
   const projectsStore = useProjectsStore();
   const [project, setProject] = useState<TProjectModel | null>(null);
   const [grantItems, setGrantItems] = useState<Record<string, any>[]>([]);
@@ -309,47 +311,12 @@ export const ShowProject = () => {
                 )}
               </Box>
             </Grid>
-
-            <Grid item xs={12} md={6}>
-              <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                  <DomesticFundingIcon color="primary" fontSize="large" />
-                  <Typography
-                    variant="h6"
-                    sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
-                  >
-                    Освоение внутреннего финансирования
-                  </Typography>
-                </Box>
-                {project?.funding?.fundsSpent ? (
-                  <Typography variant="h6" fontWeight={"bold"} sx={{ flexGrow: 1 }}>
-                    {formatCurrencyWithSpaces(project.funding.fundsSpent)}
-                  </Typography>
-                ) : (
-                  <NotSpecifiedText />
-                )}
-              </Box>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-                  <CurrentYearIcon color="primary" fontSize="large" />
-                  <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-                    Освоение за текущий год
-                  </Typography>
-                </Box>
-                {project?.funding?.fundsSpentCurrentYear ? (
-                  <Typography variant="h6" fontWeight="bold" sx={{ flexGrow: 1 }}>
-                    {formatCurrencyWithSpaces(project.funding.fundsSpentCurrentYear)}
-                  </Typography>
-                ) : (
-                  <NotSpecifiedText />
-                )}
-              </Box>
-            </Grid>
           </Grid>
         </Card>
+
+        <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+
+        <FundsSpentBlock project={project} />
 
         <Box sx={{ my: 3 }}>
           <Divider sx={{ mb: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />

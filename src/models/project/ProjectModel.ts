@@ -11,9 +11,12 @@ export const ProjectModel = z.object({
 
   funding: z
     .object({
+      updateTime: z.string().trim(),
       coFundingSum: z.string().trim(),
       fundsSpent: z.string().trim(),
       fundsSpentCurrentYear: z.string().trim(),
+      fundsSpentExternal: z.string().trim(),
+      fundsSpentCurrentYearExternal: z.string().trim(),
       techAidSum: z.string().trim(),
       totalSum: z.string().trim(),
       items: z

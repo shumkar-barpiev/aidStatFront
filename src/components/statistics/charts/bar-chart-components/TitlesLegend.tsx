@@ -55,7 +55,14 @@ const TitlesLegend: React.FC<Props> = ({ names, hoveredIndex, setHoveredIndex, m
                 },
               }}
             >
-              <Typography variant="body2">{truncateLabel(title)}</Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  alignSelf: "center",
+                }}
+              >
+                {truncateLabel(title)}
+              </Typography>
             </Tooltip>
           </Box>
         );

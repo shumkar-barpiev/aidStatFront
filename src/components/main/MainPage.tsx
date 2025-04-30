@@ -66,17 +66,17 @@ export default function MainPage() {
   if (!isClient) return null;
 
   return (
-    <Box height={"100%"}>
+    <Box>
       <Box
         sx={{
-          mt: "-10px",
+          mt: `${NAVBAR_HEIGHT}px`,
           position: "relative",
           width: "100%",
-          height: "calc(100vh - 80px)",
+          height: `calc(100dvh - ${NAVBAR_HEIGHT}px)`,
           backgroundImage: `url(/assets/images/pages/main-page-1-version-2.png)`,
-          backgroundSize: "100% auto",
-          backgroundPosition: "bottom center",
+          backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
+          backgroundPosition: "bottom center",
           display: "flex",
           justifyContent: "center",
           textAlign: "center",
