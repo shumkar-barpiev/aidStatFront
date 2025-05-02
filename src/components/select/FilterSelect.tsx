@@ -5,6 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { Box, Typography } from "@mui/material";
 
 export interface Option {
   id: number;
@@ -21,7 +22,7 @@ interface Props {
   isAll?: boolean;
 }
 
-const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName, isAll=true }) => {
+const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName, isAll = true }) => {
   const [selected, setSelected] = useState<string>(value);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -41,6 +42,23 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
         value={selected}
         onChange={handleChange}
         label={labelName}
+        renderValue={(selectedValue) => {
+          const selectedOption = options.find((opt) => opt.id === Number(selectedValue));
+          return (
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                maxWidth: { xs: "300px" },
+              }}
+            >
+              {selectedOption?.name ?? `Все ${labelName.toLowerCase() + "ы"}`}
+            </Box>
+          );
+        }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -63,8 +81,19 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
         {options
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((option) => (
-            <MenuItem key={option.id} value={option.id}>
-              ({option.projectCount}) - {option.name}
+            <MenuItem key={option.id} value={option.id} sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography
+                sx={{
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  maxWidth: "200px",
+                  mr: 0.5,
+                }}
+              >
+                {option.name}
+              </Typography>
+              <Typography>({option.projectCount})</Typography>
             </MenuItem>
           ))}
       </Select>

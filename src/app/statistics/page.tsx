@@ -14,7 +14,7 @@ export default function StatisticsPage() {
   if (!isClient) return null;
 
   return (
-    <Box sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
+    <Box sx={{ width: containerWidths, mx: containerMargins, p: { xs: 0, md: 2 }, minHeight: "100vh" }}>
       <Main />
     </Box>
   );

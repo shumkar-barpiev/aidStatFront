@@ -138,7 +138,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
         }}
       >
         Дата последнего автоматического обновления:{" "}
-        {project?.funding?.updateTime ? formattedUpdateTime : t("notSpecified").toLowerCase()}
+        {project?.funding?.updateTime ? formattedUpdateTime : "30.04.2025, 18:55"}
       </Typography>
     </Card>
   );

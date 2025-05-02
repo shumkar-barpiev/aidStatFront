@@ -20,6 +20,7 @@ import oshCity from "@/utils/map/statesOshCity.json";
 import HeatLayer from "@/components/statistics/maps/HeatLayer.tsx";
 import MapWithClusters from "@/components/statistics/maps/MapWithClusters.tsx";
 import MapWithDistricts from "@/components/statistics/maps/MapWithDistricts.tsx";
+import HeatLayerLegend from "@/components/statistics/maps/HeatLayerLegend.tsx";
 
 const districtsMap: Record<string, any> = {
   "Баткенская область": batkenRegion,
@@ -123,6 +124,7 @@ const ProjectsMap = () => {
       <ResponsiveZoom />
       <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=99425f3c-24bb-4e1e-94fc-c257d13c34a5" />
       <MapWithClusters />
+      <HeatLayerLegend />
       <HeatLayer />
       <MemoizedMapWithRegions />
       <MapWithDistricts

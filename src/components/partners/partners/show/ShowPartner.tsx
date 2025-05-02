@@ -3,22 +3,21 @@
 import {
   Box,
   Card,
-  Grid,
-  Stack,
-  Divider,
-  CardMedia,
-  Typography,
-  IconButton,
   CardContent,
+  CardMedia,
   CircularProgress,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
 } from "@mui/material";
 import Colors from "@/styles/colors";
 import PhoneIcon from "@mui/icons-material/Phone";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TPartnerModel } from "@/models/partner/partner";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { usePartnersStore } from "@/stores/partners/partners";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { CollapsibleText } from "@/components/other/CollabsibleText";
 import PaymentsOutlinedIcon from "@mui/icons-material/PaymentsOutlined";
@@ -27,10 +26,11 @@ import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 
-const ShowPartner = () => {
-  const partnerStore = usePartnersStore();
-  const [partner, setPartner] = useState<TPartnerModel | null>(null);
+interface Props {
+  partner: TPartnerModel | null;
+}
 
+const ShowPartner: React.FC<Props> = ({ partner }) => {
   const formatAndValidateUrl = (url: string) => {
     if (!url) return null;
 
@@ -47,16 +47,16 @@ const ShowPartner = () => {
       return null;
     }
   };
-
-  useEffect(() => {
-    if (partnerStore.item) {
-      setPartner(partnerStore.item);
-    }
-
-    return () => {
-      partnerStore.clearStore();
-    };
-  }, [partnerStore.item]);
+  //
+  // useEffect(() => {
+  //   if (partnerStore.item) {
+  //     setPartner(partnerStore.item);
+  //   }
+  //
+  //   return () => {
+  //     partnerStore.clearStore();
+  //   };
+  // }, [partnerStore.item]);
 
   return partner ? (
     <Box sx={{ mt: 4, px: 2 }}>

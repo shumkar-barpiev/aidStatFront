@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
-import { useProjectsStore } from "@/stores/projects/projects";
 import ProjectBadges from "@/components/projects/ProjectBadges";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { getAvatarAsCardMedia } from "@/components/other/Base64Avatar";
@@ -29,6 +28,7 @@ import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
 import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock.tsx";
+import { transliterate } from "@/utils/format/transliterate.ts";
 
 interface NotSpecifiedTextProps {
   sx?: SxProps;
@@ -44,12 +44,39 @@ export const NotSpecifiedText: React.FC<NotSpecifiedTextProps> = ({ sx }) => {
   );
 };
 
-export const ShowProject = () => {
+interface Props {
+  project: TProjectModel | null;
+}
+
+export const ShowProject: React.FC<Props> = ({ project }) => {
   const router = useRouter();
-  const projectsStore = useProjectsStore();
-  const [project, setProject] = useState<TProjectModel | null>(null);
   const [grantItems, setGrantItems] = useState<Record<string, any>[]>([]);
   const [creditItems, setCreditItems] = useState<Record<string, any>[]>([]);
+
+  let grantSum = 0;
+  let creditSum = 0;
+
+  project &&
+    project.funding &&
+    project.funding.items &&
+    project.funding.items.forEach((item) => {
+      const amount = parseFloat(item.totalSum.replace(" KGS", "").replace(" ", ""));
+      if (item.type === "Grant") {
+        grantSum += amount;
+      } else if (item.type === "Loan") {
+        creditSum += amount;
+      }
+    });
+
+  const total = grantSum + creditSum;
+
+  let grantPercent = "0%";
+  let creditPercent = "0%";
+
+  if (total > 0) {
+    grantPercent = `${Math.round((grantSum / total) * 100)}%`;
+    creditPercent = `${Math.round((creditSum / total) * 100)}%`;
+  }
 
   const renderProjectStakeholders = (stakeholders: Record<string, any>[]) => {
     if (!stakeholders || stakeholders.length === 0) return "";
@@ -62,7 +89,7 @@ export const ShowProject = () => {
 
             <button
               onClick={() => {
-                router.push(`/partners/show/${partner.name}#${partner.id}`);
+                router.push(`/partners/show/${transliterate(partner.name)}#${partner.id}`);
               }}
               style={plainBtnStyle}
             >
@@ -132,21 +159,22 @@ export const ShowProject = () => {
   };
 
   useEffect(() => {
-    setProject(projectsStore.item);
-  }, [projectsStore.item]);
-
-  useEffect(() => {
-    if (project) {
-      const fundingItems = project.funding?.items;
-
-      if (fundingItems) {
-        const grant = fundingItems?.filter((item: Record<string, any>) => item.type == "Grant");
-        const credit = fundingItems?.filter((item: Record<string, any>) => item.type == "Loan");
-
-        setGrantItems(grant ?? []);
-        setCreditItems(credit ?? []);
-      }
+    if (!project?.funding?.items) {
+      setGrantItems([]);
+      setCreditItems([]);
+      return;
     }
+
+    const grant: Record<string, any>[] = [];
+    const credit: Record<string, any>[] = [];
+
+    project.funding.items.forEach((item) => {
+      if (item.type === "Grant") grant.push(item);
+      else if (item.type === "Loan") credit.push(item);
+    });
+
+    setGrantItems(grant);
+    setCreditItems(credit);
   }, [project]);
 
   return (
@@ -327,7 +355,7 @@ export const ShowProject = () => {
           <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
             <ProjectCredit color="primary" fontSize="large" />
-            <Typography variant="h6">Кредит</Typography>
+            <Typography variant="h6">Кредит {creditPercent}</Typography>
           </Box>
           {creditItems.length ? <ProjectGrantCreditTable items={creditItems} /> : <NotSpecifiedText />}
         </Box>
@@ -336,7 +364,7 @@ export const ShowProject = () => {
           <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
             <ProjectGrant color="primary" fontSize="large" />
-            <Typography variant="h6">Грант</Typography>
+            <Typography variant="h6">Грант {grantPercent}</Typography>
           </Box>
           {grantItems.length ? <ProjectGrantCreditTable items={grantItems} /> : <NotSpecifiedText />}
         </Box>

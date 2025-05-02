@@ -14,7 +14,7 @@ interface Props {
   title: string;
   total?: string;
   unit?: string;
-  data?: ChartDataCount[] | ChartDataSum[];
+  data: ChartDataSum[];
   value?: string;
   selectOptions?: Option[];
   chartFilters?: { [key: string]: string };
@@ -38,14 +38,7 @@ const ChartCard: React.FC<Props> = ({
     return data?.length > 0 && "grantAmounts" in data[0];
   };
 
-  const names = data ? data.map((item) => item.name) : [];
-  const mainValues = data
-    ? isChartDataSum(data)
-      ? data.map((item) => item.grantAmounts)
-      : data.map((item) => item.projectCount)
-    : [];
-
-  const extraValues = data && isChartDataSum(data) ? data.map((item) => item.creditAmounts) : undefined;
+  const names = data.map((item) => item.name);
 
   return (
     <Card sx={{ boxShadow: 3, borderRadius: 1, minHeight: 483 }}>
@@ -79,7 +72,7 @@ const ChartCard: React.FC<Props> = ({
               <CircularProgress />
             </Box>
           ) : data ? (
-            <BarChart names={names} mainValues={mainValues as string[]} extraValues={extraValues} title={title} />
+            <BarChart data={data} />
           ) : (
             <Typography color="text.secondary">Нет данных для отображения</Typography>
           )}

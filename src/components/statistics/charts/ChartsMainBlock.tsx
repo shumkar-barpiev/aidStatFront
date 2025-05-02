@@ -8,11 +8,10 @@ import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
 import AreaChart from "@/components/statistics/charts/AreaChart";
 import { useProjectsMapStore } from "@/stores/projects/projects-for-map";
 import { EnergeticsMok, TransportsMok } from "@/shared/enums/statisticsMapIconsEnums";
-import PolarChart from "@/components/statistics/charts/PolarChart.tsx";
-import ChartCardLayout from "@/components/statistics/charts/ChartCardLayout.tsx";
-import HorizontalStackedBarChart from "@/components/statistics/charts/HorizontalStackedBarChart.tsx";
-
-const LazyChart = React.lazy(() => import("./ChartCard"));
+import PolarChart from "@/components/statistics/charts/PolarChart";
+import ChartCardLayout from "@/components/statistics/charts/ChartCardLayout";
+import HorizontalStackedBarChart from "@/components/statistics/charts/HorizontalStackedBarChart";
+import ChartCard from "@/components/statistics/charts/ChartCard.tsx";
 
 const ChartsMainBlock = () => {
   const { regions } = useRegionsViewModel();
@@ -66,20 +65,20 @@ const ChartsMainBlock = () => {
         yTitle="млн кВт⋅ч"
       />
       <AreaChart
-        title="Доходы от перевозок грузов всеми видами транспорта"
+        title="Доходы от перевозок грузов всеми видами транспорта (2001–настоящее время)"
         projects={transportsProjects}
         series={TransportsMok}
         yTitle="млн сом"
       />
 
       <Grid container spacing={3}>
-        {selectedOption.region !== 0 && (
+        {selectedOption.region !== 0 && topDonorsByInvestmentByRegion && topDonorsByInvestmentByRegion.data && (
           <Grid item xs={12} sm={12} lg={6}>
-            <LazyChart
+            <ChartCard
               title="Корреляция доноров по регионам"
-              total={topDonorsByInvestmentByRegion?.total}
-              unit={topDonorsByInvestmentByRegion?.unit}
-              data={topDonorsByInvestmentByRegion?.data}
+              total={topDonorsByInvestmentByRegion.total}
+              unit={topDonorsByInvestmentByRegion.unit}
+              data={topDonorsByInvestmentByRegion.data as ChartDataSum[]}
               handleFilterChange={handleFilterByRegion}
               value={selectedOption.region.toString()}
               selectOptions={regions}
@@ -89,13 +88,13 @@ const ChartsMainBlock = () => {
           </Grid>
         )}
 
-        {selectedOption.sector !== 0 && (
+        {selectedOption.sector !== 0 && topDonorsByInvestmentBySector && topDonorsByInvestmentBySector.data && (
           <Grid item xs={12} sm={12} lg={6}>
-            <LazyChart
+            <ChartCard
               title="Корреляция доноров по секторам"
-              total={topDonorsByInvestmentBySector?.total}
-              unit={topDonorsByInvestmentBySector?.unit}
-              data={topDonorsByInvestmentBySector?.data}
+              total={topDonorsByInvestmentBySector.total}
+              unit={topDonorsByInvestmentBySector.unit}
+              data={topDonorsByInvestmentBySector.data as ChartDataSum[]}
               handleFilterChange={handleFilterBySector}
               value={selectedOption.sector.toString()}
               selectOptions={sectorOptions}
