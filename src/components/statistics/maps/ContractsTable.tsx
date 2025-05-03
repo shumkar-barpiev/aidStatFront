@@ -112,9 +112,7 @@ const ContractsTable = () => {
               >
                 <StyledTableCell sx={{ width: "3%" }}>{index + 1} </StyledTableCell>
                 <StyledTableCell sx={{ width: "30%" }}>
-                  <a href={`/projects/show/${contract.title}#${contract.id}`} target="_blank" rel="noopener noreferrer">
-                    <RenderEllipsisText text={contract?.title} tooltipPlacement="left" />
-                  </a>
+                  <RenderEllipsisText text={contract?.title} tooltipPlacement="left" />
                 </StyledTableCell>
                 <StyledTableCell sx={{ width: "10%", textAlign: "right" }}>
                   {formatCurrency(contract.budget)}

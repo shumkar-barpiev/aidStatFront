@@ -46,10 +46,10 @@ const ProjectPopup: React.FC<Props> = ({ project }) => {
         <Grid xs={7}>
           {project.partners?.length ? (
             <List dense disablePadding>
-              {project.partners.map((p: PartnerForMap) => (
-                <ListItem key={p.id} disableGutters sx={{ py: 0 }}>
-                  <ListItemText primaryTypographyProps={{ variant: "subtitle2" }} primary={p.name} />
-                </ListItem>
+              {project.partners.map((partner: PartnerForMap) => (
+                <Typography key={partner.id} variant="subtitle2">
+                  {partner.name}
+                </Typography>
               ))}
             </List>
           ) : (
@@ -68,10 +68,10 @@ const ProjectPopup: React.FC<Props> = ({ project }) => {
         <Grid xs={7}>
           {project.sectors?.length ? (
             <List dense disablePadding>
-              {project.sectors.map((s: Sector) => (
-                <ListItem key={s.id} disableGutters sx={{ py: 0 }}>
-                  <ListItemText primaryTypographyProps={{ variant: "subtitle2" }} primary={s.name} />
-                </ListItem>
+              {project.sectors.map((sector: Sector) => (
+                <Typography key={sector.id} variant="subtitle2">
+                  {sector.name}
+                </Typography>
               ))}
             </List>
           ) : (

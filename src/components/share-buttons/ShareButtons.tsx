@@ -2,9 +2,10 @@
 
 import React from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import TelegramIcon from "@mui/icons-material/Send";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import FacebookIcon from "@mui/icons-material/Facebook";
+import TelegramIcon from "../../../public/assets/images/icons/social-media-icons/telegram.png";
+import WhatsAppIcon from "../../../public/assets/images/icons/social-media-icons/whatsapp.png";
+import FacebookIcon from "../../../public/assets/images/icons/social-media-icons/facebook.png";
+import Image from "next/image";
 
 export const ShareButtons = () => {
   const url = typeof window !== "undefined" ? encodeURIComponent(window.location.href) : "";
@@ -17,7 +18,7 @@ export const ShareButtons = () => {
   };
 
   return (
-    <Box mt={3}>
+    <Box my={3}>
       <Typography variant="subtitle1" gutterBottom>
         Поделиться в соцсетях:
       </Typography>
@@ -31,7 +32,7 @@ export const ShareButtons = () => {
             rel="noopener noreferrer"
             color="primary"
           >
-            <TelegramIcon />
+            <Image src={TelegramIcon} alt="telegram-icon" width={50} height={50} />
           </IconButton>
         </Tooltip>
 
@@ -43,13 +44,13 @@ export const ShareButtons = () => {
             rel="noopener noreferrer"
             color="success"
           >
-            <WhatsAppIcon />
+            <Image src={WhatsAppIcon} alt="whatsapp-icon" width={50} height={50} />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Поделиться в Facebook">
           <IconButton component="a" href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" color="info">
-            <FacebookIcon />
+            <Image src={FacebookIcon} alt="facebook-icon" width={50} height={50} />
           </IconButton>
         </Tooltip>
       </Box>
