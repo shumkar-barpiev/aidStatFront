@@ -23,7 +23,7 @@ const PercentageBar: React.FC<Props> = ({ barOpacity, percentage }) => {
         textShadow: "0px 0px 4px rgba(0,0,0,0.5)",
       }}
     >
-      {percentage}
+      {percentage}%
     </Typography>
   );
 };

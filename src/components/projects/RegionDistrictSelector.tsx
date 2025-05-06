@@ -203,17 +203,24 @@ const RegionDistrictSelector: React.FC<Props> = ({
                       />
                     }
                     label={
-                      <Typography
-                        fontWeight="bold"
-                        sx={{
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          maxWidth: { xs: "150px", sm: "200px", md: "250px" },
-                        }}
-                      >
-                        {`[ ${region.projectCount} ]  ${region.name}`}
-                      </Typography>
+                      <Box sx={{ display: "flex" }}>
+                        <Typography
+                          fontWeight="bold"
+                          sx={{
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            maxWidth: { xs: "150px", sm: "200px", md: "250px" },
+                            fontSize: "0.75rem",
+                            mr: 1,
+                          }}
+                        >
+                          {region.name}
+                        </Typography>
+                        <Typography fontWeight="bold" sx={{ fontSize: "0.75rem" }}>
+                          ({region.projectCount})
+                        </Typography>
+                      </Box>
                     }
                     sx={{
                       flexGrow: 1,
@@ -245,16 +252,35 @@ const RegionDistrictSelector: React.FC<Props> = ({
                   {regionDistricts.length > 0 && (
                     <Box sx={{ ml: 3 }}>
                       <FormGroup>
-                        {regionDistricts.map((district) => (
+                        {regionDistricts.map(({ id, name, projectCount }) => (
                           <FormControlLabel
-                            key={district.id}
+                            key={id}
                             control={
                               <Checkbox
-                                checked={selectedDistrictIds.includes(district.id) || isRegionSelected}
-                                onChange={() => handleDistrictChange(district.id, region.id)}
+                                checked={selectedDistrictIds.includes(id) || isRegionSelected}
+                                onChange={() => handleDistrictChange(id, region.id)}
                               />
                             }
-                            label={`[${district.projectCount}] ${district.name}`}
+                            label={
+                              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                                <Typography
+                                  fontWeight="bold"
+                                  sx={{
+                                    whiteSpace: "nowrap",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    maxWidth: { xs: "150px", sm: "200px", md: "250px" },
+                                    fontSize: "0.75rem",
+                                    mr: 0.5,
+                                  }}
+                                >
+                                  {name}
+                                </Typography>
+                                <Typography fontWeight="bold" sx={{ fontSize: "0.75rem" }}>
+                                  ({projectCount})
+                                </Typography>
+                              </Box>
+                            }
                           />
                         ))}
                       </FormGroup>

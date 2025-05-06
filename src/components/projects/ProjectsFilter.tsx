@@ -87,7 +87,7 @@ export default function ProjectsFilter() {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Группы секторов" />}
           renderOption={(props, option) => (
-            <li {...props} key={option.id}>
+            <li {...props} key={option.id} style={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 variant="body2"
                 sx={{
@@ -96,8 +96,9 @@ export default function ProjectsFilter() {
                   textOverflow: "ellipsis",
                 }}
               >
-                ({option.projectCount}) - {option.name}
+                {option.name}
               </Typography>
+              <Typography variant="body2">({option.projectCount})</Typography>
             </li>
           )}
           renderTags={(value, getTagProps) =>
@@ -119,7 +120,7 @@ export default function ProjectsFilter() {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Секторы" />}
           renderOption={(props, option) => (
-            <li {...props} key={option.id}>
+            <li {...props} key={option.id} style={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 variant="body2"
                 sx={{
@@ -128,8 +129,9 @@ export default function ProjectsFilter() {
                   textOverflow: "ellipsis",
                 }}
               >
-                ({option.projectCount}) - {option.name}
+                {option.name}
               </Typography>
+              <Typography variant="body2">({option.projectCount})</Typography>
             </li>
           )}
           renderTags={(value, getTagProps) =>
@@ -154,7 +156,7 @@ export default function ProjectsFilter() {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           renderInput={(params) => <TextField {...params} label="Партнеры" />}
           renderOption={(props, option) => (
-            <li {...props} key={option.id}>
+            <li {...props} key={option.id} style={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 variant="body2"
                 sx={{
@@ -163,8 +165,9 @@ export default function ProjectsFilter() {
                   textOverflow: "ellipsis",
                 }}
               >
-                ({option.projectCount}) - {option.name}
+                {option.name}
               </Typography>
+              <Typography variant="body2">({option.projectCount})</Typography>
             </li>
           )}
           renderTags={(value, getTagProps) =>

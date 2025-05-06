@@ -3,7 +3,7 @@
 import Colors from "@/styles/colors";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
-import { Table, Paper, TableRow, TableBody, TableCell, TableContainer, TableHead } from "@mui/material";
+import { Paper, Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
 
 export const ProjectGrantCreditTable = ({ items }: { items: Record<string, any>[] }) => {
   return (
@@ -29,7 +29,15 @@ export const ProjectGrantCreditTable = ({ items }: { items: Record<string, any>[
           <TableBody>
             {items?.map((item, index) => (
               <TableRow key={index} sx={{ height: "40px" }}>
-                <StyledTableCell sx={{ width: "25%", textAlign: "left", fontWeight: "bold" }}>
+                <StyledTableCell
+                  sx={{
+                    width: "25%",
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                  }}
+                >
                   {item.partnerName}
                 </StyledTableCell>
                 <StyledTableCell sx={{ width: "25%", textAlign: "center", fontWeight: "bold" }}>

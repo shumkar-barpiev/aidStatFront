@@ -93,16 +93,40 @@ const ChartCardLayout: React.FC<Props> = ({
               )}
             </Box>
 
-            <Box>
-              <IconButton
-                sx={{
-                  transition: "transform 0.2s, color 0.2s",
-                  "&:hover": { transform: "scale(1.5)", color: "blue" },
-                }}
-                onClick={handleDownload}
-              >
-                <DownloadIcon />
-              </IconButton>
+            <Box sx={{ display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center", p: 2 }}>
+              <Box sx={{ display: "flex", flex: 1 }}>
+                {title.includes("по регионам") && selectOptions && selectOptions.length > 0 && value && (
+                  <FilterSelect
+                    name="region"
+                    value={value}
+                    options={selectOptions}
+                    onChange={handleFilterChange ?? (() => {})}
+                    labelName="Регион"
+                    isAll={false}
+                  />
+                )}
+                {title.includes("по секторам") && selectOptions && selectOptions.length > 0 && value && (
+                  <FilterSelect
+                    name="sector"
+                    value={value}
+                    options={selectOptions}
+                    onChange={handleFilterChange ?? (() => {})}
+                    labelName="Сектор"
+                    isAll={false}
+                  />
+                )}
+              </Box>
+              <Box>
+                <IconButton
+                  sx={{
+                    transition: "transform 0.2s, color 0.2s",
+                    "&:hover": { transform: "scale(1.5)", color: "blue" },
+                  }}
+                  onClick={handleDownload}
+                >
+                  <DownloadIcon />
+                </IconButton>
+              </Box>
             </Box>
           </Box>
         </Box>

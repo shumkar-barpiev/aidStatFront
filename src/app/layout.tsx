@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import Providers from "@/app/providers";
 
 export const metadata: Metadata = {
-  title: "Aid Stat - Aid Stat",
-  description: "Автоматизированная система учета внешней (донорской) помощи",
+  title: "AidStat - Учет донорской помощи и государственных инвестиций",
+  description: "Учет донорской помощи и государственных инвестиций",
   icons: {
     icon: "/aid.png",
   },

@@ -4,39 +4,40 @@ import { Box } from "@mui/material";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import PartnerShow from "@/components/partners/partners/show/ShowPartner";
-import { containerWidths, containerMargins } from "@/utils/constants";
+import { containerMargins, containerWidths } from "@/utils/constants";
 import CustomBreadcrumbs from "@/components/breadcrumbs/CustomBreadcrumbs";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { usePartnersStore } from "@/stores/partners/partners.ts";
 
 export default function PartnerShowPage() {
+  const [isClient, setIsClient] = useState<boolean>(false);
   const params = useParams();
   const { fetchPartner } = usePartnersViewModel();
-  const [isClient, setIsClient] = useState<boolean>(false);
-  const [partnerName, setPartnerName] = useState<string>("");
+  const partnerStore = usePartnersStore();
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
-    const fullPath = window.location.pathname;
-    const decodedPath = decodeURIComponent(fullPath);
-    const partnerName = decodedPath.split("/partners/show/")[1];
     const hash = window.location.hash;
 
-    if (partnerName && hash) {
-      setPartnerName(partnerName);
+    if (hash) {
       const partnerId = parseInt(hash.substring(1), 10);
       if (!isNaN(partnerId)) fetchPartner(partnerId);
     }
+
+    return () => {
+      partnerStore.clearStore();
+    };
   }, [params.projectParams]);
 
   if (!isClient) return null;
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 3 }}>
-      <CustomBreadcrumbs path={`partners/${decodeURIComponent(partnerName)}`} />
-      <PartnerShow />
+      <CustomBreadcrumbs path={`partners/${partnerStore.item?.name || ""}`} />
+      <PartnerShow partner={partnerStore.item} />
     </Box>
   );
 }

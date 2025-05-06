@@ -21,6 +21,7 @@ import { PartnerSearchField } from "@/components/partners/partners/PartnerSearch
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar.tsx";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel.ts";
+import { transliterate } from "@/utils/format/transliterate.ts";
 
 function PartnersCard() {
   const router = useRouter();
@@ -94,7 +95,7 @@ function PartnersCard() {
                         >
                           <CardMedia
                             onClick={() => {
-                              router.push(`/partners/show/${partner.name}#${partner.id}`);
+                              router.push(`/partners/show/${transliterate(partner.name)}#${partner.id}`);
                             }}
                             component="img"
                             alt={partner.name}
@@ -111,7 +112,7 @@ function PartnersCard() {
                           <Stack direction={"column"} alignItems={"left"}>
                             <button
                               onClick={() => {
-                                router.push(`/partners/show/${partner.name}#${partner.id}`);
+                                router.push(`/partners/show/${transliterate(partner.name)}#${partner.id}`);
                               }}
                               style={plainBtnStyle}
                             >
@@ -141,7 +142,7 @@ function PartnersCard() {
                           <Tooltip title={t("more")}>
                             <IconButton
                               onClick={() => {
-                                router.push(`/partners/show/${partner.name}#${partner.id}`);
+                                router.push(`/partners/show/${transliterate(partner.name)}#${partner.id}`);
                               }}
                               sx={{ border: `1px solid ${Colors.darkBlue}` }}
                             >

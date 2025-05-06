@@ -28,6 +28,7 @@ import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
+import { transliterate } from "@/utils/format/transliterate.ts";
 
 export default function ProjectsTable() {
   const router = useRouter();
@@ -87,7 +88,7 @@ export default function ProjectsTable() {
                     <StyledTableCell sx={{ width: "20%", whiteSpace: "initial" }}>
                       <button
                         onClick={() => {
-                          router.push(`/projects/show/${project.name}#${project.id}`);
+                          router.push(`/projects/show/${transliterate(project.name)}#${project.id}`);
                         }}
                         style={plainBtnStyle}
                       >
@@ -116,7 +117,7 @@ export default function ProjectsTable() {
                               <button
                                 key={index}
                                 onClick={() => {
-                                  router.push(`/partners/show/${partnerName}#${partner.id}`);
+                                  router.push(`/partners/show/${transliterate(partnerName)}#${partner.id}`);
                                 }}
                                 style={plainBtnStyle}
                               >

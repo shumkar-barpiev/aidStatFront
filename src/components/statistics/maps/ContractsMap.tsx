@@ -5,7 +5,8 @@ import { select } from "d3-selection";
 import { json } from "d3-fetch";
 import { geoPath, geoMercator } from "d3-geo";
 import { Feature, FeatureCollection } from "geojson";
-import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
+import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel";
+import { Box } from "@mui/material";
 
 const width = 800;
 const height = 600;
@@ -173,7 +174,7 @@ const ContractsMap = () => {
   }, [selectedRegion, drawDistricts]);
 
   return (
-    <div style={{ position: "relative", width: "100%", maxWidth: "800px", margin: "0 auto" }}>
+    <Box sx={{ position: "relative", width: "100%", maxWidth: { xs: "350px", md: "800px" }, margin: "0 auto" }}>
       <div
         ref={tooltipRef}
         style={{
@@ -213,8 +214,8 @@ const ContractsMap = () => {
         </button>
       )}
 
-      <svg ref={ref} style={{ width: "100%", height: "600px", userSelect: "none", marginRight: "auto" }} />
-    </div>
+      <svg ref={ref} style={{ width: "100%", height: "100%", userSelect: "none", marginRight: "auto" }} />
+    </Box>
   );
 };
 

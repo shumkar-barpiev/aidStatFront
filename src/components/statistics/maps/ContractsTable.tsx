@@ -69,9 +69,9 @@ const ContractsTable = () => {
 
   return (
     <Box>
-      <Typography>Дата обновления: 9.04.2025</Typography>
+      <Typography>Дата автоматического обновления: 9.04.2025</Typography>
       <TableContainer component={Paper} sx={{ height: "100%" }}>
-        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: "fixed" }}>
+        <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: "fixed", minWidth: 1050 }}>
           <TableHead>
             <TableRow
               sx={{
@@ -104,17 +104,15 @@ const ContractsTable = () => {
           <TableBody>
             {paginatedContracts?.map((contract, index) => (
               <TableRow
-                key={index}
+                key={contract.id}
                 sx={{
                   backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
                   "&:hover": { backgroundColor: "#cadefa" },
                 }}
               >
-                <StyledTableCell sx={{ width: "3%" }}>{index + 1} </StyledTableCell>
+                <StyledTableCell sx={{ width: "3%" }}>{page * rowsPerPage + index + 1}</StyledTableCell>
                 <StyledTableCell sx={{ width: "30%" }}>
-                  <a href={`/projects/show/${contract.title}#${contract.id}`} target="_blank" rel="noopener noreferrer">
-                    <RenderEllipsisText text={contract?.title} tooltipPlacement="left" />
-                  </a>
+                  <RenderEllipsisText text={contract?.title} tooltipPlacement="left" />
                 </StyledTableCell>
                 <StyledTableCell sx={{ width: "10%", textAlign: "right" }}>
                   {formatCurrency(contract.budget)}
