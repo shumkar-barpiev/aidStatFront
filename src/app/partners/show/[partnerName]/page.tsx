@@ -10,9 +10,9 @@ import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel
 import { usePartnersStore } from "@/stores/partners/partners.ts";
 
 export default function PartnerShowPage() {
+  const [isClient, setIsClient] = useState<boolean>(false);
   const params = useParams();
   const { fetchPartner } = usePartnersViewModel();
-  const [isClient, setIsClient] = useState<boolean>(false);
   const partnerStore = usePartnersStore();
 
   useEffect(() => {
@@ -26,13 +26,17 @@ export default function PartnerShowPage() {
       const partnerId = parseInt(hash.substring(1), 10);
       if (!isNaN(partnerId)) fetchPartner(partnerId);
     }
+
+    return () => {
+      partnerStore.clearStore();
+    };
   }, [params.projectParams]);
 
   if (!isClient) return null;
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 3 }}>
-      <CustomBreadcrumbs path={`partners/${partnerStore.item?.name}`} />
+      <CustomBreadcrumbs path={`partners/${partnerStore.item?.name || ""}`} />
       <PartnerShow partner={partnerStore.item} />
     </Box>
   );

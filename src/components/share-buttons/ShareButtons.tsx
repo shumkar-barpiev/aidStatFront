@@ -2,9 +2,6 @@
 
 import React from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import TelegramIcon from "../../../public/assets/images/icons/social-media-icons/telegram.png";
-import WhatsAppIcon from "../../../public/assets/images/icons/social-media-icons/whatsapp.png";
-import FacebookIcon from "../../../public/assets/images/icons/social-media-icons/facebook.png";
 import Image from "next/image";
 
 export const ShareButtons = () => {
@@ -32,7 +29,12 @@ export const ShareButtons = () => {
             rel="noopener noreferrer"
             color="primary"
           >
-            <Image src={TelegramIcon} alt="telegram-icon" width={50} height={50} />
+            <Image
+              src="/assets/images/icons/social-media-icons/telegram.png"
+              alt="telegram-icon"
+              width={50}
+              height={50}
+            />
           </IconButton>
         </Tooltip>
 
@@ -44,13 +46,23 @@ export const ShareButtons = () => {
             rel="noopener noreferrer"
             color="success"
           >
-            <Image src={WhatsAppIcon} alt="whatsapp-icon" width={50} height={50} />
+            <Image
+              src="/assets/images/icons/social-media-icons/whatsapp.png"
+              alt="whatsapp-icon"
+              width={50}
+              height={50}
+            />
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Поделиться в Facebook">
           <IconButton component="a" href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" color="info">
-            <Image src={FacebookIcon} alt="facebook-icon" width={50} height={50} />
+            <Image
+              src="/assets/images/icons/social-media-icons/facebook.png"
+              alt="facebook-icon"
+              width={50}
+              height={50}
+            />
           </IconButton>
         </Tooltip>
       </Box>

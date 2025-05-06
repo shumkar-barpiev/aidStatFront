@@ -35,7 +35,7 @@ export default function ProjectsShowPage() {
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 3 }}>
-      <CustomBreadcrumbs path={`projects/${projectsStore.item?.name}`} />
+      <CustomBreadcrumbs path={`projects/${projectsStore.item?.name || ""}`} />
       <ShowProject project={projectsStore.item} />
       <ShareButtons />
     </Box>

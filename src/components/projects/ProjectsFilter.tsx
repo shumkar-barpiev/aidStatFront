@@ -98,7 +98,7 @@ export default function ProjectsFilter() {
               >
                 {option.name}
               </Typography>
-              <Typography variant="body2">{option.projectCount}</Typography>
+              <Typography variant="body2">({option.projectCount})</Typography>
             </li>
           )}
           renderTags={(value, getTagProps) =>

@@ -47,16 +47,6 @@ const ShowPartner: React.FC<Props> = ({ partner }) => {
       return null;
     }
   };
-  //
-  // useEffect(() => {
-  //   if (partnerStore.item) {
-  //     setPartner(partnerStore.item);
-  //   }
-  //
-  //   return () => {
-  //     partnerStore.clearStore();
-  //   };
-  // }, [partnerStore.item]);
 
   return partner ? (
     <Box sx={{ mt: 4, px: 2 }}>
