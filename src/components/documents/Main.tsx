@@ -85,12 +85,19 @@ export const Main = () => {
   };
 
   return (
-    <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>
+    <Box sx={{ width: containerWidths, mx: containerMargins, px: 2, mb: 2 }}>
       <Stack
         alignItems={"center"}
         direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
         spacing={3}
-        sx={{ width: "85%", mx: "auto", height: { xs: "50vh", sm: "50vh", md: "auto" }, color: Colors.darkBlue, mb: 6 }}
+        sx={{
+          width: "85%",
+          mx: "auto",
+          height: { xs: "50vh", sm: "50vh", md: "auto" },
+          color: Colors.darkBlue,
+          pt: 5,
+          mb: 6,
+        }}
         justifyContent={{ xs: "center", sm: "center", md: "space-between", lg: "space-between" }}
       >
         <Box
@@ -110,12 +117,18 @@ export const Main = () => {
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
               maxWidth: { xs: "100%", md: "90%" },
+              fontSize: { xs: "2rem", md: "3rem" },
               mt: { xs: 3, md: 0 },
             }}
           >
             {t("documentsPageTitle")}
           </Typography>
-          <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
+          <Typography
+            variant="subtitle1"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ maxWidth: "100%", fontSize: { xs: "0.85rem", md: "1rem" } }}
+          >
             {t("documentsPageDescription")}
           </Typography>
         </Box>

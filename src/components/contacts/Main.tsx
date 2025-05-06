@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Box, Card, CardActionArea, CardContent, CardMedia, CircularProgress, Typography } from "@mui/material";
-import { containerMargins, containerWidths } from "@/utils/constants.ts";
-import Colors from "@/styles/colors.ts";
-import useContactsViewModel from "@/viewmodels/contacts/useContactsViewModel.ts";
-import { useContactsStore } from "@/stores/contacts/contacts.ts";
-import { formatPhoneNumber } from "@/utils/format/formatPhoneNumber.ts";
+import { containerMargins, containerWidths } from "@/utils/constants";
+import Colors from "@/styles/colors";
+import useContactsViewModel from "@/viewmodels/contacts/useContactsViewModel";
+import { useContactsStore } from "@/stores/contacts/contacts";
+import { formatPhoneNumber } from "@/utils/format/formatPhoneNumber";
 
 const defaultImage =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/624px-No-Image-Placeholder.svg.png"; // Заглушка другого типа
@@ -16,7 +16,7 @@ const Main = () => {
   useContactsViewModel();
 
   return (
-    <Box sx={{ width: containerWidths, mx: containerMargins, p: 4 }}>
+    <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>
       <Box sx={{ color: Colors.darkBlue }}>
         <Typography
           variant="h3"
@@ -41,7 +41,6 @@ const Main = () => {
             flexWrap: "wrap",
             justifyContent: "center",
             gap: 4,
-            px: 2,
             py: 4,
             flexDirection: { xs: "column", md: "row" },
           }}

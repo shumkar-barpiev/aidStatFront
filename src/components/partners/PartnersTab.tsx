@@ -1,13 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import Colors from "@/styles/colors.ts";
+import Colors from "@/styles/colors";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useRef } from "react";
-import { NAVBAR_HEIGHT } from "@/utils/constants.ts";
+import { NAVBAR_HEIGHT } from "@/utils/constants";
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import MoveDownOutlinedIcon from "@mui/icons-material/MoveDownOutlined";
-import PartnersCard from "@/components/partners/partners/PartnersCard.tsx";
+import PartnersCard from "@/components/partners/partners/PartnersCard";
+
+const TABS_HEIGHT = 48;
+const MOBILE_OFFSET = NAVBAR_HEIGHT + TABS_HEIGHT;
 
 const PartnersTab = () => {
   const { t } = useTranslation();
@@ -32,28 +35,50 @@ const PartnersTab = () => {
     <Box>
       <Stack
         alignItems={"center"}
-        direction={{ xs: "column", sm: "column", md: "row", lg: "row", xl: "row" }}
+        direction={{ xs: "column", md: "row" }}
         spacing={3}
-        sx={{ width: "80%", mx: "auto", height: { xs: "50vh", sm: "50vh", md: "auto" }, color: Colors.darkBlue, mb: 3 }}
-        justifyContent={{ xs: "center", sm: "center", md: "space-between", lg: "space-between" }}
+        sx={{
+          width: "80%",
+          mx: "auto",
+          height: {
+            xs: `calc(100dvh - ${MOBILE_OFFSET}px)`,
+            md: "auto",
+          },
+          color: Colors.darkBlue,
+        }}
+        justifyContent={{ xs: "start", md: "space-between" }}
       >
-        <Box sx={{ position: "relative", width: "100%", maxWidth: "300px", height: "auto", aspectRatio: "1" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "500px",
+            maxWidth: "300px",
+            height: "auto",
+          }}
+        >
           <Image
-            fill
             alt="Project1"
-            style={{ objectFit: "cover" }}
             src="/assets/images/pages/partners-1.png"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "contain",
+            }}
             priority
           />
         </Box>
+
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: { xs: "center", sm: "center", md: "flex-start" },
-            textAlign: { xs: "center", sm: "center", md: "left" },
+            alignItems: { xs: "center", md: "flex-start" },
+            textAlign: { xs: "center", md: "left" },
           }}
         >
           <Typography
@@ -63,7 +88,6 @@ const PartnersTab = () => {
             sx={{
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
-
               maxWidth: { xs: "100%", md: "90%" },
             }}
           >
@@ -75,7 +99,7 @@ const PartnersTab = () => {
           <Button
             variant="contained"
             onClick={scrollToTableBox}
-            sx={{ marginBottom: 2, bgcolor: Colors.darkBlue }}
+            sx={{ my: 2, bgcolor: Colors.darkBlue }}
             startIcon={<MoveDownOutlinedIcon />}
           >
             {t("goToPartnersBox")}

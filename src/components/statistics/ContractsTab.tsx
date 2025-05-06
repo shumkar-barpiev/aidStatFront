@@ -1,11 +1,15 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ContractsMap from "@/components/statistics/maps/ContractsMap.tsx";
-import ContractsTable from "@/components/statistics/maps/ContractsTable.tsx";
-import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
+import ContractsMap from "@/components/statistics/maps/ContractsMap";
+import ContractsTable from "@/components/statistics/maps/ContractsTable";
+import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel";
 import dynamic from "next/dynamic";
+import { NAVBAR_HEIGHT } from "@/utils/constants";
 
 const DonutChart = dynamic(() => import("@/components/statistics/charts/DonutChart.tsx"), { ssr: false });
+
+const TABS_HEIGHT = 48;
+const MOBILE_OFFSET = NAVBAR_HEIGHT + TABS_HEIGHT + 10;
 
 const ContractsTab = () => {
   const { budgetForChart, byTypesForChart } = useContractsViewModel();
@@ -15,15 +19,15 @@ const ContractsTab = () => {
         display="flex"
         gap={2}
         mb={5}
-        sx={{ flexDirection: { xs: "column", lg: "row" }, justifyContent: "center", alignItems: "center" }}
+        sx={{
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+          height: `calc(100dvh - ${MOBILE_OFFSET}px`,
+        }}
       >
         <ContractsMap />
-        <Box
-          display="flex"
-          gap={2}
-          flexDirection="column"
-          sx={{ flexDirection: { xs: "column", md: "row", lg: "column" } }}
-        >
+        <Box display="flex" gap={2} flexDirection="column" sx={{ flexDirection: { xs: "column", md: "column" } }}>
           {budgetForChart && (
             <DonutChart
               title="Суммы контрактов"

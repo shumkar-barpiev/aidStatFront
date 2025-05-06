@@ -3,9 +3,9 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import "apexcharts/dist/apexcharts.css";
-import Colors from "@/styles/colors.ts";
+import Colors from "@/styles/colors";
 
 interface Props {
   title: string;
@@ -14,6 +14,9 @@ interface Props {
 }
 
 const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   if (!seriesOptions) return null;
 
   const noData = seriesOptions.every((val) => val === 0);
@@ -75,6 +78,8 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels }) => {
         },
         legend: {
           show: true,
+          fontSize: isMobile ? "10px" : "12px",
+          width: 140,
         },
         plotOptions: {
           pie: {
@@ -84,14 +89,14 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels }) => {
                 show: true,
                 name: {
                   show: true,
-                  fontSize: "14px",
+                  fontSize: isMobile ? "10px" : "14px",
                   fontWeight: 600,
                   color: Colors.darkBlue,
                   offsetY: -10,
                 },
                 value: {
                   show: true,
-                  fontSize: "28px",
+                  fontSize: isMobile ? "18px" : "28px",
                   fontWeight: 700,
                   color: Colors.darkBlue,
                   offsetY: 10,
@@ -99,7 +104,7 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels }) => {
                 total: {
                   show: true,
                   label: "Контрактов",
-                  fontSize: "14px",
+                  fontSize: isMobile ? "10px" : "14px",
                   fontWeight: 600,
                   color: Colors.darkBlue,
                   formatter: function (w) {
@@ -110,19 +115,6 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels }) => {
             },
           },
         },
-        responsive: [
-          {
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: 300,
-              },
-              legend: {
-                position: "bottom",
-              },
-            },
-          },
-        ],
       };
 
   return (
@@ -130,13 +122,14 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels }) => {
       <Typography
         variant="h6"
         sx={{
-          mb: 1,
+          mb: isMobile ? 0 : 1,
+          fontSize: isMobile ? "12px" : "18px",
           color: Colors.darkBlue,
         }}
       >
         {title}
       </Typography>
-      <Chart options={options} series={series} type="donut" width="450px" height="270px" />
+      <Chart options={options} series={series} type="donut" width={isMobile ? "350px" : "450px"} height="270px" />
     </Box>
   );
 };

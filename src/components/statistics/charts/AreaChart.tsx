@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Card, CardContent } from "@mui/material";
+import { Card, CardContent, useMediaQuery, useTheme } from "@mui/material";
 import ChartTitle from "@/components/statistics/charts/ChartTitle";
 import dynamic from "next/dynamic";
 import Colors from "@/styles/colors";
@@ -27,6 +27,9 @@ interface Props {
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const AreaChart: React.FC<Props> = ({ title, series, projects, yTitle }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const generateYears = (start: number, end: number) =>
     Array.from({ length: end - start + 1 }, (_, i) => (start + i).toString());
   const currentYear = new Date().getFullYear();
@@ -63,7 +66,6 @@ const AreaChart: React.FC<Props> = ({ title, series, projects, yTitle }) => {
 
     return Object.keys(groupedProjects).map((year) => {
       const projectsInYear = groupedProjects[year];
-      // const color = getColorById(projectsInYear[0].id); // Если скажут маркеры цветными сделать
       const color = "#2F70AF";
       return {
         x: year,
@@ -73,7 +75,7 @@ const AreaChart: React.FC<Props> = ({ title, series, projects, yTitle }) => {
           style: {
             color: "#fff",
             background: color,
-            fontSize: "14px",
+            fontSize: isMobile ? "8px" : "14px",
             fontWeight: 500,
           },
           text: `Начато проектов: ${projectsInYear.length}`,
@@ -101,15 +103,19 @@ const AreaChart: React.FC<Props> = ({ title, series, projects, yTitle }) => {
       stroke: { curve: "smooth", width: 2 },
       xaxis: {
         categories: years,
-        title: { text: "Годы", style: { fontWeight: 600, fontSize: "14px" } },
-        labels: { style: { fontSize: "12px" } },
+        title: {
+          text: "Годы",
+          style: { fontWeight: 600, fontSize: isMobile ? "8px" : "14px" },
+          offsetY: isMobile ? 5 : 0,
+        },
+        labels: { style: { fontSize: isMobile ? "5px" : "12px" } },
         tickAmount: 10,
       },
       yaxis: {
-        title: { text: yTitle, style: { fontWeight: 600, fontSize: "14px" } },
+        title: { text: yTitle, style: { fontWeight: 600, fontSize: isMobile ? "8px" : "14px" } },
         labels: {
           formatter: (val) => val.toFixed(0),
-          style: { fontSize: "12px" },
+          style: { fontSize: isMobile ? "5px" : "12px" },
         },
         min: 0,
         forceNiceScale: true,
