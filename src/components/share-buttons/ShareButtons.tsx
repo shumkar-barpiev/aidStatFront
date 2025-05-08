@@ -17,7 +17,7 @@ export const ShareButtons = () => {
   return (
     <Box my={3}>
       <Typography variant="subtitle1" gutterBottom>
-        Поделиться в соцсетях:
+        Поделиться:
       </Typography>
 
       <Box display="flex" gap={1} alignItems="center">

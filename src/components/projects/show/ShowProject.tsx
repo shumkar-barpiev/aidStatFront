@@ -23,12 +23,13 @@ import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { getAvatarAsCardMedia } from "@/components/other/Base64Avatar";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
-import { Box, Card, Divider, Grid, Stack, SxProps, Typography } from "@mui/material";
+import { Box, Card, CardMedia, Divider, Grid, Stack, SxProps, Tooltip, Typography } from "@mui/material";
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
 import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock.tsx";
 import { transliterate } from "@/utils/format/transliterate.ts";
+import { apiUrl } from "@/utils/constants.ts";
 
 interface NotSpecifiedTextProps {
   sx?: SxProps;
@@ -85,7 +86,19 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
       <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
         {stakeholders.map((partner, index) => (
           <Stack key={index} direction={"row"} alignItems={"center"} spacing={2}>
-            {getAvatarAsCardMedia(partner.name, partner.image ?? null, 60)}
+            {/*{getAvatarAsCardMedia(partner.name, partner.image ?? null, 60)}*/}
+            <Tooltip title={partner.name}>
+              <CardMedia
+                component="img"
+                image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                alt={partner.name}
+                sx={{
+                  width: 60,
+                  height: 60,
+                  objectFit: "contain",
+                }}
+              />
+            </Tooltip>
 
             <button
               onClick={() => {

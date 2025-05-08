@@ -5,7 +5,6 @@ import { select } from "d3-selection";
 import { json } from "d3-fetch";
 import { geoPath, geoMercator } from "d3-geo";
 import { Feature, FeatureCollection } from "geojson";
-import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel";
 import { Box } from "@mui/material";
 
 const width = 800;
@@ -21,8 +20,8 @@ const regionNames: { [key: string]: string } = {
   "Баткенская область": "statesBatkenRegion",
   "Джалал-Абадская область": "statesDjalalAbadRegion",
   "Ошская область": "statesOshRegion",
-  "г. Бишкек": "statesBishkekCity",
-  "г. Ош": "statesOshCity",
+  "город Бишкек": "statesBishkekCity",
+  "город Ош": "statesOshCity",
 };
 
 const isFeatureCollection = (data: unknown): data is FeatureCollection => {
@@ -37,10 +36,16 @@ const isFeatureCollection = (data: unknown): data is FeatureCollection => {
   );
 };
 
-const ContractsMap = () => {
+interface Props {
+  handleMouseEnter: (locationName: string) => void;
+  handleMouseLeave: () => void;
+  handleClick: (locationName: string) => void;
+  handleBack: () => void;
+}
+
+const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, handleBack, handleClick }) => {
   const ref = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
-  const { handleSetFilter, handleSetChartFilter, handleSetIsDistrict } = useContractsViewModel();
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
 
   const drawRegions = useCallback(() => {
@@ -74,17 +79,19 @@ const ContractsMap = () => {
             .on("mouseenter", function (event, d) {
               if (d && d.id) {
                 select(this).attr("fill", areaHoverColor);
-                handleSetChartFilter(d.id as string);
+                handleMouseEnter(d.id as string);
+                console.log(d.id);
               }
             })
             .on("mouseleave", function () {
               select(tooltipRef.current).style("opacity", 0);
               select(this).attr("fill", areaColor);
-              handleSetChartFilter(null);
+              handleMouseLeave();
             })
             .on("click", function (event, d) {
               if (d && d.id) {
                 setSelectedRegion(d);
+                handleClick(d.id as string);
               }
             })
             .append("title");
@@ -129,19 +136,19 @@ const ContractsMap = () => {
           .on("mouseenter", function (event, d) {
             if (d && d.id) {
               select(this).attr("fill", areaHoverColor);
-              handleSetIsDistrict(true);
-              handleSetChartFilter(d.id as string);
+              // handleSetIsDistrict(true);
+              // handleSetChartFilter(d.id as string);
             }
           })
           .on("mouseleave", function () {
             select(tooltipRef.current).style("opacity", 0);
             select(this).attr("fill", areaColor);
-            handleSetIsDistrict(false);
-            handleSetChartFilter(null);
+            // handleSetIsDistrict(false);
+            // handleSetChartFilter(null);
           })
           .on("click", function (event, d) {
             if (d && d.id) {
-              handleSetChartFilter(d.id as string);
+              // handleSetChartFilter(d.id as string);
             }
           })
           .append("title");
@@ -151,8 +158,8 @@ const ContractsMap = () => {
 
   const resetView = () => {
     setSelectedRegion(null);
-    handleSetIsDistrict(false);
-    handleSetFilter(null);
+    // handleSetIsDistrict(false);
+    // handleSetFilter(null);
     drawRegions();
   };
 
@@ -169,7 +176,7 @@ const ContractsMap = () => {
   useEffect(() => {
     if (selectedRegion) {
       drawDistricts();
-      handleSetChartFilter(selectedRegion.id as string);
+      // handleSetChartFilter(selectedRegion.id as string);
     }
   }, [selectedRegion, drawDistricts]);
 

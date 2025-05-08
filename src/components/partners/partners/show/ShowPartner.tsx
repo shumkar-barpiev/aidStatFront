@@ -25,6 +25,7 @@ import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
+import { apiUrl } from "@/utils/constants.ts";
 
 interface Props {
   partner: TPartnerModel | null;
@@ -49,12 +50,12 @@ const ShowPartner: React.FC<Props> = ({ partner }) => {
   };
 
   return partner ? (
-    <Box sx={{ mt: 4, px: 2 }}>
+    <Box sx={{ mt: 4 }}>
       <Card elevation={3}>
         <CardContent>
           <Stack direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }} alignItems={"start"} gap={3}>
             <Box sx={{ width: { xs: 1, sm: 1, md: 4 / 5 } }}>
-              <Card sx={{ p: 3, mb: 2 }}>
+              <Card sx={{ py: 3, px: { xs: 2, md: 3 }, mx: { xs: -2, md: 0 }, mb: 2 }}>
                 <Typography
                   variant="h5"
                   sx={{
@@ -97,7 +98,7 @@ const ShowPartner: React.FC<Props> = ({ partner }) => {
                       <CardMedia
                         component="img"
                         alt={partner.name}
-                        image={`data:image/png;base64,${partner.image}`}
+                        image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
                         sx={{
                           width: "100%",
                           height: "100%",
