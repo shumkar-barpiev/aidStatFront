@@ -4,6 +4,7 @@ import { useAuthStore } from "@/stores/auth/auth";
 import React, { useEffect, useState } from "react";
 import Snackbar from "@/components/other/Snackbar";
 import LoginPage from "@/components/login/LoginPage";
+import { apiUrl } from "@/utils/constants.ts";
 
 export default function SignIn() {
   const authStore = useAuthStore();
@@ -16,7 +17,7 @@ export default function SignIn() {
 
   useEffect(() => {
     authStore.getInfo((data: Record<string, any>) => {
-      if (data.user) window.location.href = `https://aidstat.brisklyminds.com/aidstat/`;
+      if (data.user) window.location.href = `${apiUrl}/aidstat/`;
       else setRenderSignInForm(true);
     });
   }, []);
