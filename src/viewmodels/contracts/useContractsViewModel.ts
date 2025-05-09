@@ -7,6 +7,7 @@ export const useContractsViewModel = () => {
   const [selectedData, setSelectedData] = useState<TContractModelForMap | null>(contractsForMap);
   const [searchByLocation, setSearchByLocation] = useState<string | null>(null);
   const [hoveredData, setHoveredData] = useState<TContractModelForMap | null>(null);
+  const [isDistrict, setIsDistrict] = useState<boolean>(false);
 
   const displayData = searchByLocation
     ? (contractsForMap?.includes?.find((item) => item.locationName === searchByLocation) ?? null)
@@ -28,6 +29,10 @@ export const useContractsViewModel = () => {
   const handleBack = () => {
     setSelectedData(null);
     setHoveredData(null);
+  };
+
+  const handleShowDistrict = () => {
+    setIsDistrict(!isDistrict);
   };
 
   // 🔍 Табличные фильтры
@@ -56,6 +61,7 @@ export const useContractsViewModel = () => {
     // handleSetFilter,
     // handleChangeLocation,
     // handleChangePage,
+    handleShowDistrict,
     handleMouseEnter,
     handleMouseLeave,
     handleClick,

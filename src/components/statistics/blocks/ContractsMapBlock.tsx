@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ContractsMap from "@/components/statistics/maps/ContractsMap.tsx";
 import { Box } from "@mui/material";
 import { NAVBAR_HEIGHT } from "@/utils/constants.ts";
@@ -21,9 +21,17 @@ interface Props {
   handleMouseLeave: () => void;
   handleClick: (locationName: string) => void;
   handleBack: () => void;
+  handleShowDistrict: () => void;
 }
 
-const ContractsMapBlock: React.FC<Props> = ({ data, handleMouseEnter, handleMouseLeave, handleBack, handleClick }) => {
+const ContractsMapBlock: React.FC<Props> = ({
+  data,
+  handleMouseEnter,
+  handleMouseLeave,
+  handleBack,
+  handleClick,
+  handleShowDistrict,
+}) => {
   return (
     <Box
       display="flex"
@@ -41,6 +49,7 @@ const ContractsMapBlock: React.FC<Props> = ({ data, handleMouseEnter, handleMous
         handleMouseLeave={handleMouseLeave}
         handleClick={handleClick}
         handleBack={handleBack}
+        handleShowDistrict={handleShowDistrict}
       />
       <Box
         display="flex"

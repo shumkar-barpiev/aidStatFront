@@ -41,9 +41,16 @@ interface Props {
   handleMouseLeave: () => void;
   handleClick: (locationName: string) => void;
   handleBack: () => void;
+  handleShowDistrict: () => void;
 }
 
-const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, handleBack, handleClick }) => {
+const ContractsMap: React.FC<Props> = ({
+  handleMouseEnter,
+  handleMouseLeave,
+  handleBack,
+  handleClick,
+  handleShowDistrict,
+}) => {
   const ref = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
@@ -91,6 +98,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
               if (d && d.id) {
                 setSelectedRegion(d);
                 handleClick(d.id as string);
+                handleShowDistrict();
               }
             })
             .append("title");
