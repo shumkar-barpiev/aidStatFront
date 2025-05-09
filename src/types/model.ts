@@ -28,4 +28,5 @@ export type TModelPublicFilters = {
   districtIds?: number[] | null;
   partnerType?: string | null;
   partnerIds?: number[] | null;
+  status?: number | null;
 } | null;

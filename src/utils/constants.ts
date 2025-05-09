@@ -13,3 +13,5 @@ export const containerMargins = {
 };
 
 export const NAVBAR_HEIGHT = 90;
+
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuthStore } from "@/stores/auth/auth";
+import { apiUrl } from "@/utils/constants.ts";
 
 export const useAuthViewModel = () => {
   const authStore = useAuthStore();
@@ -13,7 +14,7 @@ export const useAuthViewModel = () => {
           message: "Неверное имя пользователя или пароль.",
         });
       } else {
-        window.location.href = `https://aidstat.brisklyminds.com/aidstat/`;
+        window.location.href = `${apiUrl}/aidstat/`;
       }
     });
   };
