@@ -1,11 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Colors from "@/styles/colors";
-import EmptyDonutChart from "@/components/statistics/charts/donut-chart-components/EmptyDonutChart.tsx";
 
 interface Props {
   title: string;
@@ -18,7 +17,7 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels, totalContra
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  const options: ApexOptions = {
+  const [options, setOptions] = useState<ApexOptions>({
     chart: {
       type: "donut",
     },
@@ -61,13 +60,31 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels, totalContra
               fontSize: isMobile ? "10px" : "14px",
               fontWeight: 600,
               color: Colors.darkBlue,
-              formatter: () => totalContracts?.toString() || "0",
+              formatter: () => totalContracts.toString(),
             },
           },
         },
       },
     },
-  };
+  });
+
+  useEffect(() => {
+    setOptions((prev) => ({
+      ...prev,
+      labels: labels,
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              total: {
+                formatter: () => totalContracts.toString(),
+              },
+            },
+          },
+        },
+      },
+    }));
+  }, [totalContracts, labels]);
 
   return (
     <Box mx="auto" display="flex" flexDirection="column" justifyContent="center" alignItems="start">
@@ -92,4 +109,4 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels, totalContra
   );
 };
 
-export default DonutChart;
+export default React.memo(DonutChart);

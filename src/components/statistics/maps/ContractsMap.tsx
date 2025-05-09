@@ -80,10 +80,9 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
               if (d && d.id) {
                 select(this).attr("fill", areaHoverColor);
                 handleMouseEnter(d.id as string);
-                console.log(d.id);
               }
             })
-            .on("mouseleave", function () {
+            .on("mouseleave", function (event, d) {
               select(tooltipRef.current).style("opacity", 0);
               select(this).attr("fill", areaColor);
               handleMouseLeave();
@@ -181,7 +180,16 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
   }, [selectedRegion, drawDistricts]);
 
   return (
-    <Box sx={{ position: "relative", width: "100%", maxWidth: { xs: "350px", md: "800px" }, margin: "0 auto" }}>
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
+        maxWidth: { xs: "350px", md: "800px" },
+        height: "600px", // <-- добавьте фиксированную высоту
+        overflow: "hidden", // <-- это предотвратит "вытекание" при перерисовке
+        margin: "0 auto",
+      }}
+    >
       <div
         ref={tooltipRef}
         style={{
@@ -198,6 +206,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
           opacity: 0,
           transition: "opacity 0.15s ease-in-out",
         }}
+        onMouseLeave={() => handleMouseLeave()}
       ></div>
 
       {selectedRegion && (
@@ -220,7 +229,6 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
           Назад
         </button>
       )}
-
       <svg ref={ref} style={{ width: "100%", height: "100%", userSelect: "none", marginRight: "auto" }} />
     </Box>
   );

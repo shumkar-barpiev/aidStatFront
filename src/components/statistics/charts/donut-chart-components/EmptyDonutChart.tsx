@@ -6,7 +6,7 @@ import { ApexOptions } from "apexcharts";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Colors from "@/styles/colors.ts";
 
-const EmptyDonutChart: React.FC = () => {
+const EmptyDonutChart = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -62,7 +62,7 @@ const EmptyDonutChart: React.FC = () => {
           color: Colors.textSecondary,
         }}
       >
-        Нет данных
+        Нет контрактов
       </Typography>
       <Chart options={options} series={[1]} type="donut" width={isMobile ? "350px" : "420px"} height="270px" />
     </Box>
