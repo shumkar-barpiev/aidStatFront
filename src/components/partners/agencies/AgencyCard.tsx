@@ -6,7 +6,7 @@ import Image from "next/image";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useAgenciesStore } from "@/stores/partners/agencies";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
-import { apiUrl } from "@/utils/constants.ts";
+import { apiUrl } from "@/utils/constants";
 
 const AgencyCard = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);

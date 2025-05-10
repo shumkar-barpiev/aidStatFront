@@ -2,9 +2,9 @@
 
 import { Box, Tooltip, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { ChartDataCount } from "@/stores/projects/projects-for-charts";
-import TitlesLegend from "@/components/statistics/charts/bar-chart-components/TitlesLegend";
-import Colors from "@/styles/colors";
+import { ChartDataCount } from "@/stores/projects/projects-for-charts.ts";
+import TitlesLegend from "@/components/statistics/charts/bar-chart-components/TitlesLegend.tsx";
+import Colors from "@/styles/colors.ts";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({

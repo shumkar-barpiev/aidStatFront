@@ -1,11 +1,11 @@
 import React from "react";
 import { Box } from "@mui/material";
-import { useStatisticsProjectsMapViewModel } from "@/viewmodels/statistics/map/useStatisticsProjectsMapViewModel.ts";
-import FilterSelect from "@/components/select/FilterSelect.tsx";
-import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel.ts";
-import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel.ts";
-import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel.ts";
-import { TPartnerModel } from "@/models/partner/partner.ts";
+import { useStatisticsProjectsMapViewModel } from "@/viewmodels/statistics/map/useStatisticsProjectsMapViewModel";
+import FilterSelect from "@/components/select/FilterSelect";
+import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
+import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
+import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { TPartnerModel } from "@/models/partner/partner";
 
 const ProjectsMapFilter = () => {
   const { handleRegionChange, handleSectorChange, handlePartnerChange } = useStatisticsProjectsMapViewModel();

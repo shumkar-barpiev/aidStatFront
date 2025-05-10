@@ -2,9 +2,9 @@
 
 import React, { useMemo } from "react";
 import { Card, CardContent, useMediaQuery, useTheme } from "@mui/material";
-import ChartTitle from "@/components/statistics/charts/ChartTitle";
+import ChartTitle from "@/components/statistics/charts/ChartTitle.tsx";
 import dynamic from "next/dynamic";
-import Colors from "@/styles/colors";
+import Colors from "@/styles/colors.ts";
 
 interface Series {
   name: string;

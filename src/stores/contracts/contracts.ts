@@ -3,8 +3,8 @@ import { TContractModelForMap, TContractModelForTable } from "@/models/contracts
 import { http } from "@/utils/http.ts";
 
 interface ContractFilters {
-  page: number | null;
-  limit: number | null;
+  page: number | 1;
+  limit: number | 8;
   searchString: string | null;
   status: number | null;
 }

@@ -3,12 +3,12 @@
 import React from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Box, Card, CircularProgress, Divider, IconButton, Typography } from "@mui/material";
-import BarChart from "@/components/statistics/charts/BarChart";
-import { ChartDataCount, ChartDataSum } from "@/stores/projects/projects-for-charts";
-import { formatCurrency } from "@/utils/formatCurrency";
-import FilterSelect, { Option } from "@/components/select/FilterSelect";
-import ChartTitle from "@/components/statistics/charts/ChartTitle";
-import Colors from "@/styles/colors";
+import BarChart from "@/components/statistics/charts/bar-chart-components/BarChart.tsx";
+import { ChartDataCount, ChartDataSum } from "@/stores/projects/projects-for-charts.ts";
+import { formatCurrency } from "@/utils/formatCurrency.ts";
+import FilterSelect, { Option } from "@/components/select/FilterSelect.tsx";
+import ChartTitle from "@/components/statistics/charts/ChartTitle.tsx";
+import Colors from "@/styles/colors.ts";
 
 interface Props {
   title: string;

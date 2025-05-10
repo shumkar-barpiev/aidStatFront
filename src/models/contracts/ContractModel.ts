@@ -58,6 +58,7 @@ const ContractItemModel = z.object({
 
 export const ContractModelForTable = z.object({
   total: z.number(),
+  updateTime: z.string().trim(),
   data: z.array(ContractItemModel),
 });
 

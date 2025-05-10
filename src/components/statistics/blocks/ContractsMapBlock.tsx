@@ -1,29 +1,23 @@
 "use client";
 
 import React from "react";
-import ContractsMap from "@/components/statistics/maps/ContractsMap.tsx";
+import ContractsMap from "@/components/statistics/maps/ContractsMap";
 import { Box } from "@mui/material";
-import { NAVBAR_HEIGHT } from "@/utils/constants.ts";
+import { NAVBAR_HEIGHT } from "@/utils/constants";
 import dynamic from "next/dynamic";
-import { TContractModelForMap } from "@/models/contracts/ContractModel.ts";
+import { useMapContractsViewModel } from "@/viewmodels/contracts/useMapContractsViewModel";
 
-const DonutChart = dynamic(() => import("@/components/statistics/charts/DonutChart.tsx"), { ssr: false });
-const EmptyDonutChart = dynamic(
-  () => import("@/components/statistics/charts/donut-chart-components/EmptyDonutChart.tsx"),
-  { ssr: false }
-);
+const DonutChart = dynamic(() => import("@/components/statistics/charts/pie-chart-components/DonutChart"), {
+  ssr: false,
+});
+const EmptyDonutChart = dynamic(() => import("@/components/statistics/charts/pie-chart-components/EmptyDonutChart"), {
+  ssr: false,
+});
 const TABS_HEIGHT = 48;
 const MOBILE_OFFSET = NAVBAR_HEIGHT + TABS_HEIGHT + 10;
 
-interface Props {
-  data: TContractModelForMap | null;
-  handleMouseEnter: (locationName: string) => void;
-  handleMouseLeave: () => void;
-  handleClick: (locationName: string) => void;
-  handleBack: () => void;
-}
-
-const ContractsMapBlock: React.FC<Props> = ({ data, handleMouseEnter, handleMouseLeave, handleBack, handleClick }) => {
+const ContractsMapBlock = () => {
+  const { displayData, handleMouseEnter, handleMouseLeave, handleClick, handleBack } = useMapContractsViewModel();
   return (
     <Box
       display="flex"
@@ -51,21 +45,21 @@ const ContractsMapBlock: React.FC<Props> = ({ data, handleMouseEnter, handleMous
           minWidth: "420px",
         }}
       >
-        {data ? (
+        {displayData ? (
           <>
             <DonutChart
-              key={`budget-${data.totalContracts}-${data.lowBudget}-${data.mediumBudget}-${data.highBudget}`}
+              key={`budget-${displayData.totalContracts}-${displayData.lowBudget}-${displayData.mediumBudget}-${displayData.highBudget}`}
               title="Суммы контрактов"
-              seriesOptions={[data.lowBudget, data.mediumBudget, data.highBudget]}
+              seriesOptions={[displayData.lowBudget, displayData.mediumBudget, displayData.highBudget]}
               labels={["до $100.000", "$100.000 - $500.000", "от $500.000"]}
-              totalContracts={data.totalContracts}
+              totalContracts={displayData.totalContracts}
             />
             <DonutChart
-              key={`types-${data.totalContracts}-${data.goodsContracts}-${data.infrastructureContracts}`}
+              key={`types-${displayData.totalContracts}-${displayData.goodsContracts}-${displayData.infrastructureContracts}`}
               title="Типы контрактов"
-              seriesOptions={[data.goodsContracts, data.infrastructureContracts]}
+              seriesOptions={[displayData.goodsContracts, displayData.infrastructureContracts]}
               labels={["Товары", "Инфраструктура"]}
-              totalContracts={data.totalContracts}
+              totalContracts={displayData.totalContracts}
             />
           </>
         ) : (

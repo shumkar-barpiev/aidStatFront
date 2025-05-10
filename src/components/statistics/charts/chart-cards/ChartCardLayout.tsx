@@ -3,10 +3,10 @@
 import React from "react";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Box, Card, CircularProgress, Divider, Grid, IconButton, Typography } from "@mui/material";
-import { formatCurrency } from "@/utils/formatCurrency";
-import FilterSelect, { Option } from "@/components/select/FilterSelect";
-import ChartTitle from "@/components/statistics/charts/ChartTitle";
-import Colors from "@/styles/colors";
+import { formatCurrency } from "@/utils/formatCurrency.ts";
+import FilterSelect, { Option } from "@/components/select/FilterSelect.tsx";
+import ChartTitle from "@/components/statistics/charts/ChartTitle.tsx";
+import Colors from "@/styles/colors.ts";
 
 interface Props {
   title: string;

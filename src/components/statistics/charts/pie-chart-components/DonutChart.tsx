@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import Colors from "@/styles/colors";
+import Colors from "@/styles/colors.ts";
 
 interface Props {
   title: string;
