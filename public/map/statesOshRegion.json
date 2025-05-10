@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Кара-Кульджинский р-н",
+      "id": "Кара-Кульджинский район",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -1232,7 +1232,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ноокатский р-н",
+      "id": "Ноокатский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -2201,7 +2201,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Алайский р-н",
+      "id": "Алайский район",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",
@@ -3553,7 +3553,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Узгенский р-н",
+      "id": "Узгенский район",
       "total": "400",
       "geometry": {
         "type": "MultiPolygon",
@@ -4650,7 +4650,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Кара-Суйский р-н",
+      "id": "Кара-Суйский район",
       "total": "500",
       "geometry": {
         "type": "MultiPolygon",
@@ -5475,7 +5475,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Чон-Алайский р-н",
+      "id": "Чон-Алайский район",
       "total": "600",
       "geometry": {
         "type": "Polygon",
@@ -6783,7 +6783,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Араванский р-н",
+      "id": "Араванский район",
       "total": "700",
       "geometry": {
         "type": "MultiPolygon",

@@ -4,14 +4,30 @@ import { TContractModelForMap } from "@/models/contracts/ContractModel.ts";
 
 export const useContractsViewModel = () => {
   const { fetchContractsForTable, fetchContractsForMap, setFilters, filters, contractsForMap } = useContractsStore();
-  const [selectedData, setSelectedData] = useState<TContractModelForMap | null>(contractsForMap);
+  const [selectedData, setSelectedData] = useState<TContractModelForMap | null>(null);
   const [searchByLocation, setSearchByLocation] = useState<string | null>(null);
-  const [hoveredData, setHoveredData] = useState<TContractModelForMap | null>(null);
-  const [isDistrict, setIsDistrict] = useState<boolean>(false);
+  const [isDistrict, setIsDistrict] = useState<string | null>(null);
 
-  const displayData = searchByLocation
-    ? (contractsForMap?.includes?.find((item) => item.locationName === searchByLocation) ?? null)
-    : contractsForMap;
+  const getRegion = (regionName: string) => {
+    return contractsForMap?.includes?.find((region) => region.locationName === regionName) ?? null;
+  };
+
+  const getDistrict = (regionName: string, districtName: string) => {
+    const region = getRegion(regionName);
+    if (!region) return null;
+    return region?.includes?.find((district) => district.locationName === districtName) ?? null;
+  };
+
+  const displayData = (() => {
+    if (!isDistrict) {
+      return searchByLocation ? getRegion(searchByLocation) : contractsForMap;
+    } else {
+      const region = getRegion(isDistrict);
+      if (!region) return null;
+      if (!region.includes?.length) return region;
+      return searchByLocation ? getDistrict(isDistrict, searchByLocation) : region;
+    }
+  })();
 
   const handleMouseEnter = (locationName: string) => {
     setSearchByLocation(locationName);
@@ -22,17 +38,18 @@ export const useContractsViewModel = () => {
   };
 
   const handleClick = (locationName: string) => {
-    const match = contractsForMap?.includes?.find((location) => location.locationName === locationName);
-    if (match) setSelectedData(match);
+    setIsDistrict(locationName);
+    setSearchByLocation(null);
   };
 
   const handleBack = () => {
-    setSelectedData(null);
-    setHoveredData(null);
+    setIsDistrict(null);
   };
 
   const handleShowDistrict = () => {
-    setIsDistrict(!isDistrict);
+    setIsDistrict(null);
+    setSelectedData(null);
+    setSearchByLocation(null);
   };
 
   // 🔍 Табличные фильтры

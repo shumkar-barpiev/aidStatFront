@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Иссык-Кульский р-н",
+      "id": "Иссык-Кульский район",
       "total": "100",
       "geometry": {
         "type": "Polygon",
@@ -9895,7 +9895,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Тюпский р-н",
+      "id": "Тюпский район",
       "total": "200",
       "geometry": {
         "type": "Polygon",
@@ -20868,7 +20868,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Тонский р-н",
+      "id": "Тонский район",
       "total": "300",
       "geometry": {
         "type": "Polygon",
@@ -26506,7 +26506,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Жети-Огузский р-н",
+      "id": "Жети-Огузский район",
       "total": "400",
       "geometry": {
         "type": "Polygon",
@@ -29692,7 +29692,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ак-Суйский р-н",
+      "id": "Ак-Суйский район",
       "total": "500",
       "geometry": {
         "type": "Polygon",

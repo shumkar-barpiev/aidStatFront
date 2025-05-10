@@ -41,16 +41,9 @@ interface Props {
   handleMouseLeave: () => void;
   handleClick: (locationName: string) => void;
   handleBack: () => void;
-  handleShowDistrict: () => void;
 }
 
-const ContractsMap: React.FC<Props> = ({
-  handleMouseEnter,
-  handleMouseLeave,
-  handleBack,
-  handleClick,
-  handleShowDistrict,
-}) => {
+const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, handleBack, handleClick }) => {
   const ref = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
@@ -96,9 +89,8 @@ const ContractsMap: React.FC<Props> = ({
             })
             .on("click", function (event, d) {
               if (d && d.id) {
-                setSelectedRegion(d);
                 handleClick(d.id as string);
-                handleShowDistrict();
+                setSelectedRegion(d);
               }
             })
             .append("title");
@@ -124,9 +116,6 @@ const ContractsMap: React.FC<Props> = ({
           .data(districts.features.filter((f: Feature) => f.geometry.type !== "Point"))
           .enter()
           .append("path")
-          .attr("d", (d) => {
-            return path(d);
-          })
           .attr("d", path)
           .attr("fill", areaColor)
           .attr("stroke", "#fff")
@@ -143,20 +132,16 @@ const ContractsMap: React.FC<Props> = ({
           .on("mouseenter", function (event, d) {
             if (d && d.id) {
               select(this).attr("fill", areaHoverColor);
-              // handleSetIsDistrict(true);
-              // handleSetChartFilter(d.id as string);
+              handleMouseEnter(d.id as string);
             }
           })
           .on("mouseleave", function () {
             select(tooltipRef.current).style("opacity", 0);
             select(this).attr("fill", areaColor);
-            // handleSetIsDistrict(false);
-            // handleSetChartFilter(null);
+            handleMouseLeave();
           })
           .on("click", function (event, d) {
-            if (d && d.id) {
-              // handleSetChartFilter(d.id as string);
-            }
+            // click on district logic
           })
           .append("title");
       }
@@ -165,8 +150,7 @@ const ContractsMap: React.FC<Props> = ({
 
   const resetView = () => {
     setSelectedRegion(null);
-    // handleSetIsDistrict(false);
-    // handleSetFilter(null);
+    handleBack();
     drawRegions();
   };
 
@@ -176,16 +160,18 @@ const ContractsMap: React.FC<Props> = ({
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet")
       .style("background", "#fff");
-
-    drawRegions();
-  }, [drawRegions]);
-
-  useEffect(() => {
     if (selectedRegion) {
       drawDistricts();
-      // handleSetChartFilter(selectedRegion.id as string);
+    } else {
+      drawRegions();
     }
-  }, [selectedRegion, drawDistricts]);
+  }, [selectedRegion, drawRegions, drawDistricts]);
+  //
+  // useEffect(() => {
+  //   if (selectedRegion) {
+  //     drawDistricts();
+  //   }
+  // }, [selectedRegion, drawDistricts]);
 
   return (
     <Box
@@ -193,7 +179,7 @@ const ContractsMap: React.FC<Props> = ({
         position: "relative",
         width: "100%",
         maxWidth: { xs: "350px", md: "800px" },
-        height: "600px", // <-- добавьте фиксированную высоту
+        height: "600px",
         overflow: "hidden", // <-- это предотвратит "вытекание" при перерисовке
         margin: "0 auto",
       }}

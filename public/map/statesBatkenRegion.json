@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Кадамжайский р-н",
+      "id": "Кадамжайский район",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -1516,7 +1516,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Лейлекский р-н",
+      "id": "Лейлекский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -2909,7 +2909,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Баткенский р-н",
+      "id": "Баткенский район",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",

@@ -5,8 +5,7 @@ import ContractsTable from "@/components/statistics/maps/ContractsTable.tsx";
 import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
 
 const ContractsTab = () => {
-  const { displayData, handleMouseEnter, handleMouseLeave, handleClick, handleBack, handleShowDistrict } =
-    useContractsViewModel();
+  const { displayData, handleMouseEnter, handleMouseLeave, handleClick, handleBack } = useContractsViewModel();
   return (
     <Box>
       <ContractsMapBlock
@@ -15,7 +14,6 @@ const ContractsTab = () => {
         handleMouseLeave={handleMouseLeave}
         handleClick={handleClick}
         handleBack={handleBack}
-        handleShowDistrict={handleShowDistrict}
       />
       <ContractsTable />
     </Box>

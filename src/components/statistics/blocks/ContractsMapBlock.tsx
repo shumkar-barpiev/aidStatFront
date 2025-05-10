@@ -21,17 +21,9 @@ interface Props {
   handleMouseLeave: () => void;
   handleClick: (locationName: string) => void;
   handleBack: () => void;
-  handleShowDistrict: () => void;
 }
 
-const ContractsMapBlock: React.FC<Props> = ({
-  data,
-  handleMouseEnter,
-  handleMouseLeave,
-  handleBack,
-  handleClick,
-  handleShowDistrict,
-}) => {
+const ContractsMapBlock: React.FC<Props> = ({ data, handleMouseEnter, handleMouseLeave, handleBack, handleClick }) => {
   return (
     <Box
       display="flex"
@@ -41,7 +33,7 @@ const ContractsMapBlock: React.FC<Props> = ({
         flexDirection: { xs: "column", md: "row" },
         justifyContent: "center",
         alignItems: "center",
-        height: `calc(100dvh - ${MOBILE_OFFSET}px)`,
+        height: { xs: `calc(100dvh - ${MOBILE_OFFSET}px)`, md: "600px" },
       }}
     >
       <ContractsMap
@@ -49,7 +41,6 @@ const ContractsMapBlock: React.FC<Props> = ({
         handleMouseLeave={handleMouseLeave}
         handleClick={handleClick}
         handleBack={handleBack}
-        handleShowDistrict={handleShowDistrict}
       />
       <Box
         display="flex"
@@ -57,7 +48,7 @@ const ContractsMapBlock: React.FC<Props> = ({
         flexDirection="column"
         sx={{
           flexDirection: { xs: "column", md: "column" },
-          minWidth: "420px", // 👈 фикс ширины чарта
+          minWidth: "420px",
         }}
       >
         {data ? (
