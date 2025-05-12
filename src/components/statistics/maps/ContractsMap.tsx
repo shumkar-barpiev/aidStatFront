@@ -166,12 +166,6 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
       drawRegions();
     }
   }, [selectedRegion, drawRegions, drawDistricts]);
-  //
-  // useEffect(() => {
-  //   if (selectedRegion) {
-  //     drawDistricts();
-  //   }
-  // }, [selectedRegion, drawDistricts]);
 
   return (
     <Box

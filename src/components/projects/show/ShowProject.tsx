@@ -20,7 +20,6 @@ import React, { useEffect, useState } from "react";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import ProjectBadges from "@/components/projects/ProjectBadges";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
-import { getAvatarAsCardMedia } from "@/components/other/Base64Avatar";
 import ProjectTimeLine from "@/components/projects/show/ProjectTimeLine";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import { Box, Card, CardMedia, Divider, Grid, Stack, SxProps, Tooltip, Typography } from "@mui/material";
@@ -86,7 +85,6 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
       <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
         {stakeholders.map((partner, index) => (
           <Stack key={index} direction={"row"} alignItems={"center"} spacing={2}>
-            {/*{getAvatarAsCardMedia(partner.name, partner.image ?? null, 60)}*/}
             <Tooltip title={partner.name}>
               <CardMedia
                 component="img"
