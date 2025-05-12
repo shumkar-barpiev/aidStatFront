@@ -3,26 +3,26 @@
 import {
   Box,
   Card,
+  CardMedia,
+  CircularProgress,
   Grid,
+  IconButton,
+  Pagination,
   Stack,
   Tooltip,
-  CardMedia,
-  IconButton,
   Typography,
-  Pagination,
-  CircularProgress,
 } from "@mui/material";
 import React from "react";
 import Colors from "@/styles/colors.ts";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { usePartnersStore } from "@/stores/partners/partners.ts";
-import { PartnerSearchField } from "@/components/partners/partners/PartnerSearch.tsx";
-import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar.tsx";
+import { usePartnersStore } from "@/stores/partners/partners";
+import { PartnerSearchField } from "@/components/partners/partners/PartnerSearch";
+import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
-import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel.ts";
-import { transliterate } from "@/utils/format/transliterate.ts";
-import { apiUrl } from "@/utils/constants.ts";
+import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel";
+import { transliterate } from "@/utils/format/transliterate";
+import { imageUrl } from "@/utils/constants";
 
 function PartnersCard() {
   const router = useRouter();
@@ -100,7 +100,7 @@ function PartnersCard() {
                             }}
                             component="img"
                             alt={partner.name}
-                            image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                            image={`${imageUrl}${partner.image}`}
                             sx={{
                               width: "100%",
                               height: "100%",

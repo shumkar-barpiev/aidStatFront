@@ -17,10 +17,10 @@ import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledT
 import ProjectBadges from "@/components/projects/ProjectBadges";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { useContractsStore } from "@/stores/contracts/contracts";
-import { apiUrl } from "@/utils/constants";
+import { imageUrl } from "@/utils/constants";
 import { useTableContractsViewModel } from "@/viewmodels/contracts/useTableContractsViewModel";
 import ContractsSearchField from "@/components/statistics/components/search/ContractsSearchField";
-import { transliterate } from "@/utils/format/transliterate.ts";
+import { transliterate } from "@/utils/format/transliterate";
 
 const ContractsTable = () => {
   const { contractsForTable, pageTotal, totalContracts, filters } = useContractsStore();
@@ -92,7 +92,7 @@ const ContractsTable = () => {
                         return (
                           <Tooltip key={implementor.id} title={implementor.name}>
                             <Avatar
-                              src={`${apiUrl}/aidstat/ws/public/file/meta/download/${implementor.image}`}
+                              src={`${imageUrl}${implementor.image}`}
                               alt={implementor.name || "Avatar"}
                               sx={{
                                 width: 50,
@@ -122,7 +122,7 @@ const ContractsTable = () => {
                       {contract.donors.map((donor) => (
                         <Tooltip key={donor.id} title={donor.name}>
                           <Avatar
-                            src={`${apiUrl}/aidstat/ws/public/file/meta/download/${donor.image}`}
+                            src={`${imageUrl}${donor.image}`}
                             alt={donor.name || "Avatar"}
                             sx={{
                               width: 50,

@@ -6,7 +6,7 @@ import Image from "next/image";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useAgenciesStore } from "@/stores/partners/agencies";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
-import { apiUrl } from "@/utils/constants";
+import { imageUrl } from "@/utils/constants";
 
 const AgencyCard = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -66,12 +66,7 @@ const AgencyCard = () => {
             mx: { xs: "auto", md: 0 },
           }}
         >
-          <Image
-            src={`${apiUrl}/aidstat/ws/public/file/meta/download/${agency.image}`}
-            alt={`${agency.name} logo`}
-            fill
-            style={{ objectFit: "contain" }}
-          />
+          <Image src={`${imageUrl}${agency.image}`} alt={`${agency.name} logo`} fill style={{ objectFit: "contain" }} />
         </Grid>
 
         <Grid item xs={12} md={8}>

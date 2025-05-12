@@ -26,9 +26,9 @@ import { Box, Card, CardMedia, Divider, Grid, Stack, SxProps, Tooltip, Typograph
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
-import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock.tsx";
-import { transliterate } from "@/utils/format/transliterate.ts";
-import { apiUrl } from "@/utils/constants.ts";
+import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock";
+import { transliterate } from "@/utils/format/transliterate";
+import { imageUrl } from "@/utils/constants";
 
 interface NotSpecifiedTextProps {
   sx?: SxProps;
@@ -88,7 +88,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Tooltip title={partner.name}>
               <CardMedia
                 component="img"
-                image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                image={`${imageUrl}${partner.image}`}
                 alt={partner.name}
                 sx={{
                   width: 60,
