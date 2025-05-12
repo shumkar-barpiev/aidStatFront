@@ -5,13 +5,13 @@ import { Grid, Typography } from "@mui/material";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
-import AreaChart from "@/components/statistics/charts/AreaChart";
+import AreaChart from "@/components/statistics/charts/area-chart-components/AreaChart";
 import { useProjectsMapStore } from "@/stores/projects/projects-for-map";
 import { EnergeticsMok, TransportsMok } from "@/shared/enums/statisticsMapIconsEnums";
-import PolarChart from "@/components/statistics/charts/PolarChart";
-import ChartCardLayout from "@/components/statistics/charts/ChartCardLayout";
-import HorizontalStackedBarChart from "@/components/statistics/charts/HorizontalStackedBarChart";
-import ChartCard from "@/components/statistics/charts/ChartCard.tsx";
+import PolarChart from "@/components/statistics/charts/pie-chart-components/PolarChart";
+import ChartCardLayout from "@/components/statistics/charts/chart-cards/ChartCardLayout";
+import HorizontalStackedBarChart from "@/components/statistics/charts/bar-chart-components/HorizontalStackedBarChart";
+import ChartCard from "@/components/statistics/charts/chart-cards/ChartCard";
 
 const ChartsMainBlock = () => {
   const { regions } = useRegionsViewModel();

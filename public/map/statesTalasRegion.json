@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Кара-Буринский р-н",
+      "id": "Кара-Бууринский район",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -880,7 +880,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Манасский р-н",
+      "id": "Манасский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -1523,7 +1523,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Бакай-Атинский р-н",
+      "id": "Бакай-Атинский район",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",
@@ -2497,7 +2497,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Таласский р-н",
+      "id": "Таласский район",
       "total": "400",
       "geometry": {
         "type": "Polygon",

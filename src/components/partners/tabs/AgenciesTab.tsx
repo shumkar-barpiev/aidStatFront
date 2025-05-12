@@ -3,7 +3,7 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import AgenciesList from "@/components/partners/agencies/AgenciesList";
-import Colors from "@/styles/colors.ts";
+import Colors from "@/styles/colors";
 import Image from "next/image";
 
 const AgenciesTab = () => {

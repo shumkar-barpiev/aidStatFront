@@ -22,6 +22,7 @@ import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar.tsx";
 import ArrowForwardOutlinedIcon from "@mui/icons-material/ArrowForwardOutlined";
 import { usePartnersViewModel } from "@/viewmodels/partners/usePartnersViewModel.ts";
 import { transliterate } from "@/utils/format/transliterate.ts";
+import { apiUrl } from "@/utils/constants.ts";
 
 function PartnersCard() {
   const router = useRouter();
@@ -99,7 +100,7 @@ function PartnersCard() {
                             }}
                             component="img"
                             alt={partner.name}
-                            image={`data:image/png;base64,${partner.image}`}
+                            image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
                             sx={{
                               width: "100%",
                               height: "100%",

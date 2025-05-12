@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ак-Талинский р-н",
+      "id": "Ак-Талинский район",
       "total": "500",
       "geometry": {
         "type": "MultiPolygon",
@@ -1086,7 +1086,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Жумгальский р-н",
+      "id": "Жумгальский район",
       "total": "1000",
       "geometry": {
         "type": "MultiPolygon",
@@ -2451,7 +2451,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Кочкорский р-н",
+      "id": "Кочкорский район",
       "total": "100",
       "geometry": {
         "type": "Polygon",
@@ -4192,7 +4192,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Нарынский р-н",
+      "id": "Нарынский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -6115,7 +6115,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ат-Башинский р-н",
+      "id": "Ат-Башинский район",
       "total": "300",
       "geometry": {
         "type": "Polygon",

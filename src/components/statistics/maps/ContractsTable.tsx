@@ -1,75 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Avatar,
   Box,
+  Pagination,
   Paper,
   Table,
   TableBody,
   TableContainer,
   TableHead,
   TableRow,
-  TablePagination,
   Tooltip,
   Typography,
 } from "@mui/material";
-import Colors from "@/styles/colors.ts";
-import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents.tsx";
-import { RenderEllipsisText } from "@/utils/textUtils.tsx";
-import ProjectBadges from "@/components/projects/ProjectBadges.tsx";
-import { Base64Avatar } from "@/components/other/Base64Avatar.tsx";
-import { formatCurrency } from "@/utils/formatCurrency.ts";
-import { useContractsViewModel } from "@/viewmodels/contracts/useContractsViewModel.ts";
-import { GeneratedProjectNames } from "@/shared/enums/statisticsMapIconsEnums.ts";
-
-const mokDonors = [
-  { name: "International Monetary Fund", image: "12_imf.png" },
-  { name: "Европейский Банк Реконструкции и Развития", image: "EBRR_logo.png" },
-  { name: "Посольство Федеративной Республики Германия", image: "germanembassy.png" },
-  { name: "International Monetary Fund", image: "imf.png" },
-  { name: "Германский Банк Развития", image: "kfw_logo.png" },
-  { name: "Корейское агентство международного сотрудничества", image: "koica.png" },
-  { name: "Корпус Милосердия", image: "mercy_corps.png" },
-  { name: "ОБСЕ", image: "osce_logo.png" },
-  { name: "Саудовский Фонд Развития", image: "saudi_fund.png" },
-  { name: "Турецкое агентство по сотрудничеству и координации", image: "tika-logo.png" },
-  { name: "United Nations", image: "un-logo.png" },
-  { name: "USAID", image: "usaid_logo.png" },
-];
+import Colors from "@/styles/colors";
+import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
+import ProjectBadges from "@/components/projects/ProjectBadges";
+import { formatCurrency } from "@/utils/formatCurrency";
+import { useContractsStore } from "@/stores/contracts/contracts";
+import { apiUrl } from "@/utils/constants";
+import { useTableContractsViewModel } from "@/viewmodels/contracts/useTableContractsViewModel";
+import ContractsSearchField from "@/components/statistics/components/search/ContractsSearchField";
+import { transliterate } from "@/utils/format/transliterate.ts";
 
 const ContractsTable = () => {
-  const { contracts, filteredContracts } = useContractsViewModel();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const getPartnerAvatar = (name: string, image: string | null) => {
-    if (!image) {
-      const initials = name ? name.substring(0, 2).toUpperCase() : "";
-      return (
-        <Tooltip key={name} title={`${name}`}>
-          <Avatar sx={{ width: 40, height: 40, backgroundColor: "blue" }}>{initials}</Avatar>
-        </Tooltip>
-      );
-    }
-    return <Base64Avatar key={name} base64String={`${image ?? ""}`} alt={name} />;
-  };
-
-  const paginatedContracts =
-    filteredContracts && filteredContracts.length > 0
-      ? filteredContracts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      : contracts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  const { contractsForTable, pageTotal, totalContracts, filters } = useContractsStore();
+  const { handleChangePage, handleSetFilter } = useTableContractsViewModel();
 
   return (
     <Box>
-      <Typography>Дата автоматического обновления: 9.04.2025</Typography>
+      <ContractsSearchField handleSetFilter={handleSetFilter} />
+      <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", my: 1 }}>
+        <Typography>Общее количество: {totalContracts}</Typography>
+        <Typography>
+          Дата автоматического обновления:{" "}
+          {contractsForTable?.updateTime ? contractsForTable.updateTime : "30.04.2025, 11:42"}
+        </Typography>
+      </Box>
       <TableContainer component={Paper} sx={{ height: "100%" }}>
         <Table stickyHeader aria-label="sticky table" sx={{ tableLayout: "fixed", minWidth: 1050 }}>
           <TableHead>
@@ -86,157 +52,110 @@ const ContractsTable = () => {
               <StyledTableHeadCell sx={{ width: "30%", textAlign: "left", paddingLeft: "20px" }}>
                 Наименование
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "10%", textAlign: "right", paddingLeft: "20px" }}>
-                Сумма KGS
+              <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
+                Сумма
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "10%", textAlign: "left", paddingLeft: "20px" }}>
+              <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
                 Исполнитель
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "22%", textAlign: "left", paddingLeft: "20px" }}>
                 Проект
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "10%", textAlign: "left", paddingLeft: "20px" }}>
+              <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
                 Донор
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "10%" }}>Статус</StyledTableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedContracts?.map((contract, index) => (
-              <TableRow
-                key={contract.id}
-                sx={{
-                  backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
-                  "&:hover": { backgroundColor: "#cadefa" },
-                }}
-              >
-                <StyledTableCell sx={{ width: "3%" }}>{page * rowsPerPage + index + 1}</StyledTableCell>
-                <StyledTableCell sx={{ width: "30%" }}>
-                  <RenderEllipsisText text={contract?.title} tooltipPlacement="left" />
-                </StyledTableCell>
-                <StyledTableCell sx={{ width: "10%", textAlign: "right" }}>
-                  {formatCurrency(contract.budget)}
-                </StyledTableCell>
-                <StyledTableCell sx={{ width: "10%" }}>
-                  <Tooltip title={"ARIS"}>
-                    <svg
-                      id="Layer_2"
-                      data-name="Layer 2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 820.41 135.01"
+            {contractsForTable &&
+              contractsForTable.data.map((contract, index) => (
+                <TableRow
+                  key={contract.id}
+                  sx={{
+                    backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
+                    "&:hover": { backgroundColor: "#cadefa" },
+                  }}
+                >
+                  <StyledTableCell sx={{ width: "3%" }}>
+                    {(filters.page - 1) * filters.limit + index + 1}
+                  </StyledTableCell>
+                  <StyledTableCell sx={{ width: "30%", whiteSpace: "normal", wordBreak: "break-word" }}>
+                    {contract.name}
+                  </StyledTableCell>
+                  <StyledTableCell sx={{ width: "10%", textAlign: "right" }}>
+                    {formatCurrency(contract.amount) + " " + contract.unit}
+                  </StyledTableCell>
+                  <StyledTableCell sx={{ width: "10%" }}>
+                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", justifyContent: "center" }}>
+                      {contract.implementers.map((implementor) => {
+                        return (
+                          <Tooltip key={implementor.id} title={implementor.name}>
+                            <Avatar
+                              src={`${apiUrl}/aidstat/ws/public/file/meta/download/${implementor.image}`}
+                              alt={implementor.name || "Avatar"}
+                              sx={{
+                                width: 50,
+                                height: 50,
+                                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
+                                "& .MuiAvatar-img": {
+                                  objectFit: "cover",
+                                },
+                              }}
+                            />
+                          </Tooltip>
+                        );
+                      })}
+                    </Box>
+                  </StyledTableCell>
+                  <StyledTableCell sx={{ width: "22%", whiteSpace: "normal", wordBreak: "break-word" }}>
+                    <a
+                      href={`/projects/show/${transliterate(contract.project.name)}#${contract.project.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <path
-                        className="cls-1"
-                        fill="#3f4096"
-                        d="m246.71,40.84h-.67l-10.04,50.36h20.24l-9.54-50.36Zm17.74,92.69l-4.85-21.58h-26.6l-4.85,21.58h-26.77l28.78-118.46h33.63l28.61,118.46h-27.94Z"
-                      />
-                      <path
-                        className="cls-1"
-                        fill="#3f4096"
-                        d="m345.23,52.22c0-3.01-.42-5.47-1.26-7.36-.84-1.9-1.92-3.4-3.26-4.52-1.34-1.11-2.82-1.87-4.43-2.26-1.62-.39-3.21-.59-4.77-.59h-8.37v29.95h7.86c3.79,0,7.11-1.2,9.96-3.6,2.84-2.4,4.27-6.28,4.27-11.63m1.67,81.31l-15.9-47.18h-7.86v47.18h-25.77V15.08h37.98c11.49,0,20.41,2.98,26.77,8.95,6.36,5.97,9.54,14.86,9.54,26.69,0,4.35-.5,8.26-1.51,11.71-1,3.46-2.31,6.41-3.93,8.87-1.62,2.45-3.43,4.46-5.43,6.02-2.01,1.56-3.96,2.68-5.86,3.35l20.25,52.87h-28.28Z"
-                      />
-                      <rect className="cls-1" fill="#3f4096" x="382.51" y="15.08" width="26.94" height="118.46" />
-                      <path
-                        className="cls-1"
-                        fill="#3f4096"
-                        d="m473.58,44.36c-1.95-2.28-4.23-4.04-6.84-5.29-2.6-1.25-5.32-1.87-8.14-1.87s-5.56.92-7.89,2.77c-2.33,1.84-3.5,4.88-3.5,9.11,0,3.58,1.19,6.38,3.58,8.38,2.39,2.01,5.91,4.21,10.58,6.59,2.61,1.3,5.35,2.85,8.22,4.64,2.87,1.79,5.5,3.99,7.89,6.59,2.39,2.6,4.37,5.72,5.94,9.36,1.57,3.63,2.36,7.95,2.36,12.94,0,6.19-.98,11.64-2.93,16.36-1.95,4.72-4.58,8.63-7.89,11.72-3.31,3.09-7.13,5.43-11.47,7-4.34,1.57-8.84,2.36-13.51,2.36-6.94,0-13.26-1.3-18.96-3.91-5.69-2.6-10.28-5.64-13.75-9.11l13.35-19.53c2.5,2.6,5.37,4.69,8.63,6.27,3.25,1.57,6.56,2.36,9.93,2.36,3.15,0,5.81-1.03,7.98-3.09,2.17-2.06,3.25-4.94,3.25-8.63s-1.3-6.81-3.91-9.03c-2.6-2.22-6.4-4.58-11.39-7.08-3.15-1.52-6.1-3.2-8.87-5.05-2.77-1.85-5.21-4.07-7.32-6.67-2.12-2.6-3.77-5.64-4.96-9.11-1.19-3.47-1.79-7.6-1.79-12.37,0-6.4,1.06-11.91,3.18-16.52,2.11-4.61,4.88-8.38,8.3-11.31,3.42-2.93,7.22-5.1,11.39-6.51,4.18-1.41,8.38-2.12,12.61-2.12,6.29,0,11.94,1.03,16.93,3.09,4.99,2.06,9.17,4.88,12.53,8.46l-13.51,19.2Z"
-                      />
-                      <path
-                        className="cls-4"
-                        fill="#ee3338"
-                        d="m720.61,29.24l-8.9-13.56h5.29l5.82,9.44,5.89-9.44h5.02l-8.91,13.56v10.14h-4.22v-10.14Zm-20.15-9.74h-7.26v-3.82h18.75v3.82h-7.26v19.88h-4.22v-19.88Zm-14.26-3.82h4.22v23.7h-4.22V15.68Zm-26.55,0h5.59l11.48,17.61h.07V15.68h4.22v23.7h-5.36l-11.72-18.18h-.07v18.18h-4.22V15.68Zm-5.19,15c0,1.43-.25,2.72-.74,3.87-.49,1.15-1.16,2.12-2.01,2.93-.85.8-1.85,1.42-3.01,1.86-1.16.44-2.42.65-3.78.65s-2.62-.22-3.78-.65c-1.16-.44-2.17-1.05-3.03-1.86-.86-.8-1.53-1.78-2.01-2.93-.48-1.15-.72-2.44-.72-3.87v-15h4.22v14.87c0,.58.09,1.19.27,1.82.18.64.47,1.22.89,1.76.41.54.96.98,1.64,1.32.68.35,1.52.52,2.53.52s1.85-.17,2.53-.52c.68-.35,1.23-.79,1.64-1.32.41-.54.71-1.12.89-1.76.18-.64.27-1.24.27-1.82v-14.87h4.22v15Zm-49.88-15h6.43l6.33,16.61,6.39-16.61h6.36v23.7h-4.01v-19.69h-.07l-7.2,19.69h-2.95l-7.2-19.69h-.07v19.69h-4.02V15.68Zm-31,0h6.43l6.33,16.61,6.39-16.61h6.36v23.7h-4.02v-19.69h-.06l-7.2,19.69h-2.95l-7.2-19.69h-.06v19.69h-4.02V15.68Zm-24.84,11.68c0,1.27.2,2.44.59,3.51.39,1.07.94,2,1.66,2.78.71.78,1.57,1.39,2.56,1.84.99.45,2.1.67,3.33.67s2.34-.22,3.35-.67c1-.45,1.86-1.06,2.58-1.84s1.27-1.71,1.66-2.78c.39-1.07.59-2.24.59-3.51,0-1.18-.19-2.29-.59-3.31-.39-1.03-.94-1.93-1.66-2.7-.71-.77-1.57-1.37-2.58-1.81-1-.44-2.12-.65-3.35-.65s-2.34.22-3.33.65c-.99.44-1.85,1.04-2.56,1.81-.72.77-1.27,1.67-1.66,2.7-.39,1.02-.59,2.13-.59,3.31Zm-4.42.27c0-1.9.31-3.62.94-5.17.63-1.55,1.49-2.87,2.6-3.97,1.11-1.09,2.42-1.93,3.95-2.53,1.53-.59,3.21-.89,5.04-.89,1.86-.02,3.55.25,5.09.82,1.54.57,2.87,1.4,3.99,2.49,1.11,1.09,1.99,2.41,2.61,3.95.63,1.54.94,3.26.94,5.16s-.31,3.54-.94,5.05c-.62,1.52-1.5,2.82-2.61,3.92-1.12,1.09-2.44,1.95-3.99,2.56-1.54.61-3.23.93-5.09.95-1.83,0-3.51-.3-5.04-.89-1.53-.59-2.84-1.43-3.95-2.51-1.11-1.08-1.97-2.38-2.6-3.9-.62-1.52-.94-3.2-.94-5.05Zm-5.39-6.39c-.87-.94-1.71-1.56-2.53-1.88-.81-.31-1.63-.47-2.46-.47-1.23,0-2.34.22-3.33.65-.99.44-1.85,1.04-2.56,1.81-.71.77-1.26,1.67-1.66,2.7-.39,1.02-.59,2.13-.59,3.31,0,1.27.2,2.44.59,3.51.39,1.07.94,2,1.66,2.78.71.78,1.57,1.39,2.56,1.84.99.45,2.1.67,3.33.67.96,0,1.89-.23,2.8-.69.9-.46,1.75-1.19,2.53-2.19l3.48,2.48c-1.07,1.47-2.38,2.55-3.92,3.22-1.54.67-3.18,1-4.92,1-1.83,0-3.51-.3-5.04-.89-1.53-.59-2.85-1.43-3.95-2.51-1.1-1.08-1.97-2.38-2.59-3.9-.63-1.52-.94-3.2-.94-5.05s.31-3.62.94-5.17c.62-1.55,1.49-2.87,2.59-3.97,1.11-1.09,2.42-1.93,3.95-2.53,1.53-.59,3.21-.89,5.04-.89,1.61,0,3.1.28,4.47.85,1.37.57,2.65,1.54,3.83,2.9l-3.28,2.41Z"
-                      />
-                      <path
-                        className="cls-4"
-                        fill="#ee3338"
-                        d="m759.98,50.68h-7.26v-3.82h18.75v3.82h-7.26v19.88h-4.22v-19.88Zm-31.5-3.82h5.59l11.48,17.61h.07v-17.61h4.22v23.7h-5.36l-11.72-18.18h-.07v18.18h-4.22v-23.7Zm-20.45,0h15.7v3.82h-11.48v5.82h10.88v3.82h-10.88v6.43h12.09v3.82h-16.3v-23.7Zm-30.9,0h6.43l6.33,16.6,6.39-16.6h6.36v23.7h-4.01v-19.69h-.07l-7.2,19.69h-2.95l-7.2-19.69h-.07v19.69h-4.02v-23.7Zm-13.79,10.27c.6,0,1.23-.02,1.88-.06.65-.04,1.24-.18,1.79-.4.55-.23.99-.56,1.34-1.01.35-.44.52-1.07.52-1.87,0-.74-.16-1.32-.47-1.76-.31-.44-.71-.77-1.21-1-.49-.23-1.04-.39-1.64-.45-.61-.06-1.19-.1-1.74-.1h-3.01v6.66h2.54Zm-6.76-10.27h7.97c1.14,0,2.24.11,3.3.33,1.06.22,1.99.6,2.79,1.12.8.52,1.45,1.23,1.93,2.11.48.88.72,1.98.72,3.3,0,1.5-.25,2.7-.77,3.62-.52.92-1.21,1.62-2.07,2.13-.87.5-1.88.84-3.03,1.02-1.15.18-2.35.27-3.6.27h-3.01v9.81h-4.22v-23.7Zm-24.74,11.68c0,1.27.2,2.44.59,3.51.39,1.07.94,2,1.66,2.78.71.78,1.57,1.4,2.56,1.84.99.45,2.1.67,3.33.67s2.34-.22,3.35-.67c1.01-.44,1.86-1.06,2.58-1.84.72-.78,1.27-1.71,1.66-2.78.39-1.07.59-2.24.59-3.51,0-1.18-.2-2.29-.59-3.31-.39-1.03-.94-1.93-1.66-2.7-.71-.77-1.57-1.37-2.58-1.81-1-.44-2.12-.65-3.35-.65s-2.34.22-3.33.65c-.99.44-1.85,1.04-2.56,1.81-.71.77-1.27,1.67-1.66,2.7-.39,1.02-.59,2.13-.59,3.31Zm-4.42.27c0-1.9.31-3.62.94-5.17.63-1.55,1.49-2.87,2.6-3.97,1.11-1.09,2.42-1.93,3.95-2.53,1.53-.59,3.21-.89,5.04-.89,1.85-.02,3.55.25,5.09.82,1.54.57,2.87,1.4,3.98,2.49,1.11,1.09,1.99,2.41,2.61,3.95.63,1.54.94,3.26.94,5.16s-.32,3.54-.94,5.06c-.62,1.52-1.5,2.82-2.61,3.92-1.11,1.09-2.44,1.95-3.98,2.56-1.54.61-3.24.93-5.09.95-1.83,0-3.51-.3-5.04-.89-1.53-.59-2.84-1.43-3.95-2.51-1.1-1.08-1.97-2.38-2.6-3.9-.62-1.52-.94-3.2-.94-5.05Zm-16.1-11.95h4.22v19.88h10.08v3.82h-14.29v-23.7Zm-20.46,0h15.7v3.82h-11.48v5.82h10.88v3.82h-10.88v6.43h12.09v3.82h-16.3v-23.7Zm-25.08,0h4.85l6.46,17.91,6.66-17.91h4.55l-9.57,23.7h-3.65l-9.31-23.7Zm-17.71,0h15.7v3.82h-11.48v5.82h10.88v3.82h-10.88v6.43h12.09v3.82h-16.3v-23.7Zm-18.05,19.88c1.32,0,2.56-.15,3.73-.45,1.17-.3,2.19-.77,3.06-1.4.87-.63,1.56-1.46,2.06-2.48.5-1.01.75-2.25.75-3.7s-.22-2.65-.67-3.68c-.44-1.03-1.07-1.86-1.86-2.49-.79-.64-1.73-1.11-2.81-1.41-1.08-.3-2.27-.45-3.57-.45h-3.85v16.07h3.15Zm-7.36-19.88h9.34c1.56,0,3.07.24,4.52.72,1.45.48,2.74,1.21,3.85,2.19,1.11.98,2.01,2.22,2.68,3.7.67,1.48,1.01,3.23,1.01,5.24s-.39,3.79-1.16,5.27c-.77,1.48-1.76,2.71-2.98,3.68-1.22.97-2.57,1.69-4.05,2.17-1.48.48-2.94.72-4.37.72h-8.84v-23.7Z"
-                      />
-                      <path
-                        className="cls-4"
-                        fill="#ee3338"
-                        d="m808.93,81.86h-7.26v-3.82h18.75v3.82h-7.26v19.88h-4.22v-19.88Zm-31.5-3.82h5.59l11.48,17.61h.07v-17.61h4.22v23.7h-5.36l-11.71-18.18h-.07v18.18h-4.22v-23.7Zm-20.46,0h15.7v3.82h-11.48v5.82h10.88v3.82h-10.88v6.43h12.09v3.82h-16.31v-23.7Zm-30.9,0h6.43l6.33,16.6,6.39-16.6h6.36v23.7h-4.02v-19.69h-.07l-7.2,19.69h-2.95l-7.2-19.69h-.07v19.69h-4.02v-23.7Zm-14.46,3.82h-7.27v-3.82h18.75v3.82h-7.27v19.88h-4.22v-19.88Zm-12.45,1.27c-.45-.65-1.04-1.12-1.79-1.42-.75-.3-1.53-.45-2.36-.45-.49,0-.97.06-1.43.17-.46.11-.87.29-1.24.54-.37.25-.66.56-.89.95-.22.39-.34.85-.34,1.39,0,.8.28,1.42.84,1.84.56.42,1.25.79,2.08,1.11.83.31,1.73.61,2.71.9.98.29,1.88.69,2.71,1.2.83.52,1.52,1.19,2.07,2.04.56.85.84,1.98.84,3.38,0,1.27-.23,2.38-.7,3.33-.47.95-1.1,1.74-1.89,2.36-.79.63-1.71,1.09-2.76,1.41-1.05.31-2.15.47-3.32.47-1.47,0-2.89-.25-4.25-.74-1.36-.49-2.53-1.31-3.52-2.48l3.18-3.08c.51.78,1.19,1.39,2.02,1.83.84.44,1.72.65,2.66.65.49,0,.98-.07,1.47-.2.49-.13.94-.33,1.34-.6.4-.27.72-.61.97-1.02.25-.41.37-.89.37-1.42,0-.87-.28-1.54-.84-2.01-.56-.47-1.25-.87-2.07-1.19-.83-.32-1.73-.63-2.71-.92-.98-.29-1.89-.68-2.71-1.19-.83-.5-1.52-1.17-2.08-2.01-.56-.84-.84-1.96-.84-3.37,0-1.23.25-2.29.75-3.18.5-.89,1.16-1.64,1.98-2.23.81-.59,1.75-1.03,2.79-1.32,1.05-.29,2.12-.43,3.21-.43,1.25,0,2.46.19,3.63.57,1.17.38,2.23,1,3.16,1.88l-3.08,3.25Zm-32.07-5.09h15.7v3.82h-11.48v5.82h10.88v3.82h-10.88v6.43h12.09v3.82h-16.3v-23.7Zm-25.08,0h4.85l6.46,17.91,6.66-17.91h4.55l-9.57,23.7h-3.65l-9.31-23.7Zm-23.9,0h5.59l11.48,17.61h.07v-17.61h4.22v23.7h-5.36l-11.72-18.18h-.07v18.18h-4.22v-23.7Zm-9.41,0h4.22v23.7h-4.22v-23.7Zm-27.86,19.88c1.32,0,2.56-.15,3.73-.45,1.17-.3,2.19-.77,3.06-1.4.87-.63,1.56-1.46,2.06-2.48.5-1.01.75-2.25.75-3.7s-.22-2.65-.67-3.68c-.45-1.03-1.07-1.86-1.86-2.49-.79-.64-1.73-1.11-2.81-1.41-1.08-.3-2.27-.45-3.56-.45h-3.85v16.07h3.15Zm-7.36-19.88h9.34c1.56,0,3.07.24,4.52.72,1.45.48,2.73,1.21,3.85,2.19,1.12.98,2.01,2.22,2.68,3.7.67,1.48,1,3.23,1,5.24s-.39,3.79-1.16,5.27c-.77,1.48-1.76,2.71-2.98,3.68-1.21.97-2.57,1.69-4.05,2.17-1.48.48-2.94.72-4.37.72h-8.84v-23.7Zm-26.65,0h5.59l11.48,17.61h.07v-17.61h4.22v23.7h-5.36l-11.72-18.18h-.06v18.18h-4.22v-23.7Zm-11.15,14.66l-3.65-9.64-3.72,9.64h7.37Zm-5.36-14.66h3.65l10.21,23.7h-4.82l-2.21-5.42h-10.28l-2.14,5.42h-4.72l10.31-23.7Z"
-                      />
-                      <path
-                        className="cls-4"
-                        fill="#ee3338"
-                        d="m648.7,122.79l-8.9-13.56h5.29l5.82,9.44,5.89-9.44h5.02l-8.9,13.56v10.14h-4.22v-10.14Zm-12.45-8c-.87-.94-1.71-1.56-2.53-1.88-.81-.31-1.63-.47-2.46-.47-1.23,0-2.34.22-3.33.65-.99.44-1.85,1.04-2.56,1.81-.72.77-1.27,1.67-1.66,2.7-.39,1.02-.59,2.13-.59,3.31,0,1.27.2,2.44.59,3.52.39,1.07.94,2,1.66,2.78.71.78,1.57,1.4,2.56,1.84.99.45,2.1.67,3.33.67.96,0,1.89-.23,2.79-.68.91-.46,1.75-1.19,2.53-2.19l3.48,2.48c-1.07,1.47-2.38,2.54-3.92,3.21-1.54.67-3.18,1-4.92,1-1.83,0-3.51-.3-5.04-.89-1.53-.59-2.84-1.43-3.95-2.51-1.11-1.08-1.97-2.38-2.59-3.9-.63-1.52-.94-3.2-.94-5.05s.31-3.62.94-5.17c.62-1.55,1.49-2.87,2.59-3.97,1.11-1.09,2.42-1.94,3.95-2.53,1.53-.59,3.21-.89,5.04-.89,1.61,0,3.1.28,4.47.85,1.37.57,2.65,1.53,3.83,2.89l-3.28,2.41Zm-42.92-5.56h5.59l11.48,17.61h.07v-17.61h4.22v23.7h-5.36l-11.72-18.18h-.07v18.18h-4.22v-23.7Zm-20.45,0h15.7v3.82h-11.48v5.82h10.88v3.82h-10.88v6.43h12.09v3.82h-16.3v-23.7Zm-4.99,21.96c-2.92,1.56-6.19,2.34-9.81,2.34-1.83,0-3.51-.3-5.04-.89-1.53-.59-2.85-1.43-3.95-2.51-1.1-1.08-1.97-2.38-2.59-3.9-.63-1.52-.94-3.2-.94-5.05s.31-3.62.94-5.17c.63-1.55,1.49-2.87,2.59-3.97,1.11-1.09,2.42-1.94,3.95-2.53,1.53-.59,3.21-.89,5.04-.89s3.51.22,5.09.65c1.58.44,3,1.21,4.25,2.33l-3.11,3.15c-.76-.73-1.68-1.31-2.76-1.71-1.08-.4-2.23-.6-3.43-.6s-2.34.22-3.33.65c-.99.44-1.85,1.04-2.56,1.81-.71.77-1.27,1.67-1.66,2.7-.39,1.02-.59,2.13-.59,3.31,0,1.27.2,2.44.59,3.52.39,1.07.94,2,1.66,2.78.71.78,1.57,1.4,2.56,1.84.99.45,2.1.67,3.33.67,1.07,0,2.08-.1,3.03-.3.95-.2,1.79-.51,2.53-.94v-5.59h-4.85v-3.82h9.07v12.12Zm-32.2-7.3l-3.65-9.64-3.72,9.64h7.37Zm-5.36-14.66h3.65l10.21,23.7h-4.82l-2.21-5.42h-10.28l-2.14,5.42h-4.72l10.31-23.7Z"
-                      />
-                      <path
-                        className="cls-3"
-                        fill="#ee3338"
-                        d="m61.86,15.68c23.72,31.45,31.33,53.38,35.41,89.38.48,4.22-.76,5.2-2.41,6.05-1.66-11.98-3.89-33.32-16.97-31.97,2.94,17.76,5.52,36.63,5.01,54.27l76.61-.36c-.22-6.16.12-13.54-.58-19.49-1.99-16.94-4.09-34.1-9.19-50.16-5.03-15.86-14.82-33.01-27.34-47.53l-11.63-.07c8.62,9.06,24.12,32.25,29.55,54.61h-5.3c-3.59-15.5-15.36-39.14-29.4-54.54h-11.51c10.75,10.15,26.01,39.52,28.98,54.43l-4.92.11c-2.75-13.04-15.18-39.92-29.01-54.54h-10.52c11.5,12.26,24.41,35.75,29.01,54.54h-4.98c-8.18-28.74-19.34-43.08-29.01-54.54l-11.79-.2Z"
-                      />
-                      <path
-                        className="cls-2"
-                        fillRule="evenodd"
-                        fill="#3f4096"
-                        d="m29.11,56.18c7.75-19.15,18.88-35.71,23.42-40.28-2.25.09-11.78-.06-11.81-.03-4.07,4.36-12.89,15.42-17.47,23.41-2.36,4.1-3.18,5.32-1.91,10.9,3.02,13.29,2.91,26.9,2.11,40.47,0,.15,15.27,16.74,17.16,22.03-2.44.37-3-.48-4.27-2.04-7.23-8.85-8.44-10.36-16.91-18.36.83-9.7,1.75-30.2-1.59-41.25-1.07-3.52-3.37-6.96-7.58-6.21.16,31.25-14.57,51.55-9,88.02l63.08.29c-1.33-27.53,6.77-62.75,14.75-81.15.08-.19-3.53-7.8-6-12.24-2.47,3.22-12.88,20.63-17.12,39.2.33.47,1.33,1.79,1.91,2.49-.37,1.28-.86,2.7-1.1,3.53-1.66-1.97-3.84-4.93-5.26-6.72,3.57-16,14.88-37.56,19.09-42.84-1.04-1.87-3.62-6.38-4.96-7.77-7.12,9.03-16.05,24.63-20.71,38.76.69.77,1.51,1.57,1.98,2.07l-1.23,3.13c-1.3-1.51-4.49-4.87-5.63-5.76,4.74-14.06,16.26-34.11,22.87-41.87-.53-.9-5.01-6.61-5.63-7.15-10.26,11.6-17.74,26.59-23.06,39.59.55.47,1.98,1.66,2.37,2.05l-1.05,3.17c-1.03-1.09-5.5-4.87-6.43-5.48"
-                      />
-                      <path
-                        className="cls-3"
-                        fillRule="evenodd"
-                        fill="#ee3338"
-                        d="m81.79,0c14.14,0,27.16,4.77,37.51,12.77h-10.67c-7.95-4.4-17.1-6.91-26.84-6.91s-18.9,2.51-26.84,6.91h-10.67C54.62,4.77,67.64,0,81.79,0"
-                      />
-                      <rect className="cls-4" fill="#ee3338" x="77.21" y="5.67" width="3.8" height="7.12" />
-                      <rect className="cls-4" fill="#ee3338" x="70.99" y="5.67" width="3.8" height="7.12" />
-                      <rect className="cls-4" fill="#ee3338" x="83.46" y="5.67" width="3.8" height="7.12" />
-                      <rect className="cls-4" fill="#ee3338" x="89.68" y="5.67" width="3.81" height="7.12" />
-                    </svg>
-                  </Tooltip>
-                </StyledTableCell>
-                <StyledTableCell sx={{ width: "22%" }}>
-                  {(() => {
-                    // const index = Math.floor(Math.random() * GeneratedProjectNames.length);
-                    return (
-                      <a
-                        href={`/projects/show/${GeneratedProjectNames[index]}#${contract.id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <RenderEllipsisText text={GeneratedProjectNames[index]} tooltipPlacement="left" />
-                      </a>
-                    );
-                  })()}
-                </StyledTableCell>
-                <StyledTableCell sx={{ width: "10%" }}>
-                  {(() => {
-                    // const index = Math.floor(Math.random() * mokDonors.length);
-                    return (
-                      <Tooltip title={mokDonors[index].name}>
-                        <a
-                          href={`/assets/images/donors/${mokDonors[index].image}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src={`/assets/images/donors/${mokDonors[index].image}`}
-                            alt={mokDonors[index].name}
-                            style={{ width: "100px", height: "auto" }}
+                      {contract.project.name}
+                    </a>
+                  </StyledTableCell>
+                  <StyledTableCell sx={{ width: "10%" }}>
+                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", justifyContent: "center" }}>
+                      {contract.donors.map((donor) => (
+                        <Tooltip key={donor.id} title={donor.name}>
+                          <Avatar
+                            src={`${apiUrl}/aidstat/ws/public/file/meta/download/${donor.image}`}
+                            alt={donor.name || "Avatar"}
+                            sx={{
+                              width: 50,
+                              height: 50,
+                              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
+                              "& .MuiAvatar-img": {
+                                objectFit: "cover",
+                              },
+                            }}
                           />
-                        </a>
-                      </Tooltip>
-                    );
-                  })()}
-                </StyledTableCell>
-                <StyledTableCell sx={{ width: "10%", textAlign: "center" }}>
-                  <ProjectBadges status={contract.status as "In progress" | "Completed" | "Not started" | "Canceled"} />
-                </StyledTableCell>
-              </TableRow>
-            ))}
+                        </Tooltip>
+                      ))}
+                    </Box>
+                  </StyledTableCell>
+                  <StyledTableCell sx={{ width: "10%", textAlign: "center" }}>
+                    <ProjectBadges
+                      status={contract.status as "In progress" | "Completed" | "Not started" | "Canceled"}
+                    />
+                  </StyledTableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
-
-      <TablePagination
-        rowsPerPageOptions={[10, 25]}
-        component="div"
-        count={filteredContracts && filteredContracts.length ? filteredContracts.length : contracts.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <Box sx={{ mt: 2 }}>
+        <Pagination
+          siblingCount={1}
+          boundaryCount={2}
+          page={filters?.page}
+          count={pageTotal ?? 1}
+          onChange={handleChangePage}
+        />
+      </Box>
     </Box>
   );
 };

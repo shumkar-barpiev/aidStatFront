@@ -3,7 +3,7 @@ import { Box, CircularProgress, Divider, Paper, Typography } from "@mui/material
 import { useTranslation } from "react-i18next";
 import ProjectsMapFilter from "@/components/statistics/maps/ProjectsMapFilter";
 import dynamic from "next/dynamic";
-import ChartsMainBlock from "@/components/statistics/charts/ChartsMainBlock";
+import ChartsMainBlock from "@/components/statistics/blocks/ChartsMainBlock";
 
 const ProjectsMap = dynamic(() => import("@/components/statistics/maps/ProjectsMap"), {
   ssr: false,

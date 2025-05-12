@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import {
   Box,
   Table,
@@ -23,12 +24,12 @@ import { RenderEllipsisText } from "@/utils/textUtils";
 import { useProjectsStore } from "@/stores/projects/projects";
 import ProjectBadges from "@/components/projects/ProjectBadges";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
-import { getPartnerAvatar } from "@/components/other/Base64Avatar";
 import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 import { transliterate } from "@/utils/format/transliterate.ts";
+import { apiUrl } from "@/utils/constants.ts";
 
 export default function ProjectsTable() {
   const router = useRouter();
@@ -121,7 +122,20 @@ export default function ProjectsTable() {
                                 }}
                                 style={plainBtnStyle}
                               >
-                                {getPartnerAvatar(partnerName, partner.image ?? null, 40)}
+                                <Tooltip title={`${partner.name}`}>
+                                  <Avatar
+                                    src={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                                    alt={partnerName}
+                                    sx={{
+                                      width: 40,
+                                      height: 40,
+                                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
+                                      "& .MuiAvatar-img": {
+                                        objectFit: "contain",
+                                      },
+                                    }}
+                                  />
+                                </Tooltip>
                               </button>
                             );
                           })

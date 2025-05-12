@@ -3,13 +3,13 @@ import ReactDOM from "react-dom/client";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet.markercluster";
-import { useProjectsMapStore } from "@/stores/projects/projects-for-map.ts";
+import { useProjectsMapStore } from "@/stores/projects/projects-for-map";
 import { ProjectForMap } from "@/types/types";
-import { sectorIcons } from "@/utils/map/sectorIcons.ts";
-import ProjectPopup from "@/components/statistics/maps/marker/MarkerPopUp.tsx";
-import Colors from "@/styles/colors.ts";
+import { sectorIcons } from "@/utils/map/sectorIcons";
+import ProjectPopup from "@/components/statistics/maps/marker/MarkerPopUp";
+import Colors from "@/styles/colors";
 
-const MapWithClusters = () => {
+const ClustersLayer = () => {
   const map = useMap();
   const { projects } = useProjectsMapStore();
 
@@ -87,4 +87,4 @@ const MapWithClusters = () => {
   return null;
 };
 
-export default MapWithClusters;
+export default ClustersLayer;

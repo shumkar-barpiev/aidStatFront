@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ленинский р-н",
+      "id": "Ленинский район",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -904,7 +904,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Октябрьский р-н",
+      "id": "Октябрьский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -1792,7 +1792,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Первомайский р-н",
+      "id": "Первомайский район",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",
@@ -2766,7 +2766,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Свердловский р-н",
+      "id": "Свердловский район",
       "total": "400",
       "geometry": {
         "type": "MultiPolygon",

@@ -17,10 +17,10 @@ import chuyRegion from "@/utils/map/statesChuyRegion.json";
 import issykKulRegion from "@/utils/map/statesIssykKulRegion.json";
 import bishkekCity from "@/utils/map/statesBishkekCity.json";
 import oshCity from "@/utils/map/statesOshCity.json";
-import HeatLayer from "@/components/statistics/maps/HeatLayer.tsx";
-import MapWithClusters from "@/components/statistics/maps/MapWithClusters.tsx";
-import MapWithDistricts from "@/components/statistics/maps/MapWithDistricts.tsx";
-import HeatLayerLegend from "@/components/statistics/maps/HeatLayerLegend.tsx";
+import HeatLayer from "@/components/statistics/maps/layers/HeatLayer";
+import ClustersLayer from "@/components/statistics/maps/layers/ClustersLayer";
+import MapWithDistricts from "@/components/statistics/maps/layers/DistrictsLayer";
+import HeatLayerLegend from "@/components/statistics/maps/layers/HeatLayerLegend";
 
 const districtsMap: Record<string, any> = {
   "Баткенская область": batkenRegion,
@@ -123,7 +123,7 @@ const ProjectsMap = () => {
     >
       <ResponsiveZoom />
       <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=99425f3c-24bb-4e1e-94fc-c257d13c34a5" />
-      <MapWithClusters />
+      <ClustersLayer />
       <HeatLayerLegend />
       <HeatLayer />
       <MemoizedMapWithRegions />

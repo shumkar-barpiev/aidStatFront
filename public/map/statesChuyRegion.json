@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Московский р-н",
+      "id": "Московский район",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -573,7 +573,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Чуйский р-н",
+      "id": "Чуйский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -1180,7 +1180,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Сокулукский р-н",
+      "id": "Сокулукский район",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",
@@ -2462,7 +2462,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Панфиловский р-н",
+      "id": "Панфиловский район",
       "total": "400",
       "geometry": {
         "type": "MultiPolygon",
@@ -4429,7 +4429,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Кеминский р-н",
+      "id": "Кеминский район",
       "total": "500",
       "geometry": {
         "type": "MultiPolygon",
@@ -5926,7 +5926,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Жайылский р-н",
+      "id": "Жайылский район",
       "total": "600",
       "geometry": {
         "type": "MultiPolygon",
@@ -7005,7 +7005,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ыссык-Атинский р-н",
+      "id": "Ыссык-Атинский район",
       "total": "700",
       "geometry": {
         "type": "MultiPolygon",
@@ -7524,7 +7524,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Аламудунский р-н",
+      "id": "Аламудунский район",
       "total": "800",
       "geometry": {
         "type": "MultiPolygon",

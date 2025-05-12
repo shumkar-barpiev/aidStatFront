@@ -3572,7 +3572,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "г. Бишкек",
+      "id": "город Бишкек",
       "total": "800",
       "geometry": {
         "type": "MultiPolygon",
@@ -3994,7 +3994,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "г. Ош",
+      "id": "город Ош",
       "total": "900",
       "geometry": {
         "type": "MultiPolygon",

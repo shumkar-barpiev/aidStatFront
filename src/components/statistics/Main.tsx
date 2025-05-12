@@ -3,10 +3,10 @@
 import React from "react";
 import { Box, Tab, Tabs } from "@mui/material";
 import CustomTabPanel from "@/components/tabs/CustomTabPanel";
-import ProjectsTab from "@/components/statistics/ProjectsTab";
-import ContractsTab from "@/components/statistics/ContractsTab";
+import ProjectsTab from "@/components/statistics/tabs/ProjectsTab";
+import ContractsTab from "@/components/statistics/tabs/ContractsTab";
 import { a11yProps } from "@/utils/tab/a11yProps";
-import { useQueryTab } from "@/utils/tab/useQueryTab.ts";
+import { useQueryTab } from "@/utils/tab/useQueryTab";
 
 export default function Main() {
   const { currentTab, handleTabChange } = useQueryTab();

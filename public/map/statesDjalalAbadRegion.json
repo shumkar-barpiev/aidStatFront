@@ -4,7 +4,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ала-Букинский р-н",
+      "id": "Ала-Букинский район",
       "total": "100",
       "geometry": {
         "type": "MultiPolygon",
@@ -1181,7 +1181,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Сузакский р-н",
+      "id": "Сузакский район",
       "total": "200",
       "geometry": {
         "type": "MultiPolygon",
@@ -2167,7 +2167,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Тогуз-Тороузский р-н",
+      "id": "Тогуз-Тороузский район",
       "total": "300",
       "geometry": {
         "type": "MultiPolygon",
@@ -3213,7 +3213,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Токтогульский р-н",
+      "id": "Токтогульский район",
       "total": "400",
       "geometry": {
         "type": "MultiPolygon",
@@ -5504,7 +5504,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Чаткальский р-н",
+      "id": "Чаткальский район",
       "total": "500",
       "geometry": {
         "type": "Polygon",
@@ -7232,7 +7232,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Базар-Курганский р-н",
+      "id": "Базар-Курганский район",
       "total": "600",
       "geometry": {
         "type": "MultiPolygon",
@@ -7863,7 +7863,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Ноокенский р-н",
+      "id": "Ноокенский район",
       "total": "700",
       "geometry": {
         "type": "MultiPolygon",
@@ -8331,7 +8331,7 @@
     {
       "type": "Feature",
       "properties": {},
-      "id": "Аксыйский р-н",
+      "id": "Аксыйский район",
       "total": "800",
       "geometry": {
         "type": "MultiPolygon",

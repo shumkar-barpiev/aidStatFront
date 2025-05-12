@@ -9,7 +9,7 @@ interface Props {
   setSelectedRegion: (id: string | null) => void;
 }
 
-const MapWithDistricts: React.FC<Props> = ({ districtsData, selectedRegion, setSelectedRegion }) => {
+const DistrictsLayer: React.FC<Props> = ({ districtsData, selectedRegion, setSelectedRegion }) => {
   const map = useMap();
 
   if (!districtsData) return null;
@@ -48,4 +48,4 @@ const MapWithDistricts: React.FC<Props> = ({ districtsData, selectedRegion, setS
   );
 };
 
-export default React.memo(MapWithDistricts);
+export default React.memo(DistrictsLayer);
