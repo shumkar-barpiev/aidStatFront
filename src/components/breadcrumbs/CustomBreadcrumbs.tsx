@@ -16,7 +16,7 @@ interface BreadcrumbProps {
   rootLabel?: string;
 }
 
-const CustomBreadcrumbs: React.FC<BreadcrumbProps> = ({ path, rootPath = "/", rootLabel = "mainPage" }) => {
+const CustomBreadcrumbs: React.FC<BreadcrumbProps> = ({ path, rootPath = "/", rootLabel = "pages.main" }) => {
   const { t } = useTranslation();
   const router = useRouter();
   const pathSegments = path.split("/").filter((segment) => segment.trim() !== "");
@@ -25,10 +25,9 @@ const CustomBreadcrumbs: React.FC<BreadcrumbProps> = ({ path, rootPath = "/", ro
     const segmentPath = `/${pathSegments.slice(0, index + 1).join("/")}`;
     const isLast = index === pathSegments.length - 1;
 
-    const label = segment
-      .split(" ")
-      .map((word) => word)
-      .join(" ");
+    const segmentKey = segment.replace(/\s+/g, "_").toLowerCase();
+
+    const label = t(`pages.${segmentKey}`, { defaultValue: segment });
 
     return {
       label,
@@ -57,7 +56,7 @@ const CustomBreadcrumbs: React.FC<BreadcrumbProps> = ({ path, rootPath = "/", ro
         }}
       >
         <HomeIcon sx={{ mr: 0.5, width: 24, height: 24 }} />
-        {t(`${rootLabel}`)}
+        {t(rootLabel)}
       </Link>
 
       {breadcrumbItems.map((item, index) =>
@@ -90,7 +89,7 @@ const CustomBreadcrumbs: React.FC<BreadcrumbProps> = ({ path, rootPath = "/", ro
               "&:hover": { color: "primary.dark" },
             }}
           >
-            {t(`${item.label}`)}
+            {item.label}
           </Link>
         )
       )}

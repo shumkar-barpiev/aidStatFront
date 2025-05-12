@@ -91,10 +91,10 @@ const PartnersTab = () => {
               maxWidth: { xs: "100%", md: "90%" },
             }}
           >
-            {t("partners")}
+            {t("partnersPage.title")}
           </Typography>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
-            {t("partnersPageDescription")}
+            {t("partnersPage.description")}
           </Typography>
           <Button
             variant="contained"
@@ -102,7 +102,7 @@ const PartnersTab = () => {
             sx={{ my: 2, bgcolor: Colors.darkBlue }}
             startIcon={<MoveDownOutlinedIcon />}
           >
-            {t("goToPartnersBox")}
+            {t("partnersPage.goToPartnersBox")}
           </Button>
         </Box>
       </Stack>

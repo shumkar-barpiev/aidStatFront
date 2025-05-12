@@ -1,4 +1,5 @@
 "use client";
+
 import { Fab, Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useState } from "react";
@@ -23,7 +24,7 @@ export const FeedbackBtn = () => {
   if (!isClient || !mounted) return null;
 
   return (
-    <Tooltip title={t("feedbackBtnLabel")} arrow>
+    <Tooltip title={t("ui.feedbackBtnLabel")} arrow>
       <Fab
         color="primary"
         variant={isDesktop ? "extended" : "circular"}
@@ -38,7 +39,7 @@ export const FeedbackBtn = () => {
         onClick={handleClick}
       >
         <FeedbackIcon sx={{ mr: isDesktop ? 1 : 0 }} />
-        {isDesktop && t("feedbackBtnLabel")}
+        {isDesktop && t("ui.feedbackBtnLabel")}
       </Fab>
     </Tooltip>
   );

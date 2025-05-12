@@ -59,10 +59,10 @@ export default function Main() {
               maxWidth: "100%",
             }}
           >
-            {t("projectsPage")}
+            {t("projectsPage.title")}
           </Typography>
           <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ maxWidth: "100%" }}>
-            {t("projectsPageDescription")}
+            {t("projectsPage.description")}
           </Typography>
           <Button
             variant="contained"
@@ -70,7 +70,7 @@ export default function Main() {
             sx={{ marginBottom: 2, bgcolor: Colors.darkBlue }}
             startIcon={<MoveDownOutlinedIcon />}
           >
-            {t("goToProjectsTableBox")}
+            {t("projectsPage.goToProjectsTableBox")}
           </Button>
         </Box>
 

@@ -3,8 +3,10 @@
 import React from "react";
 import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export const ShareButtons = () => {
+  const { t } = useTranslation();
   const url = typeof window !== "undefined" ? encodeURIComponent(window.location.href) : "";
   const text = encodeURIComponent("Интересная ссылка — загляни:");
 
@@ -17,11 +19,11 @@ export const ShareButtons = () => {
   return (
     <Box my={3}>
       <Typography variant="subtitle1" gutterBottom>
-        Поделиться:
+        {t("ui.shareBtns.title")}:
       </Typography>
 
       <Box display="flex" gap={1} alignItems="center">
-        <Tooltip title="Поделиться в Telegram">
+        <Tooltip title={t("ui.shareBtns.shareInTG")}>
           <IconButton
             component="a"
             href={shareLinks.telegram}
@@ -38,7 +40,7 @@ export const ShareButtons = () => {
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Поделиться в WhatsApp">
+        <Tooltip title={t("ui.shareBtns.shareInWA")}>
           <IconButton
             component="a"
             href={shareLinks.whatsapp}
@@ -55,7 +57,7 @@ export const ShareButtons = () => {
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Поделиться в Facebook">
+        <Tooltip title={t("ui.shareBtns.shareInFB")}>
           <IconButton component="a" href={shareLinks.facebook} target="_blank" rel="noopener noreferrer" color="info">
             <Image
               src="/assets/images/icons/social-media-icons/facebook.png"

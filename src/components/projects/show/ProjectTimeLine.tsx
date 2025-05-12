@@ -11,13 +11,15 @@ import TimelineSeparator from "@mui/lab/TimelineSeparator";
 import TimelineConnector from "@mui/lab/TimelineConnector";
 import { TProjectModel } from "@/models/project/ProjectModel";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
+import { useTranslation } from "react-i18next";
 
 export default function ProjectTimeLine({ project }: { project: TProjectModel | null }) {
+  const { t } = useTranslation();
   return (
     <Box>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
         <EventNoteIcon color="primary" fontSize="large" />
-        <Typography variant="h6">Хронология проекта</Typography>
+        <Typography variant="h6">{t("projectInfoPage.projectTimeLine.title")}</Typography>
       </Box>
       <Timeline position="alternate">
         {project?.timeLine?.startDate && (
@@ -32,7 +34,7 @@ export default function ProjectTimeLine({ project }: { project: TProjectModel | 
             </TimelineSeparator>
             <TimelineContent sx={{ m: "auto 0" }}>
               <Typography variant="h6" component="span">
-                Дата начала
+                {t("projectInfoPage.projectTimeLine.signingDate")}
               </Typography>
             </TimelineContent>
           </TimelineItem>
@@ -74,7 +76,7 @@ export default function ProjectTimeLine({ project }: { project: TProjectModel | 
             </TimelineSeparator>
             <TimelineContent sx={{ m: "auto 0" }}>
               <Typography variant="h6" component="span">
-                Дата окончания
+                {t("projectInfoPage.projectTimeLine.endDate")}
               </Typography>
             </TimelineContent>
           </TimelineItem>

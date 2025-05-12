@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import { NAVBAR_HEIGHT } from "@/utils/constants";
 import dynamic from "next/dynamic";
 import { useMapContractsViewModel } from "@/viewmodels/contracts/useMapContractsViewModel";
+import { useTranslation } from "react-i18next";
 
 const DonutChart = dynamic(() => import("@/components/statistics/charts/pie-chart-components/DonutChart"), {
   ssr: false,
@@ -18,6 +19,8 @@ const MOBILE_OFFSET = NAVBAR_HEIGHT + TABS_HEIGHT + 10;
 
 const ContractsMapBlock = () => {
   const { displayData, handleMouseEnter, handleMouseLeave, handleClick, handleBack } = useMapContractsViewModel();
+  const { t } = useTranslation();
+
   return (
     <Box
       display="flex"
@@ -49,16 +52,19 @@ const ContractsMapBlock = () => {
           <>
             <DonutChart
               key={`budget-${displayData.totalContracts}-${displayData.lowBudget}-${displayData.mediumBudget}-${displayData.highBudget}`}
-              title="Суммы контрактов"
+              title={t("statisticsPage.charts.pieContractsSum")}
               seriesOptions={[displayData.lowBudget, displayData.mediumBudget, displayData.highBudget]}
               labels={["до $100.000", "$100.000 - $500.000", "от $500.000"]}
               totalContracts={displayData.totalContracts}
             />
             <DonutChart
               key={`types-${displayData.totalContracts}-${displayData.goodsContracts}-${displayData.infrastructureContracts}`}
-              title="Типы контрактов"
+              title={t("statisticsPage.charts.pieContractsTypes")}
               seriesOptions={[displayData.goodsContracts, displayData.infrastructureContracts]}
-              labels={["Товары", "Инфраструктура"]}
+              labels={[
+                t("statisticsPage.charts.donutLabels.goods"),
+                t("statisticsPage.charts.donutLabels.infrastructure"),
+              ]}
               totalContracts={displayData.totalContracts}
             />
           </>

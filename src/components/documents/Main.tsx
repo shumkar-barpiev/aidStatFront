@@ -121,7 +121,7 @@ export const Main = () => {
               mt: { xs: 3, md: 0 },
             }}
           >
-            {t("documentsPageTitle")}
+            {t("documentsPage.title")}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -129,7 +129,7 @@ export const Main = () => {
             gutterBottom
             sx={{ maxWidth: "100%", fontSize: { xs: "0.85rem", md: "1rem" } }}
           >
-            {t("documentsPageDescription")}
+            {t("documentsPage.description")}
           </Typography>
         </Box>
 
@@ -157,7 +157,7 @@ export const Main = () => {
                 maxWidth: "100%",
               }}
             >
-              {t("documentsPage")}
+              {t("documentsPage.title")}
             </Typography>
           </Stack>
           <ToggleButtonGroup
@@ -245,7 +245,7 @@ export const Main = () => {
                             startIcon={<DownloadIcon />}
                             onClick={() => downloadDocument(doc, getFileExtensionFromMime(doc.documentType))}
                           >
-                            {t("download")}
+                            {t("common.download")}
                           </Button>
                         </Box>
                       </Card>
@@ -281,7 +281,7 @@ export const Main = () => {
                       startIcon={<DownloadIcon />}
                       onClick={() => downloadDocument(doc, getFileExtensionFromMime(doc.documentType))}
                     >
-                      {t("download")}
+                      {t("common.download")}
                     </Button>
                   </ListItem>
                 ))}

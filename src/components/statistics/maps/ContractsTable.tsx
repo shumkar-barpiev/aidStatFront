@@ -21,19 +21,25 @@ import { imageUrl } from "@/utils/constants";
 import { useTableContractsViewModel } from "@/viewmodels/contracts/useTableContractsViewModel";
 import ContractsSearchField from "@/components/statistics/components/search/ContractsSearchField";
 import { transliterate } from "@/utils/format/transliterate";
+import { useTranslation } from "react-i18next";
+import { formattedUpdateTime } from "@/utils/format/formattedUpdateTime";
 
 const ContractsTable = () => {
   const { contractsForTable, pageTotal, totalContracts, filters } = useContractsStore();
   const { handleChangePage, handleSetFilter } = useTableContractsViewModel();
+  const { t } = useTranslation();
 
   return (
     <Box>
       <ContractsSearchField handleSetFilter={handleSetFilter} />
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", my: 1 }}>
-        <Typography>Общее количество: {totalContracts}</Typography>
         <Typography>
-          Дата автоматического обновления:{" "}
-          {contractsForTable?.updateTime ? contractsForTable.updateTime : "30.04.2025, 11:42"}
+          {t("common.totalCount")}: {totalContracts}
+        </Typography>
+        <Typography>
+          {t("common.updateTime")}
+          {": "}
+          {formattedUpdateTime(contractsForTable?.updateTime, "30.04.2025, 11:42")}
         </Typography>
       </Box>
       <TableContainer component={Paper} sx={{ height: "100%" }}>
@@ -50,19 +56,19 @@ const ContractsTable = () => {
             >
               <StyledTableHeadCell sx={{ width: "3%", textAlign: "left", paddingLeft: "20px" }}>№</StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "30%", textAlign: "left", paddingLeft: "20px" }}>
-                Наименование
+                {t("ui.table.contract")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
-                Сумма
+                {t("ui.table.totalSum")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
-                Исполнитель
+                {t("ui.table.implementor")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "22%", textAlign: "left", paddingLeft: "20px" }}>
-                Проект
+                {t("ui.table.project")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
-                Донор
+                {t("ui.table.donor")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "10%" }}>Статус</StyledTableHeadCell>
             </TableRow>

@@ -12,6 +12,7 @@ import PolarChart from "@/components/statistics/charts/pie-chart-components/Pola
 import ChartCardLayout from "@/components/statistics/charts/chart-cards/ChartCardLayout";
 import HorizontalStackedBarChart from "@/components/statistics/charts/bar-chart-components/HorizontalStackedBarChart";
 import ChartCard from "@/components/statistics/charts/chart-cards/ChartCard";
+import { useTranslation } from "react-i18next";
 
 const ChartsMainBlock = () => {
   const { regions } = useRegionsViewModel();
@@ -31,6 +32,7 @@ const ChartsMainBlock = () => {
     topDonorsByInvestmentByRegion,
     loadingState,
   } = cardsStore;
+  const { t } = useTranslation();
 
   const energeticsProjects = useMemo(() => {
     return (
@@ -59,13 +61,13 @@ const ChartsMainBlock = () => {
   return (
     <Grid>
       <AreaChart
-        title="Производство электроэнергии по источникам (2001–настоящее время)"
+        title={t("statisticsPage.charts.areaElectricityTitle")}
         projects={energeticsProjects}
         series={EnergeticsMok}
         yTitle="млн кВт⋅ч"
       />
       <AreaChart
-        title="Доходы от перевозок грузов всеми видами транспорта (2001–настоящее время)"
+        title={t("statisticsPage.charts.freightTransportIncomeTitle")}
         projects={transportsProjects}
         series={TransportsMok}
         yTitle="млн сом"
@@ -75,7 +77,7 @@ const ChartsMainBlock = () => {
         {selectedOption.region !== 0 && topDonorsByInvestmentByRegion && topDonorsByInvestmentByRegion.data && (
           <Grid item xs={12} sm={12} lg={6}>
             <ChartCard
-              title="Корреляция доноров по регионам"
+              title={t("statisticsPage.charts.barCorrelationDonorToRegionTitle")}
               total={topDonorsByInvestmentByRegion.total}
               unit={topDonorsByInvestmentByRegion.unit}
               data={topDonorsByInvestmentByRegion.data as ChartDataSum[]}
@@ -91,7 +93,7 @@ const ChartsMainBlock = () => {
         {selectedOption.sector !== 0 && topDonorsByInvestmentBySector && topDonorsByInvestmentBySector.data && (
           <Grid item xs={12} sm={12} lg={6}>
             <ChartCard
-              title="Корреляция доноров по секторам"
+              title={t("statisticsPage.charts.barCorrelationDonorToSectorTitle")}
               total={topDonorsByInvestmentBySector.total}
               unit={topDonorsByInvestmentBySector.unit}
               data={topDonorsByInvestmentBySector.data as ChartDataSum[]}
@@ -105,7 +107,7 @@ const ChartsMainBlock = () => {
         )}
 
         <ChartCardLayout
-          title="Топ доноров по инвестициям"
+          title={t("statisticsPage.charts.barDonorsToSumTitle")}
           total={topDonorsByInvestment?.total}
           unit={topDonorsByInvestment?.unit}
           loading={loadingState.topDonorsByProjectCount}
@@ -119,7 +121,7 @@ const ChartsMainBlock = () => {
         </ChartCardLayout>
 
         <ChartCardLayout
-          title="Топ доноров по количеству проектов"
+          title={t("statisticsPage.charts.barDonorsToProjectsTitle")}
           total={topDonorsByProjectCount?.total}
           unit={topDonorsByProjectCount?.unit}
           loading={loadingState.topDonorsByProjectCount}
@@ -133,7 +135,7 @@ const ChartsMainBlock = () => {
         </ChartCardLayout>
 
         <ChartCardLayout
-          title="Топ секторов по инвестициям"
+          title={t("statisticsPage.charts.barSectorsToSumTitle")}
           total={topSectorsByInvestment?.total}
           unit={topSectorsByInvestment?.unit}
           loading={loadingState.topSectorsByInvestment}
@@ -147,7 +149,7 @@ const ChartsMainBlock = () => {
         </ChartCardLayout>
 
         <ChartCardLayout
-          title="Топ секторов по количеству проектов"
+          title={t("statisticsPage.charts.barSectorsToProjectsTitle")}
           total={topSectorsByProjectCount?.total}
           unit={topSectorsByProjectCount?.unit}
           loading={loadingState.topSectorsByProjectCount}
@@ -161,7 +163,7 @@ const ChartsMainBlock = () => {
         </ChartCardLayout>
 
         <ChartCardLayout
-          title="Топ исполняющих агентств по количеству проектов"
+          title={t("statisticsPage.charts.barImplementorsToProjectsTitle")}
           total={topImplementingAgenciesByProjectCount?.total}
           unit={topImplementingAgenciesByProjectCount?.unit}
           loading={loadingState.topImplementingAgenciesByProjectCount}
@@ -175,7 +177,7 @@ const ChartsMainBlock = () => {
         </ChartCardLayout>
 
         <ChartCardLayout
-          title="Топ реализующих агентств по количеству проектов"
+          title={t("statisticsPage.charts.barExecutorsToProjectsTitle")}
           total={topExecutiveAgenciesByProjectCount?.total}
           unit={topExecutiveAgenciesByProjectCount?.unit}
           loading={loadingState.topExecutiveAgenciesByProjectCount}

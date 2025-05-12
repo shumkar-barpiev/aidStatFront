@@ -4,7 +4,7 @@ import { useAuthStore } from "@/stores/auth/auth";
 import React, { useEffect, useState } from "react";
 import Snackbar from "@/components/other/Snackbar";
 import LoginPage from "@/components/login/LoginPage";
-import { apiUrl } from "@/utils/constants.ts";
+import { apiUrl } from "@/utils/constants";
 
 export default function SignIn() {
   const authStore = useAuthStore();

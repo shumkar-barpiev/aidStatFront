@@ -28,7 +28,7 @@ const ProjectsTab = () => {
   return (
     <Box>
       <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
-        Тепловая карта по распределению проектов
+        {t("statisticsPage.projectsTab.mapTitle")}
       </Typography>
       <Divider sx={{ mb: 2, borderColor: "darkblue", borderBottomWidth: 2 }} />
       <Box sx={{ width: "100%", height: "100%", mb: 6 }}>
@@ -40,7 +40,7 @@ const ProjectsTab = () => {
         </Box>
       </Box>
       <Typography variant="h4" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
-        {t("statisticsTitle")}
+        {t("statisticsPage.projectsTab.chartsTitle")}
       </Typography>
       <Divider sx={{ mb: 6, borderColor: "darkblue", borderBottomWidth: 2 }} />
       <ChartsMainBlock />

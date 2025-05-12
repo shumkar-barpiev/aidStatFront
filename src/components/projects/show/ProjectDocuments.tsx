@@ -43,7 +43,7 @@ export const ProjectDocuments = () => {
   }, [projectStore.item]);
 
   if (documents.length === 0) {
-    return <Typography>{t("noDocumentsAvailable")}</Typography>;
+    return <Typography>{t("common.noDocumentsAvailable")}</Typography>;
   }
 
   return (

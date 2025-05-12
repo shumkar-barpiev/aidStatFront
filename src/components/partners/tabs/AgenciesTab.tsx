@@ -5,8 +5,11 @@ import { Box, Stack, Typography } from "@mui/material";
 import AgenciesList from "@/components/partners/agencies/AgenciesList";
 import Colors from "@/styles/colors";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 const AgenciesTab = () => {
+  const { t } = useTranslation();
+
   return (
     <Box>
       <Stack
@@ -53,7 +56,7 @@ const AgenciesTab = () => {
               color: Colors.darkBlue,
             }}
           >
-            Агентства
+            {t("agenciesPage.title")}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -61,8 +64,7 @@ const AgenciesTab = () => {
             gutterBottom
             sx={{ maxWidth: "100%", color: Colors.darkBlue }}
           >
-            Здесь представлена информация об исполнительных агентствах, участвующих в реализации проектов и программ, а
-            также об их вкладе в устойчивое развитие и повышение эффективности проводимых инициатив.
+            {t("agenciesPage.description")}
           </Typography>
         </Box>
       </Stack>

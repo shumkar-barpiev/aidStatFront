@@ -135,7 +135,7 @@ export const Footer = () => {
                   justifyContent={"space-between"}
                 >
                   <Typography variant="body2" sx={{ mb: 1 }}>
-                    {t("allRightsReserved")}
+                    {t("common.allRightsReserved")}
                   </Typography>
                   <Typography variant="body2" sx={{ mb: 1 }}>
                     © 2025 AIDSTAT

@@ -52,19 +52,19 @@ export default function ProjectsTable() {
               }}
             >
               <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
-                Название
+                {t("ui.table.project")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
-                Партнеры
+                {t("ui.table.partners")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
-                Секторы
+                {t("ui.table.sectors")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
-                Дата начала
+                {t("ui.table.startDate")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
-                Сумма проекта
+                {t("ui.table.totalSum")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%" }}>Статус</StyledTableHeadCell>
             </TableRow>

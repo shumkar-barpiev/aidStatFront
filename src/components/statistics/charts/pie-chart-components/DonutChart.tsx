@@ -5,6 +5,7 @@ import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Colors from "@/styles/colors.ts";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   title: string;
@@ -16,6 +17,7 @@ interface Props {
 const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels, totalContracts }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { t } = useTranslation();
 
   const [options, setOptions] = useState<ApexOptions>({
     chart: {
@@ -56,7 +58,7 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels, totalContra
             },
             total: {
               show: true,
-              label: "Контрактов",
+              label: t("statisticsPage.charts.donutLabel"),
               fontSize: isMobile ? "10px" : "14px",
               fontWeight: 600,
               color: Colors.darkBlue,
@@ -109,4 +111,4 @@ const DonutChart: React.FC<Props> = ({ title, seriesOptions, labels, totalContra
   );
 };
 
-export default React.memo(DonutChart);
+export default DonutChart;
