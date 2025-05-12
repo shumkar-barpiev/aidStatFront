@@ -20,6 +20,7 @@ import { useContractsStore } from "@/stores/contracts/contracts";
 import { apiUrl } from "@/utils/constants";
 import { useTableContractsViewModel } from "@/viewmodels/contracts/useTableContractsViewModel";
 import ContractsSearchField from "@/components/statistics/components/search/ContractsSearchField";
+import { transliterate } from "@/utils/format/transliterate.ts";
 
 const ContractsTable = () => {
   const { contractsForTable, pageTotal, totalContracts, filters } = useContractsStore();
@@ -109,7 +110,7 @@ const ContractsTable = () => {
                   </StyledTableCell>
                   <StyledTableCell sx={{ width: "22%", whiteSpace: "normal", wordBreak: "break-word" }}>
                     <a
-                      href={`/projects/show/${contract.project.name}#${contract.project.id}`}
+                      href={`/projects/show/${transliterate(contract.project.name)}#${contract.project.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
