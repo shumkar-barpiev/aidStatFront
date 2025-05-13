@@ -181,8 +181,8 @@ export const NavigationBar = () => {
                 key={"login"}
                 component="button"
                 onClick={() => {
-                  // router.push("/login");
-                  // toggleMobileMenu();
+                  router.push("/sign-in");
+                  toggleMobileMenu();
                 }}
                 sx={{
                   bgcolor: "transparent",
@@ -194,7 +194,7 @@ export const NavigationBar = () => {
                 }}
               >
                 <ListItemText
-                  primary={t("login")}
+                  primary={t("auth.login")}
                   primaryTypographyProps={{
                     variant: "h6",
                     textAlign: "left",

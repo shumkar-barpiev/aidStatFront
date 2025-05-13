@@ -25,7 +25,7 @@ const ContractsSearchField: React.FC<Props> = ({ handleSetFilter }) => {
   return (
     <StyledTextField
       fullWidth
-      placeholder={t("search-placeholder")}
+      placeholder={t("ui.search-placeholder")}
       variant="outlined"
       onChange={onChange}
       value={inputValue}
