@@ -28,8 +28,8 @@ import { plainBtnStyle } from "@/components/navigation-bar/NavigationBar";
 import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
-import { transliterate } from "@/utils/format/transliterate.ts";
-import { apiUrl } from "@/utils/constants.ts";
+import { transliterate } from "@/utils/format/transliterate";
+import { imageUrl } from "@/utils/constants";
 
 export default function ProjectsTable() {
   const router = useRouter();
@@ -52,19 +52,19 @@ export default function ProjectsTable() {
               }}
             >
               <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
-                Название
+                {t("ui.table.project")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
-                Партнеры
+                {t("ui.table.partners")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
-                Секторы
+                {t("ui.table.sectors")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
-                Дата начала
+                {t("ui.table.startDate")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
-                Сумма проекта
+                {t("ui.table.totalSum")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%" }}>Статус</StyledTableHeadCell>
             </TableRow>
@@ -124,7 +124,7 @@ export default function ProjectsTable() {
                               >
                                 <Tooltip title={`${partner.name}`}>
                                   <Avatar
-                                    src={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                                    src={`${imageUrl}${partner.image}`}
                                     alt={partnerName}
                                     sx={{
                                       width: 40,

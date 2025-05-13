@@ -4,8 +4,10 @@ import Colors from "@/styles/colors";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 import { Paper, Table, TableBody, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export const ProjectGrantCreditTable = ({ items }: { items: Record<string, any>[] }) => {
+  const { t } = useTranslation();
   return (
     items && (
       <TableContainer component={Paper} elevation={1}>
@@ -20,10 +22,10 @@ export const ProjectGrantCreditTable = ({ items }: { items: Record<string, any>[
                 height: "60px",
               }}
             >
-              <StyledTableHeadCell sx={{ width: "25%" }}>Партнер (кредитор)</StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "25%" }}>Номер кредита</StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "25%" }}>Сумма</StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "25%" }}>Сумма (в USD)</StyledTableHeadCell>
+              <StyledTableHeadCell sx={{ width: "25%" }}>{t("projectInfoPage.table.partner")}</StyledTableHeadCell>
+              <StyledTableHeadCell sx={{ width: "25%" }}>{t("projectInfoPage.table.loanNumber")}</StyledTableHeadCell>
+              <StyledTableHeadCell sx={{ width: "25%" }}>{t("projectInfoPage.table.sum")}</StyledTableHeadCell>
+              <StyledTableHeadCell sx={{ width: "25%" }}>{t("projectInfoPage.table.foreignSum")}</StyledTableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>

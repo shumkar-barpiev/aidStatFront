@@ -1,48 +1,181 @@
 {
-  "search-placeholder": "Search",
+  "pages": {
+    "main": "Home",
+    "projects": "Projects",
+    "developmentProjects": "Development Projects",
+    "statistics": "Statistics",
+    "partners": "Partners",
+    "contacts": "Contacts",
+    "documents": "Documents",
+    "about": "About Us",
+    "news": "News",
+    "useTerms": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy"
+  },
+  "auth": {
+    "login": "Login",
+    "signIn": "Sign In",
+    "signInDescription": "Welcome back! Please enter your details",
+    "username": "Username",
+    "password": "Password",
+    "usernameRequiredMessage": "Username is required.",
+    "passwordRequiredMessage": "Password is required."
+  },
+  "mainPage": {
+    "heroSectionTitle": "Monitoring of projects for the creation and development of Kyrgyzstan's infrastructure",
+    "heroSectionDescription": "Up-to-date information on projects, funding, and implementation",
+    "goToProjectsBtn": "Go to projects",
+    "projectsBlockTitle": "Projects",
+    "mainBlockTitle": "AIDSTAT – Supporting Sustainable Development!",
+    "mainBlockDescription": "The AIDSTAT project aims to create a monitoring system for investments and government expenditures in the Kyrgyz Republic. By using digital technologies, the project will ensure transparency and efficiency in public financial management. AIDSTAT will allow tracking investment processes in real-time, improving control over spending, and supporting informed decision-making. The goal is to increase accountability and provide citizens with access to information about government investments."
+  },
+  "projectsPage": {
+    "title": "Projects",
+    "description": "Explore our projects, learn about their goals, implementation stages, and impact on society. Let's make Kyrgyzstan even better together!",
+    "goToProjectsTableBox": "Projects Table"
+  },
+  "projectInfoPage": {
+    "description": "Project Description",
+    "totalFunding": "Total Funding",
+    "partners": "Partners",
+    "implementorAgency": "Implementing Agency",
+    "executingAgency": "Executing Agency",
+    "sectors": "Sectors",
+    "coverage": "Geographical Coverage",
+    "coFinancingAmount": "Co-financing Amount",
+    "technicalAssistanceAmount": "Technical Assistance Amount",
+    "domesticFinancingAbsorption": "Domestic Financing Absorption",
+    "externalFinancingAbsorption": "External Financing Absorption",
+    "absorption": {
+      "total": "For the entire period",
+      "currentYear": "For the current year"
+    },
+    "projectTimeLine": {
+      "title": "Project Timeline",
+      "startDate": "Start Date",
+      "signingDate": "Signing Date",
+      "ratificationDate": "Ratification Date",
+      "implementationStart": "Project Implementation Start",
+      "effectiveDate": "Project Effective Date",
+      "fundingClosureDate": "Funding Closure Date",
+      "negotiationDate": "Negotiation Date",
+      "endDate": "End Date"
+    },
+    "table": {
+      "loan": "Loan",
+      "grant": "Grant",
+      "partner": "Partner (Creditor)",
+      "loanNumber": "Loan Number",
+      "sum": "Amount",
+      "foreignSum": "Amount (USD)"
+    },
+    "documents": "Document"
+  },
+  "statisticsPage": {
+    "projectsTab": {
+      "mapTitle": "Heatmap of Project Distribution",
+      "chartsTitle": "Statistics"
+    },
+    "charts": {
+      "areaElectricityTitle": "Electricity Generation by Source (2001–Present)",
+      "freightTransportIncomeTitle": "Freight Transport Income by All Modes (2001–Present)",
+      "barCorrelationDonorToRegionTitle": "Donor-to-Region Correlation",
+      "barCorrelationDonorToSectorTitle": "Donor-to-Sector Correlation",
+      "barDonorsToSumTitle": "Top Donors by Investment",
+      "barDonorsToProjectsTitle": "Top Donors by Number of Projects",
+      "barSectorsToSumTitle": "Top Sectors by Investment",
+      "barSectorsToProjectsTitle": "Top Sectors by Number of Projects",
+      "barImplementorsToProjectsTitle": "Top Implementing Agencies by Number of Projects",
+      "barExecutorsToProjectsTitle": "Top Executing Agencies by Number of Projects",
+      "pieContractsSum": "Contract Amounts",
+      "pieContractsTypes": "Contract Types",
+      "pieEmptyContracts": "No contracts",
+      "donutLabel": "Contracts",
+      "donutLabels": {
+        "goods": "Goods",
+        "infrastructure": "Infrastructure"
+      }
+    }
+  },
+  "aboutPage": {
+    "title": "Contacts"
+  },
+  "partnersPage": {
+    "title": "Partners",
+    "description": "This section provides information about projects and programs supported by donors, as well as their impact on the economic and social progress of the country.",
+    "goToPartnersBox": "Our partners"
+  },
+  "agenciesPage": {
+    "title": "Agencies",
+    "description": "This section provides information about the executive agencies involved in the implementation of projects and programs, as well as their contribution to sustainable development and enhancing the effectiveness of ongoing initiatives.",
+    "card": {
+      "website": "Website",
+      "phoneNumber": "Phone",
+      "mobileNumber": "Mobile",
+      "address": "Address",
+      "projectsTotal": "Total number of projects",
+      "totalSum": "Total amount of implemented projects",
+      "noData": "Not specified"
+    }
+  },
+  "documentsPage": {
+    "title": "Documents",
+    "description": "Centralized access to important documents and legal acts concerning various aspects of life and activities in Kyrgyzstan."
+  },
+  "tabs": {
+    "partners": "Partners",
+    "agencies": "Agencies",
+    "projects": "Projects",
+    "contracts": "Contracts"
+  },
+  "ui": {
+    "feedbackBtnLabel": "Feedback",
+    "search-placeholder": "Search",
+    "table": {
+      "partners": "Partners",
+      "sectors": "Sectors",
+      "startDate": "Start Date",
+      "totalSum": "Total Sum",
+      "status": "Status",
+      "implementor": "Implementor",
+      "donor": "Donor",
+      "project": "Project",
+      "contract": "Contract"
+    },
+    "status": {
+      "inProgress": "In progress",
+      "completed": "Completed",
+      "notStarted": "Not started",
+      "canceled": "Canceled"
+    },
+    "shareBtns": {
+      "title": "Share",
+      "shareInTG": "Share on Telegram",
+      "shareInWA": "Share on WhatsApp",
+      "shareInFB": "Share on Facebook"
+    }
+  },
+  "widgets": {
+    "totalProjectsCount": "Total number of projects",
+    "totalPartnersCount": "Total number of partners",
+    "totalFundingSum": "Total investments attracted"
+  },
+  "common": {
+    "download": "Download",
+    "allRightsReserved": "All rights reserved.",
+    "showAll": "Show All",
+    "more": "More",
+    "endDate": "End Date",
+    "updateTime": "Last automatic update",
+    "totalCount": "Total count",
+    "noDocumentsAvailable": "No documents available"
+  },
   "search-coverage-placeholder": "Search regions or districts",
-  "projectsPage": "Projects",
-  "statisticsPage": "Statistics",
-  "partners": "Partners",
-  "documentsPage": "Documents",
-  "aboutUsPage": "About Us",
-  "mainPage": "Home",
-  "documentsPageTitle": "Documents",
-  "documentsPageDescription": "Centralized access to important documents and legal acts concerning various aspects of life and activities in Kyrgyzstan.",
-  "newsPage": "News",
-  "projects": "Projects",
-  "contactsPage": "Contacts",
-  "useTermsPage": "Terms of Use",
-  "privacyPolicyPage": "Privacy Policy",
-  "cookiePolicyPage": "Cookie Policy",
-  "allRightsReserved": "All rights reserved.",
-  "login": "Login",
   "email": "Email",
-  "username": "Username",
-  "password": "Password",
-  "usernameRequiredMessage": "Username is required.",
-  "passwordRequiredMessage": "Password is required.",
-  "signIn": "Sign In",
-  "signInDescription": "Welcome back! Please enter your details",
   "showMore": "Show More",
-  "showAll": "Show All",
-  "more": "More",
   "close": "Close",
-  "download": "Download",
-  "noDocumentsAvailable": "No documents available",
   "deadline": "Deadline",
-  "endDate": "End Date",
   "notSpecified": "Not specified",
-  "aidStatInfoTitle": "AIDSTAT – Supporting Sustainable Development!",
-  "aidStatInfoDescription": "The AIDSTAT project aims to create a monitoring system for investments and government expenditures in the Kyrgyz Republic. By using digital technologies, the project will ensure transparency and efficiency in public financial management. AIDSTAT will allow tracking investment processes in real-time, improving control over spending, and supporting informed decision-making. The goal is to increase accountability and provide citizens with access to information about government investments.",
-  "goToProjectsTableBox": "Projects Table",
-  "goToPartnersBox": "Our partners",
-  "partnersPageDescription": "This section provides information about projects and programs supported by donors, as well as their impact on the economic and social progress of the country.",
-  "feedbackBtnLabel": "Feedback",
-  "projectsPageDescription": "Explore our projects, learn about their goals, implementation stages, and impact on society. Let's make Kyrgyzstan even better together!",
-  "mainPageText": "Monitoring of projects for the creation and development of Kyrgyzstan's infrastructure",
-  "mainPageDescription": "Up-to-date information on projects, funding, and implementation",
-  "mainPageBtn": "Go to projects",
-  "interactivemap": "Interactive map",
-  "statisticsTitle": "Statistics"
+  "interactivemap": "Interactive map"
 }

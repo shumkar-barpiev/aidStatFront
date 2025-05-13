@@ -13,7 +13,7 @@ export const PartnerSearchField = () => {
   return (
     <StyledTextField
       fullWidth
-      placeholder={t("search-placeholder")}
+      placeholder={t("ui.search-placeholder")}
       variant="outlined"
       onChange={(e) => {
         const searchText = e.target.value;

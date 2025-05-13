@@ -33,12 +33,12 @@ const LoginPage = () => {
     setPasswordError(null);
 
     if (!username) {
-      setUsernameError(t("usernameRequiredMessage"));
+      setUsernameError(t("auth.usernameRequiredMessage"));
       isValid = false;
     }
 
     if (!password) {
-      setPasswordError(t("passwordRequiredMessage"));
+      setPasswordError(t("auth.passwordRequiredMessage"));
       isValid = false;
     }
 
@@ -67,7 +67,7 @@ const LoginPage = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        height: "90vh",
+        height: "100dvh",
         backgroundColor: "#f4f4f4",
       }}
     >
@@ -128,10 +128,10 @@ const LoginPage = () => {
           </Box>
           <Stack direction={"column"}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              {t("signIn")}
+              {t("auth.signIn")}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {t("signInDescription")}
+              {t("auth.signInDescription")}
             </Typography>
           </Stack>
         </Stack>
@@ -141,7 +141,7 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
           <TextField
             fullWidth
-            label={t("username")}
+            label={t("auth.username")}
             variant="outlined"
             type="text"
             value={username}
@@ -160,7 +160,7 @@ const LoginPage = () => {
 
           <TextField
             fullWidth
-            label={t("password")}
+            label={t("auth.password")}
             variant="outlined"
             type={showPassword ? "text" : "password"}
             value={password}
@@ -208,7 +208,7 @@ const LoginPage = () => {
               transition: "all 0.2s ease",
             }}
           >
-            {t("login")}
+            {t("auth.login")}
           </Button>
         </form>
       </Paper>

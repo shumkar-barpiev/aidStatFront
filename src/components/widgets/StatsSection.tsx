@@ -7,9 +7,11 @@ import PaidIcon from "@mui/icons-material/Paid";
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import { useEffect } from "react";
 import { useTotalsStore } from "@/stores/totals/totals";
+import { useTranslation } from "react-i18next";
 
 export const StatsSection = () => {
   const { fetchTotals, projectCount, donorCount, totalAmount } = useTotalsStore();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchTotals();
@@ -26,7 +28,7 @@ export const StatsSection = () => {
           <Grid item xs={12} md={4}>
             <StatWidget
               content={projectIcon}
-              label="Общее количество проектов"
+              label={t("widgets.totalProjectsCount")}
               value={projectCount ? projectCount : 0}
               duration={1000}
             />
@@ -34,7 +36,7 @@ export const StatsSection = () => {
           <Grid item xs={12} md={4}>
             <StatWidget
               content={partnerIcon}
-              label="Количество партнеров"
+              label={t("widgets.totalPartnersCount")}
               value={donorCount ? donorCount : 0}
               duration={2500}
             />
@@ -42,7 +44,7 @@ export const StatsSection = () => {
           <Grid item xs={12} md={4}>
             <StatWidget
               content={sumIcon}
-              label="Привлеченные инвестиции ($)"
+              label={`${t("widgets.totalFundingSum")} ($)`}
               value={totalAmount ? totalAmount : 0}
               duration={3500}
             />

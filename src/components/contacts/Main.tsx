@@ -2,11 +2,12 @@
 
 import React from "react";
 import { Box, Card, CardActionArea, CardContent, CardMedia, CircularProgress, Typography } from "@mui/material";
-import { containerMargins, containerWidths } from "@/utils/constants";
+import { containerMargins, containerWidths, imageUrl } from "@/utils/constants";
 import Colors from "@/styles/colors";
 import useContactsViewModel from "@/viewmodels/contacts/useContactsViewModel";
 import { useContactsStore } from "@/stores/contacts/contacts";
 import { formatPhoneNumber } from "@/utils/format/formatPhoneNumber";
+import { useTranslation } from "react-i18next";
 
 const defaultImage =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/624px-No-Image-Placeholder.svg.png"; // Заглушка другого типа
@@ -14,6 +15,7 @@ const defaultImage =
 const Main = () => {
   const { contacts, loading } = useContactsStore();
   useContactsViewModel();
+  const { t } = useTranslation();
 
   return (
     <Box sx={{ width: containerWidths, mx: containerMargins, p: 2 }}>
@@ -33,7 +35,7 @@ const Main = () => {
             mx: "auto",
           }}
         >
-          Контакты
+          {t("aboutPage.title")}
         </Typography>
         <Box
           sx={{
@@ -64,7 +66,7 @@ const Main = () => {
                   <CardMedia
                     component="img"
                     alt={contact.name}
-                    image={contact.image ? `data:image/png;base64,${contact.image}` : defaultImage}
+                    image={contact.image ? `${imageUrl}${contact.image}` : defaultImage}
                     sx={{
                       width: "100%",
                       height: 300,

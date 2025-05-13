@@ -100,7 +100,7 @@ export const NavigationBar = () => {
               <Stack direction={"row"} alignItems={"center"} spacing={1}>
                 <LocaleSwitch />
 
-                <Tooltip title={`${t("login")}`}>
+                <Tooltip title={`${t("auth.login")}`}>
                   <IconButton id="sign-in-button" sx={{ color: "black" }} onClick={() => router.push("/sign-in")}>
                     <LoginOutlinedIcon sx={{ color: "black", width: 24, height: 24 }} />
                   </IconButton>

@@ -7,11 +7,12 @@ import {
   DateRange as CurrentYearIcon,
   TrendingUp as DomesticFundingIcon,
 } from "@mui/icons-material";
-import { formatCurrencyWithSpaces } from "@/utils/formatCurrency.ts";
-import Colors from "@/styles/colors.ts";
-import { NotSpecifiedText } from "@/components/projects/show/ShowProject.tsx";
-import { TProjectModel } from "@/models/project/ProjectModel.ts";
+import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
+import Colors from "@/styles/colors";
+import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
+import { TProjectModel } from "@/models/project/ProjectModel";
 import { useTranslation } from "react-i18next";
+import { formattedUpdateTime } from "@/utils/format/formattedUpdateTime";
 
 interface Props {
   project: TProjectModel | null;
@@ -19,21 +20,13 @@ interface Props {
 
 const FundsSpentBlock: React.FC<Props> = ({ project }) => {
   const { t } = useTranslation();
-  const date = new Date(project?.funding?.updateTime as string);
-  const formattedUpdateTime = date.toLocaleString("ru-RU", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
   return (
     <Card sx={{ p: 3 }}>
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <DomesticFundingIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
         <Typography variant="h6" sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}>
-          Освоение внутреннего финансирования
+          {t("projectInfoPage.domesticFinancingAbsorption")}
         </Typography>
       </Box>
       <Grid container spacing={3}>
@@ -45,7 +38,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
                 variant="h6"
                 sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
               >
-                За весь период
+                {t("projectInfoPage.absorption.total")}
               </Typography>
             </Box>
             {project?.funding?.fundsSpent ? (
@@ -63,7 +56,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <CurrentYearIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
               <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-                За текущий год
+                {t("projectInfoPage.absorption.currentYear")}
               </Typography>
             </Box>
             {project?.funding?.fundsSpentCurrentYear ? (
@@ -82,7 +75,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <DomesticFundingIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
         <Typography variant="h6" sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}>
-          Освоение внешнего финансирования
+          {t("projectInfoPage.externalFinancingAbsorption")}
         </Typography>
       </Box>
       <Grid container spacing={3}>
@@ -94,7 +87,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
                 variant="h6"
                 sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
               >
-                За весь период
+                {t("projectInfoPage.absorption.total")}
               </Typography>
             </Box>
             {project?.funding?.fundsSpent ? (
@@ -112,7 +105,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <CurrentYearIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
               <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-                За текущий год
+                {formatCurrencyWithSpaces(project?.funding?.fundsSpentCurrentYearExternal)}
               </Typography>
             </Box>
             {project?.funding?.fundsSpentCurrentYear ? (
@@ -137,8 +130,9 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
           mt: 4.5,
         }}
       >
-        Дата последнего автоматического обновления:{" "}
-        {project?.funding?.updateTime ? formattedUpdateTime : "30.04.2025, 18:55"}
+        {t("common.updateTime")}
+        {": "}
+        {formattedUpdateTime(project?.funding?.updateTime, "30.04.2025, 18:55")}
       </Typography>
     </Card>
   );

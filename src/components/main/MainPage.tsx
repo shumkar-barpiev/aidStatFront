@@ -47,14 +47,6 @@ export default function MainPage() {
   const [isClient, setIsClient] = useState<boolean>(false);
   const { getProjectSectorsTitle } = useProjectsViewModel();
 
-  const handleScrollToBox = () => {
-    if (boxRef.current) {
-      const yOffset = -NAVBAR_HEIGHT;
-      const y = boxRef.current.getBoundingClientRect().top + window.scrollY + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
-
   useEffect(() => {
     setIsClient(true);
 
@@ -117,7 +109,7 @@ export default function MainPage() {
               fontSize: { xs: "1.5rem", sm: "2rem", md: "3rem" },
             }}
           >
-            {t("mainPageText")}
+            {t("mainPage.heroSectionTitle")}
           </Typography>
 
           <Typography
@@ -130,7 +122,7 @@ export default function MainPage() {
               fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
             }}
           >
-            {t("mainPageDescription")}
+            {t("mainPage.heroSectionDescription")}
           </Typography>
 
           <Button
@@ -141,7 +133,7 @@ export default function MainPage() {
               router.push("/projects");
             }}
           >
-            {t("mainPageBtn")}
+            {t("mainPage.goToProjectsBtn")}
           </Button>
         </Box>
       </Box>
@@ -149,7 +141,7 @@ export default function MainPage() {
       <Box ref={boxRef} sx={{ width: containerWidths, mx: containerMargins, p: 2, minHeight: "100vh" }}>
         <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} sx={{ mb: 3 }}>
           <Typography variant="h4" fontWeight="bold" sx={{ textAlign: "left" }}>
-            {t("projects")}
+            {t("mainPage.projectsBlockTitle")}
           </Typography>
           <Button
             startIcon={<ReadMoreOutlinedIcon fontSize="large" sx={{ color: "inheir" }} />}
@@ -160,7 +152,7 @@ export default function MainPage() {
               "&:hover": { color: "white", backgroundColor: Colors.darkBlue },
             }}
           >
-            {t("showAll")}
+            {t("common.showAll")}
           </Button>
         </Stack>
         <Divider sx={{ mb: 4, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
@@ -228,14 +220,14 @@ export default function MainPage() {
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                       <Stack direction={"column"} alignItems={"left"}>
                         <Typography variant="body2" sx={{ whiteSpace: "nowrap", fontWeight: "bold" }}>
-                          {t("endDate")}:
+                          {t("common.endDate")}:
                         </Typography>
                         <Typography variant="body2" sx={{ whiteSpace: "nowrap" }}>
                           {project.endDate && convertToRussianDateFormat(project.endDate)}
                         </Typography>
                       </Stack>
 
-                      <Tooltip title={t("more")}>
+                      <Tooltip title={t("common.more")}>
                         <IconButton
                           sx={{ border: `1px solid ${Colors.darkBlue}` }}
                           onClick={() => {
@@ -274,7 +266,7 @@ export default function MainPage() {
             >
               <CardContent>
                 <Typography gutterBottom variant="h5" sx={{ fontWeight: "bold" }}>
-                  {t("aidStatInfoTitle")}
+                  {t("mainPage.mainBlockTitle")}
                 </Typography>
                 <Typography
                   variant="body1"
@@ -287,7 +279,7 @@ export default function MainPage() {
                     WebkitBoxOrient: "vertical",
                   }}
                 >
-                  {t("aidStatInfoDescription")}
+                  {t("mainPage.mainBlockDescription")}
                 </Typography>
                 <Button
                   size="small"
@@ -297,7 +289,7 @@ export default function MainPage() {
                     router.push("/contacts");
                   }}
                 >
-                  {t("more")}
+                  {t("common.more")}
                 </Button>
               </CardContent>
             </Box>

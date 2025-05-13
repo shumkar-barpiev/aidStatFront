@@ -26,9 +26,9 @@ import { Box, Card, CardMedia, Divider, Grid, Stack, SxProps, Tooltip, Typograph
 import AddToDriveOutlinedIcon from "@mui/icons-material/AddToDriveOutlined";
 import { ProjectDocuments } from "@/components/projects/show/ProjectDocuments";
 import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrantCreditTable";
-import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock.tsx";
-import { transliterate } from "@/utils/format/transliterate.ts";
-import { apiUrl } from "@/utils/constants.ts";
+import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock";
+import { transliterate } from "@/utils/format/transliterate";
+import { imageUrl } from "@/utils/constants";
 
 interface NotSpecifiedTextProps {
   sx?: SxProps;
@@ -49,9 +49,10 @@ interface Props {
 }
 
 export const ShowProject: React.FC<Props> = ({ project }) => {
-  const router = useRouter();
   const [grantItems, setGrantItems] = useState<Record<string, any>[]>([]);
   const [creditItems, setCreditItems] = useState<Record<string, any>[]>([]);
+  const router = useRouter();
+  const { t } = useTranslation();
 
   let grantSum = 0;
   let creditSum = 0;
@@ -88,7 +89,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Tooltip title={partner.name}>
               <CardMedia
                 component="img"
-                image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                image={`${imageUrl}${partner.image}`}
                 alt={partner.name}
                 sx={{
                   width: 60,
@@ -210,7 +211,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
             <DescriptionIcon color="primary" fontSize="large" />
-            <Typography variant="h6">Описание проекта</Typography>
+            <Typography variant="h6">{t("projectInfoPage.description")}</Typography>
           </Box>
 
           {project?.description ? (
@@ -228,7 +229,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <FundingIcon color="primary" fontSize="large" />
-                <Typography variant="h6">Общая сумма финансирования</Typography>
+                <Typography variant="h6">{t("projectInfoPage.totalFunding")}</Typography>
               </Box>
               {project?.funding?.totalSum ? (
                 <Typography variant="h6" fontWeight="bold" sx={{ flexGrow: 1 }}>
@@ -244,7 +245,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <PartnersIcon color="primary" fontSize="large" />
-                <Typography variant="h6">Партнеры</Typography>
+                <Typography variant="h6">{t("projectInfoPage.partners")}</Typography>
               </Box>
               {project?.partners?.length ? (
                 <Box>{renderProjectStakeholders(project?.partners)}</Box>
@@ -260,7 +261,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <AgencyIcon color="primary" fontSize="large" />
-                <Typography variant="h6">Исполнительное агентство</Typography>
+                <Typography variant="h6">{t("projectInfoPage.implementorAgency")}</Typography>
               </Box>
               {project?.contractors?.length ? (
                 <Box>{renderProjectStakeholders(project?.contractors)}</Box>
@@ -274,7 +275,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <ImplementingIcon color="primary" fontSize="large" />
-                <Typography variant="h6">Реализующее агентство</Typography>
+                <Typography variant="h6">{t("projectInfoPage.executingAgency")}</Typography>
               </Box>
               {project?.implementors?.length ? (
                 <Box>{renderProjectStakeholders(project?.implementors)}</Box>
@@ -290,7 +291,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <SectorsIcon color="primary" fontSize="large" />
-                <Typography variant="h6">Секторы</Typography>
+                <Typography variant="h6">{t("projectInfoPage.sectors")}</Typography>
               </Box>
               {project?.sectors?.length ? renderProjectSectors(project.sectors) : <NotSpecifiedText />}
             </Box>
@@ -300,7 +301,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
             <Box flex={1}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <CoverageIcon color="primary" fontSize="large" />
-                <Typography variant="h6">Географический охват</Typography>
+                <Typography variant="h6">{t("projectInfoPage.coverage")}</Typography>
               </Box>
               {project?.geographicalCoverage?.length ? (
                 renderProjectCoverage(project.geographicalCoverage)
@@ -320,7 +321,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
                 <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                   <CoFinancingIcon color="primary" fontSize="large" />
                   <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-                    Сумма софинансирования
+                    {t("projectInfoPage.coFinancingAmount")}
                   </Typography>
                 </Box>
                 {project?.funding?.coFundingSum ? (
@@ -338,7 +339,7 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
                 <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
                   <TechAssistanceIcon color="primary" fontSize="large" />
                   <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-                    Сумма технической помощи
+                    {t("projectInfoPage.technicalAssistanceAmount")}
                   </Typography>
                 </Box>
                 {project?.funding?.techAidSum ? (
@@ -366,7 +367,9 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
           <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
             <ProjectCredit color="primary" fontSize="large" />
-            <Typography variant="h6">Кредит {creditPercent}</Typography>
+            <Typography variant="h6">
+              {t("projectInfoPage.table.loan")} {creditPercent}
+            </Typography>
           </Box>
           {creditItems.length ? <ProjectGrantCreditTable items={creditItems} /> : <NotSpecifiedText />}
         </Box>
@@ -375,7 +378,9 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
           <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
             <ProjectGrant color="primary" fontSize="large" />
-            <Typography variant="h6">Грант {grantPercent}</Typography>
+            <Typography variant="h6">
+              {t("projectInfoPage.table.grant")} {grantPercent}
+            </Typography>
           </Box>
           {grantItems.length ? <ProjectGrantCreditTable items={grantItems} /> : <NotSpecifiedText />}
         </Box>

@@ -25,7 +25,7 @@ import LocalAtmOutlinedIcon from "@mui/icons-material/LocalAtmOutlined";
 import { NotSpecifiedText } from "@/components/projects/show/ShowProject";
 import InsertLinkOutlinedIcon from "@mui/icons-material/InsertLinkOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
-import { apiUrl } from "@/utils/constants.ts";
+import { imageUrl } from "@/utils/constants";
 
 interface Props {
   partner: TPartnerModel | null;
@@ -98,7 +98,7 @@ const ShowPartner: React.FC<Props> = ({ partner }) => {
                       <CardMedia
                         component="img"
                         alt={partner.name}
-                        image={`${apiUrl}/aidstat/ws/public/file/meta/download/${partner.image}`}
+                        image={`${imageUrl}${partner.image}`}
                         sx={{
                           width: "100%",
                           height: "100%",

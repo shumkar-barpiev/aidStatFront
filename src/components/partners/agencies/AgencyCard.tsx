@@ -6,11 +6,14 @@ import Image from "next/image";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useAgenciesStore } from "@/stores/partners/agencies";
 import { formatCurrencyWithSpaces } from "@/utils/formatCurrency";
-import { apiUrl } from "@/utils/constants";
+import { imageUrl } from "@/utils/constants";
+import { useTranslation } from "react-i18next";
 
 const AgencyCard = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);
   const { agency, agencyLoading } = useAgenciesStore();
+  const { t } = useTranslation();
+  const noData = `${t("agenciesPage.card.noData")}`;
 
   useEffect(() => {
     if (cardRef.current) {
@@ -66,19 +69,15 @@ const AgencyCard = () => {
             mx: { xs: "auto", md: 0 },
           }}
         >
-          <Image
-            src={`${apiUrl}/aidstat/ws/public/file/meta/download/${agency.image}`}
-            alt={`${agency.name} logo`}
-            fill
-            style={{ objectFit: "contain" }}
-          />
+          <Image src={`${imageUrl}${agency.image}`} alt={`${agency.name} logo`} fill style={{ objectFit: "contain" }} />
         </Grid>
 
         <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} sx={{ maxWidth: "230px" }}>
               <Typography variant="body1" color="text.secondary">
-                Website:
+                {t("agenciesPage.card.website")}
+                {":"}
               </Typography>
               <Typography
                 variant="body2"
@@ -96,41 +95,45 @@ const AgencyCard = () => {
                     {agency.website}
                   </Link>
                 ) : (
-                  "Cайт не указан"
+                  noData
                 )}
               </Typography>
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                Тел:
+                {t("agenciesPage.card.phoneNumber")}
+                {":"}
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
-                {agency.fixedPhone}
+                {agency.fixedPhone || noData}
               </Typography>
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                Мобильный тел:
+                {t("agenciesPage.card.mobileNumber")}
+                {":"}
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
-                {agency.mobilePhone || "Номер не указан"}
+                {agency.mobilePhone || noData}
               </Typography>
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                Адрес:
+                {t("agenciesPage.card.address")}
+                {":"}
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
-                {agency.address || "Адрес не указан"}
+                {agency.address || noData}
               </Typography>
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                Количество проектов:
+                {t("agenciesPage.card.projectsTotal")}
+                {":"}
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
                 {agency.projectCount}
@@ -139,7 +142,8 @@ const AgencyCard = () => {
 
             <Grid item xs={12} sm={6}>
               <Typography variant="body1" color="text.secondary">
-                Общая сумма реализуемых проектов:
+                {t("agenciesPage.card.totalSum")}
+                {":"}
               </Typography>
               <Typography variant="body2" sx={{ pt: 0.5, fontSize: "1rem" }}>
                 {formatCurrencyWithSpaces(agency.grant, agency.credit) || "ERROR"}

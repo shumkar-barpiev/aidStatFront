@@ -1,48 +1,181 @@
 {
-  "search-placeholder": "Поиск",
+  "pages": {
+    "main": "Главная",
+    "projects": "Проекты",
+    "developmentProjects": "Проекты Развития",
+    "statistics": "Статистика",
+    "partners": "Партнеры",
+    "contacts": "Контакты",
+    "documents": "Документы",
+    "about": "О нас",
+    "news": "Новости",
+    "useTerms": "Условия использования",
+    "privacyPolicy": "Политика конфиденциальности",
+    "cookiePolicy": "Сookie Policy"
+  },
+  "auth": {
+    "login": "Войти",
+    "signIn": "Войти",
+    "signInDescription": "С возвращением! Введите свои данные",
+    "username": "Имя пользователя",
+    "password": "Пароль",
+    "usernameRequiredMessage": "Имя пользователя обязательно.",
+    "passwordRequiredMessage": "Пароль обязателен."
+  },
+  "mainPage": {
+    "heroSectionTitle": "Мониторинг проектов для создания и развития инфраструктуры КР",
+    "heroSectionDescription": "Актуальная информация о проектах, финансировании и реализации",
+    "goToProjectsBtn": "Перейти к проектам",
+    "projectsBlockTitle": "Проекты",
+    "mainBlockTitle": "AIDSTAT – поддержка устойчивого развития!",
+    "mainBlockDescription": "Проект AIDSTAT направлен на создание системы мониторинга инвестиций и государственных вложений в Кыргызской Республике. Используя цифровые технологии, проект обеспечит прозрачность и эффективность в управлении государственными финансами. AIDSTAT позволит отслеживать инвестиционные процессы в реальном времени, улучшая контроль за расходами и поддерживая принятие обоснованных политических решений. Цель — повысить ответственность и доступ граждан к информации о государственных вложениях."
+  },
+  "projectsPage": {
+    "title": "Проекты",
+    "description": "Исследуйте наши проекты, узнавайте об их целях, этапах реализации и влиянии на общество. Давайте вместе делать Кыргызстан еще лучше!",
+    "goToProjectsTableBox": "Таблица проектов"
+  },
+  "projectInfoPage": {
+    "description": "Описание проекта",
+    "totalFunding": "Общая сумма финансирования",
+    "partners": "Партнеры",
+    "implementorAgency": "Исполнительное агентство",
+    "executingAgency": "Реализующее агентство",
+    "sectors": "Секторы",
+    "coverage": "Географический охват",
+    "coFinancingAmount": "Сумма софинансирования",
+    "technicalAssistanceAmount": "Сумма технической помощи",
+    "domesticFinancingAbsorption": "Освоение внутреннего финансирования",
+    "externalFinancingAbsorption": "Освоение внешнего финансирования",
+    "absorption": {
+      "total": "За весь период",
+      "currentYear": "За текущий год"
+    },
+    "projectTimeLine": {
+      "title": "Хронология проекта",
+      "startDate": "Дата начала",
+      "signingDate": "Дата подписания",
+      "ratificationDate": "Дата ратификации",
+      "implementationStart": "Начало реализации проекта",
+      "effectiveDate": "Дата вступления в силу проекта",
+      "fundingClosureDate": "Дата закрытия финансирования проекта",
+      "negotiationDate": "Дата переговоров",
+      "endDate": "Дата окончания"
+    },
+    "table": {
+      "loan": "Кредит",
+      "grant": "Грант",
+      "partner": "Партнер (кредитор)",
+      "loanNumber": "Номер кредита",
+      "sum": "Сумма",
+      "foreignSum": "Сумма (в USD)"
+    },
+    "documents": "Документ"
+  },
+  "statisticsPage": {
+    "projectsTab": {
+      "mapTitle": "Тепловая карта по распределению проектов",
+      "chartsTitle": "Статистика"
+    },
+    "charts": {
+      "areaElectricityTitle": "Производство электроэнергии по источникам (2001–настоящее время)",
+      "freightTransportIncomeTitle": "Доходы от перевозок грузов всеми видами транспорта (2001–настоящее время)",
+      "barCorrelationDonorToRegionTitle": "Корреляция доноров по регионам",
+      "barCorrelationDonorToSectorTitle": "Корреляция доноров по секторам",
+      "barDonorsToSumTitle": "Топ доноров по инвестициям",
+      "barDonorsToProjectsTitle": "Топ доноров по количеству проектов",
+      "barSectorsToSumTitle": "Топ секторов по инвестициям",
+      "barSectorsToProjectsTitle": "Топ секторов по количеству проектов",
+      "barImplementorsToProjectsTitle": "Топ исполняющих агентств по количеству проектов",
+      "barExecutorsToProjectsTitle": "Топ реализующих агентств по количеству проектов",
+      "pieContractsSum": "Суммы контрактов",
+      "pieContractsTypes": "Типы контрактов",
+      "pieEmptyContracts": "Нет контрактов",
+      "donutLabel": "Контрактов",
+      "donutLabels": {
+        "goods": "Товары",
+        "infrastructure": "Инфраструктура"
+      }
+    }
+  },
+  "partnersPage": {
+    "title": "Партнеры",
+    "description": "Здесь представлена информация о проектах и программах, поддерживаемых донорами, а также об их влиянии на экономический и социальный прогресс страны.",
+    "goToPartnersBox": "Наши партнёры"
+  },
+  "agenciesPage": {
+    "title": "Агентства",
+    "description": "Здесь представлена информация об исполнительных агентствах, участвующих в реализации проектов и программ, а также об их вкладе в устойчивое развитие и повышение эффективности проводимых инициатив.",
+    "card": {
+      "website": "Website",
+      "phoneNumber": "Тел",
+      "mobileNumber": "Мобильный тел",
+      "address": "Адрес",
+      "projectsTotal": "Количество проектов",
+      "totalSum": "Общая сумма реализуемых проектов",
+      "noData": "Не указано"
+    }
+  },
+  "aboutPage": {
+    "title": "Контакты"
+  },
+  "documentsPage": {
+    "title": "Документы",
+    "description": "Централизованный доступ к важным документам и законодательным актам, касающимся различных аспектов жизни и деятельности в Кыргызстане."
+  },
+  "tabs": {
+    "partners": "Партнеры",
+    "agencies": "Агентства",
+    "projects": "Проекты",
+    "contracts": "Контракты"
+  },
+  "ui": {
+    "feedbackBtnLabel": "Обратная связь",
+    "search-placeholder": "Поиск",
+    "table": {
+      "partners": "Партнеры",
+      "sectors": "Секторы",
+      "startDate": "Дата начала",
+      "totalSum": "Сумма проекта",
+      "status": "Статус",
+      "implementor": "Исполнитель",
+      "donor": "Донор",
+      "project": "Проект",
+      "contract": "Контракт"
+    },
+    "status": {
+      "inProgress": "В процессе",
+      "completed": "Завершено",
+      "notStarted": "Не начато",
+      "canceled": "Отменено"
+    },
+    "shareBtns": {
+      "title": "Поделиться",
+      "shareInTG": "Поделиться в Telegram",
+      "shareInWA": "Поделиться в WhatsApp",
+      "shareInFB": "Поделиться в Facebook"
+    }
+  },
+  "widgets": {
+    "totalProjectsCount": "Общее количество проектов",
+    "totalPartnersCount": "Количество партнеров",
+    "totalFundingSum": "Привлеченные инвестиции"
+  },
+  "common": {
+    "download": "Скачать",
+    "allRightsReserved": "Все права защищены.",
+    "showAll": "Показать все",
+    "more": "Больше",
+    "endDate": "Дата окончания",
+    "updateTime": "Дата последнего автоматического обновления",
+    "totalCount": "Общее количество",
+    "noDocumentsAvailable": "Нет доступных документов"
+  },
   "search-coverage-placeholder": "Поиск регионов или районов",
-  "mainPage": "Главная",
-  "newsPage": "Новости",
-  "projectsPage": "Проекты Развития",
-  "partners": "Партнеры",
-  "documentsPage": "Документы",
-  "statisticsPage": "Статистика",
-  "contactsPage": "Контакты",
-  "aboutUsPage": "О нас",
-  "projects": "Проекты",
-  "documentsPageTitle": "Документы",
-  "documentsPageDescription": "Централизованный доступ к важным документам и законодательным актам, касающимся различных аспектов жизни и деятельности в Кыргызстане.",
-  "useTermsPage": "Условия использования",
-  "privacyPolicyPage": "Политика конфиденциальности",
-  "cookiePolicyPage": "Сookie Policy",
-  "allRightsReserved": "Все права защищены.",
-  "login": "Войти",
   "email": "Электронная почта",
-  "username": "Имя пользователя",
-  "password": "Пароль",
-  "usernameRequiredMessage": "Имя пользователя обязательно.",
-  "passwordRequiredMessage": "Пароль обязателен.",
-  "signIn": "Войти",
-  "signInDescription": "С возвращением! Введите свои данные",
   "showMore": "Показать больше",
-  "showAll": "Показать все",
-  "more": "Больше",
   "close": "Закрыть",
-  "download": "Скачать",
-  "noDocumentsAvailable": "Нет доступных документов",
   "deadline": "Срок выполнения",
-  "endDate": "Дата окончания",
   "notSpecified": "Не указано",
-  "aidStatInfoTitle": "AIDSTAT – поддержка устойчивого развития!",
-  "aidStatInfoDescription": "Проект AIDSTAT направлен на создание системы мониторинга инвестиций и государственных вложений в Кыргызской Республике. Используя цифровые технологии, проект обеспечит прозрачность и эффективность в управлении государственными финансами. AIDSTAT позволит отслеживать инвестиционные процессы в реальном времени, улучшая контроль за расходами и поддерживая принятие обоснованных политических решений. Цель — повысить ответственность и доступ граждан к информации о государственных вложениях.",
-  "goToProjectsTableBox": "Таблица проектов",
-  "goToPartnersBox": "Наши партнёры",
-  "partnersPageDescription": "Здесь представлена информация о проектах и программах, поддерживаемых донорами, а также об их влиянии на экономический и социальный прогресс страны.",
-  "feedbackBtnLabel": "Обратная связь",
-  "projectsPageDescription": "Исследуйте наши проекты, узнавайте об их целях, этапах реализации и влиянии на общество. Давайте вместе делать Кыргызстан еще лучше!",
-  "mainPageText": "Мониторинг проектов для создания и развития инфраструктуры КР",
-  "mainPageDescription": "Актуальная информация о проектах, финансировании и реализации",
-  "mainPageBtn": "Перейти к проектам",
-  "interactivemap": "Интерактивная карта",
-  "statisticsTitle": "Статистика"
+  "interactivemap": "Интерактивная карта"
 }
