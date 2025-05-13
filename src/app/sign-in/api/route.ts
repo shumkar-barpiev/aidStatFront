@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { username, password } = body;
 
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/aidstat/callback`;
+    const url = `${process.env.NEXT_AUTH_API_URL}/aidstat/callback`;
     const response = NextResponse.json({});
 
     const authReq = await fetch(url, {
