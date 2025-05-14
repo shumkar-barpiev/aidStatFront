@@ -10,7 +10,7 @@ const HeatLayer = () => {
         layers="agromap:KG_interpolated2"
         format="image/png"
         transparent={true}
-        opacity={0.5}
+        opacity={1}
       />
     </Pane>
   );
