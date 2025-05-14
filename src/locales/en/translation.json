@@ -77,6 +77,9 @@
       "mapTitle": "Heatmap of Project Distribution",
       "chartsTitle": "Statistics"
     },
+    "contractsTab": {
+      "tableTitle": "List of сontracts"
+    },
     "charts": {
       "areaElectricityTitle": "Electricity Generation by Source (2001–Present)",
       "freightTransportIncomeTitle": "Freight Transport Income by All Modes (2001–Present)",
@@ -142,7 +145,8 @@
       "implementor": "Implementor",
       "donor": "Donor",
       "project": "Project",
-      "contract": "Contract"
+      "contract": "Contract",
+      "noContractsAvailable": "No contracts found for the given parameters."
     },
     "status": {
       "inProgress": "In progress",
@@ -171,6 +175,72 @@
     "updateTime": "Last automatic update",
     "totalCount": "Total count",
     "noDocumentsAvailable": "No documents available"
+  },
+  "kyrgyzstan": {
+    "region": {
+      "chui": "Chuy Region",
+      "batken": "Batken Region",
+      "djalalAbad": "Jalal-Abad Region",
+      "talas": "Talas Region",
+      "issykKul": "Issyk-Kul Region",
+      "osh": "Osh Region",
+      "naryn": "Naryn Region",
+      "oshCity": "Osh City",
+      "bishkekCity": "Bishkek City"
+    },
+    "district": {
+      "panfilov": "Panfilov District",
+      "chui": "Chuy District",
+      "issykAta": "Ysyk-Ata District",
+      "alamudun": "Alamudun District",
+      "sokuluk": "Sokuluk District",
+      "moskow": "Moskow District",
+      "jaiyl": "Jayyl District",
+      "kemin": "Kemin District",
+
+      "jetiOguz": "Jeti-Oguz District",
+      "ton": "Ton District",
+      "issykKul": "Issyk-Kul District",
+      "tyup": "Tyup District",
+      "akSuu": "Ak-Suu District",
+
+      "akTala": "Ak-Tala District",
+      "jumgal": "Jumgal District",
+      "kochkor": "Kochkor District",
+      "naryn": "Naryn District",
+      "atBashy": "At-Bashy District",
+
+      "alai": "Alai District",
+      "chonAlai": "Chong-Alai District",
+      "nookat": "Nookat District",
+      "aravan": "Aravan District",
+      "karaSuu": "Kara-Suu District",
+      "karaKulja": "Kara-Kulja District",
+      "uzgen": "Uzgen District",
+
+      "leilek": "Leilek District",
+      "batken": "Batken District",
+      "kadamjai": "Kadamjay District",
+
+      "chatkal": "Chatkal District",
+      "alaBuka": "Ala-Buka District",
+      "aksyi": "Aksy District",
+      "nooken": "Nooken District",
+      "bazarKorgon": "Bazar-Korgon District",
+      "suzak": "Suzak District",
+      "toguzToro": "Toguz-Toro District",
+      "toktogul": "Toktogul District",
+
+      "manas": "Manas District",
+      "karaBuura": "Kara-Buura District",
+      "bakaiAta": "Bakai-Ata District",
+      "talas": "Talas District",
+
+      "oktyabr": "Oktyabr District",
+      "sverdlov": "Sverdlov District",
+      "pervomai": "Pervomaisky District",
+      "lenin": "Lenin District"
+    }
   },
   "search-coverage-placeholder": "Search regions or districts",
   "email": "Email",

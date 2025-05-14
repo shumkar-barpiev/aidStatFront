@@ -6,6 +6,7 @@ import { json } from "d3-fetch";
 import { geoPath, geoMercator } from "d3-geo";
 import { Feature, FeatureCollection } from "geojson";
 import { Box } from "@mui/material";
+import { useContractsStore } from "@/stores/contracts/contracts.ts";
 
 const width = 800;
 const height = 600;
@@ -47,6 +48,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
   const ref = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
+  const { setFilters } = useContractsStore();
 
   const drawRegions = useCallback(() => {
     json("/map/statesGeoJSON.json")
@@ -91,6 +93,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
               if (d && d.id) {
                 handleClick(d.id as string);
                 setSelectedRegion(d);
+                setFilters({ regionName: d.id as string });
               }
             })
             .append("title");
@@ -133,6 +136,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
             if (d && d.id) {
               select(this).attr("fill", areaHoverColor);
               handleMouseEnter(d.id as string);
+              console.log(d.id);
             }
           })
           .on("mouseleave", function () {
@@ -141,7 +145,9 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
             handleMouseLeave();
           })
           .on("click", function (event, d) {
-            // click on district logic
+            if (d && d.id) {
+              setFilters({ districtName: d.id as string });
+            }
           })
           .append("title");
       }
@@ -151,6 +157,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
   const resetView = () => {
     setSelectedRegion(null);
     handleBack();
+    setFilters({ regionName: null, districtName: null });
     drawRegions();
   };
 
