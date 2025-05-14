@@ -17,7 +17,7 @@ export const useTableContractsViewModel = () => {
 
   useEffect(() => {
     debouncedFetch();
-  }, [filters.page, filters.searchString, filters.status]);
+  }, [filters.page, filters.searchString, filters.status, filters.regionName, filters.districtName]);
 
   return {
     handleChangePage,

@@ -2,10 +2,12 @@ import React from "react";
 import {
   Avatar,
   Box,
+  CircularProgress,
   Pagination,
   Paper,
   Table,
   TableBody,
+  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -24,13 +26,76 @@ import { transliterate } from "@/utils/format/transliterate";
 import { useTranslation } from "react-i18next";
 import { formattedUpdateTime } from "@/utils/format/formattedUpdateTime";
 
+export const regionTranslations = {
+  "Чуйская область": "region.chui",
+  "Баткенская область": "region.batken",
+  "Джалал-Абадская область": "region.djalalAbad",
+  "Таласская область": "region.talas",
+  "Иссык-Кульская область": "region.issykKul",
+  "Ошская область": "region.osh",
+  "Нарынская область": "region.naryn",
+  "город Ош": "region.oshCity",
+  "город Бишкек": "region.bishkekCity",
+  "Панфиловский район": "district.panfilov",
+  "Чуйский район": "district.chui",
+  "Ыссык-Атинский район": "district.issykAta",
+  "Аламудунский район": "district.alamudun",
+  "Сокулукский район": "district.sokuluk",
+  "Московский район": "district.moskow",
+  "Жайылский район": "district.jaiyl",
+  "Кеминский район": "district.kemin",
+  "Жети-Огузский район": "district.jetiOguz",
+  "Тонский район": "district.ton",
+  "Иссык-Кульский район": "district.issykKul",
+  "Тюпский район": "district.tyup",
+  "Ак-Суйский район": "district.akSuu",
+  "Ак-Талинский район": "district.akTala",
+  "Жумгальский район": "district.jumgal",
+  "Кочкорский район": "district.kochkor",
+  "Нарынский район": "district.naryn",
+  "Ат-Башинский район": "district.atBashy",
+  "Алайский район": "district.alai",
+  "Чон-Алайский район": "district.chonAlai",
+  "Ноокатский район": "district.nookat",
+  "Араванский район": "district.aravan",
+  "Кара-Суйский район": "district.karaSuu",
+  "Кара-Кульджинский район": "district.karaKulja",
+  "Узгенский район": "district.uzgen",
+  "Лейлекский район": "district.leilek",
+  "Баткенский район": "district.batken",
+  "Кадамжайский район": "district.kadamjai",
+  "Чаткальский район": "district.chatkal",
+  "Ала-Букинский район": "district.alaBuka",
+  "Аксыйский район": "district.aksyi",
+  "Ноокенский район": "district.nooken",
+  "Базар-Курганский район": "district.bazarKorgon",
+  "Сузакский район": "district.suzak",
+  "Тогуз-Тороузский район": "district.toguzToro",
+  "Токтогульский район": "district.toktogul",
+  "Манасский район": "district.manas",
+  "Кара-Бууринский район": "district.karaBuura",
+  "Бакай-Атинский район": "district.bakaiAta",
+  "Таласский район": "district.talas",
+  "Октябрьский район": "district.oktyabr",
+  "Свердловский район": "district.sverdlov",
+  "Первомайский район": "district.pervomai",
+  "Ленинский район": "district.lenin",
+};
+
 const ContractsTable = () => {
-  const { contractsForTable, pageTotal, totalContracts, filters } = useContractsStore();
+  const { contractsForTable, pageTotal, totalContracts, filters, loadingTableData } = useContractsStore();
   const { handleChangePage, handleSetFilter } = useTableContractsViewModel();
   const { t } = useTranslation();
+  const name = filters.districtName || filters.regionName;
+  const translationKey = name ? regionTranslations[name as keyof typeof regionTranslations] : null;
 
   return (
     <Box>
+      <Typography variant="h5" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
+        {t("statisticsPage.contractsTab.tableTitle")}
+        {name && ": "}
+        {translationKey ? t(`kyrgyzstan.${translationKey}`) : name}
+      </Typography>
       <ContractsSearchField handleSetFilter={handleSetFilter} />
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", my: 1 }}>
         <Typography>
@@ -70,11 +135,17 @@ const ContractsTable = () => {
               <StyledTableHeadCell sx={{ width: "10%", textAlign: "center", paddingLeft: "20px" }}>
                 {t("ui.table.donor")}
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "10%" }}>Статус</StyledTableHeadCell>
+              <StyledTableHeadCell sx={{ width: "10%" }}>{t("ui.table.status")}</StyledTableHeadCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {contractsForTable &&
+            {loadingTableData ? (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            ) : contractsForTable && contractsForTable.data.length ? (
               contractsForTable.data.map((contract, index) => (
                 <TableRow
                   key={contract.id}
@@ -149,7 +220,14 @@ const ContractsTable = () => {
                     />
                   </StyledTableCell>
                 </TableRow>
-              ))}
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={7} align="center">
+                  {t("ui.table.noContractsAvailable")}
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

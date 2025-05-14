@@ -17,20 +17,21 @@ interface Props {
   name?: string;
   options: Option[];
   value: string;
-  onChange: (id: number) => void;
+  onChange: (id: number, isDuo?: boolean) => void;
   labelName: string;
   isAll?: boolean;
+  isDuo?: boolean;
 }
 
-const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName, isAll = true }) => {
-  const [selected, setSelected] = useState<string>(value);
+const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelName, isAll = true, isDuo = false }) => {
+  // const [selected, setSelected] = useState<string>(value);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSelected(event.target.value);
+    // setSelected(event.target.value);
     const id = Number(event.target.value);
-    onChange(id);
+    onChange(id, isDuo);
   };
 
   return (
@@ -39,7 +40,7 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
       <Select
         name={name}
         labelId={`select-label-${labelName}`}
-        value={selected}
+        value={value}
         onChange={handleChange}
         label={labelName}
         renderValue={(selectedValue) => {
@@ -59,6 +60,42 @@ const FilterSelect: React.FC<Props> = ({ name, options, value, onChange, labelNa
             </Box>
           );
         }}
+        // renderValue={(selectedValue) => {
+        //   // Находим выбранный элемент
+        //   const selectedOption = options.find((opt) => opt.id === Number(selectedValue));
+        //   // Если isAll = false, то не показывать "Все"
+        //   if (!selectedOption && isAll) {
+        //     return (
+        //       <Box
+        //         sx={{
+        //           display: "flex",
+        //           alignItems: "center",
+        //           overflow: "hidden",
+        //           textOverflow: "ellipsis",
+        //           whiteSpace: "nowrap",
+        //           maxWidth: { xs: "300px" },
+        //         }}
+        //       >
+        //         {`Все ${labelName.toLowerCase() + "ы"}`}
+        //       </Box>
+        //     );
+        //   }
+        //   // Если есть выбранная опция, показываем её
+        //   return (
+        //     <Box
+        //       sx={{
+        //         display: "flex",
+        //         alignItems: "center",
+        //         overflow: "hidden",
+        //         textOverflow: "ellipsis",
+        //         whiteSpace: "nowrap",
+        //         maxWidth: { xs: "300px" },
+        //       }}
+        //     >
+        //       {selectedOption?.name ?? `Все ${labelName.toLowerCase() + "ы"}`}
+        //     </Box>
+        //   );
+        // }}
         MenuProps={{
           PaperProps: {
             style: {

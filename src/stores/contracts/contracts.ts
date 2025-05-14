@@ -7,10 +7,13 @@ interface ContractFilters {
   limit: number | 8;
   searchString: string | null;
   status: number | null;
+  regionName: string | null;
+  districtName: string | null;
 }
 
 interface ContractsState {
-  loading: boolean;
+  loadingMapData: boolean;
+  loadingTableData: boolean;
   error: string | null;
   totalContracts: number | null;
   contractsForTable: TContractModelForTable | null;
@@ -24,7 +27,8 @@ interface ContractsState {
 }
 
 const initialStore = {
-  loading: false,
+  loadingMapData: false,
+  loadingTableData: false,
   error: null,
   totalContracts: null,
   contractsForTable: null,
@@ -35,6 +39,8 @@ const initialStore = {
     limit: 8,
     searchString: null,
     status: null,
+    regionName: null,
+    districtName: null,
   },
 };
 
@@ -47,10 +53,17 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
     })),
 
   fetchContractsForTable: async () => {
-    const { page, limit, searchString, status } = get().filters;
-    set({ loading: true, error: null });
+    const { page, limit, searchString, status, regionName, districtName } = get().filters;
+    set({ loadingMapData: true, error: null });
     try {
-      const body = { offset: page != null ? (page - 1) * (limit ?? 12) : 0, limit, searchString, status };
+      const body = {
+        offset: page != null ? (page - 1) * (limit ?? 12) : 0,
+        limit,
+        searchString,
+        status,
+        regionName,
+        districtName,
+      };
       const response = await http("/ws/public/contracts", {
         method: "POST",
         withoutAuth: true,
@@ -68,12 +81,12 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
     } catch (e: any) {
       set({ error: e?.message, pageTotal: null, totalContracts: null });
     } finally {
-      set({ loading: false });
+      set({ loadingMapData: false });
     }
   },
 
   fetchContractsForMap: async () => {
-    set({ loading: true, error: null });
+    set({ loadingTableData: true, error: null });
     try {
       const response = await http("/ws/public/stat/contract", {
         method: "GET",
@@ -89,7 +102,7 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
     } catch (e: any) {
       set({ error: e?.message, pageTotal: null, contractsForMap: null });
     } finally {
-      set({ loading: false });
+      set({ loadingTableData: false });
     }
   },
 

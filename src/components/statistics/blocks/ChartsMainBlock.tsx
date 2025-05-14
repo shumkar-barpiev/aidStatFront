@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import useStatisticsChartsViewModel from "@/viewmodels/statistics/charts/useStatisticsChartsViewModel";
 import { ChartDataCount, ChartDataSum, useProjectChartsStore } from "@/stores/projects/projects-for-charts";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
@@ -11,14 +11,15 @@ import { EnergeticsMok, TransportsMok } from "@/shared/enums/statisticsMapIconsE
 import PolarChart from "@/components/statistics/charts/pie-chart-components/PolarChart";
 import ChartCardLayout from "@/components/statistics/charts/chart-cards/ChartCardLayout";
 import HorizontalStackedBarChart from "@/components/statistics/charts/bar-chart-components/HorizontalStackedBarChart";
-import ChartCard from "@/components/statistics/charts/chart-cards/ChartCard";
 import { useTranslation } from "react-i18next";
+import BarChart from "@/components/statistics/charts/bar-chart-components/BarChart.tsx";
 
 const ChartsMainBlock = () => {
   const { regions } = useRegionsViewModel();
   const { sectors, sectorsGroup } = useSectorsViewModel();
   const sectorOptions = sectors.concat(sectorsGroup);
-  const { handleFilterBySector, handleFilterByRegion, handleDownload, selectedOption } = useStatisticsChartsViewModel();
+  const { handleFilterBySector, handleFilterByRegion, handleDownload, selectedOption, optionsForDuoCorrelation } =
+    useStatisticsChartsViewModel();
   const { projects } = useProjectsMapStore();
   const cardsStore = useProjectChartsStore();
   const {
@@ -30,6 +31,7 @@ const ChartsMainBlock = () => {
     topExecutiveAgenciesByProjectCount,
     topDonorsByInvestmentBySector,
     topDonorsByInvestmentByRegion,
+    topDonorsByInvestmentByRegionAndSector,
     loadingState,
   } = cardsStore;
   const { t } = useTranslation();
@@ -74,37 +76,68 @@ const ChartsMainBlock = () => {
       />
 
       <Grid container spacing={3}>
-        {selectedOption.region !== 0 && topDonorsByInvestmentByRegion && topDonorsByInvestmentByRegion.data && (
-          <Grid item xs={12} sm={12} lg={6}>
-            <ChartCard
-              title={t("statisticsPage.charts.barCorrelationDonorToRegionTitle")}
-              total={topDonorsByInvestmentByRegion.total}
-              unit={topDonorsByInvestmentByRegion.unit}
-              data={topDonorsByInvestmentByRegion.data as ChartDataSum[]}
-              handleFilterChange={handleFilterByRegion}
-              value={selectedOption.region.toString()}
-              selectOptions={regions}
-              loading={loadingState.topDonorsByInvestmentByRegion}
-              handleDownload={() => handleDownload(ChartDownloadType.Region, selectedOption.region)}
-            />
-          </Grid>
-        )}
+        <ChartCardLayout
+          name="donorsWithRegion&Sector"
+          title={t("statisticsPage.charts.barCorrelationDonorToRegionAndSectorTitle")}
+          total={topDonorsByInvestmentByRegionAndSector?.total}
+          unit={topDonorsByInvestmentByRegionAndSector?.unit}
+          loading={loadingState.topDonorsByInvestmentByRegionAndSector}
+          handleDownload={() =>
+            handleDownload(
+              ChartDownloadType.RegionAndSector,
+              optionsForDuoCorrelation.region,
+              optionsForDuoCorrelation.sector
+            )
+          }
+          regionSelectValue={optionsForDuoCorrelation.region.toString()}
+          sectorSelectValue={optionsForDuoCorrelation.sector.toString()}
+          regionOptions={regions}
+          sectorOptions={sectorOptions}
+          handleRegionFilterChange={handleFilterByRegion ?? (() => {})}
+          handleSectorFilterChange={handleFilterBySector ?? (() => {})}
+        >
+          {topDonorsByInvestmentByRegionAndSector && topDonorsByInvestmentByRegionAndSector.data.length > 0 ? (
+            <BarChart data={topDonorsByInvestmentByRegionAndSector.data as ChartDataSum[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
-        {selectedOption.sector !== 0 && topDonorsByInvestmentBySector && topDonorsByInvestmentBySector.data && (
-          <Grid item xs={12} sm={12} lg={6}>
-            <ChartCard
-              title={t("statisticsPage.charts.barCorrelationDonorToSectorTitle")}
-              total={topDonorsByInvestmentBySector.total}
-              unit={topDonorsByInvestmentBySector.unit}
-              data={topDonorsByInvestmentBySector.data as ChartDataSum[]}
-              handleFilterChange={handleFilterBySector}
-              value={selectedOption.sector.toString()}
-              selectOptions={sectorOptions}
-              loading={loadingState.topDonorsByInvestmentBySector}
-              handleDownload={() => handleDownload(ChartDownloadType.Sector, selectedOption.sector)}
-            />
-          </Grid>
-        )}
+        <ChartCardLayout
+          name="donorsWithRegionsOnly"
+          title={t("statisticsPage.charts.barCorrelationDonorToRegionTitle")}
+          total={topDonorsByInvestmentByRegion?.total}
+          unit={topDonorsByInvestmentByRegion?.unit}
+          loading={loadingState.topDonorsByInvestmentByRegion}
+          handleDownload={() => handleDownload(ChartDownloadType.Region, selectedOption.region)}
+          regionSelectValue={selectedOption.region.toString()}
+          regionOptions={regions}
+          handleRegionFilterChange={handleFilterByRegion ?? (() => {})}
+        >
+          {topDonorsByInvestmentByRegion && topDonorsByInvestmentByRegion.data.length > 0 ? (
+            <BarChart data={topDonorsByInvestmentByRegion.data as ChartDataSum[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
+
+        <ChartCardLayout
+          name="donorsWithSectorsOnly"
+          title={t("statisticsPage.charts.barCorrelationDonorToSectorTitle")}
+          total={topDonorsByInvestmentBySector?.total}
+          unit={topDonorsByInvestmentBySector?.unit}
+          loading={loadingState.topDonorsByInvestmentBySector}
+          handleDownload={() => handleDownload(ChartDownloadType.Region, selectedOption.sector)}
+          sectorSelectValue={selectedOption.sector.toString()}
+          sectorOptions={sectorOptions}
+          handleSectorFilterChange={handleFilterBySector ?? (() => {})}
+        >
+          {topDonorsByInvestmentBySector && topDonorsByInvestmentBySector.data.length > 0 ? (
+            <BarChart data={topDonorsByInvestmentBySector.data as ChartDataSum[]} />
+          ) : (
+            <Typography color="text.secondary">Нет данных для отображения</Typography>
+          )}
+        </ChartCardLayout>
 
         <ChartCardLayout
           title={t("statisticsPage.charts.barDonorsToSumTitle")}

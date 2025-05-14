@@ -29,6 +29,11 @@ export interface CorrelationDataBySector extends ProjectChartData {
   sectorName: string;
 }
 
+export interface CorrelationDataByRegionAndSector extends ProjectChartData {
+  regionName: string;
+  sectorName: string;
+}
+
 const initialStore = {
   loading: false,
   error: null,
@@ -41,6 +46,7 @@ const initialStore = {
     topExecutiveAgenciesByProjectCount: false,
     topDonorsByInvestmentBySector: false,
     topDonorsByInvestmentByRegion: false,
+    topDonorsByInvestmentByRegionAndSector: false,
   },
   topSectorsByProjectCount: null,
   topSectorsByInvestment: null,
@@ -50,6 +56,7 @@ const initialStore = {
   topExecutiveAgenciesByProjectCount: null,
   topDonorsByInvestmentBySector: null,
   topDonorsByInvestmentByRegion: null,
+  topDonorsByInvestmentByRegionAndSector: null,
 };
 
 const fetchData = async (
@@ -94,6 +101,7 @@ export const useProjectChartsStore = create<{
     topExecutiveAgenciesByProjectCount: boolean;
     topDonorsByInvestmentBySector: boolean;
     topDonorsByInvestmentByRegion: boolean;
+    topDonorsByInvestmentByRegionAndSector: boolean;
   };
   topSectorsByProjectCount: ProjectChartData | null;
   fetchTopSectorsByProjectCount: (download?: boolean) => void;
@@ -111,6 +119,8 @@ export const useProjectChartsStore = create<{
   fetchTopDonorsByInvestmentBySector: (sectorId: number, download?: boolean) => void;
   topDonorsByInvestmentByRegion: CorrelationDataByRegion | null;
   fetchTopDonorsByInvestmentByRegion: (regionId: number, download?: boolean) => void;
+  topDonorsByInvestmentByRegionAndSector: CorrelationDataByRegionAndSector | null;
+  fetchTopDonorsByInvestmentByRegionAndSector: (regionId: number, sectorId: number, download?: boolean) => void;
   clearStore: () => void;
 }>((set, get) => ({
   ...initialStore,
@@ -120,7 +130,7 @@ export const useProjectChartsStore = create<{
       "/ws/public/stat/project/count/sector",
       (loading) => set({ loadingState: { ...get().loadingState, topSectorsByProjectCount: loading } }),
       (data) => set({ error: null, topSectorsByProjectCount: data }),
-      (error) => set({ error }),
+      (error) => set({ error, topSectorsByProjectCount: null }),
       download
     );
   },
@@ -130,7 +140,7 @@ export const useProjectChartsStore = create<{
       "/ws/public/stat/project/sector/sum",
       (loading) => set({ loadingState: { ...get().loadingState, topSectorsByInvestment: loading } }),
       (data) => set({ error: null, topSectorsByInvestment: data }),
-      (error) => set({ error }),
+      (error) => set({ error, topSectorsByInvestment: null }),
       download
     );
   },
@@ -140,7 +150,7 @@ export const useProjectChartsStore = create<{
       "/ws/public/stat/project/donor/sum",
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestment: loading } }),
       (data) => set({ error: null, topDonorsByInvestment: data }),
-      (error) => set({ error }),
+      (error) => set({ error, topDonorsByInvestment: null }),
       download
     );
   },
@@ -150,7 +160,7 @@ export const useProjectChartsStore = create<{
       "/ws/public/stat/project/count/donor",
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByProjectCount: loading } }),
       (data) => set({ error: null, topDonorsByProjectCount: data }),
-      (error) => set({ error }),
+      (error) => set({ error, topDonorsByProjectCount: null }),
       download
     );
   },
@@ -160,7 +170,7 @@ export const useProjectChartsStore = create<{
       "/ws/public/stat/project/count/implementer",
       (loading) => set({ loadingState: { ...get().loadingState, topImplementingAgenciesByProjectCount: loading } }),
       (data) => set({ error: null, topImplementingAgenciesByProjectCount: data }),
-      (error) => set({ error }),
+      (error) => set({ error, topImplementingAgenciesByProjectCount: null }),
       download
     );
   },
@@ -170,7 +180,7 @@ export const useProjectChartsStore = create<{
       "/ws/public/stat/project/count/contractor",
       (loading) => set({ loadingState: { ...get().loadingState, topExecutiveAgenciesByProjectCount: loading } }),
       (data) => set({ error: null, topExecutiveAgenciesByProjectCount: data }),
-      (error) => set({ error }),
+      (error) => set({ error, topExecutiveAgenciesByProjectCount: null }),
       download
     );
   },
@@ -180,7 +190,7 @@ export const useProjectChartsStore = create<{
       `/ws/public/stat/project/sector/${sectorId}`,
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentBySector: loading } }),
       (data) => set({ error: null, topDonorsByInvestmentBySector: data as CorrelationDataBySector }),
-      (error) => set({ error }),
+      (error) => set({ error, topDonorsByInvestmentBySector: null }),
       download
     );
   },
@@ -190,7 +200,17 @@ export const useProjectChartsStore = create<{
       `/ws/public/stat/project/region/${regionId}`,
       (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentByRegion: loading } }),
       (data) => set({ error: null, topDonorsByInvestmentByRegion: data as CorrelationDataByRegion }),
-      (error) => set({ error }),
+      (error) => set({ error, topDonorsByInvestmentByRegion: null }),
+      download
+    );
+  },
+
+  fetchTopDonorsByInvestmentByRegionAndSector: async (regionId: number, sectorId: number, download?: boolean) => {
+    fetchData(
+      `/ws/public/stat/project/correlation/${regionId}/${sectorId}`,
+      (loading) => set({ loadingState: { ...get().loadingState, topDonorsByInvestmentByRegionAndSector: loading } }),
+      (data) => set({ error: null, topDonorsByInvestmentByRegionAndSector: data as CorrelationDataByRegionAndSector }),
+      (error) => set({ error, topDonorsByInvestmentByRegionAndSector: null }),
       download
     );
   },

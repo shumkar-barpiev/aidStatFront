@@ -9,30 +9,38 @@ import ChartTitle from "@/components/statistics/charts/ChartTitle.tsx";
 import Colors from "@/styles/colors.ts";
 
 interface Props {
+  name?: string;
   title: string;
   total?: string;
   unit?: string;
-  value?: string;
-  selectOptions?: Option[];
-  handleFilterChange?: (id: number) => void;
+  regionSelectValue?: string;
+  sectorSelectValue?: string;
+  regionOptions?: Option[];
+  sectorOptions?: Option[];
+  handleRegionFilterChange?: (id: number) => void;
+  handleSectorFilterChange?: (id: number) => void;
   loading?: boolean;
   handleDownload: () => void;
   children?: React.ReactNode;
 }
 
 const ChartCardLayout: React.FC<Props> = ({
+  name,
   title,
   total,
   unit,
-  value,
-  selectOptions,
-  handleFilterChange,
+  regionSelectValue,
+  sectorSelectValue,
+  regionOptions,
+  sectorOptions,
+  handleRegionFilterChange,
+  handleSectorFilterChange,
   loading,
   handleDownload,
   children,
 }) => {
   return (
-    <Grid item xs={12} sm={12} lg={6}>
+    <Grid item xs={12} sm={12} lg={name === "donorsWithRegion&Sector" ? 12 : 6}>
       <Card sx={{ boxShadow: 3, borderRadius: 1, minHeight: 483 }}>
         <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <Box sx={{ p: 2.5, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -67,66 +75,69 @@ const ChartCardLayout: React.FC<Props> = ({
 
           <Box sx={{ display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center", p: 2 }}>
             <Box sx={{ display: "flex", flex: 1 }}>
-              {selectOptions && selectOptions.length > 0 && value && (
-                <>
-                  {title.includes("по регионам") && (
-                    <FilterSelect
-                      name="region"
-                      value={value}
-                      options={selectOptions}
-                      onChange={handleFilterChange ?? (() => {})}
-                      labelName="Регион"
-                      isAll={false}
-                    />
-                  )}
-                  {title.includes("по секторам") && (
-                    <FilterSelect
-                      name="sector"
-                      value={value}
-                      options={selectOptions}
-                      onChange={handleFilterChange ?? (() => {})}
-                      labelName="Сектор"
-                      isAll={false}
-                    />
-                  )}
-                </>
+              {name?.includes("RegionsOnly") && regionSelectValue && regionOptions && regionOptions.length > 0 && (
+                <FilterSelect
+                  name="region"
+                  value={regionSelectValue}
+                  options={regionOptions}
+                  onChange={handleRegionFilterChange ?? (() => {})}
+                  labelName="Регион"
+                  isAll={false}
+                />
               )}
+              {name?.includes("SectorsOnly") && sectorSelectValue && sectorOptions && sectorOptions.length > 0 && (
+                <FilterSelect
+                  name="sector"
+                  value={sectorSelectValue}
+                  options={sectorOptions}
+                  onChange={handleSectorFilterChange ?? (() => {})}
+                  labelName="Сектор"
+                  isAll={false}
+                />
+              )}
+              {name?.includes("Region&Sector") &&
+                regionSelectValue &&
+                sectorSelectValue &&
+                regionOptions &&
+                regionOptions.length > 0 &&
+                sectorOptions &&
+                sectorOptions.length > 0 && (
+                  <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, width: "100%", gap: 2 }}>
+                    <Box sx={{ flex: 1 }}>
+                      <FilterSelect
+                        name="region"
+                        value={regionSelectValue}
+                        options={regionOptions}
+                        onChange={handleRegionFilterChange ?? (() => {})}
+                        labelName="Регион"
+                        isAll={false}
+                        isDuo={true}
+                      />
+                    </Box>
+                    <Box sx={{ flex: 1 }}>
+                      <FilterSelect
+                        name="sector"
+                        value={sectorSelectValue}
+                        options={sectorOptions}
+                        onChange={handleSectorFilterChange ?? (() => {})}
+                        labelName="Сектор"
+                        isAll={false}
+                        isDuo={true}
+                      />
+                    </Box>
+                  </Box>
+                )}
             </Box>
-
-            <Box sx={{ display: "flex", gap: 2, justifyContent: "space-between", alignItems: "center", p: 2 }}>
-              <Box sx={{ display: "flex", flex: 1 }}>
-                {title.includes("по регионам") && selectOptions && selectOptions.length > 0 && value && (
-                  <FilterSelect
-                    name="region"
-                    value={value}
-                    options={selectOptions}
-                    onChange={handleFilterChange ?? (() => {})}
-                    labelName="Регион"
-                    isAll={false}
-                  />
-                )}
-                {title.includes("по секторам") && selectOptions && selectOptions.length > 0 && value && (
-                  <FilterSelect
-                    name="sector"
-                    value={value}
-                    options={selectOptions}
-                    onChange={handleFilterChange ?? (() => {})}
-                    labelName="Сектор"
-                    isAll={false}
-                  />
-                )}
-              </Box>
-              <Box>
-                <IconButton
-                  sx={{
-                    transition: "transform 0.2s, color 0.2s",
-                    "&:hover": { transform: "scale(1.5)", color: "blue" },
-                  }}
-                  onClick={handleDownload}
-                >
-                  <DownloadIcon />
-                </IconButton>
-              </Box>
+            <Box>
+              <IconButton
+                sx={{
+                  transition: "transform 0.2s, color 0.2s",
+                  "&:hover": { transform: "scale(1.5)", color: "blue" },
+                }}
+                onClick={handleDownload}
+              >
+                <DownloadIcon />
+              </IconButton>
             </Box>
           </Box>
         </Box>
