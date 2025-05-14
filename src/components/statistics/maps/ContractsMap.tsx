@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { select } from "d3-selection";
 import { json } from "d3-fetch";
-import { geoPath, geoMercator } from "d3-geo";
+import { geoMercator, geoPath } from "d3-geo";
 import { Feature, FeatureCollection } from "geojson";
 import { Box } from "@mui/material";
 import { useContractsStore } from "@/stores/contracts/contracts.ts";
+import { useTranslation } from "react-i18next";
 
 const width = 800;
 const height = 600;
@@ -49,6 +50,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<Feature | null>(null);
   const { setFilters } = useContractsStore();
+  const { t } = useTranslation();
 
   const drawRegions = useCallback(() => {
     json("/map/statesGeoJSON.json")
@@ -76,7 +78,7 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
                 .style("left", `${event.offsetX + 12}px`)
                 .style("top", `${event.offsetY + 12}px`)
                 .style("opacity", 1)
-                .html((d.id as string) || "Без названия");
+                .html(t(`kyrgyzstan.region.${d.id as string}`) || "Без названия");
             })
             .on("mouseenter", function (event, d) {
               if (d && d.id) {
@@ -130,13 +132,12 @@ const ContractsMap: React.FC<Props> = ({ handleMouseEnter, handleMouseLeave, han
               .style("left", `${event.offsetX + 12}px`)
               .style("top", `${event.offsetY + 12}px`)
               .style("opacity", 1)
-              .html((d.id as string) || "Без названия");
+              .html(t(`kyrgyzstan.district.${d.id as string}`) || "Без названия");
           })
           .on("mouseenter", function (event, d) {
             if (d && d.id) {
               select(this).attr("fill", areaHoverColor);
               handleMouseEnter(d.id as string);
-              console.log(d.id);
             }
           })
           .on("mouseleave", function () {

@@ -87,14 +87,14 @@ const ContractsTable = () => {
   const { handleChangePage, handleSetFilter } = useTableContractsViewModel();
   const { t } = useTranslation();
   const name = filters.districtName || filters.regionName;
-  const translationKey = name ? regionTranslations[name as keyof typeof regionTranslations] : null;
+  const translationKey = name?.includes("район") ? `district.${name as string}` : `region.${name as string}`;
 
   return (
     <Box>
       <Typography variant="h5" fontWeight="bold" sx={{ my: 3, textAlign: "left" }}>
         {t("statisticsPage.contractsTab.tableTitle")}
         {name && ": "}
-        {translationKey ? t(`kyrgyzstan.${translationKey}`) : name}
+        {name ? t(`kyrgyzstan.${translationKey}`) : ""}
       </Typography>
       <ContractsSearchField handleSetFilter={handleSetFilter} />
       <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, justifyContent: "space-between", my: 1 }}>
