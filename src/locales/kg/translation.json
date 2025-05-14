@@ -82,6 +82,7 @@
       "freightTransportIncomeTitle": "Бардык транспорт түрлөрү боюнча жүк ташуудан түшкөн киреше (2001–азыркыга чейин)",
       "barCorrelationDonorToRegionTitle": "Донорлор менен региондордун корреляциясы",
       "barCorrelationDonorToSectorTitle": "Донорлор менен секторлордун корреляциясы",
+      "barCorrelationDonorToRegionAndSectorTitle": "Донорлор менен региондордун жана секторлордун корреляциясы",
       "barDonorsToSumTitle": "Инвестициялар боюнча алдыңкы донорлор",
       "barDonorsToProjectsTitle": "Долбоорлордун саны боюнча алдыңкы донорлор",
       "barSectorsToSumTitle": "Инвестициялар боюнча алдыңкы секторлор",

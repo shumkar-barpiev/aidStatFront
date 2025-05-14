@@ -4,13 +4,17 @@ import { useRegionsViewModel } from "@/viewmodels/regions/useRegionsViewModel";
 import { useSectorsViewModel } from "@/viewmodels/sectors/useSectorsViewModel";
 import { ChartDownloadType } from "@/shared/enums/fetchChartsEnums";
 
-interface firstOptions {
+interface FirstOptions {
   sector: number;
   region: number;
 }
 
 const useStatisticsChartsViewModel = () => {
-  const [selectedOption, setSelectedOption] = useState<firstOptions>({
+  const [selectedOption, setSelectedOption] = useState<FirstOptions>({
+    sector: 0,
+    region: 0,
+  });
+  const [optionsForDuoCorrelation, setOptionsForDuoCorrelation] = useState<FirstOptions>({
     sector: 0,
     region: 0,
   });
@@ -23,23 +27,40 @@ const useStatisticsChartsViewModel = () => {
     setSelectedOption({ ...selectedOption, [optionName]: id });
   };
 
-  const handleFilterBySector = (id: number) => {
-    handleSelectedOption("sector", id);
-    cardsStore.fetchTopDonorsByInvestmentBySector(id);
+  const handleSelectedOptionForDuoCorrelation = (optionName: string, id: number) => {
+    setOptionsForDuoCorrelation({ ...optionsForDuoCorrelation, [optionName]: id });
   };
 
-  const handleFilterByRegion = (id: number) => {
-    handleSelectedOption("region", id);
-    cardsStore.fetchTopDonorsByInvestmentByRegion(id);
+  const handleFilterBySector = (id: number, isDuo?: boolean) => {
+    if (isDuo) {
+      handleSelectedOptionForDuoCorrelation("sector", id);
+      cardsStore.fetchTopDonorsByInvestmentByRegionAndSector(optionsForDuoCorrelation.region, id);
+    } else {
+      handleSelectedOption("sector", id);
+      cardsStore.fetchTopDonorsByInvestmentBySector(id);
+    }
   };
 
-  const handleDownload = (type: ChartDownloadType, selectedValueId?: number) => {
+  const handleFilterByRegion = (id: number, isDuo?: boolean) => {
+    if (isDuo) {
+      handleSelectedOptionForDuoCorrelation("region", id);
+      cardsStore.fetchTopDonorsByInvestmentByRegionAndSector(id, optionsForDuoCorrelation.sector);
+    } else {
+      handleSelectedOption("region", id);
+      cardsStore.fetchTopDonorsByInvestmentByRegion(id);
+    }
+  };
+
+  const handleDownload = (type: ChartDownloadType, regionId?: number, sectorId?: number) => {
     switch (type) {
       case ChartDownloadType.Region:
-        cardsStore.fetchTopDonorsByInvestmentByRegion(selectedValueId as number, true);
+        cardsStore.fetchTopDonorsByInvestmentByRegion(regionId as number, true);
         break;
       case ChartDownloadType.Sector:
-        cardsStore.fetchTopDonorsByInvestmentBySector(selectedValueId as number, true);
+        cardsStore.fetchTopDonorsByInvestmentBySector(sectorId as number, true);
+        break;
+      case ChartDownloadType.RegionAndSector:
+        cardsStore.fetchTopDonorsByInvestmentByRegionAndSector(regionId as number, sectorId as number, true);
         break;
       case ChartDownloadType.DonorsByInvestment:
         cardsStore.fetchTopDonorsByInvestment(true);
@@ -66,7 +87,7 @@ const useStatisticsChartsViewModel = () => {
 
   useEffect(() => {
     if (sectorOptions && sectorOptions.length > 0) {
-      const firstNonEmptyOption = sectorOptions.find((option) => option.projectCount !== 0);
+      const firstNonEmptyOption = sectorOptions.find((option) => option.projectCount > 0);
 
       if (firstNonEmptyOption) {
         handleSelectedOption("sector", firstNonEmptyOption.id);
@@ -77,7 +98,7 @@ const useStatisticsChartsViewModel = () => {
 
   useEffect(() => {
     if (regions && regions.length > 0) {
-      const firstNonEmptyOption = regions.find((option) => option.projectCount !== 0);
+      const firstNonEmptyOption = regions.find((option) => option.projectCount > 0);
 
       if (firstNonEmptyOption) {
         handleSelectedOption("region", firstNonEmptyOption.id);
@@ -85,6 +106,23 @@ const useStatisticsChartsViewModel = () => {
       }
     }
   }, [regions.length]);
+
+  useEffect(() => {
+    if (regions && regions.length > 0 && sectorOptions && sectorOptions.length > 0) {
+      const firstNonEmptyRegionOption = regions.find((option) => option.projectCount > 0);
+      const firstNonEmptySectorOption = sectorOptions.find((option) => option.projectCount > 0);
+
+      if (firstNonEmptyRegionOption && firstNonEmptySectorOption) {
+        const newOptions = {
+          sector: firstNonEmptySectorOption.id,
+          region: firstNonEmptyRegionOption.id,
+        };
+        setOptionsForDuoCorrelation(newOptions);
+
+        cardsStore.fetchTopDonorsByInvestmentByRegionAndSector(newOptions.region, newOptions.sector);
+      }
+    }
+  }, [regions.length, sectorOptions.length]);
 
   useEffect(() => {
     cardsStore.fetchTopSectorsByInvestment();
@@ -97,7 +135,7 @@ const useStatisticsChartsViewModel = () => {
 
   return {
     selectedOption,
-    handleSelectedOption,
+    optionsForDuoCorrelation,
     handleFilterBySector,
     handleFilterByRegion,
     handleDownload,

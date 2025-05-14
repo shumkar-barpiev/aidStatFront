@@ -82,6 +82,7 @@
       "freightTransportIncomeTitle": "Freight Transport Income by All Modes (2001–Present)",
       "barCorrelationDonorToRegionTitle": "Donor-to-Region Correlation",
       "barCorrelationDonorToSectorTitle": "Donor-to-Sector Correlation",
+      "barCorrelationDonorToRegionAndSectorTitle": "Donor to Region and Sector Correlation",
       "barDonorsToSumTitle": "Top Donors by Investment",
       "barDonorsToProjectsTitle": "Top Donors by Number of Projects",
       "barSectorsToSumTitle": "Top Sectors by Investment",

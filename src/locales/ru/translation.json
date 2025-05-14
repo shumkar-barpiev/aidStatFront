@@ -82,6 +82,7 @@
       "freightTransportIncomeTitle": "Доходы от перевозок грузов всеми видами транспорта (2001–настоящее время)",
       "barCorrelationDonorToRegionTitle": "Корреляция доноров по регионам",
       "barCorrelationDonorToSectorTitle": "Корреляция доноров по секторам",
+      "barCorrelationDonorToRegionAndSectorTitle": "Корреляция доноров по секторам и регионам",
       "barDonorsToSumTitle": "Топ доноров по инвестициям",
       "barDonorsToProjectsTitle": "Топ доноров по количеству проектов",
       "barSectorsToSumTitle": "Топ секторов по инвестициям",
