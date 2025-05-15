@@ -140,6 +140,7 @@
       "partners": "Partners",
       "sectors": "Sectors",
       "startDate": "Start Date",
+      "endDate": "End Date",
       "totalSum": "Total Sum",
       "totalContractSum": "Contract Sum",
       "contractType": "Type of services",

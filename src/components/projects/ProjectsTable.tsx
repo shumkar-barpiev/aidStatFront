@@ -6,8 +6,6 @@ import {
   Table,
   Paper,
   Stack,
-  Avatar,
-  Tooltip,
   TableRow,
   TableHead,
   TableBody,
@@ -30,6 +28,7 @@ import { useProjectsViewModel } from "@/viewmodels/projects/useProjectsViewModel
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents";
 import { transliterate } from "@/utils/format/transliterate";
 import { imageUrl } from "@/utils/constants";
+import AvatarListItem from "@/components/statistics/components/avatars/AvatarListItem.tsx";
 
 export default function ProjectsTable() {
   const router = useRouter();
@@ -54,14 +53,17 @@ export default function ProjectsTable() {
               <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
                 {t("ui.table.project")}
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "20%", textAlign: "left", paddingLeft: "20px" }}>
+              <StyledTableHeadCell sx={{ width: "13%", textAlign: "left", paddingLeft: "20px" }}>
                 {t("ui.table.partners")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
                 {t("ui.table.sectors")}
               </StyledTableHeadCell>
-              <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
+              <StyledTableHeadCell sx={{ width: "10%", textAlign: "left", paddingLeft: "20px" }}>
                 {t("ui.table.startDate")}
+              </StyledTableHeadCell>
+              <StyledTableHeadCell sx={{ width: "12%", textAlign: "left", paddingLeft: "20px" }}>
+                {t("ui.table.endDate")}
               </StyledTableHeadCell>
               <StyledTableHeadCell sx={{ width: "15%", textAlign: "left", paddingLeft: "20px" }}>
                 {t("ui.table.totalSum")}
@@ -109,7 +111,7 @@ export default function ProjectsTable() {
                         </Typography>
                       </button>
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "20%" }}>
+                    <StyledTableCell sx={{ width: "15%" }}>
                       <Stack direction={"row"} alignItems={"center"} spacing={1}>
                         {project?.partners ? (
                           project.partners.map((partner, index) => {
@@ -122,20 +124,7 @@ export default function ProjectsTable() {
                                 }}
                                 style={plainBtnStyle}
                               >
-                                <Tooltip title={`${partner.name}`}>
-                                  <Avatar
-                                    src={`${imageUrl}${partner.image}`}
-                                    alt={partnerName}
-                                    sx={{
-                                      width: 40,
-                                      height: 40,
-                                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
-                                      "& .MuiAvatar-img": {
-                                        objectFit: "contain",
-                                      },
-                                    }}
-                                  />
-                                </Tooltip>
+                                <AvatarListItem item={partner} />
                               </button>
                             );
                           })
@@ -144,7 +133,7 @@ export default function ProjectsTable() {
                         )}
                       </Stack>
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "15%" }}>
+                    <StyledTableCell sx={{ width: "13%" }}>
                       {project.sectors ? (
                         <RenderEllipsisText
                           text={getProjectSectorsTitle(project.sectors ?? [])}
@@ -154,8 +143,11 @@ export default function ProjectsTable() {
                         <NotSpecifiedText />
                       )}
                     </StyledTableCell>
-                    <StyledTableCell sx={{ width: "15%" }}>
+                    <StyledTableCell sx={{ width: "10%" }}>
                       {project.startDate ? projectFormatDate(`${project.startDate}`) : <NotSpecifiedText />}
+                    </StyledTableCell>
+                    <StyledTableCell sx={{ width: "12%" }}>
+                      {project.endDate ? projectFormatDate(`${project.endDate}`) : <NotSpecifiedText />}
                     </StyledTableCell>
                     <StyledTableCell sx={{ width: "15%", paddingLeft: "0px", textAlign: "center" }}>
                       {project?.totalSum ? formatCurrencyWithSpaces(`${project?.totalSum}`) : <NotSpecifiedText />}

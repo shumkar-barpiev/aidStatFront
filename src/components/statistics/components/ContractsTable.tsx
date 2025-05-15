@@ -2,7 +2,6 @@
 
 import React, { ChangeEvent, useRef } from "react";
 import {
-  Avatar,
   Box,
   CircularProgress,
   Pagination,
@@ -13,19 +12,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { formattedUpdateTime } from "@/utils/format/formattedUpdateTime.ts";
 import Colors from "@/styles/colors.ts";
 import { StyledTableCell, StyledTableHeadCell } from "@/components/other/StyledTableComponents.tsx";
 import { formatCurrency } from "@/utils/formatCurrency.ts";
-import { imageUrl } from "@/utils/constants.ts";
 import { transliterate } from "@/utils/format/transliterate.ts";
 import ProjectBadges from "@/components/projects/ProjectBadges.tsx";
 import { useTranslation } from "react-i18next";
 import { ContractFilters } from "@/stores/contracts/contracts.ts";
 import { TContractModelForTable } from "@/models/contracts/ContractModel.ts";
+import AvatarList from "@/components/statistics/components/avatars/AvatarList.tsx";
 
 interface Props {
   contractsForTable: TContractModelForTable | null;
@@ -137,24 +135,7 @@ const ContractsTable: React.FC<Props> = ({
                   {forProject ? null : (
                     <StyledTableCell sx={{ width: "10%" }}>
                       <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", justifyContent: "center" }}>
-                        {contract.implementers.map((implementor) => {
-                          return (
-                            <Tooltip key={implementor.id} title={implementor.name}>
-                              <Avatar
-                                src={`${imageUrl}${implementor.image}`}
-                                alt={implementor.name || "Avatar"}
-                                sx={{
-                                  width: 50,
-                                  height: 50,
-                                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
-                                  "& .MuiAvatar-img": {
-                                    objectFit: "cover",
-                                  },
-                                }}
-                              />
-                            </Tooltip>
-                          );
-                        })}
+                        <AvatarList items={contract.implementers} />
                       </Box>
                     </StyledTableCell>
                   )}
@@ -189,24 +170,7 @@ const ContractsTable: React.FC<Props> = ({
                         justifyContent: forProject ? "left" : "center",
                       }}
                     >
-                      {forProject
-                        ? contract.address || "не указано"
-                        : contract.donors.map((donor) => (
-                            <Tooltip key={donor.id} title={donor.name}>
-                              <Avatar
-                                src={`${imageUrl}${donor.image}`}
-                                alt={donor.name || "Avatar"}
-                                sx={{
-                                  width: 50,
-                                  height: 50,
-                                  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.45)",
-                                  "& .MuiAvatar-img": {
-                                    objectFit: "cover",
-                                  },
-                                }}
-                              />
-                            </Tooltip>
-                          ))}
+                      {forProject ? contract.address || "не указано" : <AvatarList items={contract.donors} />}
                     </Box>
                   </StyledTableCell>
                   <StyledTableCell sx={{ width: "10%", textAlign: "center" }}>
@@ -218,7 +182,7 @@ const ContractsTable: React.FC<Props> = ({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7} align="center">
+                <TableCell colSpan={forProject ? 6 : 7} align="center">
                   {forProject ? t("ui.table.noContractsAvailableForProject") : t("ui.table.noContractsAvailable")}
                 </TableCell>
               </TableRow>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import ContractsMapBlock from "@/components/statistics/blocks/ContractsMapBlock";
-import ContractsTableBlock from "@/components/statistics/maps/ContractsTableBlock.tsx";
+import ContractsTableBlock from "@/components/statistics/blocks/ContractsTableBlock.tsx";
 
 const ContractsTab = () => {
   return (

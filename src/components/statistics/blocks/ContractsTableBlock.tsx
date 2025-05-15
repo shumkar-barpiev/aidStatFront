@@ -2,11 +2,11 @@
 
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { useContractsStore } from "@/stores/contracts/contracts";
-import { useTableContractsViewModel } from "@/viewmodels/contracts/useTableContractsViewModel";
-import ContractsSearchField from "@/components/statistics/components/search/ContractsSearchField";
+import { useContractsStore } from "@/stores/contracts/contracts.ts";
+import { useTableContractsViewModel } from "@/viewmodels/contracts/useTableContractsViewModel.ts";
+import ContractsSearchField from "@/components/statistics/components/search/ContractsSearchField.tsx";
 import { useTranslation } from "react-i18next";
-import ContractsTable from "@/components/statistics/maps/ContractsTable.tsx";
+import ContractsTable from "@/components/statistics/components/ContractsTable.tsx";
 
 const ContractsTableBlock = () => {
   const { contractsForTable, pageTotal, totalContracts, filters, loadingTableData, setFilters } = useContractsStore();
