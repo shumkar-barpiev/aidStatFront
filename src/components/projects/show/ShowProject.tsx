@@ -29,6 +29,9 @@ import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrant
 import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock";
 import { transliterate } from "@/utils/format/transliterate";
 import { imageUrl } from "@/utils/constants";
+import { useContractsStore } from "@/stores/contracts/contracts.ts";
+import ContractsTable from "@/components/statistics/maps/ContractsTable.tsx";
+import EventNoteIcon from "@mui/icons-material/EventNote";
 
 interface NotSpecifiedTextProps {
   sx?: SxProps;
@@ -53,6 +56,15 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
   const [creditItems, setCreditItems] = useState<Record<string, any>[]>([]);
   const router = useRouter();
   const { t } = useTranslation();
+  const {
+    fetchContractsForTable,
+    contractsForTable,
+    pageTotal,
+    totalContracts,
+    filters,
+    loadingTableData,
+    setFilters,
+  } = useContractsStore();
 
   let grantSum = 0;
   let creditSum = 0;
@@ -188,6 +200,13 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
     setGrantItems(grant);
     setCreditItems(credit);
   }, [project]);
+
+  useEffect(() => {
+    if (project && project.id) {
+      console.log(project.id);
+      fetchContractsForTable(project.id);
+    }
+  }, [project, filters.page]);
 
   return (
     <Box sx={{ py: 3 }}>
@@ -357,6 +376,24 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
         <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
 
         <FundsSpentBlock project={project} />
+
+        <Box sx={{ my: 3 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+            <EventNoteIcon color="primary" fontSize="large" />
+            <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
+              {t("statisticsPage.contractsTab.tableTitle")}
+            </Typography>
+          </Box>
+          <ContractsTable
+            contractsForTable={contractsForTable}
+            pageTotal={pageTotal}
+            totalContracts={totalContracts}
+            loadingTableData={loadingTableData}
+            filters={filters}
+            setFilters={setFilters}
+            forProject={true}
+          />
+        </Box>
 
         <Box sx={{ my: 3 }}>
           <Divider sx={{ mb: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
