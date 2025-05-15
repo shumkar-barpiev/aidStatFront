@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, CircularProgress, Divider, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import ProjectsMapFilter from "@/components/statistics/maps/ProjectsMapFilter";
+import ProjectsMapFilter from "@/components/statistics/components/ProjectsMapFilter.tsx";
 import dynamic from "next/dynamic";
 import ChartsMainBlock from "@/components/statistics/blocks/ChartsMainBlock";
 

@@ -29,8 +29,8 @@ import { ProjectGrantCreditTable } from "@/components/projects/show/ProjectGrant
 import FundsSpentBlock from "@/components/projects/show/FundsSpentBlock";
 import { transliterate } from "@/utils/format/transliterate";
 import { imageUrl } from "@/utils/constants";
-import { useContractsStore } from "@/stores/contracts/contracts.ts";
-import ContractsTable from "@/components/statistics/maps/ContractsTable.tsx";
+import { useContractsStore } from "@/stores/contracts/contracts";
+import ContractsTable from "@/components/statistics/components/ContractsTable.tsx";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 
 interface NotSpecifiedTextProps {
@@ -400,8 +400,22 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
           <ProjectTimeLine project={project} />
         </Box>
 
-        <Box flex={1}>
+        <Box flex={1} mb={4}>
           <Divider sx={{ my: 3, borderColor: Colors.darkBlue, borderBottomWidth: 2 }} />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
+            <FundingIcon color="primary" fontSize="large" />
+            <Typography variant="h6">{t("projectInfoPage.totalFunding")}</Typography>
+          </Box>
+          {project?.funding?.totalSum ? (
+            <Typography variant="h6" fontWeight="bold" sx={{ flexGrow: 1 }}>
+              {formatCurrencyWithSpaces(project?.funding?.totalSum)}
+            </Typography>
+          ) : (
+            <NotSpecifiedText />
+          )}
+        </Box>
+
+        <Box flex={1}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
             <ProjectCredit color="primary" fontSize="large" />
             <Typography variant="h6">

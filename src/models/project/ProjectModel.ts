@@ -56,7 +56,7 @@ export const ProjectModel = z.object({
       z.object({
         id: z.number().int().positive(),
         name: z.string().trim().optional().nullable(),
-        image: z.string().trim().optional().nullable(),
+        image: z.number().int().optional().nullable(),
       })
     )
     .optional()

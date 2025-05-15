@@ -140,6 +140,7 @@
       "partners": "Партнеры",
       "sectors": "Секторы",
       "startDate": "Дата начала",
+      "endDate": "Дата окончания",
       "totalSum": "Сумма проекта",
       "totalContractSum": "Сумма контракта",
       "contractType": "Тип услуг",
