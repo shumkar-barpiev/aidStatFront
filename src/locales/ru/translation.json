@@ -141,12 +141,16 @@
       "sectors": "Секторы",
       "startDate": "Дата начала",
       "totalSum": "Сумма проекта",
+      "totalContractSum": "Сумма контракта",
+      "contractType": "Тип услуг",
+      "contractLocationName": "Место оказания услуг",
       "status": "Статус",
       "implementor": "Исполнитель",
       "donor": "Донор",
       "project": "Проект",
       "contract": "Контракт",
-      "noContractsAvailable": "Контракты по заданным параметрам не найдены."
+      "noContractsAvailable": "Контракты по заданным параметрам не найдены.",
+      "noContractsAvailableForProject": "Контракты по данному проекту не найдены."
     },
     "status": {
       "inProgress": "В процессе",

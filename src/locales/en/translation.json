@@ -141,12 +141,16 @@
       "sectors": "Sectors",
       "startDate": "Start Date",
       "totalSum": "Total Sum",
+      "totalContractSum": "Contract Sum",
+      "contractType": "Type of services",
+      "contractLocationName": "Service location",
       "status": "Status",
       "implementor": "Implementor",
       "donor": "Donor",
       "project": "Project",
       "contract": "Contract",
-      "noContractsAvailable": "No contracts found for the given parameters."
+      "noContractsAvailable": "No contracts found for the given parameters.",
+      "noContractsAvailableForProject": "No contracts found for this project."
     },
     "status": {
       "inProgress": "In progress",

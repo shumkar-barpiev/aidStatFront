@@ -141,12 +141,16 @@
       "sectors": "Секторлор",
       "startDate": "Башталгыч дата",
       "totalSum": "Жыйынды сумма",
+      "totalContractSum": "Кызмат суммасы",
+      "contractType": "Кызмат түрү",
+      "contractLocationName": "Кызмат көрсөтүү жайы",
       "status": "Статус",
       "implementor": "Аткаруучу",
       "donor": "Донор",
       "project": "Долбоор",
       "contract": "Контракт",
-      "noContractsAvailable": "Көрсөтүлгөн параметрлер боюнча келишимдер табылган жок."
+      "noContractsAvailable": "Көрсөтүлгөн параметрлер боюнча келишимдер табылган жок.",
+      "noContractsAvailableForProject": "Бул долбоор үчүн келишимдер табылган жок."
     },
     "status": {
       "inProgress": "Иштеп жатат",

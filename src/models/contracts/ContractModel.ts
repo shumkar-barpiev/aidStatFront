@@ -54,6 +54,8 @@ const ContractItemModel = z.object({
   donors: z.array(DonorModel),
   implementers: z.array(ImplementerModel),
   project: ProjectModel,
+  contractType: z.string().trim(),
+  address: z.string().trim(),
 });
 
 export const ContractModelForTable = z.object({

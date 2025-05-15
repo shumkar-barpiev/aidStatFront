@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { TContractModelForMap, TContractModelForTable } from "@/models/contracts/ContractModel.ts";
 import { http } from "@/utils/http.ts";
 
-interface ContractFilters {
+export interface ContractFilters {
   page: number | 1;
   limit: number | 8;
   searchString: string | null;
@@ -21,7 +21,7 @@ interface ContractsState {
   pageTotal: number | null;
   filters: ContractFilters;
   setFilters: (filters: Partial<ContractFilters>) => void;
-  fetchContractsForTable: () => Promise<void>;
+  fetchContractsForTable: (params?: number) => Promise<void>;
   fetchContractsForMap: () => Promise<void>;
   clearStore: () => void;
 }
@@ -52,7 +52,7 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
       filters: { ...state.filters, ...newFilters },
     })),
 
-  fetchContractsForTable: async () => {
+  fetchContractsForTable: async (projectId?: number) => {
     const { page, limit, searchString, status, regionName, districtName } = get().filters;
     set({ loadingMapData: true, error: null });
     try {
@@ -64,7 +64,11 @@ export const useContractsStore = create<ContractsState>((set, get) => ({
         regionName,
         districtName,
       };
-      const response = await http("/ws/public/contracts", {
+      let query = "";
+      if (projectId) {
+        query = `?projectId=${projectId}`;
+      }
+      const response = await http(`/ws/public/contracts${query}`, {
         method: "POST",
         withoutAuth: true,
         body: JSON.stringify(body),

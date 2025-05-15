@@ -105,7 +105,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <CurrentYearIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
               <Typography variant="h6" sx={{ whiteSpace: "nowrap" }}>
-                {formatCurrencyWithSpaces(project?.funding?.fundsSpentCurrentYearExternal)}
+                {t("projectInfoPage.absorption.currentYear")}
               </Typography>
             </Box>
             {project?.funding?.fundsSpentCurrentYear ? (
