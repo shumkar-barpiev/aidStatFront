@@ -49,7 +49,8 @@
     "externalFinancingAbsorption": "External Financing Absorption",
     "absorption": {
       "total": "For the entire period",
-      "currentYear": "For the current year"
+      "currentYear": "For the current year",
+      "planned": "Planned annual budget"
     },
     "projectTimeLine": {
       "title": "Project Timeline",

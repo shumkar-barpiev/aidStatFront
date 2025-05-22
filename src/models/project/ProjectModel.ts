@@ -17,6 +17,8 @@ export const ProjectModel = z.object({
       fundsSpentCurrentYear: z.string().trim(),
       fundsSpentExternal: z.string().trim(),
       fundsSpentCurrentYearExternal: z.string().trim(),
+      plannedBudget: z.string().trim(),
+      plannedBudgetExternal: z.string().trim(),
       techAidSum: z.string().trim(),
       totalSum: z.string().trim(),
       items: z
