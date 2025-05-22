@@ -30,7 +30,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <PeriodIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
@@ -51,7 +51,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <CurrentYearIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
@@ -62,6 +62,27 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
             {project?.funding?.fundsSpentCurrentYear ? (
               <Typography variant="h6" fontWeight="bold" sx={{ flexGrow: 1 }}>
                 {formatCurrencyWithSpaces(project.funding.fundsSpentCurrentYear)}
+              </Typography>
+            ) : (
+              <NotSpecifiedText />
+            )}
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <PeriodIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
+              <Typography
+                variant="h6"
+                sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
+              >
+                {t("projectInfoPage.absorption.planned")}
+              </Typography>
+            </Box>
+            {project?.funding?.plannedBudget ? (
+              <Typography variant="h6" fontWeight={"bold"} sx={{ flexGrow: 1 }}>
+                {formatCurrencyWithSpaces(project.funding.plannedBudget)}
               </Typography>
             ) : (
               <NotSpecifiedText />
@@ -79,7 +100,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <PeriodIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
@@ -100,7 +121,7 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
               <CurrentYearIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
@@ -111,6 +132,27 @@ const FundsSpentBlock: React.FC<Props> = ({ project }) => {
             {project?.funding?.fundsSpentCurrentYear ? (
               <Typography variant="h6" fontWeight="bold" sx={{ flexGrow: 1 }}>
                 {formatCurrencyWithSpaces(project.funding.fundsSpentCurrentYearExternal)}
+              </Typography>
+            ) : (
+              <NotSpecifiedText />
+            )}
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+              <PeriodIcon color="primary" fontSize="large" sx={{ mr: 1 }} />
+              <Typography
+                variant="h6"
+                sx={{ whiteSpace: "nowrap", width: 1, overflow: "hidden", textOverflow: "ellipsis" }}
+              >
+                {t("projectInfoPage.absorption.planned")}
+              </Typography>
+            </Box>
+            {project?.funding?.plannedBudgetExternal ? (
+              <Typography variant="h6" fontWeight={"bold"} sx={{ flexGrow: 1 }}>
+                {formatCurrencyWithSpaces(project.funding.plannedBudgetExternal)}
               </Typography>
             ) : (
               <NotSpecifiedText />

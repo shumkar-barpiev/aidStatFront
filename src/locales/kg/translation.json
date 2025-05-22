@@ -49,7 +49,8 @@
     "externalFinancingAbsorption": "Тышкы каржылоону өздөштүрүү",
     "absorption": {
       "total": "Жалпы мөөнөт үчүн",
-      "currentYear": "Учурдагы жыл үчүн"
+      "currentYear": "Учурдагы жыл үчүн",
+      "planned": "Жылга пландалган бюджет"
     },
     "projectTimeLine": {
       "title": "Долбоордун хронологиясы",

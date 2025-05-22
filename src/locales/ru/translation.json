@@ -49,7 +49,8 @@
     "externalFinancingAbsorption": "Освоение внешнего финансирования",
     "absorption": {
       "total": "За весь период",
-      "currentYear": "За текущий год"
+      "currentYear": "За текущий год",
+      "planned": "Запланированный годовой бюджет"
     },
     "projectTimeLine": {
       "title": "Хронология проекта",
