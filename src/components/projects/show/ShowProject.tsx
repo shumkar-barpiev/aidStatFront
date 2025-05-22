@@ -147,10 +147,12 @@ export const ShowProject: React.FC<Props> = ({ project }) => {
   const renderProjectCoverage = (regions: Record<string, any>[]) => {
     if (!regions || regions.length === 0) return "";
 
+    const uniqueRegions = Array.from(new Map(regions.map((region) => [region.region.name, region])).values());
+
     return (
       <ul style={{ paddingLeft: "1.5rem", margin: 0 }}>
-        {regions.map((region, index) => (
-          <li key={index}>
+        {uniqueRegions.map((region) => (
+          <li key={region.region.name}>
             <Typography variant="subtitle1" fontWeight={"bold"}>
               {region.region.name}
             </Typography>
